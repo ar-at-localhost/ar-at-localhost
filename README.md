@@ -40,3 +40,4 @@ I'm Ahmad Raza, a full stack web developer. I'm currently working with [PieCyfer
 - Docker
 - Nginx
 - Swaywm (In past: i3 / Gnome)
+- NeoVim (In past: VSCode / Zed Editor)
