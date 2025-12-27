@@ -8,7 +8,7 @@ I'm Ahmad Raza, a full stack web developer. I'm currently working with [PieCyfer
   - @ar-at-piecyfer
   - @ar-at-amaizing
 - **Gitlab**:
-  - @ar124officialwd@gmail.com
+  - @ar124officialwd
 - **Website**:
   - [https://ar124officialwd.vercel.app](https://ar124officialwd.vercel.app)
 
