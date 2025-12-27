@@ -1,16 +1,42 @@
-## Hi there 👋
+I'm Ahmad Raza, a full stack web developer. I'm currently working with [PieCyfer](https://piecyfer.com) (a Lahore based company) on [Amaizing Inc.](https://amaizing.io) projects.
 
-<!--
-**ar-at-localhost/ar-at-localhost** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+- **Email**:
+  - pro.se.ahmad.raza.1@gmail.com
+  - ar124officialwd@gmail.com
+- **Github**
+  - @ar-at-localhost
+  - @ar-at-piecyfer
+  - @ar-at-amaizing
+- **Gitlab**:
+  - @ar124officialwd@gmail.com
+- **Website**:
+  - [https://ar124officialwd.vercel.app](https://ar124officialwd.vercel.app)
 
-Here are some ideas to get you started:
+### My Tech Stack
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+#### Programming Languages
+
+- JS / TS
+- Python
+- Lua
+- Nix
+
+#### Web
+
+- HTML / CSS / JS
+- React.js / Angular
+- Node.js / Socket.io
+
+#### Database
+
+- MongoDB
+- MySQL
+- Redis
+
+#### Favorite Tools & Misc. Tech
+
+- Linux 
+- Nix / NixOS (In past ArchLinux)
+- Docker
+- Nginx
+- Swaywm (In past: i3 / Gnome)
