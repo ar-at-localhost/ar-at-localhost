@@ -1,0 +1,16 @@
+MONGODB_URI: ENC[AES256_GCM,data:gYJrWAUqsePjxr6jMeN8h9FRaiw5JCaj536meYHjNceGnD5xuzfqSm+trQETzDJKp3riUIIKzuunyJChK+01K8t6WR4gejDFlxOu86qROIpX4s6nMXDynCbItilpXXOaKIzfZS1PTS7K8d700TCz66uDdQ==,iv:T915IZX2UlQBatkdWdGvDPUMW0BX7GqMTgcN/+Xepgw=,tag:ersmhrT32DnYCLWj8Ov5nA==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5ZEIzOUhtRi8xN2FKaWN2
+            MUZuQ1ZwOEE1Y2hhTUducE5YUy9XR3FNMVJZCm82Vnd5a21CLzVJQy8vVml2TkpB
+            U1N5NlUrRWVPWnhRTTZJZ1hVUWQ3RTgKLS0tIHcraVNvWmxIR1prTWlybVBFQkZV
+            OC9YZ1VNY3l6M3VJK1BsUFhWRW1vbWsKlAeH5O00/fy3YHJGHjLC1sFfZ99A/0sF
+            OuZfxZcSasw06wiwhNoigtEcSB21IdNrsNMiKX55xiCE8vhij2+Yog==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age1hy55kqs46c8g9g3ajynf2zut3l5teftc6hx4tthvxjqkkdn0p5qqls5m9c
+    lastmodified: "2026-10-13T17:11:41Z"
+    mac: ENC[AES256_GCM,data:RD9gC/lvkvuzcj3vz+gPUjw5C2bjydFrGm2LQWD9DudT7LOcHJUSp836hXZXtNbvYxB/RggIrlP65A5FIA3htJZsw6E1Ddia6klU19xLcewIznQkJk1GvgQ4Y7Arjxd2FLRNp79dDSuS0j/RGt4RZB3TbRs/iRroUSacmsxhYBw=,iv:xY6N2us07FscEK6hhvqoFoGHPOkm9vLl+A1psvV0dZE=,tag:fyYWtZ1Qv6IohrVXHZ+LUA==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.13.3
