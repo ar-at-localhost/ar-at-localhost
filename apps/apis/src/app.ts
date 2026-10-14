@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import { type GenericSchema, safeParse } from "valibot";
 import { contact } from "./contact/index.ts";
-import { fastifyPlugin } from "lib";
+import { fastifyPlugin as mongoosePlugin } from "lib";
 
 export const getApp = () => {
   const app = Fastify({
@@ -29,7 +29,7 @@ export const getApp = () => {
     resp.send();
   });
 
-  app.register(fastifyPlugin);
+  app.register(mongoosePlugin);
 
   app.register(contact, {
     prefix: "/api/contact",
