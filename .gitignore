@@ -1,3 +1,6 @@
+# builds
+dist/
+
 # Devenv
 .devenv*
 devenv.local.nix
@@ -18,7 +21,12 @@ node_modules
 # turbo
 .turbo
 
+# vite / vitest
+coverage/
+.vitest/
+
 # yarn
-.yarn/unplugged/
-.yarn/install-state.gz
 .pnp.*
+.yarn/install-state.gz
+.yarn/releases
+.yarn/unplugged/

@@ -45,6 +45,14 @@
         "^lint:fix",
       ]
     },
+    "test": {
+      "dependsOn": [
+        "^test",
+      ],
+      "env": [
+        "MONGODB_URI"
+      ]
+    },
     "typecheck": {
       "dependsOn": [
         "^typecheck",

@@ -1,7 +1,7 @@
 {pkgs, ...}: {
-  # https://devenv.sh/basics/
   enterShell = ''
     echo "󰣫 ar-at-localhost"
+    echo "󰖟 Playwright: ${pkgs.playwright.version}"
   '';
 
   git-hooks = {
@@ -22,5 +22,5 @@
     };
   };
 
-  packages = [pkgs.alejandra];
+  packages = with pkgs; [alejandra playwright];
 }
