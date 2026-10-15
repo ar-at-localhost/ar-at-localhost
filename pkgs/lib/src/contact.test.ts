@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { Contact, contactBodySchema, ContactModel, getFalseContact } from "./contact";
-import { randText } from "@ngneat/falso";
+import { randEmail, randText } from "@ngneat/falso";
 import { parseAsync } from "valibot";
 
 let contact: Contact;
@@ -21,6 +21,13 @@ describe("Contact", () => {
       contact.message = randText({ charCount: 128 });
       const result = await parseAsync(contactBodySchema, contact);
       expect(result.firstName).toEqual(contact.firstName);
+    });
+
+    it("Performs transforms", async () => {
+      contact.email = randEmail().toUpperCase();
+      const result = await parseAsync(contactBodySchema, contact);
+      expect(result.firstName).toEqual(contact.firstName);
+      expect(result.email).toEqual(contact.email.toLowerCase());
     });
 
     it("Rejects bad values", async () => {
