@@ -1,6 +1,6 @@
 import { Contact, getFalseContact } from "lib";
 import { describe, expect, it } from "vitest";
-import { apiBaseURL } from "../config.ts";
+import { apiBaseURL } from "../test/global";
 
 const baseURL = `${apiBaseURL}/contact`;
 
