@@ -15,7 +15,6 @@ import { required, tooLong, tooShort } from "./schema.ts";
 import mongoose, { model, Schema } from "mongoose";
 import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso";
 import { getMongoDEKs } from "./env.ts";
-import { SchemaMember } from "mongodb";
 
 /**
  * A form submission
