@@ -1,4 +1,4 @@
-import { getPort } from "lib";
+import { getBaseURL, getPort } from "lib";
 import { getApp } from "../app";
 
 const app = getApp();
@@ -17,3 +17,5 @@ export const setup = async () => {
 export const teardown = async () => {
   await app.close();
 };
+
+export const apiBaseURL = `${getBaseURL()}/api`;
