@@ -1,7 +1,7 @@
 import { defineCommand } from "citty";
 import { getProviderName, mongooseConnect } from "lib";
 import { ClientEncryption } from "mongodb";
-import { getKMSProvider, getNamespace } from "lib";
+import { getLocalKMSProvider, getNamespace } from "lib";
 
 export const dekCommand = defineCommand({
   meta: {
@@ -10,17 +10,18 @@ export const dekCommand = defineCommand({
   },
 
   run: async () => {
+    const namespace = getNamespace();
     const connection = await mongooseConnect();
 
     const ec = new ClientEncryption(connection.connection.getClient(), {
-      keyVaultNamespace: getNamespace(),
+      keyVaultNamespace: namespace,
       kmsProviders: {
-        local: getKMSProvider(),
+        local: getLocalKMSProvider(),
       },
     });
 
     const out: Record<string, string> = {};
-    const targets = ["contact-email", "contact-message"];
+    const targets = ["contact-email", "contact-message"].map((i) => `${namespace}-${i}`);
 
     for (const target of targets) {
       const existing = await ec.getKeyByAltName(target);

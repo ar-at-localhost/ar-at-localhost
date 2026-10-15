@@ -1,6 +1,6 @@
 import type { FastifyPluginAsync } from "fastify";
 import mongoose, { type ConnectOptions } from "mongoose";
-import { getKMSProvider, getNamespace } from "./kms.ts";
+import { getLocalKMSProvider, getNamespace } from "./kms.ts";
 import { getMongocryptPath } from "./env.ts";
 
 export const mongooseConnect = async (
@@ -23,7 +23,7 @@ export const mongooseConnect = async (
         },
 
         kmsProviders: {
-          local: getKMSProvider(),
+          local: getLocalKMSProvider(),
         },
       },
     },
