@@ -2,6 +2,12 @@
   enterShell = ''
     echo "󰣫 ar-at-localhost"
     echo "󰖟 Playwright: ${pkgs.playwright.version}"
+    echo " Mongocrypt: $MONGO_CRYPT_LIB"
+  '';
+
+  enterTest = ''
+    secretspec run yarn check
+    secretspec run yarn test
   '';
 
   git-hooks = {
@@ -22,5 +28,5 @@
     };
   };
 
-  packages = with pkgs; [alejandra playwright];
+  packages = with pkgs; [alejandra libmongocrypt playwright];
 }

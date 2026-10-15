@@ -1,0 +1,31 @@
+{
+  "name": "cli",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A simple example library built by tsdown",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "node src/index.ts",
+    "build": "tsdown",
+    "start": "tsdown && node dist/index.mjs"
+  },
+  "devDependencies": {
+    "tsdown": "^0.22.5",
+    "typescript": "^7.0.2"
+  },
+  "bin": "./dist/index.mjs",
+  "dependencies": {
+    "citty": "^0.2.2",
+    "lib": "workspace:*",
+    "mongodb": "catalog:",
+    "mongodb-client-encryption": "catalog:",
+    "mongoose": "catalog:"
+  }
+}

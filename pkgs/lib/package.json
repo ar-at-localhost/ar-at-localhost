@@ -20,7 +20,9 @@
     "@vitest/coverage-v8": "5.0.3",
     "falso": "^0.0.0",
     "fastify": "catalog:",
-    "mongoose": "^9.11.0",
+    "mongodb": "catalog:",
+    "mongodb-client-encryption": "catalog:",
+    "mongoose": "catalog:",
     "tsdown": "^0.22.5",
     "typescript": "^7.0.2",
     "valibot": "*",
@@ -29,6 +31,8 @@
   },
   "peerDependencies": {
     "fastify": "*",
+    "mongodb": "*",
+    "mongodb-client-encryption": "*",
     "mongoose": "*",
     "valibot": "*"
   },

@@ -1,14 +1,49 @@
 import type { FastifyPluginAsync } from "fastify";
 import mongoose, { type ConnectOptions } from "mongoose";
+import { getKMSProvider, getNamespace } from "./kms.ts";
+import { getMongocryptPath } from "./env.ts";
 
-export const connect = (uri?: string, opts?: ConnectOptions) =>
-  mongoose.connect(uri || process.env.MONGODB_URI, opts);
+export const mongooseConnect = async (
+  uri?: string,
+  opts?: ConnectOptions,
+): Promise<typeof mongoose> => {
+  await import("./contact.ts");
+
+  return mongoose.connect(
+    uri || process.env.MONGODB_URI!,
+    opts || {
+      dbName: process.env.MONGODB_DB,
+
+      autoEncryption: {
+        keyVaultNamespace: getNamespace(),
+
+        extraOptions: {
+          cryptSharedLibPath: getMongocryptPath() as any,
+          cryptSharedLibRequired: true,
+        },
+
+        kmsProviders: {
+          local: getKMSProvider(),
+        },
+      },
+    },
+  );
+};
 
 export const fastifyPlugin: FastifyPluginAsync = async (app) => {
-  await connect()
-    .then(() => app.log.info("Database is connected..."))
+  const result: typeof mongoose | void = await mongooseConnect()
+    .then((res) => {
+      app.log.info("Database is connected...");
+      return res;
+    })
     .catch((err: Error) => {
       app.log.error(`Error connecting to the database: ${err?.message || "Something went wrong"}`);
       app.log.debug(err);
     });
+
+  app.addHook("onClose", async () => {
+    for (const connection of result?.connections || []) {
+      await connection.close().catch(() => null);
+    }
+  });
 };

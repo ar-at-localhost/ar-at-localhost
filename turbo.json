@@ -50,7 +50,14 @@
         "^test",
       ],
       "env": [
-        "MONGODB_URI"
+        "MONGO_CRYPT_LIB",
+        "MONGODB_DB",
+        "MONGODB_DEK_CONTACT_EMAIL",
+        "MONGODB_DEK_CONTACT_MESSAGE",
+        "MONGODB_ENC_KEY",
+        "MONGODB_URI",
+        "PORT",
+        "SRV_URL"
       ]
     },
     "typecheck": {
