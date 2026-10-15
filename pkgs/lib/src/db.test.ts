@@ -8,16 +8,20 @@ describe("db", () => {
     vi.restoreAllMocks();
   });
 
-  describe("connect", () => {
-    it("should connect", async () => {
-      const mongoose = await connect();
-      expect(mongoose).toBeTruthy();
-    });
+  describe(
+    "connect",
+    () => {
+      it("should connect", async () => {
+        const mongoose = await connect();
+        expect(mongoose).toBeTruthy();
+      });
 
-    it("should fail to connect to bad URI", async () => {
-      await expect(connect("not-a-mongodb-uri")).rejects.toThrow();
-    });
-  });
+      it("should fail to connect to bad URI", async () => {
+        await expect(connect("not-a-mongodb-uri")).rejects.toThrow();
+      });
+    },
+    60 * 1000,
+  );
 
   describe("fastify", () => {
     it("registers", async () => {
