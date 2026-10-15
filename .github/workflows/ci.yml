@@ -14,10 +14,11 @@ jobs:
         with:
           name: devenv
 
-      - name: Install devenv
-        run: nix profile add nixpkgs#devenv
+      - name: Install devenv, sops
+        run: nix profile add nixpkgs#devenv nixpkgs#sops
 
       - name: Check & Test
         env:
           MONGODB_DB: "test_db_${{ github.run_id }}"
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: SECRETSPEC_PROFILE=ci devenv --no-tui test
