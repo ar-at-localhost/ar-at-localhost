@@ -9,6 +9,7 @@ import {
   rfcEmail,
   safeParse,
   string,
+  toLowerCase,
 } from "valibot";
 import { required, tooLong, tooShort } from "./schema.ts";
 import { model, Schema } from "mongoose";
@@ -40,7 +41,7 @@ export const contactBodySchema = object({
   ),
 
   lastName: optional(pipe(string(), maxLength(128, tooLong("Name", 128)))),
-  email: pipe(string(required("Email")), email("Invalid email!")),
+  email: pipe(string(required("Email")), email("Invalid email!"), toLowerCase()),
 
   message: pipe(
     string(required("Message")),
@@ -69,6 +70,7 @@ const contactSchema = new Schema({
 
   email: {
     type: String,
+    set: (v: string) => v?.trim()?.toLowerCase(),
     required: true,
     validate: {
       validator: (v: string) => safeParse(pipe(string(), rfcEmail()), v).success,
