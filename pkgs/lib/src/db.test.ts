@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { connect, fastifyPlugin } from "./db";
+import { mongooseConnect, fastifyPlugin } from "./db";
 import fastify from "fastify";
 import mongoose from "mongoose";
 
@@ -12,12 +12,12 @@ describe("db", () => {
     "connect",
     () => {
       it("should connect", async () => {
-        const mongoose = await connect();
+        const mongoose = await mongooseConnect();
         expect(mongoose).toBeTruthy();
       });
 
       it("should fail to connect to bad URI", async () => {
-        await expect(connect("not-a-mongodb-uri")).rejects.toThrow();
+        await expect(mongooseConnect("not-a-mongodb-uri")).rejects.toThrow();
       });
     },
     60 * 1000,

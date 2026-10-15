@@ -67,5 +67,10 @@
     "thread-stream": "4.2.0",
     "toad-cache": "3.7.4",
     "valibot": "1.5.0"
+  },
+  "dependenciesMeta": {
+    "mongodb-client-encryption": {
+      "built": true
+    }
   }
 }

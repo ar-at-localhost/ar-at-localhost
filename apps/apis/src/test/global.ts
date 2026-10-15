@@ -12,10 +12,8 @@ export const setup = async () => {
   });
 
   await app.ready();
-  // TODO: Cleanup database
 };
 
 export const teardown = async () => {
   await app.close();
-  // TODO: Cleanup database
 };

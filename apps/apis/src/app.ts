@@ -6,6 +6,7 @@ import { fastifyPlugin as mongoosePlugin } from "lib";
 export const getApp = () => {
   const app = Fastify({
     logger: true,
+    forceCloseConnections: true,
   });
 
   /**

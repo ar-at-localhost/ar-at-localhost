@@ -21,6 +21,9 @@
   "dependencies": {
     "fastify": "catalog:",
     "lib": "workspace:*",
+    "mongodb": "catalog:",
+    "mongodb-client-encryption": "catalog:",
+    "mongoose": "catalog:",
     "valibot": "^1.5.0"
   },
   "devDependencies": {

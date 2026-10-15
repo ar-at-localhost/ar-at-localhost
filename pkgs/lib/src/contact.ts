@@ -12,8 +12,10 @@ import {
   toLowerCase,
 } from "valibot";
 import { required, tooLong, tooShort } from "./schema.ts";
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso";
+import { getMongoDEKs } from "./env.ts";
+import { SchemaMember } from "mongodb";
 
 /**
  * A form submission
@@ -55,41 +57,62 @@ export const contactBodySchema = object({
 /**
  * Contact Schema for mongoose
  */
-const contactSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    minLength: 1,
-    maxLength: 128,
-  },
+const contactSchema = new Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      minLength: 1,
+      maxLength: 128,
+    },
 
-  lastName: {
-    type: String,
-    maxLength: 128,
-  },
+    lastName: {
+      type: String,
+      maxLength: 128,
+    },
 
-  email: {
-    type: String,
-    set: (v: string) => v?.trim()?.toLowerCase(),
-    required: true,
-    validate: {
-      validator: (v: string) => safeParse(pipe(string(), rfcEmail()), v).success,
-      message: "`email` validation failed",
+    email: {
+      type: String,
+
+      encrypt: {
+        keyId: getMongoDEKs().contact.email,
+        // HACK: `any` is workaround as there seems a mismatch between `mongoose` and `mongodb-client-encryption`
+        // *mongoose* expects plain string (const) value: "equality"
+        // *mongodb-client-encryption* expects as document as in form below
+        // See: https://mongoosejs.com/docs/field-level-encryption.html#integrating-with-mongodb-client-side-field-level-encryption
+        queries: { queryType: "equality" } as unknown as any,
+      },
+
+      required: true,
+      set: (v: string) => v?.trim()?.toLowerCase() || "",
+      validate: {
+        validator: (v: string) => safeParse(pipe(string(), rfcEmail()), v).success,
+        message: "`email` validation failed",
+      },
+    },
+
+    message: {
+      type: String,
+
+      encrypt: {
+        keyId: getMongoDEKs().contact.message,
+      },
+
+      maxLength: 10000,
+      minLength: 128,
+      required: true,
+    },
+
+    markdown: {
+      type: Boolean,
+      default: false,
     },
   },
-
-  message: {
-    type: String,
-    required: true,
-    minLength: 128,
-    maxLength: 10000,
+  {
+    timestamps: true,
+    encryptionType: "queryableEncryption",
   },
-
-  markdown: {
-    type: Boolean,
-    default: false,
-  },
-});
+);
 
 /**
  * Create a false contact object for testing
@@ -102,4 +125,4 @@ export const getFalseContact = () => ({
   markdown: false,
 });
 
-export const ContactModel = model("Contact", contactSchema);
+export const ContactModel = mongoose.models.Contact || model("Contact", contactSchema);
