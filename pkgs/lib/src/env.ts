@@ -1,5 +1,9 @@
 import { UUID } from "mongodb";
 
+export const getCtx = () => {
+  return process.env.NODE_ENV || "";
+};
+
 /**
  * Get port of a running server
  */
