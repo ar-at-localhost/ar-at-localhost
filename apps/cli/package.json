@@ -20,7 +20,9 @@
     "tsdown": "^0.22.5",
     "typescript": "^7.0.2"
   },
-  "bin": "./dist/index.mjs",
+  "bin": {
+    "cli": "./dist/index.mjs"
+  },
   "dependencies": {
     "citty": "^0.2.2",
     "lib": "workspace:*",
