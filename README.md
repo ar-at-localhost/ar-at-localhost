@@ -17,6 +17,6 @@
 
 ----
 
-If you're looking at codebase, find see repo [docs](/docs/index.md).
-This repo is licensed under [GNU GENERAL PUBLIC LICENSE](./LICENSE).
+If you're looking at codebase, see repository [docs](/docs/index.md).
+This repository is licensed under [GNU GENERAL PUBLIC LICENSE](./LICENSE).
 No part of the codebase is AI-generated.
