@@ -1,0 +1,23 @@
+name: "CI"
+
+on:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+      - uses: cachix/cachix-action@v16
+        with:
+          name: devenv
+
+      - name: Install devenv
+        run: nix profile add nixpkgs#devenv
+
+      - name: Check & Test
+        env:
+          MONGODB_DB: "test_db_${{ github.run_id }}"
+        run: SECRETSPEC_PROFILE=ci devenv --no-tui test
