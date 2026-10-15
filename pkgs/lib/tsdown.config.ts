@@ -6,7 +6,7 @@ export default defineConfig({
     devExports: true,
 
     customExports: (exports) => {
-      exports["./env.d.ts"] = "./src/env.d.ts";
+      exports["./env.d.ts"] = "./env.d.ts";
       return exports;
     },
 
