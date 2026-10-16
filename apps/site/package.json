@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^7.0.0",
+    "@lucide/astro": "^1.54.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/canvas-confetti": "^1.9.0",
     "astro": "^7.3.8",
@@ -20,6 +21,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3",
+    "ui": "workspace:*",
     "vite": "^8.3.4"
   },
   "devDependencies": {
