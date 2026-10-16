@@ -1,0 +1,59 @@
+{
+  "name": "lib-server",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Library of server side shared artifacts",
+  "author": "Ahmad Raza <pro.se.ahmad.raza.1@gmail.com>",
+  "license": "GPL-v3.0",
+  "homepage": "https://github.com/ar-at-localhost/ar-at-localhost",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ar-at-localhost/ar-at-localhost.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ar-at-localhost/ar-at-localhost/issues"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp",
+    "prepublishOnly": "pnpm run build"
+  },
+  "devDependencies": {
+    "@ngneat/falso": "^8.0.2",
+    "@types/node": "^26.6.0",
+    "bumpp": "^12.3.0",
+    "fastify": "catalog:",
+    "mongodb": "catalog:",
+    "mongodb-client-encryption": "catalog:",
+    "mongoose": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "^7.0.2",
+    "valibot": "catalog:",
+    "vite": "^8.3.4",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@ngneat/falso": "*",
+    "fastify": "*",
+    "mongodb": "*",
+    "mongodb-client-encryption": "*",
+    "mongoose": "*",
+    "valibot": "*"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.mjs",
+      "./package.json": "./package.json"
+    }
+  }
+}

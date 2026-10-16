@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10",
+    "@formisch/react": "^1.1.0",
     "@tailwindcss/vite": "^4",
     "@turbo/gen": "^2.11.7",
     "@types/node": "^24",
@@ -40,8 +41,17 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
     "globals": "^17",
+    "lib": "workspace:*",
+    "lib-server": "workspace:^",
     "tailwindcss": "^4",
     "typescript": "~6.0.2",
-    "typescript-eslint": "^8"
+    "typescript-eslint": "^8",
+    "valibot": "^1.5.0",
+    "vite": "^8.3.4"
+  },
+  "peerDependencies": {
+    "@formisch/react": "*",
+    "lib": "*",
+    "valibot": "*"
   }
 }

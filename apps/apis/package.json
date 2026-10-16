@@ -19,8 +19,10 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@fastify/cors": "^11.3.1",
     "fastify": "catalog:",
     "lib": "workspace:*",
+    "lib-server": "workspace:*",
     "mongodb": "catalog:",
     "mongodb-client-encryption": "catalog:",
     "mongoose": "catalog:",
@@ -30,6 +32,6 @@
     "tsdown": "^0.22.5",
     "typescript": "^7.0.2",
     "vite": "^8.3.3",
-    "vitest": "^5.0.3"
+    "vitest": "catalog:"
   }
 }

@@ -17,7 +17,7 @@
     "start": "tsdown && node dist/index.mjs"
   },
   "devDependencies": {
-    "tsdown": "^0.22.5",
+    "tsdown": "catalog:",
     "typescript": "^7.0.2"
   },
   "bin": "./dist/index.mjs",

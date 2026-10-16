@@ -3,3 +3,7 @@ declare namespace NodeJS {
     MONGODB_URI: string;
   }
 }
+
+interface ImportMeta {
+  env: Record<string, string>;
+}

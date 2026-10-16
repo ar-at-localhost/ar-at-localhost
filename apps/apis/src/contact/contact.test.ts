@@ -1,6 +1,5 @@
-import { Contact, getFalseContact } from "lib";
+import { apiBaseURL, createContactSrv, getFalseContact } from "lib";
 import { describe, expect, it } from "vitest";
-import { apiBaseURL } from "../test/global";
 
 const baseURL = `${apiBaseURL}/contact`;
 
@@ -8,17 +7,10 @@ describe("Contact", () => {
   describe("create", () => {
     it("should create a record", async () => {
       const body = getFalseContact();
-
-      const result: Contact = await fetch(`${baseURL}/`, {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "CONTENT-TYPE": "application/json",
-        },
-      }).then((res) => res.json());
-
+      const result = await createContactSrv(body);
+      console.log(result);
       expect(result).toBeTruthy();
-      expect(result.email).toBe(body.email);
+      expect(result._id).toBeTruthy();
     });
 
     it("raise validation error", async () => {
