@@ -1,3 +1,6 @@
+# astro
+.astro/
+
 # builds
 dist/
 
@@ -10,7 +13,14 @@ devenv.local.yaml
 .direnv
 
 # env
+.env
 .envrc
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # nodejs
 node_modules
