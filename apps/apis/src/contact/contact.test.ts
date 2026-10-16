@@ -8,7 +8,6 @@ describe("Contact", () => {
     it("should create a record", async () => {
       const body = getFalseContact();
       const result = await createContactSrv(body);
-      console.log(result);
       expect(result).toBeTruthy();
       expect(result._id).toBeTruthy();
     });
