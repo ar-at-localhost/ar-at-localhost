@@ -1,7 +1,6 @@
 import { defineCommand } from "citty";
-import { getProviderName, mongooseConnect } from "lib";
 import { ClientEncryption } from "mongodb";
-import { getLocalKMSProvider, getNamespace } from "lib";
+import { getLocalKMSProvider, getNamespace, getProviderName, mongooseConnect } from "lib-server";
 
 export const dekCommand = defineCommand({
   meta: {
