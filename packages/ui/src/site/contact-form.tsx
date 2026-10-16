@@ -14,8 +14,8 @@ type Props = {};
 
 export const ContactForm: FC<Props> = () => {
   const [showDataPolicy, setShowDataPolicy] = useState(false);
-  const [submissionError, setSubmissionError] = useState<string>(null);
-  const [submissionId, setSubmissionId] = useState<string>(null);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [submissionId, setSubmissionId] = useState<string | null>(null);
   const form = useForm({
     schema: contactBodySchema,
   });
