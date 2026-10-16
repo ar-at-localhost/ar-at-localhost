@@ -1,10 +1,21 @@
 @import "tailwindcss";
+@@import './typeset.css';
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "@fontsource-variable/roboto-slab";
+@import "@fontsource-variable/roboto";
+@import "@fontsource-variable/jetbrains-mono";
 @source "../../../apps/**/*.{ts,tsx}";
 @source "./**/*.{ts,tsx}";
 
-@custom-variant dark (&:is(.dark *));
+* {
+  font-family: "Roboto Slab Variable", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, b, strong, em {
+  font-family: "Roboto Variable", sans-serif;
+}
+
 
 @theme inline {
   --color-background: var(--background);
