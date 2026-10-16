@@ -16,7 +16,8 @@ import { ContactForm } from 'ui/site/contact-form';
 ---
 
 <script is:inline>
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const isDark = theme == "dark";
   document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
 </script>
 
