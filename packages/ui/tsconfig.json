@@ -6,13 +6,9 @@
     "moduleResolution": "bundler",
     "noEmit": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "resolvePackageJsonImports": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src", "env.d.ts"]
 }
