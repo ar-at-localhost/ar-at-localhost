@@ -1,7 +1,8 @@
 import Fastify from "fastify";
 import { type GenericSchema, safeParse } from "valibot";
 import { contact } from "./contact/index.ts";
-import { fastifyPlugin as mongoosePlugin } from "lib";
+import { getCors, fastifyPlugin as mongoosePlugin } from "lib-server";
+import fastifyCors from "@fastify/cors";
 
 export const getApp = () => {
   const app = Fastify({
@@ -28,6 +29,11 @@ export const getApp = () => {
 
   app.get("/health", (_, resp) => {
     resp.send();
+  });
+
+  app.register(fastifyCors, {
+    origin: getCors(),
+    methods: ["DELETE", "GET", "OPTIONS", "POST", "PUT", "PATCH"],
   });
 
   app.register(mongoosePlugin);

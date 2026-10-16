@@ -1,5 +1,3 @@
-import { UUID } from "mongodb";
-
 /**
  * Get port of a running server
  */
@@ -11,24 +9,15 @@ export const getPort = () => {
  * Get base URL of a running server
  */
 export const getBaseURL = () => {
-  const url = new URL(process.env.SRV_URL!);
-  url.port = getPort().toString();
+  let url: string = "";
+
+  if (globalThis["process"]) {
+    url = new URL(process.env.PUBLIC_SRV_URL!).toString();
+  } else if (import.meta["env"]) {
+    url = new URL(import.meta.env.PUBLIC_SRV_URL!).toString();
+  }
+
   return url.toString().replace(/\/$/, "");
 };
 
-/**
- * Retrieve MongoDB Crypt library path
- */
-export const getMongocryptPath = (): string => {
-  return process.env.MONGO_CRYPT_LIB!;
-};
-
-/**
- * Retrieve MongoDB Data Encryption key
- */
-export const getMongoDEKs = () => ({
-  contact: {
-    email: new UUID(process.env.MONGODB_DEK_CONTACT_EMAIL),
-    message: new UUID(process.env.MONGODB_DEK_CONTACT_MESSAGE),
-  },
-});
+export const apiBaseURL = `${getBaseURL()}/api`;

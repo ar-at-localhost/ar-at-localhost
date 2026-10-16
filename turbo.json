@@ -58,7 +58,7 @@
         "MONGODB_URI",
         "NODE_ENV",
         "PORT",
-        "SRV_URL"
+        "PUBLIC_SRV_URL"
       ]
     },
     "typecheck": {

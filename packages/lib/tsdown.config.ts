@@ -1,7 +1,9 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  dts: true,
+  dts: {
+    generator: "tsgo",
+  },
   exports: {
     devExports: true,
 

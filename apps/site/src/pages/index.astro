@@ -12,8 +12,13 @@ import { Button } from 'ui/components/button';
 import { LinkBtn } from '../components/LinkBtn';
 import { Copyright, ExternalLink } from '@lucide/astro';
 import { Image } from 'astro:assets';
-import { Form } from 'ui/site/form';
+import { ContactForm } from 'ui/site/contact-form';
 ---
+
+<script is:inline>
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+</script>
 
 <html lang="en">
 	<head>
@@ -52,34 +57,34 @@ import { Form } from 'ui/site/form';
 
           <div class="flex flex-row items-center gap-2 actions">
             <LinkBtn href="mailto:pro.se.ahmad.raza.1@gmail.com">
-              <Mail alt="Email icon" class="text-white" />
+              <Mail alt="Email icon" class="dark:text-gray-100" />
             </LinkBtn>
 
             <LinkBtn href="https://wa.me/923011353415">
-              <Whatsapp alt="Whatsapp logo" />
+              <Whatsapp alt="Whatsapp logo" class="dark:text-gray-100" />
             </LinkBtn>
             
             <LinkBtn href="https://github.com/ar-at-localhost" target="_blank">
-              <Github alt="Github logo" />
+              <Github alt="Github logo" class="dark:text-gray-100" />
             </LinkBtn>
 
             <LinkBtn href="https://linkedin.com/in/ar124officialwd" target="_blank">
-              <LinkedIn alt="LinkedIn logo" />
+              <LinkedIn alt="LinkedIn logo" class="dark:text-gray-100" />
             </LinkBtn>
 
             <LinkBtn  href="https://www.fiverr.com/s/gvvXllo" target="_blank">
-              <Fiverr alt="Fiverr logo" />
+              <Fiverr alt="Fiverr logo" class="dark:text-gray-100" />
             </LinkBtn>
 
             <LinkBtn href="https://www.upwork.com/freelancers/~013dd6d70690822d44" target="_blank">
-              <Upwork alt="Upwork logo" />
+              <Upwork alt="Upwork logo" class="dark:text-gray-100" />
             </LinkBtn>
           </div>
         </div>
       </div>
 
       <div class="px-2 py-4 w-1/4 rounded">
-        <Form client:load />
+        <ContactForm client:only="react" />
       </div>
 
       <div class="absolute bottom-4 left-40 bottom-1">

@@ -6,30 +6,13 @@ import {
   object,
   optional,
   pipe,
-  rfcEmail,
-  safeParse,
   string,
   toLowerCase,
 } from "valibot";
 import { required, tooLong, tooShort } from "./schema.ts";
-import mongoose, { model, Schema } from "mongoose";
 import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso";
-import { getMongoDEKs } from "./env.ts";
-
-/**
- * A form submission
- */
-export type Contact = {
-  firstName: string;
-  lastName?: string;
-  email: string;
-  message: string;
-
-  /**
-   * Tells if the `message` is markdown formatted or not
-   */
-  markdown?: boolean;
-};
+import { apiBaseURL } from "./env.ts";
+import type { ContactBody, ContactDoc } from "lib-server";
 
 /**
  * Schema to validate a contact
@@ -54,74 +37,24 @@ export const contactBodySchema = object({
 });
 
 /**
- * Contact Schema for mongoose
+ * a fetch function for creating a new contact
  */
-const contactSchema = new Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-      minLength: 1,
-      maxLength: 128,
+export const createContactSrv = async (body: ContactBody): Promise<Pick<ContactDoc, "_id">> =>
+  fetch(`${apiBaseURL}/contact`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "CONTENT-TYPE": "application/json",
     },
-
-    lastName: {
-      type: String,
-      maxLength: 128,
-    },
-
-    email: {
-      type: String,
-
-      encrypt: {
-        keyId: getMongoDEKs().contact.email,
-        // HACK: `any` is workaround as there seems a mismatch between `mongoose` and `mongodb-client-encryption`
-        // *mongoose* expects plain string (const) value: "equality"
-        // *mongodb-client-encryption* expects as document as in form below
-        // See: https://mongoosejs.com/docs/field-level-encryption.html#integrating-with-mongodb-client-side-field-level-encryption
-        queries: { queryType: "equality" } as unknown as any,
-      },
-
-      required: true,
-      set: (v: string) => v?.trim()?.toLowerCase() || "",
-      validate: {
-        validator: (v: string) => safeParse(pipe(string(), rfcEmail()), v).success,
-        message: "`email` validation failed",
-      },
-    },
-
-    message: {
-      type: String,
-
-      encrypt: {
-        keyId: getMongoDEKs().contact.message,
-      },
-
-      maxLength: 10000,
-      minLength: 128,
-      required: true,
-    },
-
-    markdown: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  {
-    timestamps: true,
-    encryptionType: "queryableEncryption",
-  },
-);
+  }).then((res) => res.json());
 
 /**
- * Create a false contact object for testing
+ * Create a false contact body object for testing
  */
-export const getFalseContact = () => ({
+export const getFalseContact = (): ContactBody => ({
   firstName: randFirstName(),
   lastName: randLastName(),
   email: randEmail(),
   message: randText({ charCount: 128 }),
   markdown: false,
 });
-
-export const ContactModel = mongoose.models.Contact || model("Contact", contactSchema);
