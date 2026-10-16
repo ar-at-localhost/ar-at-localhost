@@ -114,6 +114,7 @@ export const ContactForm: FC<Props> = () => {
                       defaultValue={field.input || ""}
                       placeholder="Tell me about your project"
                       rows={5}
+                      className="min-h-[128px] max-h-[196px] overflow-auto"
                     />
                     {field.errors && (
                       <FieldError errors={field.errors.map((message) => ({ message }))} />
