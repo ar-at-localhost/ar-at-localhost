@@ -20,9 +20,9 @@ export const ContactForm: FC<Props> = () => {
     schema: contactBodySchema,
   });
 
-  const handleSubmit: SubmitHandler<typeof contactBodySchema> = (body) => {
+  const handleSubmit: SubmitHandler<typeof contactBodySchema> = async (body) => {
     setSubmissionError(null);
-    createContactSrv(body)
+    await createContactSrv(body)
       .then((res) => setSubmissionId(res._id?.toString()))
       .catch((err: Error) => {
         setSubmissionError(err?.message || "Something went off!");
