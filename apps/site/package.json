@@ -15,10 +15,12 @@
     "@astrojs/react": "^7.0.0",
     "@formisch/react": "^1.1.0",
     "@lucide/astro": "^1.54.0",
+    "@ngneat/falso": "^8.0.2",
     "@tailwindcss/vite": "^4.3.3",
     "@types/canvas-confetti": "^1.9.0",
     "astro": "^7.3.8",
     "canvas-confetti": "^1.9.4",
+    "lib": "workspace:*",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3",
@@ -29,11 +31,5 @@
   "devDependencies": {
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0"
-  },
-  "resolutions": {
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0"
   }
 }
