@@ -1,4 +1,4 @@
-import { UUID } from "mongodb";
+import { UUID } from "mongoose";
 import { readFileSync } from "node:fs";
 
 /**

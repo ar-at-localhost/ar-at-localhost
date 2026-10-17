@@ -21,6 +21,7 @@
   "dependencies": {
     "@fastify/cors": "^11.3.1",
     "fastify": "catalog:",
+    "kerberos": "^7.0.0",
     "lib": "workspace:*",
     "lib-server": "workspace:*",
     "mongodb": "catalog:",
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "tsdown": "catalog:",
-    "typescript": "^7.0.2",
+    "typescript": "catalog:",
     "vite": "^8.3.3",
     "vitest": "catalog:"
   }

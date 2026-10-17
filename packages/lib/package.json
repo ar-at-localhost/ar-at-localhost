@@ -19,9 +19,8 @@
     "@vitest/browser-playwright": "^5.0.3",
     "@vitest/coverage-v8": "5.0.3",
     "falso": "^0.0.0",
-    "lib-server": "workspace:*",
     "tsdown": "catalog:",
-    "typescript": "^7.0.2",
+    "typescript": "catalog:",
     "valibot": "*",
     "vite": "^8.3.4",
     "vitest": "catalog:"

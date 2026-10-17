@@ -38,16 +38,19 @@
     "release": "bumpp",
     "prepublishOnly": "yarn build"
   },
+  "dependencies": {
+    "lib": "workspace:*"
+  },
   "devDependencies": {
     "@ngneat/falso": "^8.0.2",
-    "@types/node": "^26.6.0",
+    "@types/node": "^26.6.5",
     "bumpp": "^12.3.0",
     "fastify": "catalog:",
     "mongodb": "catalog:",
     "mongodb-client-encryption": "catalog:",
     "mongoose": "catalog:",
     "tsdown": "catalog:",
-    "typescript": "^7.0.2",
+    "typescript": "catalog:",
     "valibot": "catalog:",
     "vite": "^8.3.4",
     "vitest": "catalog:"

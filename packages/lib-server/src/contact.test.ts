@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { ContactModel, getFalseContact, type ContactBody } from "./contact";
+import { getFalseContact, type ContactBody } from "lib";
+import { ContactModel } from "./contact";
 
 let contact: ContactBody;
 

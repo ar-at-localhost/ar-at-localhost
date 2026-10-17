@@ -8,11 +8,11 @@ import {
   pipe,
   string,
   toLowerCase,
+  type InferOutput,
 } from "valibot";
 import { required, tooLong, tooShort } from "./schema.ts";
 import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso";
 import { apiBaseURL } from "./env.ts";
-import type { ContactBody, ContactDoc } from "lib-server";
 
 /**
  * Schema to validate a contact
@@ -35,6 +35,13 @@ export const contactBodySchema = object({
 
   markdown: optional(boolean()),
 });
+
+export type ContactBody = InferOutput<typeof contactBodySchema>;
+export type ContactDoc = ContactBody & {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 /**
  * a fetch function for creating a new contact

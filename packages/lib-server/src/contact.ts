@@ -1,7 +1,6 @@
-import { model, Schema, type HydratedDocument, type InferSchemaType } from "mongoose";
+import { model, Schema } from "mongoose";
 import { getMongoDEKs } from "./env.ts";
 import { pipe, rfcEmail, safeParse, string } from "valibot";
-import { randFirstName, randLastName, randEmail, randText } from "@ngneat/falso";
 
 /**
  * Contact Schema for mongoose
@@ -65,17 +64,3 @@ const contactSchema = new Schema(
 );
 
 export const ContactModel = model("Contact", contactSchema);
-export type Contact = InferSchemaType<typeof contactSchema>;
-export type ContactBody = Omit<Contact, "_id" | "createdAt" | "updatedAt">;
-export type ContactDoc = HydratedDocument<Contact>;
-
-/**
- * Create a false contact body object for testing
- */
-export const getFalseContact = (): ContactBody => ({
-  firstName: randFirstName(),
-  lastName: randLastName(),
-  email: randEmail(),
-  message: randText({ charCount: 128 }),
-  markdown: false,
-});

@@ -18,12 +18,13 @@
   },
   "devDependencies": {
     "tsdown": "catalog:",
-    "typescript": "^7.0.2"
+    "typescript": "catalog:"
   },
   "bin": "./dist/index.mjs",
   "dependencies": {
     "citty": "^0.2.2",
-    "lib": "workspace:*",
+    "kerberos": "^7.0.0",
+    "lib-server": "workspace:*",
     "mongodb": "catalog:",
     "mongodb-client-encryption": "catalog:",
     "mongoose": "catalog:"

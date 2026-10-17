@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { contactBodySchema, getFalseContact } from "./contact";
 import { randEmail, randText } from "@ngneat/falso";
 import { parseAsync } from "valibot";
-import type { ContactBody } from "lib-server";
+import type { ContactBody } from "./contact.ts";
 
 let contact: ContactBody;
 
