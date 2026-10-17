@@ -13,13 +13,13 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "check": "yarn format && yarn lint && yarn typecheck",
+    "check": "pnpm format && pnpm lint && pnpm typecheck",
     "dev": "node src/index.ts",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "start": "yarn build && node dist/index.mjs",
+    "start": "pnpm build && node dist/index.mjs",
     "test": "vitest run",
     "test:cov": "vitest --coverage",
     "test:watch": "vitest",
@@ -28,7 +28,6 @@
   "dependencies": {
     "@fastify/cors": "^11.3.1",
     "fastify": "catalog:",
-    "kerberos": "^7.0.0",
     "lib": "workspace:*",
     "lib-server": "workspace:*",
     "mongodb": "catalog:",

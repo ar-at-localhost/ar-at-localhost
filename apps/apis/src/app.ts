@@ -1,22 +1,24 @@
-import Fastify from "fastify";
+import Fastify, { FastifyInstance } from "fastify";
 import { type GenericSchema, safeParse } from "valibot";
 import { contact } from "./contact/index.ts";
 import { getCors, getSSL, fastifyPlugin as mongoosePlugin } from "lib-server";
 import fastifyCors from "@fastify/cors";
 
 export const getApp = (ssl?: boolean) => {
-  const app = Fastify({
+  const baseOpts = {
     logger: true,
-    http2: true,
     forceCloseConnections: true,
-    ...(ssl
-      ? {
-          https: getSSL(),
-        }
-      : {
-          allowHTTP1: true,
-        }),
-  });
+  };
+
+  const app = ssl
+    ? (Fastify({
+        ...baseOpts,
+        http2: true,
+        https: getSSL(),
+      }) as unknown as FastifyInstance)
+    : Fastify({
+        ...baseOpts,
+      });
 
   /**
    * Valibot based schema validation

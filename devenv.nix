@@ -9,8 +9,8 @@ in {
   '';
 
   enterTest = ''
-    secretspec run yarn check
-    secretspec run yarn test
+    secretspec run pnpm check
+    secretspec run pnpm test
   '';
 
   env = {
@@ -28,10 +28,9 @@ in {
 
   languages.javascript = {
     enable = true;
-    yarn = {
+    pnpm = {
       enable = true;
       install.enable = true;
-      package = pkgs.yarn-berry;
     };
   };
 

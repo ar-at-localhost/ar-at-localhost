@@ -36,7 +36,7 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "release": "bumpp",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "lib": "workspace:*"
@@ -57,7 +57,7 @@
   },
   "peerDependencies": {
     "@ngneat/falso": "*",
-    "fastify": "*",
+    "fastify": "catalog:",
     "mongodb": "*",
     "mongodb-client-encryption": "*",
     "mongoose": "*",

@@ -168,8 +168,8 @@ export const ContactForm: FC<Props> = () => {
                 </Button>
               ) : (
                 <span>
-                  Your data is stored with encryption. You can always request deletion anytime
-                  sending me an mail{" "}
+                  Your email and message is stored in encrypted format. I don't share it with
+                  anyone. You may request deletion anytime by sending me an mail{" "}
                   <a href="mailto:pro.se.ahmad.raza.1@gmail.com">pro.se.ahmad.raza.1@gmail.com</a>.
                 </span>
               )}

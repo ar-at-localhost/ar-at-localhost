@@ -20,7 +20,9 @@
     "tsdown": "catalog:",
     "typescript": "catalog:"
   },
-  "bin": "./dist/index.mjs",
+  "bin": {
+    "cli": "./dist/index.mjs"
+  },
   "dependencies": {
     "citty": "^0.2.2",
     "kerberos": "^7.0.0",

@@ -1,0 +1,25 @@
+packages:
+  - ./apps/*
+  - ./packages/*
+
+allowBuilds:
+  esbuild: true
+  kerberos: true
+  mongodb-client-encryption: true
+
+catalog:
+  fastify: 5.12.5
+  lucide-react: 1.54.0
+  mongodb: ^7.7.0
+  mongodb-client-encryption: ^7.2.1
+  mongoose: ^9.11.1
+  playwright: 1.62.1
+  tsdown: ^0.23.0
+  typescript: ^6.0.2
+  valibot: ^1.1.0
+  vitest: ^5.0.3
+
+minimumReleaseAge: 10080
+
+minimumReleaseAgeExclude:
+  - fastify@5.12.7
