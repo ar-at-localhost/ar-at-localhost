@@ -35,5 +35,5 @@ in {
     };
   };
 
-  packages = with pkgs; [alejandra libmongocrypt playwright];
+  packages = with pkgs; [alejandra libmongocrypt playwright sops];
 }
