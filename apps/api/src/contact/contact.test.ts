@@ -1,7 +1,7 @@
-import { apiBaseURL, createContactSrv, getFalseContact } from "lib";
+import { getAPIBaseURL, createContactSrv, getFalseContact } from "lib";
 import { describe, expect, it } from "vitest";
 
-const baseURL = `${apiBaseURL}/contact`;
+const baseURL = `${getAPIBaseURL()}/contact`;
 
 describe("Contact", () => {
   describe("create", () => {

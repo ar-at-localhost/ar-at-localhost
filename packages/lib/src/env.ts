@@ -28,4 +28,4 @@ export const getBaseURL = () => {
   return url.toString().replace(/\/$/, "");
 };
 
-export const apiBaseURL = `${getBaseURL()}/api`;
+export const getAPIBaseURL = (base?: string) => `${base || getBaseURL()}/api`;

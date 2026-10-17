@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/card";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/field";
@@ -10,9 +8,11 @@ import { contactBodySchema, createContactSrv } from "lib";
 import { CheckCircle, LoaderCircle, PlusCircleIcon, SendIcon } from "lucide-react";
 import { useState, type FC } from "react";
 
-type Props = {};
+type Props = {
+  apiBase?: string;
+};
 
-export const ContactForm: FC<Props> = () => {
+export const ContactForm: FC<Props> = ({ apiBase }) => {
   const [showDataPolicy, setShowDataPolicy] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export const ContactForm: FC<Props> = () => {
 
   const handleSubmit: SubmitHandler<typeof contactBodySchema> = async (body) => {
     setSubmissionError(null);
-    await createContactSrv(body)
+    await createContactSrv(body, apiBase)
       .then((res) => setSubmissionId(res._id?.toString()))
       .catch((err: Error) => {
         setSubmissionError(err?.message || "Something went off!");

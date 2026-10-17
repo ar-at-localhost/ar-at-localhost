@@ -13,6 +13,8 @@ import { LinkBtn } from '../components/LinkBtn';
 import { Copyright, ExternalLink } from '@lucide/astro';
 import { Image } from 'astro:assets';
 import { ContactForm } from 'ui/site/contact-form';
+
+const { PUBLIC_SRV_URL } = import.meta.env;
 ---
 
 <script is:inline>
@@ -86,7 +88,7 @@ import { ContactForm } from 'ui/site/contact-form';
       </div>
 
       <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0">
-        <ContactForm client:only="react" />
+        <ContactForm apiBase={PUBLIC_SRV_URL} client:only="react" />
       </div>
 
       <div class="text-center md:absolute md:text-left md:bottom-4 md:left-32 lg:bottom-4">

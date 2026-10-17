@@ -2,7 +2,6 @@ import {
   boolean,
   email,
   maxLength,
-  message,
   minLength,
   object,
   optional,
@@ -13,7 +12,7 @@ import {
 } from "valibot";
 import { required, tooLong, tooShort } from "./schema.ts";
 import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso";
-import { apiBaseURL } from "./env.ts";
+import { getAPIBaseURL } from "./env.ts";
 
 /**
  * Schema to validate a contact
@@ -47,8 +46,11 @@ export type ContactDoc = ContactBody & {
 /**
  * a fetch function for creating a new contact
  */
-export const createContactSrv = async (body: ContactBody): Promise<Pick<ContactDoc, "_id">> =>
-  fetch(`${apiBaseURL}/contact`, {
+export const createContactSrv = async (
+  body: ContactBody,
+  base?: string,
+): Promise<Pick<ContactDoc, "_id">> =>
+  fetch(`${getAPIBaseURL(base)}/contact`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
