@@ -8,6 +8,7 @@ allowBuilds:
   mongodb-client-encryption: true
 
 catalog:
+  "@formisch/react": "^1.1.0"
   fastify: 5.12.5
   lucide-react: 1.54.0
   mongodb: ^7.7.0
