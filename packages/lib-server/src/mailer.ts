@@ -19,6 +19,7 @@ const {
   NODE_ENV,
 } = process.env;
 
+const isCI = !!CI || CI === "";
 const isTest = !MAIL_SERVER;
 const contactPerson = CONTACT_PERSON_EMAIL
   ? `${CONTACT_PERSON_NAME} <${CONTACT_PERSON_EMAIL}>`
@@ -51,15 +52,13 @@ export const getTransport = (() => {
 
 export const sendMail = async (opts: SendMailOptions) => {
   const transport = await getTransport();
-  const _opts = {
+  const finalOpts = {
     from: MAIL_FROM,
     ...opts,
-    to: CI ? contactPerson : opts.to,
+    to: isCI ? contactPerson : opts.to,
   };
 
-  return transport.sendMail(_opts).then((res) => {
-    console.log(res);
-
+  return transport.sendMail(finalOpts).then((res) => {
     if (isTest) {
       const previewUrl = getTestMessageUrl(res);
       console.info("Test email sent:", previewUrl);

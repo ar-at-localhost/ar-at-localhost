@@ -14,11 +14,17 @@ jobs:
         with:
           name: devenv
 
-      - name: Install devenv, sops
-        run: nix profile add nixpkgs#devenv nixpkgs#sops
+      - name: Install deps
+        run: |
+          nix profile add .#crypt_shared .#nodejs .#oxfmt .#oxlint .#pnpm .#secretspec .#sops
+          pnpm install
 
       - name: Check & Test
         env:
+          SECRETSPEC_PROFILE: "ci"
+          MONGO_CRYPT_LIB: "/home/runner/.nix-profile/lib/mongo_crypt_v1.so"
           MONGODB_DB: "test_db_${{ github.run_id }}"
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-        run: SECRETSPEC_PROFILE=ci devenv --no-tui test
+        run: |
+          secretspec run pnpm check
+          secretspec run pnpm test

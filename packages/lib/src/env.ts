@@ -19,9 +19,9 @@ export const getPort = () => {
 export const getBaseURL = () => {
   let url: string = "";
 
-  if (globalThis["process"]) {
+  if (process) {
     url = new URL(process.env.PUBLIC_SRV_URL!).toString();
-  } else if (import.meta["env"]) {
+  } else if (import.meta?.env) {
     url = new URL(import.meta.env.PUBLIC_SRV_URL!).toString();
   }
 

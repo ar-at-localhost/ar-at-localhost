@@ -90,3 +90,4 @@ ${CONTACT_PERSON_NAME}
 });
 
 export const ContactModel = model("Contact", contactSchema);
+export type { ContactBody, ContactDoc } from "lib";

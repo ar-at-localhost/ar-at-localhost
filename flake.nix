@@ -25,6 +25,7 @@
     packages = forEachSupportedSystem (
       {pkgs, ...}: {
         crypt_shared = pkgs.callPackage ./nix/pkgs/crypt_shared.nix {};
+        inherit (pkgs) nodejs oxfmt oxlint pnpm secretspec sops;
       }
     );
   };
