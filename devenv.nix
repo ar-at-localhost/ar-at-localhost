@@ -39,5 +39,6 @@ in {
 
   tasks."api:build" = {
     exec = "pnpm --filter api build";
+    before = ["devenv:processes:api:start"];
   };
 }
