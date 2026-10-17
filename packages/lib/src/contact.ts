@@ -2,6 +2,7 @@ import {
   boolean,
   email,
   maxLength,
+  message,
   minLength,
   object,
   optional,
@@ -53,7 +54,15 @@ export const createContactSrv = async (body: ContactBody): Promise<Pick<ContactD
     headers: {
       "CONTENT-TYPE": "application/json",
     },
-  }).then((res) => res.json());
+  })
+    .then((res) =>
+      res.json().catch(() => {
+        throw new Error("Something went wrong!");
+      }),
+    )
+    .catch((err) => {
+      throw new Error(err?.message || "Something went wrong!");
+    });
 
 /**
  * Create a false contact body object for testing
