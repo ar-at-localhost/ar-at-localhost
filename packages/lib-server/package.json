@@ -39,7 +39,8 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "lib": "workspace:*"
+    "lib": "workspace:*",
+    "nodemailer": "catalog:"
   },
   "devDependencies": {
     "@ngneat/falso": "catalog:",
