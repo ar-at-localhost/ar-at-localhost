@@ -6,7 +6,10 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/root/.nix-profile/bin/secretspec run --profile prod devenv --no-tui up "api:start"
+Environment="HOME=/root"
+Environment="PATH=/usr/bin:/usr/sbin:/usr/local/bin:/root/.nix-profile/bin"
+Environment="SECRETSPEC_PROFILE=prod"
+ExecStart=/root/.nix-profile/bin/devenv --no-tui up "api:start"
 WorkingDirectory=/src/ar-at-localhost
 Restart=on-failure
 RestartSec=5
