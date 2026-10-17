@@ -1,9 +1,13 @@
-declare namespace NodeJS {
-  interface ProcessEnv {
-    MONGODB_URI: string;
-  }
-}
+export {};
 
-interface ImportMeta {
-  env: Record<string, string>;
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      MONGODB_URI: string;
+    }
+  }
+
+  interface ImportMeta {
+    env: Record<string, string>;
+  }
 }

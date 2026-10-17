@@ -8,7 +8,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "resolvePackageJsonImports": true
+    "resolvePackageJsonImports": true,
+    "types": ["node"]
   },
   "include": ["src", "env.d.ts"]
 }

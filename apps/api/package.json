@@ -1,20 +1,21 @@
 {
   "name": "api",
-  "type": "module",
   "version": "0.0.0",
   "private": true,
   "description": "A simple example library built by tsdown",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "tsdown",
     "check": "pnpm format && pnpm lint && pnpm typecheck",
     "dev": "node src/index.ts",
+    "fix": "pnpm format:fix && pnpm lint:fix",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",
     "lint": "oxlint",
@@ -36,6 +37,7 @@
     "valibot": "^1.5.0"
   },
   "devDependencies": {
+    "@types/node": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
     "vite": "^8.3.3",

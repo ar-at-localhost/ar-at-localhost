@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest, RouteOptions } from "fastify";
-import { contactBodySchema } from "lib";
-import { ContactModel, type Contact } from "lib-server";
+import { ContactBody, contactBodySchema } from "lib";
+import { ContactModel } from "lib-server";
 
 /**
  * @fastify
@@ -13,7 +13,7 @@ export const createContact: RouteOptions = {
     body: contactBodySchema,
   },
   handler: async (req: FastifyRequest, rep: FastifyReply) => {
-    const body = req.body as unknown as Contact;
+    const body = req.body as unknown as ContactBody;
     const record = await ContactModel.create(body);
 
     rep.send({

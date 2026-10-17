@@ -42,6 +42,7 @@ export type ContactDoc = ContactBody & {
   createdAt: string;
   updatedAt: string;
 };
+export type CreateContactResp = Pick<ContactDoc, "_id">;
 
 /**
  * a fetch function for creating a new contact
@@ -49,7 +50,7 @@ export type ContactDoc = ContactBody & {
 export const createContactSrv = async (
   body: ContactBody,
   base?: string,
-): Promise<Pick<ContactDoc, "_id">> =>
+): Promise<CreateContactResp> =>
   fetch(`${getAPIBaseURL(base)}/contact`, {
     method: "POST",
     body: JSON.stringify(body),
@@ -57,10 +58,11 @@ export const createContactSrv = async (
       "CONTENT-TYPE": "application/json",
     },
   })
-    .then((res) =>
-      res.json().catch(() => {
-        throw new Error("Something went wrong!");
-      }),
+    .then(
+      (res) =>
+        res.json().catch(() => {
+          throw new Error("Something went wrong!");
+        }) as Promise<CreateContactResp>,
     )
     .catch((err) => {
       throw new Error(err?.message || "Something went wrong!");

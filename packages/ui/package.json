@@ -36,7 +36,7 @@
     "@eslint/js": "^10",
     "@tailwindcss/vite": "^4",
     "@turbo/gen": "^2.11.7",
-    "@types/node": "^24",
+    "@types/node": "catalog:",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "eslint": "^10",
