@@ -42,7 +42,7 @@
     "lib": "workspace:*"
   },
   "devDependencies": {
-    "@ngneat/falso": "^8.0.2",
+    "@ngneat/falso": "catalog:",
     "@types/node": "^26.6.5",
     "bumpp": "^12.3.0",
     "fastify": "catalog:",

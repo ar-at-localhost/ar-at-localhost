@@ -15,7 +15,7 @@
     "@astrojs/react": "^7.0.0",
     "@formisch/react": "catalog:",
     "@lucide/astro": "^1.54.0",
-    "@ngneat/falso": "^8.0.2",
+    "@ngneat/falso": "catalog:",
     "@tailwindcss/vite": "^4.3.3",
     "@types/canvas-confetti": "^1.9.0",
     "astro": "^7.3.8",

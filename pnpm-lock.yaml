@@ -9,6 +9,9 @@ catalogs:
     '@formisch/react':
       specifier: ^1.1.0
       version: 1.1.0
+    '@ngneat/falso':
+      specifier: ^8.0.2
+      version: 8.0.2
     fastify:
       specifier: 5.12.5
       version: 5.12.5
@@ -125,7 +128,7 @@ importers:
         specifier: ^1.54.0
         version: 1.54.0(astro@7.3.8(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
       '@ngneat/falso':
-        specifier: ^8.0.2
+        specifier: 'catalog:'
         version: 8.0.2
       '@tailwindcss/vite':
         specifier: ^4.3.3
@@ -169,28 +172,26 @@ importers:
         version: 19.3.0(@types/react@19.3.0)
 
   packages/lib:
-    devDependencies:
+    dependencies:
       '@ngneat/falso':
-        specifier: ^8.0.2
+        specifier: 'catalog:'
         version: 8.0.2
+      valibot:
+        specifier: 'catalog:'
+        version: 1.5.0(typescript@6.0.3)
+    devDependencies:
       '@vitest/browser-playwright':
         specifier: ^5.0.3
         version: 5.0.3(playwright@1.64.0)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(vitest@5.0.3)
       '@vitest/coverage-v8':
         specifier: 5.0.3
         version: 5.0.3(@vitest/browser@5.0.3)(vitest@5.0.3)
-      falso:
-        specifier: ^0.0.0
-        version: 0.0.0
       tsdown:
         specifier: 'catalog:'
         version: 0.23.0(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
-      valibot:
-        specifier: '*'
-        version: 1.5.0(typescript@6.0.3)
       vite:
         specifier: ^8.3.4
         version: 8.3.4(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
@@ -205,7 +206,7 @@ importers:
         version: link:../lib
     devDependencies:
       '@ngneat/falso':
-        specifier: ^8.0.2
+        specifier: 'catalog:'
         version: 8.0.2
       '@types/node':
         specifier: ^26.6.5
@@ -2621,9 +2622,6 @@ packages:
 
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
-
-  falso@0.0.0:
-    resolution: {integrity: sha512-jAx+Wpl+PQq/lu+0iAGV3+cyDiRonY99AKzvfbEdRQgSXTVs0Id3A+B4TafBE+Dn8+uqm9JTWJVW2Blieoh4FQ==}
 
   fast-decode-uri-component@1.0.1:
     resolution: {integrity: sha512-WKgKWg5eUxvRZGwW8FvfbaH7AXSh2cL+3j5fMGzUMCxWBJ3dV3a7Wz8y2f/uQ0e3B6WmodD3oS54jTQ9HVTIIg==}
@@ -6824,8 +6822,6 @@ snapshots:
       - supports-color
 
   extend@3.0.2: {}
-
-  falso@0.0.0: {}
 
   fast-decode-uri-component@1.0.1: {}
 
