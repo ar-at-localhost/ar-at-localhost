@@ -1,0 +1,15 @@
+[Unit]
+Description=ar-at-localhost API server
+After=nix-daemon.service network.target multiuser.target
+Requires=nix-daemon.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/root/.nix-profile/bin/secretspec run --profile prod devenv --no-tui up "api:start"
+WorkingDirectory=/src/ar-at-localhost
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

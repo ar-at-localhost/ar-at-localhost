@@ -35,4 +35,9 @@ in {
   };
 
   packages = with pkgs; [alejandra libmongocrypt playwright sops];
+  processes."api:start".exec = "secretspec run node apps/api/dist/index.mjs";
+
+  tasks."api:build" = {
+    exec = "pnpm --filter api build";
+  };
 }
