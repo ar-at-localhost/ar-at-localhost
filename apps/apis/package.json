@@ -12,11 +12,18 @@
     "dist"
   ],
   "scripts": {
-    "dev": "node src/index.ts",
     "build": "tsdown",
+    "check": "yarn format && yarn lint && yarn typecheck",
+    "dev": "node src/index.ts",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt --write",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "start": "yarn build && node dist/index.mjs",
     "test": "vitest run",
     "test:cov": "vitest --coverage",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@fastify/cors": "^11.3.1",
