@@ -1,13 +1,21 @@
 import Fastify from "fastify";
 import { type GenericSchema, safeParse } from "valibot";
 import { contact } from "./contact/index.ts";
-import { getCors, fastifyPlugin as mongoosePlugin } from "lib-server";
+import { getCors, getSSL, fastifyPlugin as mongoosePlugin } from "lib-server";
 import fastifyCors from "@fastify/cors";
 
-export const getApp = () => {
+export const getApp = (ssl?: boolean) => {
   const app = Fastify({
     logger: true,
+    http2: true,
     forceCloseConnections: true,
+    ...(ssl
+      ? {
+          https: getSSL(),
+        }
+      : {
+          allowHTTP1: true,
+        }),
   });
 
   /**

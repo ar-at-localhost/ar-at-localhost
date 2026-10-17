@@ -1,5 +1,5 @@
 creation_rules:
-  - path_regex: (default|ci)\.enc\.yaml$
+  - path_regex: (ci|default|prod)\.enc\.yaml$
     age:
       - age1hy55kqs46c8g9g3ajynf2zut3l5teftc6hx4tthvxjqkkdn0p5qqls5m9c
       - age189a6a2f4lnmuhzahe0cemj22ha3wde323rcc6frlwl0kjp433fssn248xe

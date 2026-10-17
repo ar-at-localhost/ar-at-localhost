@@ -1,7 +1,7 @@
 import { getPort } from "lib";
 import { getApp } from "../app";
 
-const app = getApp();
+const app = getApp(!!process.env.SSL_CERT_PATH);
 
 /**
  * Setup tests

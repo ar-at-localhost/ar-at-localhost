@@ -1,4 +1,5 @@
 import { UUID } from "mongodb";
+import { readFileSync } from "node:fs";
 
 /**
  * Retrieve MongoDB Crypt library path
@@ -21,3 +22,8 @@ export const getMongoDEKs = () => ({
  * Get allowed CORS origins
  */
 export const getCors = (): string[] => (process.env.CORS_ALLOW || "").split(",").filter((i) => !!i);
+
+export const getSSL = () => ({
+  cert: readFileSync(process.env.SSL_CERT_PATH!),
+  key: readFileSync(process.env.SSL_CERT_KEY_PATH!),
+});
