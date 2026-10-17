@@ -7,12 +7,8 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "tsdown",
-    "dev": "tsdown --watch",
-    "test": "vitest run",
-    "test:cov": "vitest --coverage",
-    "test:watch": "vitest"
+  "dependencies": {
+    "valibot": "catalog:"
   },
   "devDependencies": {
     "@ngneat/falso": "^8.0.2",
@@ -21,12 +17,8 @@
     "falso": "^0.0.0",
     "tsdown": "catalog:",
     "typescript": "catalog:",
-    "valibot": "*",
     "vite": "^8.3.4",
     "vitest": "catalog:"
-  },
-  "peerDependencies": {
-    "valibot": "*"
   },
   "exports": {
     ".": "./src/index.ts",
@@ -40,9 +32,18 @@
       "./env.d.ts": "./env.d.ts"
     }
   },
-  "inlinedDependencies": {
-    "@ngneat/falso": "8.0.2",
-    "seedrandom": "3.0.5",
-    "uuid": "8.3.2"
+  "scripts": {
+    "build": "tsdown",
+    "check": "pnpm format && pnpm lint && pnpm typecheck",
+    "dev": "tsdown --watch",
+    "format": "oxfmt",
+    "format:fix": "oxfmt --write",
+    "fix": "pnpm format:fix && pnpm lint:fix",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "test": "vitest run",
+    "test:cov": "vitest --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   }
 }
