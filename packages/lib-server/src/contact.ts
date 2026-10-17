@@ -65,7 +65,7 @@ const contactSchema = new Schema(
   },
 );
 
-contactSchema.post("save", async (doc) => {
+contactSchema.post("save", (doc) => {
   const { CONTACT_PERSON_NAME, CONTACT_PERSON_EMAIL } = process.env;
   const { firstName, lastName, email } = doc;
   const bcc = [
@@ -74,7 +74,8 @@ contactSchema.post("save", async (doc) => {
       : "",
   ].filter((i) => !!i);
 
-  await sendMail({
+  // PERF: DO NOT AWAIT
+  sendMail({
     subject: "Brief received - Thank you",
     to: `${firstName}${lastName ? " " + lastName : ""} <${email}>`,
     bcc,
