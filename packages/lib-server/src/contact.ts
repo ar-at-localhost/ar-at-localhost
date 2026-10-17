@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 import { getMongoDEKs } from "./env.ts";
 import { pipe, rfcEmail, safeParse, string } from "valibot";
 import { UUID } from "mongodb";
+import { sendMail } from "./mailer.ts";
 
 /**
  * Contact Schema for mongoose
@@ -63,5 +64,29 @@ const contactSchema = new Schema(
     encryptionType: "queryableEncryption",
   },
 );
+
+contactSchema.post("save", async (doc) => {
+  const { CONTACT_PERSON_NAME, CONTACT_PERSON_EMAIL } = process.env;
+  const { firstName, lastName, email } = doc;
+  const bcc = [
+    CONTACT_PERSON_NAME && CONTACT_PERSON_EMAIL
+      ? `${CONTACT_PERSON_NAME} <${CONTACT_PERSON_EMAIL}>`
+      : "",
+  ].filter((i) => !!i);
+
+  await sendMail({
+    subject: "Brief received - Thank you",
+    to: `${firstName}${lastName ? " " + lastName : ""} <${email}>`,
+    bcc,
+    text: `Hi ${firstName},
+
+Thank you for getting in touch and submitting your brief. This is an automated email to confirm that it has successfully arrived.
+I'll review it and be in touch with you soon.
+
+Best regards,
+${CONTACT_PERSON_NAME}
+`,
+  });
+});
 
 export const ContactModel = model("Contact", contactSchema);

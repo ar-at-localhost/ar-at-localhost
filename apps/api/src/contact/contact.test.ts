@@ -5,12 +5,16 @@ const baseURL = `${getAPIBaseURL()}/contact`;
 
 describe("Contact", () => {
   describe("create", () => {
-    it("should create a record", async () => {
-      const body = getFalseContact();
-      const result = await createContactSrv(body);
-      expect(result).toBeTruthy();
-      expect(result._id).toBeTruthy();
-    });
+    it(
+      "should create a record",
+      async () => {
+        const body = getFalseContact();
+        const result = await createContactSrv(body);
+        expect(result).toBeTruthy();
+        expect(result._id).toBeTruthy();
+      },
+      60 * 1000,
+    );
 
     it("raise validation error", async () => {
       const body = getFalseContact();
