@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { getMongoDEKs } from "./env.ts";
 import { pipe, rfcEmail, safeParse, string } from "valibot";
+import { UUID } from "mongodb";
 
 /**
  * Contact Schema for mongoose
@@ -26,10 +27,10 @@ const contactSchema = new Schema(
       // *mongoose* expects plain string (const) value: "equality"
       // *mongodb-client-encryption* expects as document as in form below
       encrypt: {
-        keyId: getMongoDEKs().contact.email,
+        keyId: new UUID(getMongoDEKs().contact.email),
         // See: https://mongoosejs.com/docs/field-level-encryption.html#integrating-with-mongodb-client-side-field-level-encryption
         queries: { queryType: "equality" } as unknown as any,
-      } as unknown as any,
+      },
 
       required: true,
       set: (v: string) => v?.trim()?.toLowerCase() || "",
@@ -42,12 +43,9 @@ const contactSchema = new Schema(
     message: {
       type: String,
 
-      // HACK: `any` is workaround as there seems a mismatch between `mongoose` and `mongodb-client-encryption`
-      // *mongoose* expects plain string (const) value: "equality"
-      // *mongodb-client-encryption* expects as document as in form below
       encrypt: {
         keyId: getMongoDEKs().contact.message,
-      } as unknown as any,
+      },
 
       maxLength: 10000,
       minLength: 128,

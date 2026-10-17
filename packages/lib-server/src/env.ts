@@ -1,3 +1,4 @@
+import { UUID } from "mongodb";
 import { readFileSync } from "node:fs";
 
 /**
@@ -12,8 +13,8 @@ export const getMongocryptPath = (): string => {
  */
 export const getMongoDEKs = () => ({
   contact: {
-    email: process.env.MONGODB_DEK_CONTACT_EMAIL!,
-    message: process.env.MONGODB_DEK_CONTACT_MESSAGE!,
+    email: new UUID(process.env.MONGODB_DEK_CONTACT_EMAIL!),
+    message: new UUID(process.env.MONGODB_DEK_CONTACT_MESSAGE!),
   },
 });
 
