@@ -13,6 +13,7 @@ ExecStart=/root/.nix-profile/bin/devenv --no-tui up "api:start"
 WorkingDirectory=/src/ar-at-localhost
 Restart=on-failure
 RestartSec=5
+User=root
 
 [Install]
 WantedBy=multi-user.target
