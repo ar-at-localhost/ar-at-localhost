@@ -74,7 +74,7 @@ contactSchema.post("save", (doc) => {
       : "",
   ].filter((i) => !!i);
 
-  // PERF: DO NOT AWAIT
+  // PERF: DO NOT AWAIT as that may delay or fail API request
   sendMail({
     subject: "Brief received - Thank you",
     to: `${firstName}${lastName ? " " + lastName : ""} <${email}>`,
