@@ -4,6 +4,8 @@
 # Match tags: api-v* only
 
 set -euo pipefail
+src=$(git rev-parse --show-toplevel)
+cd "$src"
 
 while read -r oldrev newrev ref; do
   case $ref in refs/tags/api-v*)
@@ -16,8 +18,6 @@ while read -r oldrev newrev ref; do
 
   [ "$newrev" == "0000000000000000000000000000000000000000" ] && continue
   git checkout -f "$TAG";
-  src=$(git rev-parse --show-toplevel)
-  cd "$src"
   nix develop -c bash -euo pipefail -c '
     pnpm install
     pnpm --filter api build
