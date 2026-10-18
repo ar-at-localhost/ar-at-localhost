@@ -12,7 +12,7 @@ export const getTransport: () => Promise<MailTransport> = (() => {
   return async () => {
     if (transport) return transport;
 
-    if (NODE_ENV == "production" || NODE_ENV == "ci") {
+    if (NODE_ENV == "production") {
       transport = createResendTransport(RESEND_API_KEY!);
     } else {
       const testAcc = await createTestAccount();
