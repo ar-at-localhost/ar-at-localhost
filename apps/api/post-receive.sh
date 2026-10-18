@@ -19,6 +19,9 @@ while read -r oldrev newrev ref; do
   nix develop -c bash -euo pipefail -c '
     pnpm install
     pnpm --filter api build
+    cp -f apps/api/api.service /etc/systemd/system/
+    systemctl daemon-reload
+    systemctl enable api.service
     systemctl restart api.service
   '
 done
