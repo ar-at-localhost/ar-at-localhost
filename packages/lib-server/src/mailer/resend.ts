@@ -4,7 +4,7 @@ import type { SendEmailPayload, MailTransport } from "./types";
 /**
  * Mail Transport adopter for Resend
  */
-export const createTransport = (key: string): MailTransport<"resend"> => {
+export const createResendTransport = (key: string): MailTransport<"resend"> => {
   const resend = new Resend(key);
 
   return {

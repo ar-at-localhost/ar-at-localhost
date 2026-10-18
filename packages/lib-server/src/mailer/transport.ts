@@ -1,6 +1,6 @@
 import { createTestAccount, createTransport } from "nodemailer";
 
-import { createTransport as createResendTransport } from "./resend";
+import { createResendTransport } from "./resend";
 import type { MailTransport } from "./types";
 
 const { MAIL_SERVER, MAIL_PORT, MAIL_SECURE, MAIL_USER, MAIL_PWD, RESEND_API_KEY, NODE_ENV } =
