@@ -41,7 +41,8 @@
   },
   "dependencies": {
     "lib": "workspace:*",
-    "nodemailer": "catalog:"
+    "nodemailer": "catalog:",
+    "resend": "^6.32.1"
   },
   "devDependencies": {
     "@ngneat/falso": "catalog:",
