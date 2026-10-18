@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest, RouteOptions } from "fastify";
-import { ContactBody, contactBodySchema } from "lib";
+import { type ContactBody, contactBodySchema } from "lib";
 import { ContactModel } from "lib-server";
 
 /**
