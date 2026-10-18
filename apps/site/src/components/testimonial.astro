@@ -1,0 +1,43 @@
+---
+import { Dot, Star } from '@lucide/astro';
+import { cn } from "cn";
+const { extraClass, rating } = Astro.props;
+const cls = cn(
+  "flex flex-col gap-2 text-xs text-gray-900",
+  "max-w-[384px] rounded-md p-4 border border-violet-200 shadow-md shadow-lime-500",
+  "bg-linear-to-tl from-cyan-100 via-blue-100 to-violet-100",
+  extraClass
+)
+---
+
+<div class={cls}>
+  <div class="text-sm flex flex-row gap-4 font-serif">
+    <div class="size-8 shrink-0 flex flex-row items-center justify-center text-center text-middle rounded-full bg-gray-500 text-white">
+      <slot name="avatar" />
+    </div>
+
+    <div class="w-full flex flex-row items-center">
+      <span class="font-medium">
+        <slot name="name" />
+      </span>
+
+      <Dot size="16" />
+
+      <span class="italic">
+        <slot name="company" />
+      </span>
+
+      { rating && <span class="font-medium grow flex flex-row items-center justify-end gap-1"><Star class="text-yellow-500 fill-yellow-500" size="12"/>
+        <span>
+          <slot name="rating" />
+        </span>
+      </span>}
+    </div>
+  </div>
+
+  <hr class="border border-lime-500/50" />
+
+  <div class="font-sans">
+    &ldquo;<slot name="quote" />&rdquo;
+  </div>
+</div>
