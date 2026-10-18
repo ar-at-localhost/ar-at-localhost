@@ -28,5 +28,17 @@
         inherit (pkgs) nodejs oxfmt oxlint pnpm secretspec sops;
       }
     );
+
+    devShell = forEachSupportedSystem (
+      {pkgs, ...}: let
+        crypt_shared = pkgs.callPackage ./nix/pkgs/crypt_shared.nix {};
+      in
+        pkgs.mkShellNoCC {
+          packages = [crypt_shared] ++ (with pkgs; [nodejs oxfmt oxlint pnpm secretspec sops]);
+          enterShell = ''
+            echo "󰣫 ar-at-localhost"
+          '';
+        }
+    );
   };
 }
