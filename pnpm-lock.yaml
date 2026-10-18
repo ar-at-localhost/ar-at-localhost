@@ -163,6 +163,9 @@ importers:
       canvas-confetti:
         specifier: ^1.9.4
         version: 1.9.4
+      cn:
+        specifier: ^0.4.0
+        version: 0.4.0
       lib:
         specifier: workspace:*
         version: link:../../packages/lib

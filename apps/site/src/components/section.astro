@@ -1,0 +1,16 @@
+---
+import {cn} from 'cn';
+const { extraClass } = Astro.props;
+
+const cls = cn(
+  "relative font-roboto-slab h-auto w-auto min-w-screen min-h-screen",
+  "bg-slate-200 text-gray-900 from-cyan-100 via-blue-100 to-blue-400",
+  "dark:text-white dark:bg-stone-800 dark:from-gray-900 dark:via-stone-900 dark:to-black",
+  "md:bg-linear-to-br",
+  extraClass
+)
+---
+
+<section class={cls}>
+  <slot />
+</section>

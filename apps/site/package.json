@@ -20,6 +20,7 @@
     "@types/canvas-confetti": "^1.9.0",
     "astro": "^7.3.8",
     "canvas-confetti": "^1.9.4",
+    "cn": "^0.4.0",
     "lib": "workspace:*",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
