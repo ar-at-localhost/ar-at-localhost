@@ -24,6 +24,7 @@ jobs:
           SECRETSPEC_PROFILE: "ci"
           MONGO_CRYPT_LIB: "/home/runner/.nix-profile/lib/mongo_crypt_v1.so"
           MONGODB_DB: "test_db_${{ github.run_id }}"
+          NODE_ENV: ci
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           secretspec run pnpm check
