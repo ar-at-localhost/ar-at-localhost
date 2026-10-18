@@ -1,7 +1,7 @@
 import { createTestAccount, createTransport } from "nodemailer";
 
-import { createResendTransport } from "./resend";
-import type { MailTransport } from "./types";
+import { createResendTransport } from "./resend.ts";
+import type { MailTransport } from "./types.ts";
 
 const { MAIL_SERVER, MAIL_PORT, MAIL_SECURE, MAIL_USER, MAIL_PWD, RESEND_API_KEY, NODE_ENV } =
   process.env;

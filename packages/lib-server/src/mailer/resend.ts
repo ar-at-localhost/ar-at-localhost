@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import type { SendEmailPayload, MailTransport } from "./types";
+import type { SendEmailPayload, MailTransport } from "./types.ts";
 
 /**
  * Mail Transport adopter for Resend

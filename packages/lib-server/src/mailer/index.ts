@@ -1,6 +1,6 @@
 import { getTestMessageUrl } from "nodemailer";
-import { getTransport } from "./transport";
-import type { SendEmailPayload } from "./types";
+import { getTransport } from "./transport.ts";
+import type { SendEmailPayload } from "./types.ts";
 
 const { CI, CONTACT_PERSON_NAME, CONTACT_PERSON_EMAIL, MAIL_SERVER, MAIL_FROM } = process.env;
 
