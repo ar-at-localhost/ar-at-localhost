@@ -9,7 +9,7 @@ Type=simple
 Environment="HOME=/root"
 Environment="PATH=/usr/bin:/usr/sbin:/usr/local/bin:/root/.nix-profile/bin"
 Environment="SECRETSPEC_PROFILE=prod"
-ExecStart=/root/.nix-profile/bin/devenv --no-tui up "api:start"
+ExecStart=/root/.nix-profile/bin/nix develop -c secretspec run --profile prod node apps/api/dist/index.mjs
 WorkingDirectory=/src/ar-at-localhost
 Restart=on-failure
 RestartSec=5
