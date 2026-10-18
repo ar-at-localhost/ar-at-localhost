@@ -10,7 +10,11 @@ const contactPerson = CONTACT_PERSON_EMAIL
   ? `${CONTACT_PERSON_NAME} <${CONTACT_PERSON_EMAIL}>`
   : MAIL_FROM;
 
-export const sendMail = async (opts: SendEmailPayload) => {
+export const sendMail = async (
+  opts: Omit<SendEmailPayload, "from"> & {
+    from?: string;
+  },
+) => {
   const transport = await getTransport();
   const finalOpts = {
     ...opts,
