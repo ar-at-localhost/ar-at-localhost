@@ -1,6 +1,6 @@
 import { createTestAccount, createTransport } from "nodemailer";
 
-import { createTransport as createResendTransport } from "./rsend";
+import { createTransport as createResendTransport } from "./resend";
 import type { MailTransport } from "./types";
 
 const { MAIL_SERVER, MAIL_PORT, MAIL_SECURE, MAIL_USER, MAIL_PWD, RESEND_API_KEY, NODE_ENV } =
@@ -12,7 +12,7 @@ export const getTransport: () => Promise<MailTransport> = (() => {
   return async () => {
     if (transport) return transport;
 
-    if (NODE_ENV == "production") {
+    if (NODE_ENV == "production" || NODE_ENV == "ci") {
       transport = createResendTransport(RESEND_API_KEY!);
     } else {
       const testAcc = await createTestAccount();

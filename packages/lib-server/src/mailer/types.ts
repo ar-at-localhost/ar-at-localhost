@@ -1,3 +1,5 @@
+import type { SendmailSentMessageInfo } from "nodemailer";
+
 export type SendEmailPayload = {
   from: string;
   subject: string;
@@ -10,6 +12,7 @@ export type SendEmailPayload = {
 
 export type SendEmailResp = {
   id?: string;
+  info?: SendmailSentMessageInfo;
 };
 
 export type MailClient = "nodemailer" | "resend";
