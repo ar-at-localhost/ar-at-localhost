@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { getMongoDEKs } from "./env.ts";
 import { pipe, rfcEmail, safeParse, string } from "valibot";
 import { UUID } from "mongodb";
-import { sendMail } from "./mailer.ts";
+import { sendMail } from "./mailer/index.ts";
 
 /**
  * Contact Schema for mongoose
