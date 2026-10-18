@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { getHost, getPort } from "lib";
 import { getApp } from "./app.ts";
 
