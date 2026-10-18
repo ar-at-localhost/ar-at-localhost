@@ -33,6 +33,9 @@ catalogs:
     nodemailer:
       specifier: npm:10.1.0
       version: 10.1.0
+    resend:
+      specifier: ^6.32.1
+      version: 6.32.1
     tsdown:
       specifier: ^0.23.0
       version: 0.23.0
@@ -78,7 +81,7 @@ importers:
         specifier: 'catalog:'
         version: 9.11.1(kerberos@7.0.0)(mongodb-client-encryption@7.2.1)(socks@2.8.10)
       resend:
-        specifier: ^6.32.1
+        specifier: 'catalog:'
         version: 6.32.1
       valibot:
         specifier: ^1.5.0
@@ -226,7 +229,7 @@ importers:
         specifier: 'catalog:'
         version: 10.1.0
       resend:
-        specifier: ^6.32.1
+        specifier: 'catalog:'
         version: 6.32.1
     devDependencies:
       '@ngneat/falso':
