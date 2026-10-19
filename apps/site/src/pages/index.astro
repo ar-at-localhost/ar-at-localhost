@@ -15,6 +15,7 @@ import { Image } from 'astro:assets';
 import { ContactForm } from 'ui/site/contact-form';
 import Section from '../components/section.astro'
 import Services from '../components/services.astro'
+import Tech from '../components/tech.astro'
 import Testmonial from '../components/testimonial.astro';
 
 const { PUBLIC_SRV_URL } = import.meta.env;
@@ -37,7 +38,7 @@ const { PUBLIC_SRV_URL } = import.meta.env;
     <meta name="description" content="Hire a full stack developer">
 	</head>
 
-  <body class="relative">
+  <body class="relative smooth">
     <Section>
       <div class="h-auto gap-8 md:gap-16 lg:gap-8 flex flex-col lg:min-h-screen lg:gap-auto lg:flex-row items-center justify-around">
         <div class="pt-24 lg:pt-0 w-3/4 lg:w-2/5 flex flex-col gap-8 md:gap-16 font-serif">
@@ -85,12 +86,11 @@ const { PUBLIC_SRV_URL } = import.meta.env;
             </LinkBtn>
           </div>
 
-          <div class="w-full flex flex-row items-center">
-            <Testmonial>
+          <div class="w-full flex flex-row items-center justify-center">
+            <Testmonial rating="5.0">
               <span slot="avatar">A</span>
               <span slot="name">Aqdas R.</span>
               <span slot="company">npmCode</span>
-              <span slot="rating">5.0</span>
               <span slot="quote">
                 Ahmad was consistently one of the most capable individuals I worked with. He was organized, discerning, and quick. 
                 Highly Recommended!
@@ -99,18 +99,29 @@ const { PUBLIC_SRV_URL } = import.meta.env;
           </div>
         </div>
 
-        <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0">
+        <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0" id="contact-form">
           <ContactForm apiBase={PUBLIC_SRV_URL} client:only="react" />
         </div>
       </div>
     </Section>
 
     <Services />
+    <Tech />
 
     <div class="text-center md:absolute md:text-left md:bottom-4 md:left-32 lg:bottom-4">
       <span class=" text-xs text-gray-500 dark:text-gray-100">
         <Copyright class="size-3 inline-block" />&nbsp;2026 &nbsp;Ahmad Raza &lt;ar-at-localhost&gt;. Source code is available on <a href="https://github.com/ar-at-localhost/ar-at-localhost" target="_blank">Github <ExternalLink class="size-3 inline-block" /></a>.
       </span>
     </div>
+
+    <script>
+      document.querySelectorAll('button.connect-link').forEach((button) => button.addEventListener('click', () => {
+        document.querySelector('#contact-form')?.scrollIntoView({
+          behavior: 'smooth'
+        });
+
+        document.querySelector('input[type="text"]')?.focus();
+      }));
+    </script>
 	</body>
 </html>

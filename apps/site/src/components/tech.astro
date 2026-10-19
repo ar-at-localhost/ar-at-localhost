@@ -1,0 +1,100 @@
+---
+import ConnectLink from './connect-link.astro';
+import Section from './section.astro';
+import Testmonial from './testimonial.astro';
+import TechCard from './tech-card.astro';
+import Angular from '../assets/icons/brand-angular.svg';
+import CSS from '../assets/icons/brand-css3.svg';
+import Docker from '../assets/icons/brand-docker.svg';
+import HTML from '../assets/icons/brand-html5.svg';
+import JavaScript from '../assets/icons/brand-javascript.svg';
+import MongoDB from '../assets/icons/brand-mongodb.svg';
+import MySQL from '../assets/icons/brand-mysql.svg';
+import NodeJS from '../assets/icons/brand-nodejs.svg';
+import Python from '../assets/icons/brand-python.svg';
+import React from '../assets/icons/brand-react.svg';
+import Svelte from '../assets/icons/brand-svelte.svg';
+import TypeScript from '../assets/icons/brand-typescript.svg';
+---
+
+<Section extraClass="p-16 py-24 flex flex-col gap-24">
+  <div class="flex flex-col items-center justify-center gap-2">
+    <h2 class="font-bold px-4 md:px-0 text-center text-xl md:text-2xl lg:text-6xl">I work with every technology needed for feature-rich apps.</h2>
+  </div>
+
+  <div class="flex flex-row flex-wrap items-center md:items-stretch justify-center gap-16 text-gray-500 dark:text-gray-300">
+    <TechCard>
+      <HTML slot="icon" class="size-full"/>
+      HTML
+    </TechCard>
+
+    <TechCard>
+      <CSS slot="icon" class="size-full"/>
+      CSS
+    </TechCard>
+
+    <TechCard>
+      <JavaScript slot="icon" class="size-full"/>
+      JavaScript
+    </TechCard>
+
+    <TechCard>
+      <TypeScript slot="icon" class="size-full"/>
+      TypeScript
+    </TechCard>
+
+    <TechCard>
+      <NodeJS slot="icon" class="size-full"/>
+      Node.js
+    </TechCard>
+
+    <TechCard>
+      <React slot="icon" class="size-full"/>
+      React
+    </TechCard>
+
+    <TechCard>
+      <Angular slot="icon" class="size-full"/>
+      Angular
+    </TechCard>
+
+    <TechCard>
+      <Svelte slot="icon" class="size-full"/>
+      Svelte
+    </TechCard>
+
+    <TechCard>
+      <MongoDB slot="icon" class="size-full"/>
+      MongoDB
+    </TechCard>
+
+    <TechCard>
+      <MySQL slot="icon" class="size-full"/>
+      MySQL
+    </TechCard>
+
+    <TechCard>
+      <Docker slot="icon" class="size-full"/>
+      Docker
+    </TechCard>
+
+    <TechCard>
+      <Python slot="icon" class="size-full"/>
+      Python
+    </TechCard>
+  </div>
+
+  <div class="flex justify-center">
+    <Testmonial extraClass="min-w-1/2">
+      <span slot="avatar">L</span>
+      <span slot="name">Lorenzo D.</span>
+      <span slot="company">Fiverr</span>
+      <span slot="quote">I worked with Ahmad in a project and I can only say: this
+  guy is awesome. He has great communication skills, a true passion for coding and an outstanding
+  work ethic. The project had strict deadlines and he managed it with passion and motivation till the
+  end, delivering a great product. Thank you again for your help and I hope to collaborate again!</span>
+    </Testmonial>
+  </div>
+
+  <ConnectLink extraClass="mt-[-36px]" />
+</Section>
