@@ -1,0 +1,18 @@
+---
+import { cn } from 'cn';
+import { buttonVariants } from 'ui/components/button';
+const { extraClass } = Astro.props;
+
+const linkCls = cn(buttonVariants(
+  { variant: 'outline', size: 'lg' }),
+  "connect-link cursor-pointer text-blue-500 dark:text-white",
+  extraClass
+);
+---
+
+<div class="flex flex-row justify-center">
+  <button class={linkCls}>
+    Discuss a project
+  </button>
+</div>
+

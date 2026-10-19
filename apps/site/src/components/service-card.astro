@@ -3,20 +3,22 @@ const { title, desc } = Astro.props;
 import { cn } from 'cn';
 
 const cls = cn(
-  "w-9/10 md:w-[448px] p-8 pl-4 rounded border-4 border-gray-700",
-  "flex flex-row items-top justify-start gap-8"
+  "w-9/10 md:w-[448px] p-8 pl-4 rounded border-4 border-blue-200",
+  "flex flex-col items-top justify-start gap-8",
+  "grid-cols-2"
 );
 ---
 
 <div class={cls}>
-  <span class="text-stone-700 dark:text-orange-300 pb-4">
-    <slot />
-  </span>
-
-  <div class="flex flex-col gap-4">
-    <span class="font-medium text-2xl">{title}</span>
-    <span class="text-justify text-gray-700 dark:text-white">
-      <slot name="desc" />
+  <div class="flex flex-row items-center gap-8">
+    <span>
+      <slot />
     </span>
+
+    <span class="font-medium text-2xl">{title}</span>
+  </div>
+
+  <div class="dark:text-white px-4">
+    <slot name="desc" />
   </div>
 </div>
