@@ -99,7 +99,7 @@ const { PUBLIC_SRV_URL } = import.meta.env;
           </div>
         </div>
 
-        <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0" id="contact-form">
+        <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0" id="contact-form-container">
           <ContactForm apiBase={PUBLIC_SRV_URL} client:only="react" />
         </div>
       </div>
@@ -116,7 +116,7 @@ const { PUBLIC_SRV_URL } = import.meta.env;
 
     <script>
       document.querySelectorAll('button.connect-link').forEach((button) => button.addEventListener('click', () => {
-        document.querySelector('#contact-form')?.scrollIntoView({
+        document.querySelector('#contact-form-container')?.scrollIntoView({
           behavior: 'smooth'
         });
 
