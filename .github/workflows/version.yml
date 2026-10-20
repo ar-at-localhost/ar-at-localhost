@@ -43,6 +43,8 @@ jobs:
 
       - name: Version packages
         if: steps.changesets-detection.outputs.has_changeset == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           nix develop -c pnpm changeset version
 
