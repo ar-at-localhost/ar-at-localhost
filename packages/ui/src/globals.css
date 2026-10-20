@@ -10,6 +10,13 @@
   font-family: "Overpass Variable", sans-serif;
 }
 
+@media (max-width: 528px) {
+  * {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
