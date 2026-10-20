@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   quality-checks:
+    if: ${{ !startsWith(github.event.head_commit.message, 'release:') }}
     uses: "ar-at-localhost/ar-at-localhost/.github/workflows/quality.yml@main"
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
@@ -55,7 +56,7 @@ jobs:
         with:
           add: "."
           default_author: github_actions
-          message: "ci: version packages [skip ci]"
+          message: "release: version packages"
           push: "--set-upstream origin main --no-verify"
 
       - name: Tag packages
