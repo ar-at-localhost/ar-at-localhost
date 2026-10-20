@@ -1,3 +1,4 @@
+import packageInfo from "../package.json" with { type: "json" };
 import Fastify, { type FastifyInstance } from "fastify";
 import { type GenericSchema, safeParse } from "valibot";
 import { contact } from "./contact/index.ts";
@@ -77,6 +78,11 @@ export const getApp = (ssl?: boolean) => {
       resp.send();
     },
   );
+
+  app.get("/version", (_, resp) => {
+    const { author, name, repository, version } = packageInfo;
+    resp.send({ author, name, repository, version });
+  });
 
   app.register(mongoosePlugin);
 
