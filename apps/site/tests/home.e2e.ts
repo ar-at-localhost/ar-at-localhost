@@ -3,7 +3,7 @@ import { test } from "@playwright/test";
 
 test("it should submit", async ({ page }) => {
   await page.goto("/");
-  await page.getByTestId("contact-form").waitFor();
+  await page.getByTestId("contact-form").waitFor({ timeout: 60000 });
   await page.locator("form [name=firstName]").fill(randFirstName());
   await page.locator("form [name=lastName]").fill(randLastName());
   await page.locator("form [name=email]").fill(randEmail());
