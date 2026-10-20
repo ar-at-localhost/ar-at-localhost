@@ -29,3 +29,11 @@ Following icons are provided by Tabler icons:
 - [../apps/site/src/assets/icons/brand-typescript.svg](../apps/site/src/assets/icons/brand-typescript.svg)
 - [../apps/site/src/assets/icons/brand-whatsapp.svg](../apps/site/src/assets/icons/brand-whatsapp.svg)
 - [../apps/site/src/assets/icons/mail.svg](../apps/site/src/assets/icons/mail.svg)
+- [../apps/site/src/assets/icons/terminal-2.svg](../apps/site/src/assets/icons/terminal-2.svg)
+
+### theSVG Icons <https://thesvg.org/>
+
+Following icons are provided by theSVG:
+
+- [../apps/site/src/assets/icons/handlebars.svg](../apps/site/src/assets/icons/handlebars.svg)
+- [../apps/site/src/assets/icons/mjml.svg](../apps/site/src/assets/icons/mjml.svg)

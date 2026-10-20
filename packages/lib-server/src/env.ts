@@ -27,3 +27,8 @@ export const getSSL = () => ({
   cert: readFileSync(process.env.SSL_CERT_PATH!),
   key: readFileSync(process.env.SSL_CERT_KEY_PATH!),
 });
+
+/**
+ * Tells if running on production
+ */
+export const isProduction = () => process.env.NODE_ENV === "production";

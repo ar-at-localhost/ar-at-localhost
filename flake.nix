@@ -36,8 +36,6 @@
         src = ./.;
         hooks = {
           alejandra.enable = true;
-          oxfmt.enable = true;
-          oxlint.enable = true;
 
           quality = {
             enable = true;

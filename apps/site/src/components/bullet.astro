@@ -1,0 +1,14 @@
+---
+import { cn } from 'cn';
+import { CircleCheck } from '@lucide/astro';
+const { extraClass } = Astro.props;
+const cls = cn("flex items-center gap-2", extraClass);
+---
+
+<div class={cls}>
+  <slot name="icon">
+    <CircleCheck class="fill-blue-500 text-white dark:fill-green-500" size="24" />
+  </slot>
+
+  <slot />
+</div>

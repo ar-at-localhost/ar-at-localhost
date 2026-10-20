@@ -1,0 +1,48 @@
+---
+import AI from '../assets/icons/code-ai.svg';
+import Alert from '../assets/icons/alert-circle.svg';
+import Claude from '../assets/icons/claude.svg';
+import Copilot from '../assets/icons/brand-github-copilot.svg';
+import Zed from '../assets/icons/zed.svg';
+import Lock from '../assets/icons/lock.svg';
+import ConnectLink from './connect-link.astro';
+import Section from './section.astro';
+import Bullet from './bullet.astro';
+---
+
+<Section extraClass="w-full py-24 flex flex-col items-center gap-24 md:bg-linear-to-tr text-stone-900">
+  <div class="font-medium text-center text-xl flex items-center flex-col gap-2 w-2/3">
+    <AI class="size-16 md:size-24 lg:size-32 mb-8" />
+
+    <h2 class="font-bold">AI makes mistake &ndash; Production requires care</h2>
+    <h3>I use AI in my development workflows, only under strict guidelines to improve productivity without compromising quality.</h3>
+
+    <div class="py-2 flex gap-4 items-center justify-center text-gray-700 dark:text-gray-100">
+      <Claude class="size-4 md:size-8 hover:text-gray-600 dark:hover:text-lime-100" />
+      <Copilot class="size-4 md:size-8 hover:text-gray-600 dark:hover:text-lime-100" />
+      <Zed class="size-4 md:size-8 hover:text-gray-600 dark:hover:text-lime-100" />
+    </div>
+  </div>
+
+  <div class="w-9/10 md:w-3/5 lg:w-4/5 grid grid-cols-1 md:flex-col lg:grid-cols-3 gap-1 md:gap-2 lg:gap-4 items-center justify-center">
+    <Bullet>
+      <Lock slot="icon" class="fill-red-500 dark:fill-red-600 text-white" />
+      You must explicitly approve the use of AI
+    </Bullet>
+
+    <Bullet>
+      <Alert slot="icon" class="fill-red-500 dark:fill-red-600 text-white" />
+      You will need to manage the subscriptions and associated costs
+    </Bullet>
+
+    <Bullet>Code Completions</Bullet>
+    <Bullet>Code Reviews</Bullet>
+    <Bullet>Unit Tests Generation</Bullet>
+    <Bullet>Manually accepted E2E tests generation</Bullet>
+    <Bullet>Manually accepted code generation</Bullet>
+    <Bullet>Human PR reviews mandatory</Bullet>
+    <Bullet>Continous instructions improvements</Bullet>
+  </div>
+
+  <ConnectLink />
+</Section>

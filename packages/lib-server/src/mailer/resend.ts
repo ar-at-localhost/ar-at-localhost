@@ -16,7 +16,9 @@ export const createResendTransport = (key: string): MailTransport<"resend"> => {
       });
 
       if (result.error) throw result.error;
-      return result.data;
+      return {
+        messageId: result.data.id,
+      };
     },
     verify: async () => {
       const { error } = await resend.domains.list();

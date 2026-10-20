@@ -1,0 +1,89 @@
+<!-- TEMPLATE SYNTAX: mustache -->
+<mjml>
+  <mj-head>
+    <mj-title>Brief received - Thank you</mj-title>
+    <mj-font href="https://fonts.googleapis.com/css?family=Overpass" name="Overpass" />
+
+    <mj-attributes>
+      <mj-all color="#101828" font-family="Overpass, Arial, sans-serif"></mj-all>
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#f1f5f9">
+    <mj-section background-color="#cad5e2">
+      <mj-column vertical-align="middle">
+        <mj-image width="64px" src="https://ar-at-localhost.site/favicon.svg"></mj-image>
+      </mj-column>
+    </mj-section>
+
+    <mj-section>
+      <mj-column>
+        <mj-text>
+          <b>Hi {{ firstName }},</b>
+        </mj-text>
+
+        <mj-text>
+          Thank you for getting in touch and submitting your brief. This is an automated email to
+          confirm that it has successfully arrived. I'll review it and be in touch with you soon.
+        </mj-text>
+
+        <mj-text>
+          Please feel free to reply to this email with any additional details, or relevant
+          documents. If you would prefer a quick chat, especially for urgent tasks, send me a
+          WhatsApp message or reach out via Upwork, LinkedIn or Fiverr.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    {{#links}}
+    <mj-section>
+      {{#whatsapp}}
+      <mj-column width="96px">
+        <mj-image
+          href="{{whatsapp}}"
+          width="64px"
+          src="https://ar-at-localhost.site/brand-whatsapp.svg"
+        ></mj-image>
+      </mj-column>
+      {{/whatsapp}}
+
+      {{#linkedin}}
+      <mj-column width="96px">
+        <mj-image
+          href="{{linkedin}}"
+          width="64px"
+          src="https://ar-at-localhost.site/brand-linkedin.svg"
+        ></mj-image>
+      </mj-column>
+      {{/linkedin}}
+
+      {{#upwork}}
+      <mj-column width="96px">
+        <mj-image
+          href="{{upwork}}"
+          width="64px"
+          src="https://ar-at-localhost.site/brand-upwork.svg"
+        ></mj-image>
+      </mj-column>
+      {{/upwork}}
+
+      {{#fiverr}}
+      <mj-column width="96px">
+        <mj-image
+          href=""
+          width="64px"
+          src="https://ar-at-localhost.site/brand-fiverr.svg"
+        ></mj-image>
+      </mj-column>
+      {{/fiverr}}
+    </mj-section>
+    {{/links}}
+
+    <mj-section>
+      <mj-column>
+        <mj-text> Best regards, </mj-text>
+        <mj-text> Ahmad Raza </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

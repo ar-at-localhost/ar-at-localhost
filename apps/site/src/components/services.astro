@@ -19,7 +19,7 @@ import Testmonial from './testimonial.astro';
       </div>
     </div>
 
-    <div class="w-full flex flex-col lg:flex-row items-center lg:items-stretch gap-4 lg:gap-auto justify-center overflow-hidden w-2/3">
+    <div class="w-full flex flex-wrap flex-col items-center justify-center gap-4 lg:flex-row lg:items-stretch lg:gap-auto">
       <ServiceCard title="Back-End Services">
         <Settings size="96" />
         <div slot="desc" class="flex flex-col gap-1">
@@ -58,14 +58,12 @@ import Testmonial from './testimonial.astro';
       </ServiceCard>
     </div>
 
-    <div class="w-full flex items-center justify-center">
-      <Testmonial extraClass="w-full lg:max-w-1/2">
-        <span slot="avatar">J</span>
-        <span slot="name">Jackson J.</span>
-        <span slot="company">Rixor</span>
-        <span slot="quote">I got Ahmad to help with building the initial version of my site. He was very responsive and was extremely skilled, particularly with back end work. I have some development experience so I know enough to know when someone knows what they are doing. Ahmad didn't just do the work I told him to do like a robot, but would often give feedback and suggestions on what would perhaps work better. He was also very good at keeping me updated with what he was working on instead of waiting to submit everything the day I needed it done.</span>
-      </Testmonial>
-    </div>
+    <Testmonial extraClass="w-9/10 md:w-[448px] lg:w-3/5">
+      <span slot="avatar">J</span>
+      <span slot="name">Jackson J.</span>
+      <span slot="company">Rixor</span>
+      <span slot="quote">I got Ahmad to help with building the initial version of my site. He was very responsive and was extremely skilled, particularly with back end work. I have some development experience so I know enough to know when someone knows what they are doing. Ahmad didn't just do the work I told him to do like a robot, but would often give feedback and suggestions on what would perhaps work better. He was also very good at keeping me updated with what he was working on instead of waiting to submit everything the day I needed it done.</span>
+    </Testmonial>
 
     <ConnectLink extraClass="mx-4" />
   </div>

@@ -8,5 +8,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src/", "env.d.ts"]
+  "include": ["src/", "./env.d.ts"]
 }

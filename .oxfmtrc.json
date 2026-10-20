@@ -1,9 +1,12 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "astro": true,
   "ignorePatterns": [
     "dist/**",
     "*.min.js",
     ".pnp.*",
-    ".yarn/**"
+    ".yarn/**",
+    "packages/lib-server/src/templates/*.html",
+    "secrets/**"
   ]
 }

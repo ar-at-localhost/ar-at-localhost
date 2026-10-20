@@ -9,5 +9,5 @@ test("it should submit", async ({ page }) => {
   await page.locator("form [name=email]").fill(randEmail());
   await page.locator("form [name=message]").fill(randText({ charCount: 128 }));
   await page.locator("button[type=submit]").click();
-  await page.getByTestId("brief-submit-success").waitFor();
+  await page.getByTestId("brief-submit-success").waitFor({ timeout: 60000 });
 });

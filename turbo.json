@@ -28,71 +28,38 @@
   ],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**",
-        "!.next/dev/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "!.next/dev/**"]
     },
     "check": {
-      "dependsOn": [
-        "^format",
-        "^lint",
-        "^typecheck",
-      ]
+      "dependsOn": ["^format", "^lint", "^typecheck"]
     },
     "fix": {
-      "dependsOn": [
-        "^format:fix",
-        "^lint:fix",
-      ]
+      "dependsOn": ["^format:fix", "^lint:fix"]
     },
     "format": {
-      "dependsOn": [
-        "^format",
-      ]
+      "dependsOn": ["^format"]
     },
     "format:fix": {
-      "dependsOn": [
-        "^format:fix",
-      ]
+      "dependsOn": ["^format:fix"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint",
-      ]
+      "dependsOn": ["^lint"]
     },
     "lint:fix": {
-      "dependsOn": [
-        "^lint:fix",
-      ]
+      "dependsOn": ["^lint:fix"]
     },
     "quality": {
-      "dependsOn": [
-        "build",
-        "check",
-        "test",
-        "test:e2e",
-      ]
+      "dependsOn": ["build", "check", "test", "test:e2e"]
     },
     "test": {
-      "dependsOn": [
-        "^test",
-      ]
+      "dependsOn": ["^test"]
     },
     "test:e2e": {
-      "dependsOn": [
-        "^test:e2e",
-      ]
+      "dependsOn": ["^test:e2e"]
     },
     "typecheck": {
-      "dependsOn": [
-        "^typecheck",
-      ]
+      "dependsOn": ["^typecheck"]
     },
     "dev": {
       "persistent": true,

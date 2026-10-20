@@ -1,48 +1,66 @@
 ---
 import { Dot, Star } from '@lucide/astro';
 import { cn } from "cn";
-const { extraClass, rating } = Astro.props;
+const { extraClass, rating, view } = Astro.props;
 
 const cls = cn(
-  "flex flex-col gap-2 text-xs text-gray-900 dark:text-white",
-  "max-w-[384px] rounded-md p-4 border border-violet-200 shadow-md shadow-lime-500",
+  "flex flex-col gap-2",
+  "min-w-[384px] rounded-md p-4 border border-violet-200 shadow-md shadow-lime-500",
   "bg-linear-to-tl from-cyan-100 via-blue-100 to-violet-100",
   "dark:bg-linear-to-tl dark:from-stone-700 dark:via-gray-700 dark:to-lime-700",
   extraClass
 )
 ---
+<div class="flex justify-center text-sm lg:text-xl text-gray-900 dark:text-white">
+  { view == "alt" ? <div class="flex flex-col justify-center items-center gap-2">
+      <div class="text-xl font-medium text-center w-4/5 md:w-2/3 lg:w-1/2">
+        &ldquo;<slot name="quote" />&rdquo;
+      </div>
 
-<div class={cls}>
-  <div class="text-sm flex flex-row gap-4 font-serif">
-    <div class="size-8 shrink-0 flex flex-row items-center justify-center text-center text-middle rounded-full bg-gray-500 text-white">
-      <slot name="avatar" />
+      <div class="w-full flex flex-row justify-center items-center text-gray-500 dark:text-gray-400">
+        <span class="font-medium">
+          <slot name="name" />
+        </span>
+
+        <Dot size="16" />
+
+        <span class="text-xs lg:text-sm">
+          <slot name="company" />
+        </span>
+      </div>
+    </div> :  <div class={cls}>
+    <div class="flex flex-row gap-4">
+      <div class="size-8 shrink-0 flex flex-row items-center justify-center text-center text-middle rounded-full bg-gray-500 text-white">
+        <slot name="avatar" />
+      </div>
+
+      <div class="w-full flex flex-row items-center">
+        <span class="font-medium">
+          <slot name="name" />
+        </span>
+
+        <Dot size="16" />
+
+        <span class="text-xs lg:text-sm">
+          <slot name="company" />
+        </span>
+
+        <span class="font-medium grow flex flex-row items-center justify-end">
+          { rating ? <span class="flex items-center gap-1">
+            <Star class="text-yellow-500 fill-yellow-500" size="12"/>
+            <span>
+              {rating}
+            </span>
+          </span> : <span>&rdquo;</span> }
+        </span>
+      </div>
     </div>
 
-    <div class="w-full flex flex-row items-center">
-      <span class="font-medium">
-        <slot name="name" />
-      </span>
+    <hr class="border border-lime-500/50" />
 
-      <Dot size="16" />
-
-      <span class="italic">
-        <slot name="company" />
-      </span>
-
-      <span class="font-medium grow flex flex-row items-center justify-end">
-        { rating ? <span class="flex items-center gap-1">
-          <Star class="text-yellow-500 fill-yellow-500" size="12"/>
-          <span>
-            {rating}
-          </span>
-        </span> : <span>&rdquo;</span> }
-      </span>
+    <div class="font-sans">
+      &ldquo;<slot name="quote" />&rdquo;
     </div>
   </div>
-
-  <hr class="border border-lime-500/50" />
-
-  <div class="font-sans">
-    &ldquo;<slot name="quote" />&rdquo;
-  </div>
+}
 </div>
