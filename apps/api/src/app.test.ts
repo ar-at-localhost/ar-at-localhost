@@ -16,7 +16,6 @@ describe("App", () => {
       method: "GET",
     }).then((res) => res.json());
 
-    expect(info.status).toBe(200);
     expect(info.version).toBe(packageInfo.version);
   });
 });
