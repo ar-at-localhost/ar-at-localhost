@@ -37,7 +37,7 @@ jobs:
         id: commit
         with:
           add: "."
-          author: github_actions
+          default_author: github_actions
           message: "ci: version packages"
           push: true
 
