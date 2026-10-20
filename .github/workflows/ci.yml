@@ -2,20 +2,11 @@ name: "CI"
 
 on:
   pull_request:
+    branches:
+      - main
 
 jobs:
-  quality:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v5
-      - uses: cachix/install-nix-action@v31
-
-      - name: Check & Test
-        env:
-          SECRETSPEC_PROFILE: "ci"
-          MONGODB_DB: "test_db_${{ github.run_id }}"
-          NODE_ENV: ci
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-        run: |
-          nix develop -c secretspec run pnpm quality
+  quality-checks:
+    uses: "ar-at-localhost/ar-at-localhost/.github/workflows/quality.yml@main"
+    secrets:
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}

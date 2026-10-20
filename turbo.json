@@ -4,6 +4,7 @@
     "CONTACT_PERSON_NAME",
     "CONTACT_PERSON_EMAIL",
     "CHROMIUM_PATH",
+    "DOCTL_TOKEN",
     "MAIL_FROM",
     "MAIL_SECURE",
     "MAIL_SERVER",
@@ -22,6 +23,7 @@
     "PUBLIC_SRV_URL",
     "RESEND_API_KEY",
     "SECRETSPEC_PROFILE",
+    "SITE_APP_ID",
     "SOPS_AGE_KEY"
   ],
   "tasks": {
@@ -71,6 +73,7 @@
     },
     "quality": {
       "dependsOn": [
+        "build",
         "check",
         "test",
         "test:e2e",

@@ -44,6 +44,9 @@ export const fastifyPlugin: FastifyPluginAsync = async (app) => {
   app.addHook("onClose", async () => {
     for (const connection of result?.connections || []) {
       await connection.close().catch(() => null);
+      await connection.destroy().catch(() => null);
     }
+
+    await mongoose.disconnect();
   });
 };

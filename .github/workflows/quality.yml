@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  quality-checks:
+  check:
     runs-on: ubuntu-latest
 
     steps:

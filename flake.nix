@@ -68,7 +68,7 @@
         inherit (self.checks.${system}.pre-commit-check) shellHook enabledPackages;
       in
         pkgs.mkShellNoCC {
-          packages = enabledPackages ++ [chromium crypt_shared playwright] ++ (with pkgs; [nodejs pnpm secretspec sops]);
+          packages = enabledPackages ++ [chromium crypt_shared playwright] ++ (with pkgs; [doctl nodejs pnpm secretspec sops]);
           shellHook =
             shellHook
             + ''
@@ -76,7 +76,7 @@
               export MONGO_CRYPT_LIB="${crypt_shared}/lib/mongo_crypt_v1.so"
               export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1;
               export CHROMIUM_PATH="${chromium}/bin/chromium"
-              pnpm install
+              pnpm install --frozen-lockfile
             '';
         }
     );
