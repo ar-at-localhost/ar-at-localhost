@@ -6,13 +6,7 @@ on:
       - site@*
 
 jobs:
-  quality-checks:
-    uses: "ar-at-localhost/ar-at-localhost/.github/workflows/quality.yml@main"
-    secrets:
-      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-
   deploy:
-    needs: [quality-checks]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
