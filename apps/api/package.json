@@ -36,7 +36,7 @@
   "scripts": {
     "build": "tsdown",
     "check": "pnpm format && pnpm lint && pnpm typecheck",
-    "dev": "node src/index.ts",
+    "dev": "node --watch src/index.ts",
     "fix": "pnpm format:fix && pnpm lint:fix",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",

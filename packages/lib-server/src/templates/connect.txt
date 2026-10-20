@@ -1,0 +1,15 @@
+<!-- TEMPLATE SYNTAX: mustache -->
+Hi {{ firstName }},
+
+Thank you for getting in touch and submitting your brief. This is an automated email to confirm that it has successfully arrived. I'll review it and be in touch with you soon.
+Please feel free to reply to this email with any additional details, or relevant documents. If you would prefer a quick chat, especially for urgent tasks, send me a WhatsApp message or reach out via Upwork, LinkedIn or Fiverr.
+
+{{#links}}
+{{#whatsapp}}WhatsApp: {{{.}}}{{/whatsapp}}
+{{#linkedin}}LinkedIn: {{{.}}}{{/linkedin}}
+{{#upwork}}Upwork: {{{.}}}{{/upwork}}
+{{#fiverr}}Fiverr: {{{.}}}{{/fiverr}}
+{{/links}}
+
+Best regards,
+Ahmad Raza

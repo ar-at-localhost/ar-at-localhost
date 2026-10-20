@@ -10,11 +10,7 @@ export type SendEmailPayload = {
   html?: string;
 };
 
-export type SendEmailResp = {
-  id?: string;
-  info?: SendmailSentMessageInfo;
-};
-
+export type SendEmailResp = Partial<SendmailSentMessageInfo>;
 export type MailClient = "nodemailer" | "resend";
 
 /**

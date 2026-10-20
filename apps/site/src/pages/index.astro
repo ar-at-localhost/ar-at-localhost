@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import logo from '../assets/logo.png';
+import logoLight from '../assets/logo-light.png';
 import Fiverr from '../assets/icons/brand-fiverr.svg';
 import Github from '../assets/icons/brand-github.svg';
 import Link from '../assets/icons/external-link.svg';
@@ -13,6 +14,7 @@ import { LinkBtn } from '../components/LinkBtn';
 import { Copyright, ExternalLink } from '@lucide/astro';
 import { Image } from 'astro:assets';
 import { ContactForm } from 'ui/site/contact-form';
+import AI from '../components/ai.astro'
 import Section from '../components/section.astro'
 import Services from '../components/services.astro'
 import Tech from '../components/tech.astro'
@@ -31,7 +33,6 @@ const { PUBLIC_SRV_URL } = import.meta.env;
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Ahmad Raza | ar-at-localhost</title>
@@ -43,7 +44,8 @@ const { PUBLIC_SRV_URL } = import.meta.env;
       <div class="h-auto gap-8 md:gap-16 lg:gap-8 flex flex-col lg:min-h-screen lg:gap-auto lg:flex-row items-center justify-around">
         <div class="pt-24 lg:pt-0 w-3/4 lg:w-2/5 flex flex-col gap-8 md:gap-16 font-serif">
           <div class="flex flex-col md:flex-row items-center gap-8 font-roboto">
-            <Image src={logo} class="size-16 md:size-24 rounded-full aspect-video" alt="Photo of Ahmad Raza" />
+            <Image src={logo} class="dark:hidden size-16 md:size-24 rounded-full" alt="Logo - ar-at-localhost" />
+            <Image src={logoLight} class="not-dark:hidden size-16 md:size-24 rounded-full" alt="Logo - ar-at-localhost" />
 
             <div class="flex flex-col gap-1 text-center md:text-start">
               <h1 class="uppercase font-bold text-4xl md:text-6xl">Ahmad Raza</h1>
@@ -87,7 +89,7 @@ const { PUBLIC_SRV_URL } = import.meta.env;
           </div>
 
           <div class="w-full flex flex-row items-center justify-center">
-            <Testmonial rating="5.0">
+            <Testmonial rating="5.0" view="alt">
               <span slot="avatar">A</span>
               <span slot="name">Aqdas R.</span>
               <span slot="company">npmCode</span>
@@ -107,6 +109,7 @@ const { PUBLIC_SRV_URL } = import.meta.env;
 
     <Services />
     <Tech />
+    <AI />
 
     <div class="text-center md:absolute md:text-left md:bottom-4 md:left-32 lg:bottom-4">
       <span class=" text-xs text-gray-500 dark:text-gray-100">

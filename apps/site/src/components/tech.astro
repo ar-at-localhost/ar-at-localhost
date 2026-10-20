@@ -4,16 +4,20 @@ import Section from './section.astro';
 import Testmonial from './testimonial.astro';
 import TechCard from './tech-card.astro';
 import Angular from '../assets/icons/brand-angular.svg';
+import AstroLogo from '../assets/icons/brand-astro.svg';
 import CSS from '../assets/icons/brand-css3.svg';
 import Docker from '../assets/icons/brand-docker.svg';
+import Handlebars from '../assets/icons/handlebars.svg';
 import HTML from '../assets/icons/brand-html5.svg';
 import JavaScript from '../assets/icons/brand-javascript.svg';
+import MJML from '../assets/icons/mjml.svg';
 import MongoDB from '../assets/icons/brand-mongodb.svg';
 import MySQL from '../assets/icons/brand-mysql.svg';
 import NodeJS from '../assets/icons/brand-nodejs.svg';
 import Python from '../assets/icons/brand-python.svg';
 import React from '../assets/icons/brand-react.svg';
 import Svelte from '../assets/icons/brand-svelte.svg';
+import Terminal from '../assets/icons/terminal-2.svg';
 import TypeScript from '../assets/icons/brand-typescript.svg';
 ---
 
@@ -23,7 +27,7 @@ import TypeScript from '../assets/icons/brand-typescript.svg';
       <h2 class="font-bold px-4 md:px-0 text-center text-xl md:text-2xl lg:text-6xl">I work with every technology needed for feature-rich apps.</h2>
     </div>
 
-    <div class="flex flex-row flex-wrap items-center md:items-stretch justify-center gap-16 text-gray-500 dark:text-gray-300">
+    <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-16 text-gray-500 dark:text-gray-300">
       <TechCard>
         <HTML slot="icon" class="size-full"/>
         HTML
@@ -83,11 +87,31 @@ import TypeScript from '../assets/icons/brand-typescript.svg';
         <Python slot="icon" class="size-full"/>
         Python
       </TechCard>
+
+      <TechCard>
+        <AstroLogo slot="icon" class="size-full"/>
+        Astro
+      </TechCard>
+
+      <TechCard>
+        <MJML slot="icon" class="size-full"/>
+        MJML
+      </TechCard>
+
+      <TechCard>
+        <Handlebars slot="icon" class="size-full"/>
+        Handlebars
+      </TechCard>
+
+      <TechCard>
+        <AstroLogo slot="icon" class="size-full"/>
+        Bash
+      </TechCard>
     </div>
   </div>
 
   <div class="flex justify-center">
-    <Testmonial extraClass="min-w-1/2">
+    <Testmonial extraClass="min-w-1/2" view="alt">
       <span slot="avatar">L</span>
       <span slot="name">Lorenzo D.</span>
       <span slot="company">Polaris</span>

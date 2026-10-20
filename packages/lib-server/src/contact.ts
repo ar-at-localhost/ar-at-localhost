@@ -1,8 +1,9 @@
 import { model, Schema } from "mongoose";
-import { getMongoDEKs } from "./env.ts";
+import { getMongoDEKs, isProduction } from "./env.ts";
 import { pipe, rfcEmail, safeParse, string } from "valibot";
 import { UUID } from "mongodb";
 import { sendMail } from "./mailer/index.ts";
+import { renderConnectTemplate, renderConnectTextTemplate } from "./templates/connect.ts";
 
 /**
  * Contact Schema for mongoose
@@ -65,7 +66,7 @@ const contactSchema = new Schema(
   },
 );
 
-contactSchema.post("save", (doc) => {
+contactSchema.post("save", async (doc) => {
   const { CONTACT_PERSON_NAME, CONTACT_PERSON_EMAIL } = process.env;
   const { firstName, lastName, email } = doc;
   const bcc = [
@@ -74,20 +75,28 @@ contactSchema.post("save", (doc) => {
       : "",
   ].filter((i) => !!i);
 
-  // PERF: DO NOT AWAIT as that may delay or fail API request
-  sendMail({
+  const data = {
+    firstName,
+    links: {
+      fiverr: "https://www.fiverr.com/s/gvvXllo",
+      linkedin: "https://linkedin.com/in/ar124officialwd",
+      upwork: "https://www.upwork.com/freelancers/~013dd6d70690822d44",
+      whatsapp: "https://wa.me/923011353415",
+    },
+  };
+
+  const mailPromise = sendMail({
     subject: "Brief received - Thank you",
     to: `${firstName}${lastName ? " " + lastName : ""} <${email}>`,
     bcc,
-    text: `Hi ${firstName},
+    text: await renderConnectTextTemplate(data),
+    html: await renderConnectTemplate(data),
+  }).catch(() => null);
 
-Thank you for getting in touch and submitting your brief. This is an automated email to confirm that it has successfully arrived.
-I'll review it and be in touch with you soon.
-
-Best regards,
-${CONTACT_PERSON_NAME}
-`,
-  });
+  // PERF: DO NOT AWAIT as that may delay or fail API request
+  if (!isProduction()) {
+    await mailPromise;
+  }
 });
 
 export const ContactModel = model("Contact", contactSchema);

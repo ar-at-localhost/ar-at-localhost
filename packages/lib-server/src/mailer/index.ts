@@ -25,7 +25,7 @@ export const sendMail = async (
 
   return transport.sendMail(finalOpts).then((res) => {
     if (isTest) {
-      const previewUrl = getTestMessageUrl(res.info);
+      const previewUrl = getTestMessageUrl(res);
       console.info("Test email sent:", previewUrl);
     }
 

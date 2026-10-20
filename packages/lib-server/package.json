@@ -28,6 +28,7 @@
     }
   },
   "scripts": {
+    "compile-templates": "node src/compile-mjml.ts",
     "build": "tsdown",
     "dev": "tsdown --watch",
     "format": "oxfmt --check",
@@ -41,12 +42,17 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
+    "globby": "^16.2.4",
     "lib": "workspace:*",
+    "mjml": "^5.4.1",
+    "mustache": "^4.2.0",
     "nodemailer": "catalog:",
     "resend": "catalog:"
   },
   "devDependencies": {
     "@ngneat/falso": "catalog:",
+    "@types/mjml": "^5.0.0",
+    "@types/mustache": "^4.2.6",
     "@types/node": "catalog:",
     "bumpp": "^12.3.0",
     "fastify": "catalog:",

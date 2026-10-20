@@ -1,8 +1,5 @@
-import "lib/env.d.ts";
+export {};
 
-declare namespace NodeJS {
-  interface ProcessEnv {
-    PUBLIC_SRV_URL: string;
-    PORT: string;
-  }
-}
+import "lib/env.d.ts";
+import "lib-server/env.d.ts";
+import "templates/env.d.ts";

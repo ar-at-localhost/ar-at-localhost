@@ -1,29 +1,30 @@
 {
   "name": "ar-at-localhost",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "exports": {
+    ".": "./apps/apis/dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "turbo build",
+    "check": "oxfmt && oxlint && turbo check",
+    "cs": "pnpm changeset",
+    "dev": "turbo dev",
+    "fix": "oxfmt --write && oxlint --fix && turbo fix",
+    "quality": "turbo run --force true quality",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e"
+  },
   "devDependencies": {
+    "@astrojs/compiler-rs": "^0.5.1",
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "turbo": "2.11.0"
   },
-  "exports": {
-    ".": "./apps/apis/dist/index.mjs",
-    "./package.json": "./package.json"
-  },
-  "packageManager": "pnpm@11.27.0",
-  "scripts": {
-    "build": "turbo build",
-    "check": "turbo check",
-    "cs": "pnpm changeset",
-    "dev": "turbo dev",
-    "fix": "turbo fix",
-    "quality": "turbo run --force true quality",
-    "test": "turbo test",
-    "test:e2e": "turbo test:e2e"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "pnpm@11.27.0"
 }
