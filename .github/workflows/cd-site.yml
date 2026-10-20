@@ -19,6 +19,8 @@ jobs:
           NODE_ENV: ci
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
-          nix develop -c doctl app update "$SITE_APP_ID" \
-          --access-token "$DOCTL_TOKEN" \
-          --spec "apps/site/.do/app.yaml"
+          nix develop -c secretspec run -- bash -euo pipefail -c '
+            doctl app update "$SITE_APP_ID" \
+              --access-token "$DOCTL_TOKEN" \
+              --spec "apps/site/.do/app.yaml"
+          '
