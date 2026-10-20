@@ -1,5 +1,11 @@
 # api
 
+## 0.0.4
+
+### Patch Changes
+
+- [#11](https://github.com/ar-at-localhost/ar-at-localhost/pull/11) [`ac671df`](https://github.com/ar-at-localhost/ar-at-localhost/commit/ac671dfc908b4720e645ec7a70e2a240bed35646) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - feat: added new api /version
+
 ## 0.0.3
 
 ### Patch Changes
