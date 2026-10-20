@@ -22,13 +22,16 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+
     steps:
       - uses: actions/checkout@v5
+        with:
+          # IMPORANT: Use PAT with this job so that pushed tags will eventually trigger other workflows.
+          # When using Github Actions token -- it wouldn't trigger other flows based on tag push.
+          token: ${{ secrets.RELEASE_TOKEN }}
       - uses: cachix/install-nix-action@v31
 
       - name: Version packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           nix develop -c pnpm changeset version
 
