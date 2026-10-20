@@ -1,5 +1,11 @@
 # site
 
+## 0.0.5
+
+### Patch Changes
+
+- [`3794634`](https://github.com/ar-at-localhost/ar-at-localhost/commit/3794634a50f80c4b7d6acea16fe774a8cccf3315) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - style(site): fix typo and resize testmonial card
+
 ## 0.0.4
 
 ### Patch Changes
