@@ -29,13 +29,25 @@ jobs:
           # IMPORANT: Use PAT with this job so that pushed tags will eventually trigger other workflows.
           # When using Github Actions token -- it wouldn't trigger other flows based on tag push.
           token: ${{ secrets.RELEASE_TOKEN }}
+          fetch-depth: 0
       - uses: cachix/install-nix-action@v31
 
+      - name: Check changesets
+        id: changesets-detection
+        run: |
+          echo 'has_changeset=false' >> "$GITHUB_OUTPUT"
+
+          if find .changeset -maxdepth 1 -type f -name '*.md' ! -name 'README.md' -print -quit | grep -q .; then
+            echo 'has_changeset=true' >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Version packages
+        if: steps.changesets-detection.outputs.has_changeset == 'true'
         run: |
           nix develop -c pnpm changeset version
 
       - name: Commit versions
+        if: steps.changesets-detection.outputs.has_changeset == 'true'
         uses: EndBug/add-and-commit@v11
         id: commit
         with:
@@ -45,7 +57,7 @@ jobs:
           push: "--set-upstream origin main --no-verify"
 
       - name: Tag packages
-        if: steps.commit.outputs.committed == 'true'
+        if: steps.changesets-detection.outputs.has_changeset == 'true' && steps.commit.outputs.committed == 'true'
         run: |
           nix develop -c pnpm changeset git-tag
           git push origin --no-verify --tags
