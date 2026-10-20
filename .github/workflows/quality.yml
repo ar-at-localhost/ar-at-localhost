@@ -1,6 +1,7 @@
 name: "Quality Checks"
 
 on:
+  workflow_dispatch:
   workflow_call:
     secrets:
       SOPS_AGE_KEY:
