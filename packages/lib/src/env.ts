@@ -1,7 +1,6 @@
 /**
  * Get port of a running server
  */
-
 export const getHost = () => {
   return process.env.HOST!;
 };

@@ -45,7 +45,7 @@ export const ContactForm: FC<Props> = ({ apiBase }) => {
 
       <CardContent>
         {!submissionId ? (
-          <Form of={form} id="contact-form" onSubmit={handleSubmit}>
+          <Form of={form} id="contact-form" onSubmit={handleSubmit} data-testid="contact-form">
             <FieldGroup>
               <FField of={form} path={["firstName"]}>
                 {(field) => (
@@ -125,7 +125,10 @@ export const ContactForm: FC<Props> = ({ apiBase }) => {
             </FieldGroup>
           </Form>
         ) : (
-          <div className="flex flex-col items-center gap-4 px-4 py-16">
+          <div
+            className="flex flex-col items-center gap-4 px-4 py-16"
+            data-testid="brief-submit-success"
+          >
             <CheckCircle size={96} className="text-green-500" />
 
             <div className="text-center">
@@ -168,8 +171,8 @@ export const ContactForm: FC<Props> = ({ apiBase }) => {
                 </Button>
               ) : (
                 <span>
-                  Your email and message is stored in encrypted format. I don't share it with
-                  anyone. You may request deletion anytime by sending me an mail{" "}
+                  Your email and message is stored in encrypted format. I do not share it with
+                  anyone. You may request deletion anytime by sending me an mail at
                   <a href="mailto:pro.se.ahmad.raza.1@gmail.com">pro.se.ahmad.raza.1@gmail.com</a>.
                 </span>
               )}
