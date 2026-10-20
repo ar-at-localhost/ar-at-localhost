@@ -1,0 +1,24 @@
+name: "Quality Checks"
+
+on:
+  workflow_call:
+    secrets:
+      SOPS_AGE_KEY:
+        required: true
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+
+      - name: Check & Test
+        env:
+          SECRETSPEC_PROFILE: "ci"
+          MONGODB_DB: "test_db_${{ github.run_id }}"
+          NODE_ENV: ci
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          nix develop -c secretspec run pnpm quality
