@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
+  "baseBranch": "main",
+  "access": "restricted",
+  "format": "auto",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "ar-at-localhost/ar-at-localhost"
+    }
+  ],
+  "ignore": [],
+  "fixed": [],
+  "linked": [],
+  "privatePackages": {
+    "version": true,
+    "tag": true
+  },
+  "updateInternalDependencies": "patch"
+}

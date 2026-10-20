@@ -1,6 +1,8 @@
 {
   "name": "ar-at-localhost",
   "devDependencies": {
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "turbo": "2.11.0"
@@ -13,6 +15,7 @@
   "scripts": {
     "build": "turbo build",
     "check": "turbo check",
+    "cs": "pnpm changeset",
     "dev": "turbo dev",
     "fix": "turbo fix",
     "quality": "turbo run --force true quality",

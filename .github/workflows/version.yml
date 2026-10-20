@@ -1,0 +1,48 @@
+name: Version Packages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  quality-checks:
+    uses: "ar-at-localhost/ar-at-localhost/.github/workflows/quality.yml@main"
+    secrets:
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
+  version:
+    needs: quality-checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+
+      - name: Version packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          nix develop -c pnpm changeset version
+
+      - name: Commit versions
+        uses: EndBug/add-and-commit@v11
+        id: commit
+        with:
+          add: "."
+          author: github_actions
+          message: "ci: version packages"
+          push: true
+
+      - name: Tag packages
+        if: steps.commit.outputs.committed == 'true'
+        run: |
+          nix develop -c pnpm changeset git-tag
+          git push origin --tags

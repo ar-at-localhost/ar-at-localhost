@@ -8,7 +8,7 @@ gitdir=$(git rev-parse --show-toplevel)
 src=$(dirname "$gitdir")
 
 while read -r oldrev newrev ref; do
-  case $ref in refs/tags/api-v*)
+  case $ref in refs/tags/api@*)
     TAG="${ref#refs/tags/}"
     ;;
   *)
@@ -20,8 +20,7 @@ while read -r oldrev newrev ref; do
   git --work-tree "$src" checkout --force --detach "$TAG"
   cd "$src"
   nix develop -c bash -euo pipefail -c '
-    pnpm install
-    pnpm --filter api build
+    pnpm turbo run --filter api build
     cp -f apps/api/api.service /etc/systemd/system/
     systemctl daemon-reload
     systemctl enable api.service
