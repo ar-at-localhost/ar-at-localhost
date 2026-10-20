@@ -45,4 +45,4 @@ jobs:
         if: steps.commit.outputs.committed == 'true'
         run: |
           nix develop -c pnpm changeset git-tag
-          git push origin --tags
+          git push origin --no-verify --tags
