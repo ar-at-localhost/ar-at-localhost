@@ -1,5 +1,29 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
+  "globalEnv": [
+    "CONTACT_PERSON_NAME",
+    "CONTACT_PERSON_EMAIL",
+    "CHROMIUM_PATH",
+    "MAIL_FROM",
+    "MAIL_SECURE",
+    "MAIL_SERVER",
+    "MAIL_PORT",
+    "MAIL_USER",
+    "MAIL_PWD",
+    "MONGO_CRYPT_LIB",
+    "MONGODB_DB",
+    "MONGODB_DEK_CONTACT_EMAIL",
+    "MONGODB_DEK_CONTACT_MESSAGE",
+    "MONGODB_ENC_KEY",
+    "MONGODB_URI",
+    "NODE_ENV",
+    "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD",
+    "PORT",
+    "PUBLIC_SRV_URL",
+    "RESEND_API_KEY",
+    "SECRETSPEC_PROFILE",
+    "SOPS_AGE_KEY"
+  ],
   "tasks": {
     "build": {
       "dependsOn": [
@@ -45,29 +69,21 @@
         "^lint:fix",
       ]
     },
+    "quality": {
+      "dependsOn": [
+        "check",
+        "test",
+        "test:e2e",
+      ]
+    },
     "test": {
       "dependsOn": [
         "^test",
-      ],
-      "env": [
-        "CONTACT_PERSON_NAME",
-        "CONTACT_PERSON_EMAIL",
-        "MAIL_FROM",
-        "MAIL_SECURE",
-        "MAIL_SERVER",
-        "MAIL_PORT",
-        "MAIL_USER",
-        "MAIL_PWD",
-        "MONGO_CRYPT_LIB",
-        "MONGODB_DB",
-        "MONGODB_DEK_CONTACT_EMAIL",
-        "MONGODB_DEK_CONTACT_MESSAGE",
-        "MONGODB_ENC_KEY",
-        "MONGODB_URI",
-        "NODE_ENV",
-        "PORT",
-        "PUBLIC_SRV_URL",
-        "RESEND_API_KEY"
+      ]
+    },
+    "test:e2e": {
+      "dependsOn": [
+        "^test:e2e",
       ]
     },
     "typecheck": {

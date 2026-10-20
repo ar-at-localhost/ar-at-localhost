@@ -10,22 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
-      - uses: cachix/cachix-action@v16
-        with:
-          name: devenv
-
-      - name: Install deps
-        run: |
-          nix profile add .#crypt_shared .#nodejs .#oxfmt .#oxlint .#pnpm .#secretspec .#sops
-          pnpm install
 
       - name: Check & Test
         env:
           SECRETSPEC_PROFILE: "ci"
-          MONGO_CRYPT_LIB: "/home/runner/.nix-profile/lib/mongo_crypt_v1.so"
           MONGODB_DB: "test_db_${{ github.run_id }}"
           NODE_ENV: ci
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
-          secretspec run pnpm check
-          secretspec run pnpm test
+          nix develop -c secretspec run pnpm quality

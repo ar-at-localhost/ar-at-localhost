@@ -1,6 +1,8 @@
 {
   "name": "ar-at-localhost",
   "devDependencies": {
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
     "turbo": "2.11.0"
   },
   "exports": {
@@ -13,6 +15,12 @@
     "check": "turbo check",
     "dev": "turbo dev",
     "fix": "turbo fix",
-    "test": "turbo test"
-  }
+    "quality": "turbo run --force true quality",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

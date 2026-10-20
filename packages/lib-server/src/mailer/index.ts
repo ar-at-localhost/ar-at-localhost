@@ -19,6 +19,7 @@ export const sendMail = async (
   const finalOpts = {
     ...opts,
     from: opts.from || MAIL_FROM!,
+    subject: isCI ? `[TEST] ${opts.subject}` : opts.subject,
     to: (isCI ? contactPerson : opts.to) || contactPerson!,
   };
 

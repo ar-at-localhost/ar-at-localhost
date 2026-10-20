@@ -28,6 +28,9 @@ node_modules
 # pre-commit
 .pre-commit-config.yaml
 
+# tests
+test-results/
+
 # turbo
 .turbo
 
