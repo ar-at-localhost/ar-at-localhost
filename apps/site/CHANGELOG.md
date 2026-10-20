@@ -1,5 +1,11 @@
 # site
 
+## 0.0.4
+
+### Patch Changes
+
+- [`eb4df56`](https://github.com/ar-at-localhost/ar-at-localhost/commit/eb4df569024a480d39719dfb428541cd9382ad91) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - style(ui/ux): introduce logo and prefer flat design for mobile
+
 ## 0.0.3
 
 ### Patch Changes
