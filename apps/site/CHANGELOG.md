@@ -1,5 +1,13 @@
 # site
 
+## 0.0.7
+
+### Patch Changes
+
+- [`4909f03`](https://github.com/ar-at-localhost/ar-at-localhost/commit/4909f03a4f18d4886d1624b40c8c9cd3cbad3f23) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Added linkedin logo
+- Updated dependencies []:
+  - ui@0.0.0
+
 ## 0.0.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # lib-server
 
+## 0.0.3
+
+### Patch Changes
+
+- [`930292c`](https://github.com/ar-at-localhost/ar-at-localhost/commit/930292c69a9f3893d6dd74a132ccbd2395b87562) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Fix connect email template
+
 ## 0.0.2
 
 ### Patch Changes
