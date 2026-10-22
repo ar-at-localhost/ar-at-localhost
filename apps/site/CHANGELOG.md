@@ -1,5 +1,13 @@
 # site
 
+## 0.0.8
+
+### Patch Changes
+
+- [`1e3f3b3`](https://github.com/ar-at-localhost/ar-at-localhost/commit/1e3f3b353f5dc27f7fef0f3c5f139aac1dae3f58) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Use png assets for email
+- Updated dependencies []:
+  - ui@0.0.0
+
 ## 0.0.7
 
 ### Patch Changes
