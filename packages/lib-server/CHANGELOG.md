@@ -1,5 +1,11 @@
 # lib-server
 
+## 0.0.5
+
+### Patch Changes
+
+- [`32a6054`](https://github.com/ar-at-localhost/ar-at-localhost/commit/32a6054e9a6bd927a7060fd7f922cc33f598612c) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Update logo in email template
+
 ## 0.0.4
 
 ### Patch Changes

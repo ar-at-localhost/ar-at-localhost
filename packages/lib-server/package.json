@@ -1,6 +1,6 @@
 {
   "name": "lib-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "description": "Library of server side shared artifacts",
   "homepage": "https://github.com/ar-at-localhost/ar-at-localhost",

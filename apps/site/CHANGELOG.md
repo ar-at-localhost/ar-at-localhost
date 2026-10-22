@@ -1,5 +1,13 @@
 # site
 
+## 0.0.9
+
+### Patch Changes
+
+- [`32a6054`](https://github.com/ar-at-localhost/ar-at-localhost/commit/32a6054e9a6bd927a7060fd7f922cc33f598612c) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Update logo in email template
+- Updated dependencies []:
+  - ui@0.0.0
+
 ## 0.0.8
 
 ### Patch Changes
