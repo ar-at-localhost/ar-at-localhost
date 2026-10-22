@@ -38,45 +38,45 @@
     {{#links}}
     <mj-section>
       {{#whatsapp}}
-      <mj-column width="96px">
+      <mj-column>
         <mj-image
           href="{{whatsapp}}"
           width="96px"
           height="96px"
-          src="https://ar-at-localhost.site/brand-whatsapp.svg"
+          src="https://ar-at-localhost.site/brand-whatsapp.png"
         ></mj-image>
       </mj-column>
       {{/whatsapp}}
 
       {{#linkedin}}
-      <mj-column width="96px">
+      <mj-column>
         <mj-image
           href="{{linkedin}}"
           width="96px"
           height="96px"
-          src="https://ar-at-localhost.site/brand-linkedin.svg"
+          src="https://ar-at-localhost.site/brand-linkedin.png"
         ></mj-image>
       </mj-column>
       {{/linkedin}}
 
       {{#upwork}}
-      <mj-column width="96px">
+      <mj-column>
         <mj-image
           href="{{upwork}}"
           width="96px"
           height="96px"
-          src="https://ar-at-localhost.site/brand-upwork.svg"
+          src="https://ar-at-localhost.site/brand-upwork.png"
         ></mj-image>
       </mj-column>
       {{/upwork}}
 
       {{#fiverr}}
-      <mj-column width="96px">
+      <mj-column>
         <mj-image
           href="{{fiverr}}"
           width="96px"
           height="96px"
-          src="https://ar-at-localhost.site/brand-fiverr.svg"
+          src="https://ar-at-localhost.site/brand-fiverr.png"
         ></mj-image>
       </mj-column>
       {{/fiverr}}

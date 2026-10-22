@@ -14,7 +14,7 @@
     "cs": "pnpm changeset",
     "dev": "turbo dev",
     "fix": "oxfmt --write && oxlint --fix && turbo fix",
-    "quality": "turbo run --force true quality",
+    "quality": "turbo run quality",
     "test": "turbo test",
     "test:e2e": "turbo test:e2e"
   },

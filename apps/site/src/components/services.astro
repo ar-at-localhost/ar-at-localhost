@@ -1,6 +1,6 @@
 ---
 import ConnectLink from './connect-link.astro';
-import ServiceBullet from './service-bullet.astro';
+import Bullet from './bullet.astro';
 import { Button } from "ui/components/button";
 import { LayoutTemplate, Settings, SquareDashed, Rocket } from '@lucide/astro';
 import {Card, CardTitle} from "ui/components/card";
@@ -23,37 +23,37 @@ import Testmonial from './testimonial.astro';
       <ServiceCard title="Back-End Services">
         <Settings size="96" />
         <div slot="desc" class="flex flex-col gap-1">
-          <ServiceBullet>REST APIs</ServiceBullet>
-          <ServiceBullet>Socket communication</ServiceBullet>
-          <ServiceBullet>External systems integration</ServiceBullet>
-          <ServiceBullet>Scripts and automations</ServiceBullet>
-          <ServiceBullet>Microservices</ServiceBullet>
+          <Bullet>REST APIs</Bullet>
+          <Bullet>Socket communication</Bullet>
+          <Bullet>External systems integration</Bullet>
+          <Bullet>Scripts and automations</Bullet>
+          <Bullet>Microservices</Bullet>
         </div>
       </ServiceCard>
 
       <ServiceCard title="Front-End / UI/UX">
         <SquareDashed size="96" />
         <div slot="desc">
-          <ServiceBullet>Interactive apps</ServiceBullet>
-          <ServiceBullet>Static Sites</ServiceBullet>
-          <ServiceBullet>Micro-Frontends</ServiceBullet>
-          <ServiceBullet>Server side rendering</ServiceBullet>
-          <ServiceBullet>Back-End integrations</ServiceBullet>
-          <ServiceBullet>Pixel Perfect UIs</ServiceBullet>
-          <ServiceBullet>User Experience</ServiceBullet>
+          <Bullet>Interactive apps</Bullet>
+          <Bullet>Static Sites</Bullet>
+          <Bullet>Micro-Frontends</Bullet>
+          <Bullet>Server side rendering</Bullet>
+          <Bullet>Back-End integrations</Bullet>
+          <Bullet>Pixel Perfect UIs</Bullet>
+          <Bullet>User Experience</Bullet>
         </div>
       </ServiceCard>
 
       <ServiceCard title="Deployments">
         <Rocket size="96"/>
         <div slot="desc">
-          <ServiceBullet>Vercel</ServiceBullet>
-          <ServiceBullet>Heroku</ServiceBullet>
-          <ServiceBullet>DigitalOcean</ServiceBullet>
-          <ServiceBullet>Linux VPS Deployments</ServiceBullet>
-          <ServiceBullet>Containers</ServiceBullet>
-          <ServiceBullet>Microservices</ServiceBullet>
-          <ServiceBullet>Nix & Ecosystem</ServiceBullet>
+          <Bullet>Vercel</Bullet>
+          <Bullet>Heroku</Bullet>
+          <Bullet>DigitalOcean</Bullet>
+          <Bullet>Linux VPS Deployments</Bullet>
+          <Bullet>Containers</Bullet>
+          <Bullet>Microservices</Bullet>
+          <Bullet>Nix & Ecosystem</Bullet>
         </div>
       </ServiceCard>
     </div>

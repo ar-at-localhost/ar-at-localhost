@@ -17,13 +17,19 @@ export default defineConfig({
       name: "Website",
       reuseExistingServer: !process.env.CI,
       url: "http://localhost:4321",
+      env: {
+        PUBLIC_SRV_URL: "http://localhost:5001",
+      },
     },
     {
       command: "secretspec run pnpm --filter api dev",
       ignoreHTTPSErrors: true,
       name: "API Server",
       reuseExistingServer: !process.env.CI,
-      port: 5000,
+      port: 5001,
+      env: {
+        PORT: "5001",
+      },
     },
   ],
 });

@@ -47,6 +47,7 @@
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "playwright": "catalog:",
+    "typescript": "catalog:",
     "vite": "^8.3.4",
     "vitest": "catalog:"
   },
