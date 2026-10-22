@@ -12,7 +12,7 @@
   <mj-body background-color="#f1f5f9">
     <mj-section background-color="#cad5e2">
       <mj-column vertical-align="middle">
-        <mj-image width="64px" src="https://ar-at-localhost.site/favicon.svg"></mj-image>
+        <mj-image width="64px" src="https://ar-at-localhost.site/favicon.png"></mj-image>
       </mj-column>
     </mj-section>
 
