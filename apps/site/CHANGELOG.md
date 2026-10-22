@@ -1,5 +1,13 @@
 # site
 
+## 0.0.6
+
+### Patch Changes
+
+- [#12](https://github.com/ar-at-localhost/ar-at-localhost/pull/12) [`b8f5294`](https://github.com/ar-at-localhost/ar-at-localhost/commit/b8f5294cb61a47a3e5b02dbe08e9b2935c858ddd) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Introduce AI policy and improve ui/ux
+- Updated dependencies []:
+  - ui@0.0.0
+
 ## 0.0.5
 
 ### Patch Changes
