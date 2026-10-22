@@ -41,7 +41,8 @@
       <mj-column width="96px">
         <mj-image
           href="{{whatsapp}}"
-          width="64px"
+          width="96px"
+          height="96px"
           src="https://ar-at-localhost.site/brand-whatsapp.svg"
         ></mj-image>
       </mj-column>
@@ -51,7 +52,8 @@
       <mj-column width="96px">
         <mj-image
           href="{{linkedin}}"
-          width="64px"
+          width="96px"
+          height="96px"
           src="https://ar-at-localhost.site/brand-linkedin.svg"
         ></mj-image>
       </mj-column>
@@ -61,7 +63,8 @@
       <mj-column width="96px">
         <mj-image
           href="{{upwork}}"
-          width="64px"
+          width="96px"
+          height="96px"
           src="https://ar-at-localhost.site/brand-upwork.svg"
         ></mj-image>
       </mj-column>
@@ -70,8 +73,9 @@
       {{#fiverr}}
       <mj-column width="96px">
         <mj-image
-          href=""
-          width="64px"
+          href="{{fiverr}}"
+          width="96px"
+          height="96px"
           src="https://ar-at-localhost.site/brand-fiverr.svg"
         ></mj-image>
       </mj-column>
