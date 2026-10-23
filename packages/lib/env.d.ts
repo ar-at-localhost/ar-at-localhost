@@ -5,6 +5,8 @@ declare global {
     interface ProcessEnv {
       CHROMIUM_PATH: string;
       MONGODB_URI: string;
+      PORT: string;
+      TEST_PORT: string;
     }
   }
 

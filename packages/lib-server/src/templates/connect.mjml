@@ -37,49 +37,37 @@
 
     {{#links}}
     <mj-section>
-      {{#whatsapp}}
       <mj-column>
-        <mj-image
-          href="{{whatsapp}}"
-          width="96px"
-          height="96px"
-          src="https://ar-at-localhost.site/brand-whatsapp.png"
-        ></mj-image>
-      </mj-column>
-      {{/whatsapp}}
+        <mj-social>
+          {{#whatsapp}}
+          <mj-social-element
+            href="{{whatsapp}}"
+            src="https://ar-at-localhost.site/brand-whatsapp.png"
+          />
+          {{/whatsapp}}
 
-      {{#linkedin}}
-      <mj-column>
-        <mj-image
-          href="{{linkedin}}"
-          width="96px"
-          height="96px"
-          src="https://ar-at-localhost.site/brand-linkedin.png"
-        ></mj-image>
-      </mj-column>
-      {{/linkedin}}
+          {{#linkedin}}
+          <mj-social-element
+            href="{{linkedin}}"
+            src="https://ar-at-localhost.site/brand-linkedin.png"
+          />
+          {{/linkedin}}
 
-      {{#upwork}}
-      <mj-column>
-        <mj-image
-          href="{{upwork}}"
-          width="96px"
-          height="96px"
-          src="https://ar-at-localhost.site/brand-upwork.png"
-        ></mj-image>
-      </mj-column>
-      {{/upwork}}
+          {{#upwork}}
+          <mj-social-element
+            href="{{upwork}}"
+            src="https://ar-at-localhost.site/brand-upwork.png"
+          />
+          {{/upwork}}
 
-      {{#fiverr}}
-      <mj-column>
-        <mj-image
-          href="{{fiverr}}"
-          width="96px"
-          height="96px"
-          src="https://ar-at-localhost.site/brand-fiverr.png"
-        ></mj-image>
+          {{#fiverr}}
+          <mj-social-element
+            href="{{fiverr}}"
+            src="https://ar-at-localhost.site/brand-fiverr.png"
+          />
+          {{/fiverr}}
+        </mj-social>
       </mj-column>
-      {{/fiverr}}
     </mj-section>
     {{/links}}
 
