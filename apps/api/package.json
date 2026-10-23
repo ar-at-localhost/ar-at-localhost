@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": true,
   "description": "API services of ar-at-localhost",
   "homepage": "https://github.com/ar-at-localhost/ar-at-localhost",
