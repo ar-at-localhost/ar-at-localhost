@@ -1,5 +1,11 @@
 # lib-server
 
+## 0.0.6
+
+### Patch Changes
+
+- [`413bce2`](https://github.com/ar-at-localhost/ar-at-localhost/commit/413bce26476fe5e976c77faadb9013bc8c9d0b45) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Update email template social icons
+
 ## 0.0.5
 
 ### Patch Changes

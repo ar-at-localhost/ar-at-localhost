@@ -1,5 +1,12 @@
 # api
 
+## 0.0.9
+
+### Patch Changes
+
+- Updated dependencies [[`413bce2`](https://github.com/ar-at-localhost/ar-at-localhost/commit/413bce26476fe5e976c77faadb9013bc8c9d0b45)]:
+  - lib-server@0.0.6
+
 ## 0.0.8
 
 ### Patch Changes

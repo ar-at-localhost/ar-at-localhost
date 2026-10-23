@@ -1,5 +1,13 @@
 # site
 
+## 0.0.10
+
+### Patch Changes
+
+- [`fd5f178`](https://github.com/ar-at-localhost/ar-at-localhost/commit/fd5f1789d81b9eefa5dd972b72d2eb3a0cf0ddfa) Thanks [@ar-at-localhost](https://github.com/ar-at-localhost)! - Improved UI/UX
+- Updated dependencies []:
+  - ui@0.0.0
+
 ## 0.0.9
 
 ### Patch Changes
