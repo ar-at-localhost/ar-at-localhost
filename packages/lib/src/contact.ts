@@ -78,3 +78,16 @@ export const getFalseContact = (): ContactBody => ({
   message: randText({ charCount: 128 }),
   markdown: false,
 });
+
+/**
+ * Contact Links
+ */
+export const links = {
+  fiverr: "https://www.fiverr.com/s/gvvXllo",
+  form: "#contact-form-container",
+  github: "https://github.com/ar-at-localhost",
+  linkedin: "https://linkedin.com/in/ar124officialwd",
+  mail: "mailto:pro.se.ahmad.raza.1@gmail.com",
+  upwork: "https://www.upwork.com/freelancers/~013dd6d70690822d44",
+  whatsapp: "https://wa.me/923011353415",
+};

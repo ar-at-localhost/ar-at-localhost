@@ -1,0 +1,77 @@
+---
+const { apiBase } = Astro.props;
+import { Image } from 'astro:assets';
+import { Button } from 'ui/components/button';
+import { ContactForm } from 'ui/site/contact-form';
+import { ConnectLinks } from '../components/connect-links'
+import ConnectLinksAstro from './connect-links.astro'
+import Section from '../components/section.astro'
+import Testmonial from '../components/testimonial.astro';
+import logo from '../assets/logo.png';
+import logoLight from '../assets/logo-light.png';
+---
+
+<Section>
+  <div class="h-auto gap-8 md:gap-16 lg:gap-8 flex flex-col lg:min-h-screen lg:gap-auto lg:flex-row items-center justify-around">
+    <div class="pt-24 lg:pt-0 w-3/4 lg:w-2/5 flex flex-col gap-8 md:gap-16 font-serif">
+      <div class="flex flex-col md:flex-row items-center gap-8 font-roboto">
+        <Image loading="eager" src={logo} class="dark:hidden size-16 md:size-24 rounded-full" alt="Logo - ar-at-localhost" />
+        <Image loading="eager" src={logoLight} class="not-dark:hidden size-16 md:size-24 rounded-full" alt="Logo - ar-at-localhost" />
+
+        <div class="flex flex-col gap-1 text-center md:text-start">
+          <h1 class="uppercase font-bold text-4xl md:text-6xl">Ahmad Raza</h1>
+          <h2 class="capitalize font-medium text-xl md:text-4xl tracking-wide">Full Stack developer</h2>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4 md:gap-2 text-center md:text-left">
+        <p>I am a software engineer who builds end-2-end web applications using modern technologies. I have a keen eye for details, strong problem-solving skills, and a passion for quality driven development, clean code and collaboration.
+        </p>
+
+        <p>
+        Reach out if you need help building server-side applications, APIs, interactive web-apps, or technical consultation.
+        </p>
+      </div>
+
+      <ConnectLinksAstro extraClass="connect-links relative left-auto top-auto md:w-auto md:absolute md:left-4 md:top-30 md:justify-start md:flex-col lg:flex-col lg:relative lg:left-auto lg:top-auto lg:flex-row" />
+
+      <div id="connect-fab" class="fixed bottom-4 right-2 z-50">
+        <ConnectLinks client:load />
+      </div>
+
+
+      <div class="w-full flex flex-row items-center justify-center">
+        <Testmonial rating="5.0" view="alt">
+          <span slot="avatar">A</span>
+          <span slot="name">Aqdas R.</span>
+          <span slot="company">npmCode</span>
+          <span slot="quote">
+            Ahmad was consistently one of the most capable individuals I worked with. He was organized, discerning, and quick. 
+            Highly Recommended!
+          </span>
+        </Testmonial>
+      </div>
+    </div>
+
+    <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0" id="contact-form-container">
+      <ContactForm apiBase={apiBase} client:load />
+    </div>
+  </div>
+</Section>
+
+<script>
+  const links = document.getElementById('connect-fab');
+  const targets = document.querySelectorAll('.connect-links');
+
+  const intersection = new IntersectionObserver((entries) => {
+    const entry = entries.some(i => i?.intersectionRatio > 0);
+
+    if (!entry && links) {
+      links.style.display = 'block';
+    } else {
+      links.style.display = 'none';
+    }
+  });
+
+  targets.forEach((target) => intersection.observe(target));
+</script>

@@ -1,11 +1,11 @@
 ---
 import AI from '../assets/icons/code-ai.svg';
+import Testmonial from './testimonial.astro';
 import Alert from '../assets/icons/alert-circle.svg';
 import Claude from '../assets/icons/claude.svg';
 import Copilot from '../assets/icons/brand-github-copilot.svg';
 import Zed from '../assets/icons/zed.svg';
 import Lock from '../assets/icons/lock.svg';
-import ConnectLink from './connect-link.astro';
 import Section from './section.astro';
 import Bullet from './bullet.astro';
 ---
@@ -44,5 +44,15 @@ import Bullet from './bullet.astro';
     <Bullet>Continous instructions improvements</Bullet>
   </div>
 
-  <ConnectLink />
+  <div class="flex justify-center pt-16">
+    <Testmonial extraClass="min-w-1/2" view="alt">
+      <span slot="avatar">L</span>
+      <span slot="name">Lorenzo D.</span>
+      <span slot="company">Polaris</span>
+      <span slot="quote">I worked with Ahmad in a project and I can only say: this
+  guy is awesome. He has great communication skills, a true passion for coding and an outstanding
+  work ethic. The project had strict deadlines and he managed it with passion and motivation till the
+  end, delivering a great product. Thank you again for your help and I hope to collaborate again!</span>
+    </Testmonial>
+  </div>
 </Section>
