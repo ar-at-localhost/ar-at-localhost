@@ -1,5 +1,11 @@
-<div class="flex flex-col items-center justify-center gap-2">
-  <span class="size-16 md:size-24 md:size-48">
+---
+import { cn } from 'cn';
+const { extraClass } = Astro.props;
+const cls = cn("text-center flex flex-col items-center justify-center gap-2", extraClass)
+---
+
+<div class={cls}>
+  <span class="size-12 md:size-24 md:size-48">
     <slot name="icon" />
   </span>
 
