@@ -1,7 +1,7 @@
-name: "CI"
+name: "Continuous Integration"
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -10,3 +10,92 @@ jobs:
     uses: "ar-at-localhost/ar-at-localhost/.github/workflows/quality.yml@main"
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
+  change-detection:
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.changed-apps-detection.outputs.apps }}
+      services: ${{ steps.changed-services-detection.outputs.services }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Detect changed apps
+        id: changed-apps-detection
+        env:
+          TURBO_SCM_BASE: ${{ github.event.before }}
+          TURBO_SCM_HEAD: ${{ github.sha }}
+        run: |
+          apps=$(
+            nix develop -c pnpm exec turbo ls --affected --output json |
+              jq -c '[
+                .packages.items[].name |
+                select(test("^app-"))
+              ]'
+          )
+
+          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
+
+      - name: Detect changed services
+        id: changed-services-detection
+        env:
+          TURBO_SCM_BASE: ${{ github.event.before }}
+          TURBO_SCM_HEAD: ${{ github.sha }}
+        run: |
+          services=$(
+            nix develop -c pnpm exec turbo ls --affected --output json |
+              jq -c '[
+                .packages.items[].name |
+                select(test("^srv-"))
+              ]'
+          )
+
+          echo "services=${services}" >> "$GITHUB_OUTPUT"
+
+  deploy-apps:
+    needs: [quality-checks, change-detection]
+    if: needs.change-detection.outputs.apps != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.change-detection.outputs.apps) }}
+    uses: ./.github/workflows/cd-app.yml
+    with:
+      app: ${{ matrix.app }}
+      profile: "staging"
+    secrets: inherit
+
+  deploy-services:
+    needs: [quality-checks, change-detection]
+    if: needs.change-detection.outputs.services != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ${{ fromJSON(needs.change-detection.outputs.services) }}
+    uses: ./.github/workflows/cd-srv.yml
+    with:
+      service: ${{ matrix.service }}
+      profile: "staging"
+    secrets: inherit
+
+  deploy-gateway-config:
+    needs: [deploy-services]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Update API gateway
+        env:
+          SECRETSPEC_PROFILE: "staging"
+          NODE_ENV: "production"
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          nix develop -c secretspec run -- bash -c '
+            nix run .#tofu-view > config.tf.json
+            tofu apply -auto-approve -target "google_api_gateway_api_config.services"
+          '

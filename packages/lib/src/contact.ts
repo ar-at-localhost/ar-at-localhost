@@ -49,9 +49,9 @@ export type CreateContactResp = Pick<ContactDoc, "_id">;
  */
 export const createContactSrv = async (
   body: ContactBody,
-  base?: string,
+  path?: string,
 ): Promise<CreateContactResp> =>
-  fetch(`${getAPIBaseURL(base)}/contact`, {
+  fetch(path ?? `${getAPIBaseURL()}/contact`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
