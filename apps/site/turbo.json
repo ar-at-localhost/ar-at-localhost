@@ -3,7 +3,7 @@
   "extends": ["//"],
   "tasks": {
     "test:e2e": {
-      "dependsOn": ["$TURBO_EXTENDS$", "api#test"]
+      "dependsOn": ["$TURBO_EXTENDS$", "srv-contact#test"]
     }
   }
 }

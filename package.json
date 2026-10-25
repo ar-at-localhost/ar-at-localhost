@@ -1,9 +1,6 @@
 {
   "name": "ar-at-localhost",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "version": "0.0.1",
   "exports": {
     ".": "./apps/apis/dist/index.mjs",
     "./package.json": "./package.json"
@@ -22,9 +19,16 @@
     "@astrojs/compiler-rs": "^0.5.1",
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
+    "firebase-tools": "^15.34.0",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "turbo": "2.11.0"
   },
-  "packageManager": "pnpm@11.27.0"
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.9.0",
+      "onFail": "ignore"
+    }
+  }
 }

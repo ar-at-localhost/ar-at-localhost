@@ -7,8 +7,6 @@ export const mongooseConnect = async (
   uri?: string,
   opts?: ConnectOptions,
 ): Promise<typeof mongoose> => {
-  await import("./contact.ts");
-
   return mongoose.connect(
     uri || process.env.MONGODB_URI!,
     opts || {
@@ -30,23 +28,22 @@ export const mongooseConnect = async (
   );
 };
 
-export const fastifyPlugin: FastifyPluginAsync = async (app) => {
-  const result: typeof mongoose | void = await mongooseConnect()
+export const mongoosePlugin: FastifyPluginAsync = async (app) => {
+  return await mongooseConnect()
     .then((res) => {
       app.log.info("Database is connected...");
-      return res;
+
+      app.addHook("onClose", async () => {
+        for (const connection of res?.connections || []) {
+          await connection.close().catch(() => null);
+          await connection.destroy().catch(() => null);
+        }
+
+        await mongoose.disconnect();
+      });
     })
     .catch((err: Error) => {
       app.log.error(`Error connecting to the database: ${err?.message || "Something went wrong"}`);
       app.log.debug(err);
     });
-
-  app.addHook("onClose", async () => {
-    for (const connection of result?.connections || []) {
-      await connection.close().catch(() => null);
-      await connection.destroy().catch(() => null);
-    }
-
-    await mongoose.disconnect();
-  });
 };

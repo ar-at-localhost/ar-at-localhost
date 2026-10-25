@@ -1,0 +1,39 @@
+name: "Continuous Service Deployment"
+
+on:
+  push:
+    tags:
+      - "srv-*"
+
+  workflow_dispatch:
+    inputs: &deployment_inputs
+      service:
+        required: true
+        type: string
+
+      profile:
+        default: "staging"
+        type: string
+
+  workflow_call:
+    inputs: *deployment_inputs
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Deploy service
+        env:
+          SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+          NODE_ENV: "production"
+          SERVICE: ${{ inputs.service || github.ref_name }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          service="${SERVICE%@*}"
+          nix develop -c secretspec run -- bash -c '
+            nix run .#deploy-service "$service" "$SECRETSPEC_PROFILE"
+          '

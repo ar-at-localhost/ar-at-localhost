@@ -9,7 +9,7 @@ export const getHost = () => {
  * Get port of a running server
  */
 export const getPort = () => {
-  return parseInt(process.env.PORT!);
+  return parseInt(process.env.PORT! || "5000");
 };
 
 /**

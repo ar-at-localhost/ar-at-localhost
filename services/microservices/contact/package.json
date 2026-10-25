@@ -1,8 +1,8 @@
 {
-  "name": "api",
-  "version": "0.0.10",
+  "name": "srv-contact",
+  "version": "0.0.1",
   "private": true,
-  "description": "API services of ar-at-localhost",
+  "description": "Create contact API service",
   "homepage": "https://github.com/ar-at-localhost/ar-at-localhost",
   "bugs": {
     "url": "https://github.com/ar-at-localhost/ar-at-localhost/issues"
@@ -42,6 +42,7 @@
     "format:fix": "oxfmt --write",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "openapi": "node ./src/specs.ts",
     "start": "pnpm build && node dist/index.mjs",
     "test": "vitest run",
     "test:cov": "vitest --coverage",
@@ -67,5 +68,20 @@
     "typescript": "catalog:",
     "vite": "^8.3.3",
     "vitest": "catalog:"
+  },
+  "inlinedDependencies": {
+    "@fastify/swagger": "9.9.2",
+    "@valibot/to-json-schema": "1.8.0",
+    "debug": "4.4.3",
+    "fast-uri": "3.1.8",
+    "fastify-plugin": "6.0.1",
+    "has-flag": "4.0.0",
+    "json-schema-resolver": "3.0.0",
+    "ms": "2.1.3",
+    "mustache": "4.2.0",
+    "nodemailer": "10.1.0",
+    "rfdc": "1.4.1",
+    "supports-color": "7.2.0",
+    "yaml": "2.9.1"
   }
 }

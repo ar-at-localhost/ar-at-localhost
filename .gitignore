@@ -17,6 +17,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# nix
+result*
+
 # nodejs
 node_modules
 
@@ -35,3 +38,14 @@ coverage/
 
 # yarn
 .yarn/install-state.gz
+result
+
+# terraform
+.terraform/
+*.tfstate*
+config.tf.json
+envs/
+
+# firebase
+firebase-debug.log
+.firebase

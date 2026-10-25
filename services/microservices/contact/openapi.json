@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "srv-contact",
+    "version": "0.0.1"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "message": {
+                    "type": "string",
+                    "minLength": 128,
+                    "maxLength": 10000
+                  },
+                  "markdown": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["firstName", "email", "message"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "pattern": "^[a-f\\d]{24}$"
+                    }
+                  },
+                  "required": ["_id"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+name: "Continuous Site Deployment"
+
+on:
+  push:
+    tags:
+      - "app-*"
+
+  workflow_dispatch:
+    inputs: &deployment_inputs
+      app:
+        required: true
+        type: string
+
+      profile:
+        default: "staging"
+        type: string
+
+  workflow_call:
+    inputs: *deployment_inputs
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Deploy application
+        env:
+          SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+          NODE_ENV: "production"
+          APP: ${{ inputs.app || github.ref_name }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          nix develop -c secretspec run -- bash -euo pipefail -c '
+            app="${APP%@*}"
+            pnpm turbo --filter "$app" build
+            GOOGLE_CREDENTIALS="$GCP_SERVICE_KEY" pnpm --filter "$app" firebase --project "$SECRETSPEC_PROFILE" deploy
+          '

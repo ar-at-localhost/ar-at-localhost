@@ -1,11 +1,18 @@
 packages:
   - "apps/*"
   - "packages/*"
+  - "services/*/*"
 
 allowBuilds:
   esbuild: true
-  kerberos: true
+  kerberos: false
   mongodb-client-encryption: true
+  protobufjs: true
+  re2: true
+
+peerDependencyRules:
+  ignoreMissing:
+    - kerberos
 
 catalog:
   "@formisch/react": "^1.1.0"
@@ -29,6 +36,13 @@ catalog:
   vitest: ^5.0.3
 
 minimumReleaseAge: 10080
-
 minimumReleaseAgeExclude:
   - fastify@5.12.7
+
+supportedArchitectures:
+  os:
+    - current
+  cpu:
+    - current
+  libc:
+    - current

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { mongooseConnect, fastifyPlugin } from "./db";
+import { mongooseConnect, mongoosePlugin } from "./db";
 import fastify from "fastify";
 import mongoose from "mongoose";
 
@@ -27,7 +27,7 @@ describe("db", () => {
     it("registers", async () => {
       vi.spyOn(mongoose, "connect").mockResolvedValue(mongoose);
       const app = fastify();
-      app.register(fastifyPlugin);
+      app.register(mongoosePlugin);
       await app.ready();
       expect(mongoose.connect).toHaveBeenCalled();
     });
@@ -37,7 +37,7 @@ describe("db", () => {
       vi.spyOn(mongoose, "connect").mockRejectedValue(new Error(err));
       const app = fastify();
       const error = vi.spyOn(app.log, "error");
-      app.register(fastifyPlugin);
+      app.register(mongoosePlugin);
       await app.ready();
       expect(error).toHaveBeenCalledWith(`Error connecting to the database: ${err}`);
     });
@@ -47,7 +47,7 @@ describe("db", () => {
       vi.spyOn(mongoose, "connect").mockRejectedValue(1);
       const app = fastify();
       const error = vi.spyOn(app.log, "error");
-      app.register(fastifyPlugin);
+      app.register(mongoosePlugin);
       await app.ready();
       expect(error).toHaveBeenCalledWith(`Error connecting to the database: ${err}`);
     });

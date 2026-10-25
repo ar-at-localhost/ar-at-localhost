@@ -12,14 +12,14 @@ export default defineConfig({
 
   webServer: [
     {
-      command: "secretspec run pnpm --filter site dev",
+      command: "secretspec run pnpm --filter app-site dev",
       ignoreHTTPSErrors: true,
       name: "Website",
       reuseExistingServer: !process.env.CI,
       url: "http://localhost:4321",
     },
     {
-      command: "secretspec run pnpm --filter api dev",
+      command: "secretspec run pnpm --filter srv-contact dev",
       ignoreHTTPSErrors: true,
       name: "API Server",
       reuseExistingServer: !process.env.CI,
