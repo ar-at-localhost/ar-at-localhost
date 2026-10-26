@@ -1,5 +1,9 @@
 {
   "projects": {
-    "staging": "speedy-elf-362819"
-  }
+    "default": "ar-at-localhost-staging",
+    "staging": "ar-at-localhost-staging",
+    "prod": "speedy-elf-362819"
+  },
+  "targets": {},
+  "etags": {}
 }
