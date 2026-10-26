@@ -12,6 +12,7 @@ jobs:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
   change-detection:
+    needs: quality-checks
     runs-on: ubuntu-latest
     outputs:
       apps: ${{ steps.changed-apps-detection.outputs.apps }}
