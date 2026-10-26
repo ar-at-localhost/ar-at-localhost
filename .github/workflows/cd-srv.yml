@@ -24,7 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Deploy service
         env:
@@ -33,7 +32,7 @@ jobs:
           SERVICE: ${{ inputs.service || github.ref_name }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
-          service="${SERVICE%@*}"
+          export service="${SERVICE%@*}"
           nix develop -c secretspec run -- bash -c '
             nix run .#deploy-service "$service" "$SECRETSPEC_PROFILE"
           '

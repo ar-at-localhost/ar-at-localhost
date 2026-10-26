@@ -172,7 +172,7 @@ export const ContactForm: FC<Props> = ({ apiBase }) => {
               ) : (
                 <span>
                   Your email and message is stored in encrypted format. I do not share it with
-                  anyone. You may request deletion anytime by sending me an mail at
+                  anyone. You may request deletion anytime by sending me an mail at&nbsp;
                   <a href="mailto:pro.se.ahmad.raza.1@gmail.com">pro.se.ahmad.raza.1@gmail.com</a>.
                 </span>
               )}

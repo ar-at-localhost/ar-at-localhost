@@ -24,7 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Deploy application
         env:
@@ -33,8 +32,8 @@ jobs:
           APP: ${{ inputs.app || github.ref_name }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
+          export app="${APP%@*}"
           nix develop -c secretspec run -- bash -euo pipefail -c '
-            app="${APP%@*}"
             pnpm turbo --filter "$app" build
-            GOOGLE_CREDENTIALS="$GCP_SERVICE_KEY" pnpm --filter "$app" firebase --project "$SECRETSPEC_PROFILE" deploy
+            pnpm --filter "$app" firebase --project "$SECRETSPEC_PROFILE" deploy
           '

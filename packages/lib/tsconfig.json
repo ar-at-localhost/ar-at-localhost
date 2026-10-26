@@ -8,5 +8,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/", "env.d.ts"]
+  "include": ["src/", "env.d.ts", "./node_modules/vite/client.d.ts"]
 }

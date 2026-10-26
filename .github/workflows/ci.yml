@@ -22,23 +22,6 @@ jobs:
         with:
           fetch-depth: 0
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
-
-      - name: Detect changed apps
-        id: changed-apps-detection
-        env:
-          TURBO_SCM_BASE: ${{ github.event.before }}
-          TURBO_SCM_HEAD: ${{ github.sha }}
-        run: |
-          apps=$(
-            nix develop -c pnpm exec turbo ls --affected --output json |
-              jq -c '[
-                .packages.items[].name |
-                select(test("^app-"))
-              ]'
-          )
-
-          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
 
       - name: Detect changed services
         id: changed-services-detection
@@ -46,28 +29,27 @@ jobs:
           TURBO_SCM_BASE: ${{ github.event.before }}
           TURBO_SCM_HEAD: ${{ github.sha }}
         run: |
+          nix develop -c bash -euo pipefail -s <<'EOF'
           services=$(
-            nix develop -c pnpm exec turbo ls --affected --output json |
-              jq -c '[
-                .packages.items[].name |
-                select(test("^srv-"))
-              ]'
+            pnpm turbo ls --affected --output json |
+              jq -c '[.packages.items[].name | select(test("^srv-"))]'
           )
-
           echo "services=${services}" >> "$GITHUB_OUTPUT"
+          EOF
 
-  deploy-apps:
-    needs: [quality-checks, change-detection]
-    if: needs.change-detection.outputs.apps != '[]'
-    strategy:
-      fail-fast: false
-      matrix:
-        app: ${{ fromJSON(needs.change-detection.outputs.apps) }}
-    uses: ./.github/workflows/cd-app.yml
-    with:
-      app: ${{ matrix.app }}
-      profile: "staging"
-    secrets: inherit
+      - name: Detect changed apps
+        id: changed-apps-detection
+        env:
+          TURBO_SCM_BASE: ${{ github.event.before }}
+          TURBO_SCM_HEAD: ${{ github.sha }}
+        run: |
+          nix develop -c bash -euo pipefail -s <<'EOF'
+          apps=$(
+            pnpm turbo ls --affected --output json |
+              jq -c '[.packages.items[].name | select(test("^app-"))]'
+          )
+          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
+          EOF
 
   deploy-services:
     needs: [quality-checks, change-detection]
@@ -82,13 +64,25 @@ jobs:
       profile: "staging"
     secrets: inherit
 
+  deploy-apps:
+    needs: deploy-services
+    if: needs.change-detection.outputs.apps != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.change-detection.outputs.apps) }}
+    uses: ./.github/workflows/cd-app.yml
+    with:
+      app: ${{ matrix.app }}
+      profile: "staging"
+    secrets: inherit
+
   deploy-gateway-config:
     needs: [deploy-services]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Update API gateway
         env:
