@@ -5,7 +5,7 @@ import fastifyCors from "@fastify/cors";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyRateLimit from "@fastify/rate-limit";
 import assert from "node:assert";
-import { getCors } from "./env.ts";
+import { getCors, isDev } from "./env.ts";
 import { getPort, isValibot } from "lib";
 import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import { toJsonSchema } from "@valibot/to-json-schema";
@@ -26,9 +26,19 @@ export type BaseAppOpts = {
    * useful where early ping meters, i.e. health checks
    */
   dontAwaitDatabase?: boolean;
+
+  /**
+   *
+   */
+  prefix?: string;
+
+  /**
+   * Name of the service
+   */
+  name?: string;
 };
 
-export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase }: BaseAppOpts) => {
+export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase, name }: BaseAppOpts) => {
   let safeRate = 1000;
   if (process.env.NODE_ENV == "production") {
     safeRate = 1;
@@ -40,6 +50,8 @@ export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase }: Bas
     logger: true,
     forceCloseConnections: true,
     pluginTimeout: 60 * 1000,
+    rewriteUrl:
+      name && isDev() ? (req) => req.url?.replace(`/${name}`, "/") as unknown as string : undefined,
   });
 
   /**

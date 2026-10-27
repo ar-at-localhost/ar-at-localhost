@@ -25,6 +25,17 @@ jobs:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
 
+      - name: Write Google Credentials
+        env:
+          SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          # shellcheck disable=SC2016
+          nix develop -c secretspec run -- bash -euo pipefail -c '
+            credentials="$1"
+            echo "$GOOGLE_CREDENTIALS" > "$credentials"
+          ' -- "$RUNNER_TEMP/gcp.json"
+
       - name: Deploy application
         env:
           SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
@@ -33,6 +44,7 @@ jobs:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           export app="${APP%@*}"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/gcp.json"
 
           # shellcheck disable=SC2016
           nix develop -c secretspec run -- bash -euo pipefail -c '

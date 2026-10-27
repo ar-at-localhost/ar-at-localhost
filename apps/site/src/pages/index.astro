@@ -4,10 +4,8 @@ import { Copyright, ExternalLink } from '@lucide/astro';
 import AI from '../components/ai.astro'
 import CTA from '../components/cta.astro'
 import Hero from '../components/hero.astro'
-import Section from '../components/section.astro'
 import Services from '../components/services.astro'
 import Tech from '../components/tech.astro'
-import Testmonial from '../components/testimonial.astro';
 
 const { PUBLIC_SRV_URL } = import.meta.env;
 ---
@@ -50,7 +48,7 @@ const { PUBLIC_SRV_URL } = import.meta.env;
           behavior: 'smooth'
         });
 
-        document.querySelector('input[type="text"]')?.focus();
+        (document.querySelector('input[type="text"]') as HTMLInputElement)?.focus();
       }));
     </script>
 	</body>

@@ -65,7 +65,7 @@ jobs:
     secrets: inherit
 
   deploy-apps:
-    needs: change-detection
+    needs: [change-detection, deploy-services]
     if: needs.change-detection.outputs.apps != '[]'
     strategy:
       fail-fast: false
@@ -92,5 +92,6 @@ jobs:
         run: |
           nix develop -c secretspec run -- bash -c '
             nix run .#tofu-view > config.tf.json
+            tofu init -input=false
             tofu apply -auto-approve -target "google_api_gateway_api_config.services"
           '
