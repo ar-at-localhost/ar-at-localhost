@@ -38,7 +38,7 @@ jobs:
             specified_hash="$(cat "$hash_path")"
             got_hash=$(nix run .#pnpm-hash)
 
-            if [[ "$specified_hash" != "$got_hash" ]]; then
+            if [[ -n "$got_hash" && "$specified_hash" != "$got_hash" ]]; then
               echo "$got_hash" > "$hash_path"
               git add "$hash_path"
               git config user.name "$AUTHOR_NAME"
