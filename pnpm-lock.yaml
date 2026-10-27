@@ -68,18 +68,12 @@ importers:
 
   .:
     devDependencies:
-      '@astrojs/compiler-rs':
-        specifier: ^0.5.1
-        version: 0.5.1
       '@changesets/changelog-github':
         specifier: ^1.0.1
         version: 1.0.1
       '@changesets/cli':
         specifier: ^3.0.3
         version: 3.0.3
-      firebase-tools:
-        specifier: ^15.34.0
-        version: 15.34.0(@types/node@26.6.5)(supports-color@7.2.0)
       oxfmt:
         specifier: 'catalog:'
         version: 0.61.0

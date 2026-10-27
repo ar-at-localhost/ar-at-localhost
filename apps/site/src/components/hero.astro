@@ -9,6 +9,8 @@ import Section from '../components/section.astro'
 import Testmonial from '../components/testimonial.astro';
 import logo from '../assets/logo.png';
 import logoLight from '../assets/logo-light.png';
+
+const { apiURL } = `${apiBase}/contact`;
 ---
 
 <Section>
@@ -54,7 +56,7 @@ import logoLight from '../assets/logo-light.png';
     </div>
 
     <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0" id="contact-form-container">
-      <ContactForm apiBase={apiBase} client:load />
+      <ContactForm apiURL={apiURL} client:load />
     </div>
   </div>
 </Section>

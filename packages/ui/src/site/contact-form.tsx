@@ -9,10 +9,10 @@ import { CheckCircle, LoaderCircle, PlusCircleIcon, SendIcon } from "lucide-reac
 import { useState, type FC } from "react";
 
 type Props = {
-  apiBase?: string;
+  apiURL?: string;
 };
 
-export const ContactForm: FC<Props> = ({ apiBase }) => {
+export const ContactForm: FC<Props> = ({ apiURL }) => {
   const [showDataPolicy, setShowDataPolicy] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export const ContactForm: FC<Props> = ({ apiBase }) => {
 
   const handleSubmit: SubmitHandler<typeof contactBodySchema> = async (body) => {
     setSubmissionError(null);
-    await createContactSrv(body, apiBase)
+    await createContactSrv(body, apiURL)
       .then((res) => setSubmissionId(res._id?.toString()))
       .catch((err: Error) => {
         setSubmissionError(err?.message || "Something went off!");

@@ -34,6 +34,8 @@ jobs:
         run: |
           export service="${SERVICE%@*}"
           # shellcheck disable=SC2016
-          nix develop -c secretspec run -- bash -c '
+          nix develop -c secretspec run -- bash -euo pipefail -c '
+            nix run .#tofu-view > config.tf.json
+            tofu init -input=false
             nix run .#deploy-service "$service" "$SECRETSPEC_PROFILE"
           '
