@@ -6,6 +6,7 @@ const port = getPort();
 
 createApp({
   dontAwaitDatabase: true,
+  name: "contact",
 }).then((app) => {
   app.listen({
     host,

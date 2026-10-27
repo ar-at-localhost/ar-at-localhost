@@ -3,7 +3,7 @@
 in
   pkgs.writeShellApplication {
     name = "deploy-service";
-    runtimeInputs = with pkgs; [nix opentofu secretspec skopeo];
+    runtimeInputs = with pkgs; [google-cloud-sdk nix opentofu secretspec skopeo];
     text = ''
       name="''${1:-}"
       profile="''${2:-default}"
@@ -33,7 +33,14 @@ in
           "docker-archive:./$out" \
           "docker://''${TF_VAR_region}-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:latest"
 
-        tofu apply -auto-approve -replace "google_cloud_run_v2_service.$name"
+        # Ensure resource is created
+        tofu apply -auto-approve -target "google_cloud_run_v2_service.$name"
+
+        # Update service
+        gcloud run services update \
+          --project "''${TF_VAR_project_name}" "$name" \
+          --region "''${TF_VAR_region}" \
+          --image "''${TF_VAR_region}-docker.pkg.dev/''${TF_VAR_project_name}/''${TF_VAR_project_name}/''${name}:latest"
       ' -- "$out" "$name" "$version"
     '';
   }

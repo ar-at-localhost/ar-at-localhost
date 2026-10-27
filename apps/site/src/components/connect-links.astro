@@ -1,10 +1,8 @@
 ---
 import { cn } from 'cn';
-import { Button } from 'ui/components/button';
 import { LinkBtn } from '../components/LinkBtn';
 import Fiverr from '../assets/icons/brand-fiverr.svg';
 import Github from '../assets/icons/brand-github.svg';
-import Link from '../assets/icons/external-link.svg';
 import LinkedIn from '../assets/icons/brand-linkedin.svg';
 import Mail from '../assets/icons/mail.svg';
 import Upwork from '../assets/icons/brand-upwork.svg';
@@ -18,27 +16,27 @@ const cls = cn(
 )
 ---
 <div class={cls}>
-  <LinkBtn href="mailto:pro.se.ahmad.raza.1@gmail.com">
-    <Mail alt="Email icon" class="dark:text-gray-100" />
+  <LinkBtn title="Email address" href="mailto:pro.se.ahmad.raza.1@gmail.com">
+    <Mail class="dark:text-gray-100" />
   </LinkBtn>
 
-  <LinkBtn href="https://wa.me/923011353415">
-    <Whatsapp alt="Whatsapp logo" class="dark:text-gray-100" />
+  <LinkBtn title="Whatsapp" href="https://wa.me/923011353415">
+    <Whatsapp class="dark:text-gray-100" />
   </LinkBtn>
   
-  <LinkBtn href="https://github.com/ar-at-localhost" target="_blank">
-    <Github alt="Github logo" class="dark:text-gray-100" />
+  <LinkBtn title="Github" href="https://github.com/ar-at-localhost" target="_blank">
+    <Github class="dark:text-gray-100" />
   </LinkBtn>
 
-  <LinkBtn href="https://linkedin.com/in/ar124officialwd" target="_blank">
-    <LinkedIn alt="LinkedIn logo" class="dark:text-gray-100" />
+  <LinkBtn title="LinkedIn" href="https://linkedin.com/in/ar124officialwd" target="_blank">
+    <LinkedIn class="dark:text-gray-100" />
   </LinkBtn>
 
-  <LinkBtn  href="https://www.fiverr.com/s/gvvXllo" target="_blank">
-    <Fiverr alt="Fiverr logo" class="dark:text-gray-100" />
+  <LinkBtn title="Fiverr" href="https://www.fiverr.com/s/gvvXllo" target="_blank">
+    <Fiverr class="dark:text-gray-100" />
   </LinkBtn>
 
-  <LinkBtn href="https://www.upwork.com/freelancers/~013dd6d70690822d44" target="_blank">
-    <Upwork alt="Upwork logo" class="dark:text-gray-100" />
+  <LinkBtn title="Upwork" href="https://www.upwork.com/freelancers/~013dd6d70690822d44" target="_blank">
+    <Upwork class="dark:text-gray-100" />
   </LinkBtn>
 </div>

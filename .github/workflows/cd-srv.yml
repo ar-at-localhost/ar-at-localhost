@@ -25,6 +25,18 @@ jobs:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
 
+      - name: Authenticate Google Cloud
+        env:
+          SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          export keyfile="$RUNNER_TEMP/gcp.json"
+          # shellcheck disable=SC2016
+          nix develop -c secretspec run -- bash -euo pipefail -c '
+            printf '%s' "$GOOGLE_CREDENTIALS" > "$keyfile"
+            gcloud auth activate-service-account --key-file "$keyfile" --quiet
+          '
+
       - name: Deploy service
         env:
           SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
@@ -34,6 +46,8 @@ jobs:
         run: |
           export service="${SERVICE%@*}"
           # shellcheck disable=SC2016
-          nix develop -c secretspec run -- bash -c '
+          nix develop -c secretspec run -- bash -euo pipefail -c '
+            nix run .#tofu-view > config.tf.json
+            tofu init -input=false
             nix run .#deploy-service "$service" "$SECRETSPEC_PROFILE"
           '

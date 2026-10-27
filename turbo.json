@@ -25,7 +25,8 @@
     "RESEND_API_KEY",
     "SECRETSPEC_PROFILE",
     "SITE_APP_ID",
-    "SOPS_AGE_KEY"
+    "SOPS_AGE_KEY",
+    "TURBO_TOKEN"
   ],
   "tasks": {
     "build": {

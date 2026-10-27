@@ -8,6 +8,7 @@ const { name, version } = packageInfo;
 
 export const createApp = async (opts?: BaseAppOpts) => {
   const app = await getBaseApp({
+    name: opts?.name,
     noDatabase: opts?.noDatabase,
     dontAwaitDatabase: opts?.dontAwaitDatabase,
     swagger: {

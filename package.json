@@ -1,6 +1,6 @@
 {
   "name": "ar-at-localhost",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "exports": {
     ".": "./apps/apis/dist/index.mjs",
     "./package.json": "./package.json"
@@ -16,10 +16,8 @@
     "test:e2e": "turbo test:e2e"
   },
   "devDependencies": {
-    "@astrojs/compiler-rs": "^0.5.1",
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
-    "firebase-tools": "^15.34.0",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "turbo": "2.11.0"

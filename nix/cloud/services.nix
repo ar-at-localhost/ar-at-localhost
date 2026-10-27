@@ -78,7 +78,7 @@
 
       openapi = {
         paths = lib.mapAttrs' (path: spec:
-          lib.nameValuePair (lib.removeSuffix "/" "/${name}${path}") (lib.mapAttrs (k: op:
+          lib.nameValuePair (lib.removeSuffix "/" "/${builtins.replaceStrings ["srv-"] [""] name}${path}") (lib.mapAttrs (k: op:
             if isMethod k
             then
               op
