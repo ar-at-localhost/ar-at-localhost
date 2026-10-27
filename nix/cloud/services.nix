@@ -130,6 +130,8 @@ in {
     inherit openapi;
   };
 
+  output.api-gateway-url.value = "\${google_api_gateway_gateway.services.default_hostname}";
+
   resource = lib.foldl' lib.recursiveUpdate {
     google_service_account.services = {
       inherit project;
