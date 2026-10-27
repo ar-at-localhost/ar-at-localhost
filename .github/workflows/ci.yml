@@ -94,5 +94,5 @@ jobs:
             set -euo pipefail
             nix run .#tofu-view > config.tf.json
             tofu init -input=false
-            tofu apply -auto-approve apply
+            tofu apply -auto-approve
           '
