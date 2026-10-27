@@ -119,13 +119,6 @@
       version = "1.0.0";
     };
 
-    servers = [
-      {
-        url = "https://${project}.apigateway.${project}.cloud.goog";
-        x-google-endpoint.allowCors = true;
-      }
-    ];
-
     components = {
       schemas = merge "components-schemas";
     };
