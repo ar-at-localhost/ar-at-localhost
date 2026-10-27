@@ -52,7 +52,7 @@ jobs:
           EOF
 
   deploy-services:
-    needs: [quality-checks, change-detection]
+    needs: change-detection
     if: needs.change-detection.outputs.services != '[]'
     strategy:
       fail-fast: false
@@ -65,7 +65,7 @@ jobs:
     secrets: inherit
 
   deploy-apps:
-    needs: deploy-services
+    needs: change-detection
     if: needs.change-detection.outputs.apps != '[]'
     strategy:
       fail-fast: false

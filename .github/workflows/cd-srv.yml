@@ -33,6 +33,7 @@ jobs:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           export service="${SERVICE%@*}"
+          # shellcheck disable=SC2016
           nix develop -c secretspec run -- bash -c '
             nix run .#deploy-service "$service" "$SECRETSPEC_PROFILE"
           '

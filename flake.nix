@@ -44,6 +44,7 @@
       pre-commit-check = inputs.git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
+          actionlint.enable = true;
           alejandra.enable = true;
 
           quality = {

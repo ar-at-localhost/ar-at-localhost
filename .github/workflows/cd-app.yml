@@ -33,6 +33,8 @@ jobs:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           export app="${APP%@*}"
+
+          # shellcheck disable=SC2016
           nix develop -c secretspec run -- bash -euo pipefail -c '
             pnpm turbo --filter "$app" build
             pnpm --filter "$app" firebase --project "$SECRETSPEC_PROFILE" deploy
