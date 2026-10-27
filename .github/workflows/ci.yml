@@ -91,7 +91,11 @@ jobs:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           nix develop -c secretspec run -- bash -c '
+            set -euo pipefail
             nix run .#tofu-view > config.tf.json
             tofu init -input=false
-            tofu apply -auto-approve -target "google_api_gateway_api_config.services"
+
+            tofu apply -auto-approve \
+              -target "google_api_gateway_api_config.services" \
+              -target "google_api_gateway_gateway.services"
           '
