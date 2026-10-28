@@ -45,5 +45,8 @@ export const mongoosePlugin: FastifyPluginAsync = async (app) => {
     .catch((err: Error) => {
       app.log.error(`Error connecting to the database: ${err?.message || "Something went wrong"}`);
       app.log.debug(err);
+      app.log.debug(
+        JSON.stringify({ uri: process.env.MONGODB_URI, database: process.env.MONGODB_DB }),
+      );
     });
 };

@@ -5,7 +5,7 @@ import fastifyCors from "@fastify/cors";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyRateLimit from "@fastify/rate-limit";
 import assert from "node:assert";
-import { getCors, isDev } from "./env.ts";
+import { getCors, isDev, isProduction } from "./env.ts";
 import { getPort, isValibot } from "lib";
 import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import { toJsonSchema } from "@valibot/to-json-schema";
@@ -40,20 +40,23 @@ export type BaseAppOpts = {
 
 export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase, name }: BaseAppOpts) => {
   let safeRate = 1000;
-  if (process.env.NODE_ENV == "production") {
+  if (isProduction()) {
     safeRate = 1;
   }
 
   assert(safeRate >= 1, "Unexpected test factor!");
 
   const app = Fastify({
-    logger: true,
     forceCloseConnections: true,
     pluginTimeout: 60 * 1000,
     rewriteUrl:
       name && isDev()
         ? (req) => req.url?.replace(`/${name}`, "/").replace("//", "/") as unknown as string
         : undefined,
+
+    logger: {
+      level: isProduction() ? "info" : "debug",
+    },
   });
 
   /**

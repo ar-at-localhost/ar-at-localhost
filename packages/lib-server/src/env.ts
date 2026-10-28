@@ -31,7 +31,8 @@ export const getSSL = () => ({
 /**
  * Tells if running on production
  */
-export const isProduction = () => process.env.NODE_ENV === "production";
+export const isProduction = () =>
+  process.env.NODE_ENV === "production" && process.env.DEBUG !== "debug";
 
 /**
  * Tells if running on local or unrecognized environment
