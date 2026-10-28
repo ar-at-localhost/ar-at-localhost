@@ -1,8 +1,6 @@
 import packageInfo from "../package.json" with { type: "json" };
-import type { FastifyRequest, FastifyReply } from "fastify";
-import { type ContactBody, contactBodySchema } from "lib";
-import { type BaseAppOpts, ContactModel, getBaseApp } from "lib-server";
-import { object, pipe, regex, string } from "valibot";
+import { type BaseAppOpts, getBaseApp } from "lib-server";
+import { contactRest } from "./contact.ts";
 
 const { name, version } = packageInfo;
 
@@ -22,24 +20,6 @@ export const createApp = async (opts?: BaseAppOpts) => {
     },
   });
 
-  app.post("/", {
-    schema: {
-      body: contactBodySchema,
-      response: {
-        201: object({
-          _id: pipe(string(), regex(/^[a-f\d]{24}$/)),
-        }),
-      },
-    },
-    handler: async (req: FastifyRequest, rep: FastifyReply) => {
-      const body = req.body as unknown as ContactBody;
-      const record = await ContactModel.create(body);
-
-      rep.send({
-        _id: record._id.toString(),
-      });
-    },
-  });
-
+  app.register(contactRest);
   return app;
 };

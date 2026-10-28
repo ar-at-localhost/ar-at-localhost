@@ -34,6 +34,7 @@ export const contactBodySchema = object({
   ),
 
   markdown: optional(boolean()),
+  token: optional(string()),
 });
 
 export type ContactBody = InferOutput<typeof contactBodySchema>;
@@ -58,12 +59,15 @@ export const createContactSrv = async (
       "CONTENT-TYPE": "application/json",
     },
   })
-    .then(
-      (res) =>
-        res.json().catch(() => {
-          throw new Error("Something went wrong!");
-        }) as Promise<CreateContactResp>,
-    )
+    .then(async (res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      throw await res.json().catch(() => {
+        throw new Error("Something went wrong!");
+      });
+    })
     .catch((err) => {
       throw new Error(err?.message || "Something went wrong!");
     });
