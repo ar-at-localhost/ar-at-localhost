@@ -8,29 +8,29 @@ export const mongooseConnect = async (
   uri?: string,
   opts?: ConnectOptions,
 ): Promise<typeof mongoose> => {
-  return mongoose.connect(
-    uri || process.env.MONGODB_URI!,
-    opts || {
-      dbName: process.env.MONGODB_DB,
+  return mongoose.connect(uri || process.env.MONGODB_URI!, {
+    dbName: process.env.MONGODB_DB,
+    serverSelectionTimeoutMS: 60000,
 
-      autoEncryption: {
-        keyVaultNamespace: getNamespace(),
+    autoEncryption: {
+      keyVaultNamespace: getNamespace(),
 
-        extraOptions: {
-          cryptSharedLibPath: getMongocryptPath() as any,
-          cryptSharedLibRequired: true,
-        },
+      extraOptions: {
+        cryptSharedLibPath: getMongocryptPath() as any,
+        cryptSharedLibRequired: true,
+      },
 
-        kmsProviders: {
-          local: getLocalKMSProvider(),
-        },
+      kmsProviders: {
+        local: getLocalKMSProvider(),
       },
     },
-  );
+
+    ...opts,
+  });
 };
 
 export const mongoosePlugin: FastifyPluginAsync = fp(async (app) => {
-  return await mongooseConnect()
+  await mongooseConnect()
     .then((res) => {
       app.log.info("Database is connected...");
 
@@ -42,12 +42,13 @@ export const mongoosePlugin: FastifyPluginAsync = fp(async (app) => {
 
         await mongoose.disconnect();
       });
+
+      return true;
     })
     .catch((err: Error) => {
       app.log.error(`Error connecting to the database: ${err?.message || "Something went wrong"}`);
+
       app.log.debug(err);
-      app.log.debug(
-        JSON.stringify({ uri: process.env.MONGODB_URI, database: process.env.MONGODB_DB }),
-      );
+      return false;
     });
 });

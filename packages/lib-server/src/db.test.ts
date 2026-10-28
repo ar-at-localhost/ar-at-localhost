@@ -50,6 +50,6 @@ describe("db", () => {
       app.register(mongoosePlugin);
       await app.ready();
       expect(error).toHaveBeenCalledWith(`Error connecting to the database: ${err}`);
-    });
+    }, 60000);
   });
 });
