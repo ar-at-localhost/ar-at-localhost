@@ -51,7 +51,9 @@ export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase, name 
     forceCloseConnections: true,
     pluginTimeout: 60 * 1000,
     rewriteUrl:
-      name && isDev() ? (req) => req.url?.replace(`/${name}`, "/") as unknown as string : undefined,
+      name && isDev()
+        ? (req) => req.url?.replace(`/${name}`, "/").replace("//", "/") as unknown as string
+        : undefined,
   });
 
   /**
