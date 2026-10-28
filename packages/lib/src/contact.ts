@@ -61,7 +61,7 @@ export const createContactSrv = async (
   })
     .then(async (res) => {
       if (res.ok) {
-        return res.json();
+        return res.json() as unknown as Promise<CreateContactResp>;
       }
 
       throw await res.json().catch(() => {
