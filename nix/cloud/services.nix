@@ -123,6 +123,15 @@
       schemas = merge "components-schemas";
     };
 
+    servers = [
+      {
+        url = "https://services-dju3p6cr.uc.gateway.dev";
+        x-google-endpoint = {
+          allowCors = true;
+        };
+      }
+    ];
+
     x-google-api-management.backends = merge "backends";
   };
 in {
@@ -130,7 +139,9 @@ in {
     inherit openapi;
   };
 
-  output.api-gateway-url.value = "\${google_api_gateway_gateway.services.default_hostname}";
+  output = {
+    api-gateway-url.value = "\${google_api_gateway_gateway.services.default_hostname}";
+  };
 
   resource = lib.foldl' lib.recursiveUpdate {
     google_service_account.services = {
