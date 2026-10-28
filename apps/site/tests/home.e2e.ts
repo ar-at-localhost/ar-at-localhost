@@ -3,12 +3,13 @@ import { test } from "@playwright/test";
 
 test("it should submit", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.getByTestId("contact-form").waitFor();
   await page.locator("form [name=firstName]").fill(randFirstName());
   await page.locator("form [name=lastName]").fill(randLastName());
   await page.locator("form [name=email]").fill(randEmail());
   await page.locator("form [name=message]").fill(randText({ charCount: 128 }));
+  await page.waitForFunction(() => (window as any)?.turnstile?.__token);
   await page.locator("button[type=submit]").click();
   await page.getByTestId("brief-submit-success").waitFor();
 });
