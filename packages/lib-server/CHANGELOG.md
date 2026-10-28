@@ -1,5 +1,13 @@
 # lib-server
 
+## 0.0.8
+
+### Patch Changes
+
+- Force version all packages
+- Updated dependencies []:
+  - lib@0.0.2
+
 ## 0.0.7
 
 ### Patch Changes
