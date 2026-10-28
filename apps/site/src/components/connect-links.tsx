@@ -46,7 +46,7 @@ export const ConnectLinks = () => {
         }
       />
 
-      <DropdownMenuContent>
+      <DropdownMenuContent className={"min-w-48"}>
         <DropdownMenuItem>
           <ConnectLink href={links.form}>
             <IconSend />
