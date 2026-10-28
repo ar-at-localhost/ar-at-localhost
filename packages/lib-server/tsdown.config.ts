@@ -5,5 +5,10 @@ export default defineConfig({
   exports: {
     devExports: true,
     packageJson: true,
+
+    customExports: (exports) => {
+      exports["./env.d.ts"] = "./env.d.ts";
+      return exports;
+    },
   },
 });

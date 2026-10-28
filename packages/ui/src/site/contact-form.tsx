@@ -3,19 +3,22 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/field";
 import { Input } from "@/components/input";
 import { Textarea } from "@/components/textarea";
-import { useForm, Form, Field as FField, SubmitHandler } from "@formisch/react";
+import { useForm, Form, Field as FField, SubmitHandler, setInput, reset } from "@formisch/react";
 import { contactBodySchema, createContactSrv } from "lib";
 import { CheckCircle, LoaderCircle, PlusCircleIcon, SendIcon } from "lucide-react";
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 
 type Props = {
   apiURL?: string;
+  sitekey?: string;
 };
 
-export const ContactForm: FC<Props> = ({ apiURL }) => {
+export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
   const [showDataPolicy, setShowDataPolicy] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState<string | null>(null);
+  const [turnstile, setTurnstile] = useState<boolean>(false);
+
   const form = useForm({
     schema: contactBodySchema,
   });
@@ -28,6 +31,35 @@ export const ContactForm: FC<Props> = ({ apiURL }) => {
         setSubmissionError(err?.message || "Something went off!");
       });
   };
+
+  useEffect(() => {
+    document.querySelector("#contact-form-placeholder")?.classList?.add("hidden");
+    reset(form);
+    // oxlint-disable-next-line react-hooks/exhaustive-deps :do only on mount
+  }, []);
+
+  useEffect(() => {
+    if (sitekey && turnstile && form) {
+      window.turnstile.render("#turstile-container", {
+        sitekey,
+        callback: (token) =>
+          setInput(form, {
+            path: ["token"],
+            input: token,
+          }),
+      });
+    }
+  }, [sitekey, form, turnstile]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if ("turnstile" in window) {
+        setTurnstile(true);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Card
@@ -114,7 +146,7 @@ export const ContactForm: FC<Props> = ({ apiURL }) => {
                       defaultValue={field.input || ""}
                       placeholder="Tell me about your project"
                       rows={5}
-                      className="min-h-[128px] max-h-[196px] overflow-auto"
+                      className="min-h-32 max-h-49 overflow-auto"
                     />
                     {field.errors && (
                       <FieldError errors={field.errors.map((message) => ({ message }))} />
@@ -142,6 +174,7 @@ export const ContactForm: FC<Props> = ({ apiURL }) => {
       {!submissionId && (
         <CardFooter>
           <div className="w-full flex flex-col items-center gap-2">
+            <div id="turstile-container"></div>
             <Button variant="default" className="w-full" type="submit" form="contact-form">
               {/* FIXME: Loading doesn't seem to work */}
               {!form.isSubmitting ? (

@@ -19,12 +19,14 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./env.d.ts": "./env.d.ts"
   },
   "publishConfig": {
     "exports": {
       ".": "./dist/index.mjs",
-      "./package.json": "./package.json"
+      "./package.json": "./package.json",
+      "./env.d.ts": "./env.d.ts"
     }
   },
   "scripts": {
@@ -47,6 +49,7 @@
     "@fastify/rate-limit": "^11.2.1",
     "@fastify/swagger": "^9.9.2",
     "@valibot/to-json-schema": "^1.8.0",
+    "fastify-plugin": "^6.0.1",
     "globby": "^16.2.4",
     "lib": "workspace:*",
     "mjml": "^5.4.1",

@@ -22,11 +22,13 @@
     "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD",
     "PORT",
     "PUBLIC_SRV_URL",
+    "TURNSTILE_SECRET_KEY",
     "RESEND_API_KEY",
     "SECRETSPEC_PROFILE",
     "SITE_APP_ID",
     "SOPS_AGE_KEY",
-    "TURBO_TOKEN"
+    "TURBO_TOKEN",
+    "TURNSTILE_SECRET_KEY"
   ],
   "tasks": {
     "build": {

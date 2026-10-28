@@ -1,16 +1,16 @@
 ---
-const { apiBase } = Astro.props;
+const { apiBase, siteKey } = Astro.props;
 import { Image } from 'astro:assets';
-import { Button } from 'ui/components/button';
 import { ContactForm } from 'ui/site/contact-form';
 import { ConnectLinks } from '../components/connect-links'
 import ConnectLinksAstro from './connect-links.astro'
+import ContactFormPlaceholder from './contact-form.astro';
 import Section from '../components/section.astro'
 import Testmonial from '../components/testimonial.astro';
 import logo from '../assets/logo.png';
 import logoLight from '../assets/logo-light.png';
 
-const { apiURL } = `${apiBase}/contact`;
+const apiURL = `${apiBase}/contact`;
 ---
 
 <Section>
@@ -56,7 +56,8 @@ const { apiURL } = `${apiBase}/contact`;
     </div>
 
     <div class="w-full md:w-3/4 lg:w-1/4 px-2 md:p-0" id="contact-form-container">
-      <ContactForm apiURL={apiURL} client:load />
+      <ContactForm apiURL={apiURL} sitekey={siteKey} client:only="react" />
+      <ContactFormPlaceholder />
     </div>
   </div>
 </Section>
@@ -70,7 +71,7 @@ const { apiURL } = `${apiBase}/contact`;
 
     if (!entry && links) {
       links.style.display = 'block';
-    } else {
+    } else if (links) {
       links.style.display = 'none';
     }
   });

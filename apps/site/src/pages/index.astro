@@ -7,7 +7,7 @@ import Hero from '../components/hero.astro'
 import Services from '../components/services.astro'
 import Tech from '../components/tech.astro'
 
-const { PUBLIC_SRV_URL } = import.meta.env;
+const { PUBLIC_SRV_URL, PUBLIC_TURNSTILE_SITEKEY } = import.meta.env;
 ---
 
 <script>
@@ -24,10 +24,12 @@ const { PUBLIC_SRV_URL } = import.meta.env;
 		<meta name="generator" content={Astro.generator} />
 		<title>Ahmad Raza | ar-at-localhost</title>
     <meta name="description" content="Hire a full stack developer">
+
+    <script is:inline	src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 	</head>
 
   <body class="relative smooth">
-    <Hero apiBase={PUBLIC_SRV_URL} />
+    <Hero apiBase={PUBLIC_SRV_URL} siteKey={PUBLIC_TURNSTILE_SITEKEY} />
     <Services />
     <Tech />
     <AI />

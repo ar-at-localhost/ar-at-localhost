@@ -40,3 +40,8 @@ export const isProduction = () =>
 export const isDev = () => {
   return !["staging", "production"].includes(process.env.NODE_ENV || "");
 };
+
+export const getTurnstile = () => ({
+  TURNSTILE_SITEKEY: process.env.PUBLIC_TURNSTILE_SITEKEY!,
+  TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY!,
+});

@@ -11,6 +11,7 @@ import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swag
 import { toJsonSchema } from "@valibot/to-json-schema";
 import { cwd } from "node:process";
 import { writeFile } from "node:fs/promises";
+import { turnstilePlugin } from "./turnstile.ts";
 
 export type BaseAppOpts = {
   swagger?: FastifyDynamicSwaggerOptions;
@@ -142,6 +143,8 @@ export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase, name 
     timeWindow: "1 minute",
     global: true,
   });
+
+  await app.register(turnstilePlugin);
 
   app.get("/health", async (_, resp) => {
     resp.status(200).send();
