@@ -71,7 +71,7 @@ export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
     >
       {!submissionId && (
         <CardHeader>
-          <CardTitle>Send a brief</CardTitle>
+          <CardTitle>Send a project brief</CardTitle>
         </CardHeader>
       )}
 

@@ -50,7 +50,7 @@ export const ConnectLinks = () => {
         <DropdownMenuItem>
           <ConnectLink href={links.form}>
             <IconSend />
-            Send a brief
+            Send a project brief
           </ConnectLink>
         </DropdownMenuItem>
 
