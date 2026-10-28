@@ -10,7 +10,7 @@ import Tech from '../components/tech.astro'
 const { PUBLIC_SRV_URL } = import.meta.env;
 ---
 
-<script is:inline>
+<script>
   const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   const isDark = theme == "dark";
   document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
@@ -50,6 +50,13 @@ const { PUBLIC_SRV_URL } = import.meta.env;
 
         (document.querySelector('input[type="text"]') as HTMLInputElement)?.focus();
       }));
+    </script>
+
+    <script>
+      // warm up contact service for quicker response
+      fetch(`${import.meta.env.PUBLIC_SRV_URL}/contact/health`, {
+        method: 'GET',
+      }).then(() => null).catch(() => null);
     </script>
 	</body>
 </html>

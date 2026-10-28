@@ -10,7 +10,11 @@ declare global {
     }
   }
 
+  interface ImportMetaEnv {
+    PUBLIC_SRV_URL: string;
+  }
+
   interface ImportMeta {
-    env: Record<string, string>;
+    readonly env: ImportMetaEnv;
   }
 }
