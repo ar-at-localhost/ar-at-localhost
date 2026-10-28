@@ -1,3 +1,4 @@
+import fp from "fastify-plugin";
 import type { FastifyPluginAsync } from "fastify";
 import mongoose, { type ConnectOptions } from "mongoose";
 import { getLocalKMSProvider, getNamespace } from "./kms.ts";
@@ -9,7 +10,6 @@ export const mongooseConnect = async (
 ): Promise<typeof mongoose> => {
   return mongoose.connect(uri || process.env.MONGODB_URI!, {
     dbName: process.env.MONGODB_DB,
-    serverSelectionTimeoutMS: 10 * 60000,
 
     autoEncryption: {
       keyVaultNamespace: getNamespace(),
@@ -28,7 +28,7 @@ export const mongooseConnect = async (
   });
 };
 
-export const mongoosePlugin: FastifyPluginAsync = async (app) => {
+export const mongoosePlugin: FastifyPluginAsync = fp(async (app) => {
   await mongooseConnect()
     .then((res) => {
       app.log.info("Database is connected...");
@@ -50,4 +50,4 @@ export const mongoosePlugin: FastifyPluginAsync = async (app) => {
       app.log.debug(err);
       return false;
     });
-};
+});
