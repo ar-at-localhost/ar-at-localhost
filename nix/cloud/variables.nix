@@ -1,5 +1,9 @@
 _: let
   variables = {
+    domain_name = {
+      type = "string";
+    };
+
     project_id = {
       type = "string";
     };

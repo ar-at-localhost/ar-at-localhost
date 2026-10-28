@@ -28,12 +28,13 @@ in {
 
     google_project_service =
       lib.genAttrs [
-        "run"
-        "artifactregistry"
         "apigateway"
+        "artifactregistry"
         "cloudresourcemanager"
         "compute"
+        "dns"
         "iam"
+        "run"
         "secretmanager"
         "servicemanagement"
         "servicecontrol"
