@@ -42,11 +42,14 @@ export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
     if (sitekey && turnstile && form) {
       window.turnstile.render("#turstile-container", {
         sitekey,
-        callback: (token) =>
+        callback: (token) => {
           setInput(form, {
             path: ["token"],
             input: token,
-          }),
+          });
+
+          window.turnstile.__token = token;
+        },
       });
     }
   }, [sitekey, form, turnstile]);
@@ -55,6 +58,7 @@ export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
     const interval = setInterval(() => {
       if ("turnstile" in window) {
         setTurnstile(true);
+        clearInterval(interval);
       }
     }, 100);
 

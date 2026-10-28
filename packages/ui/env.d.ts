@@ -11,6 +11,7 @@ declare global {
   interface Window {
     turnstile: {
       render: (ref: string, opts: { sitekey: string; callback: (token: string) => void }) => void;
+      __token?: string;
     };
   }
 }
