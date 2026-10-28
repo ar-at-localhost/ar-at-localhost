@@ -22,6 +22,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Detect changed services
         id: changed-services-detection
@@ -83,6 +84,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Update API gateway
         env:
