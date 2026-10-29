@@ -1,5 +1,10 @@
 import fp from "fastify-plugin";
-import type { FastifyInstance, FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
+import {
+  type FastifyInstance,
+  type FastifyPluginAsync,
+  type FastifyReply,
+  type FastifyRequest,
+} from "fastify";
 import { getTurnstile } from "./env.ts";
 
 export const turnstilePlugin: FastifyPluginAsync = fp(async (app: FastifyInstance) => {
@@ -32,7 +37,8 @@ export const turnstilePlugin: FastifyPluginAsync = fp(async (app: FastifyInstanc
         if (!success) return errResp();
         return true;
       })
-      .catch(() => {
+      .catch((err) => {
+        app.log.error("Error validating user response:", err);
         return errResp(500);
       });
   });

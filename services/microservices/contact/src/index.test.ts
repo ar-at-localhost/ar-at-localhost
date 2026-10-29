@@ -7,7 +7,6 @@ describe("Contact", () => {
   describe("create", () => {
     it("should create a record", async () => {
       const body = getFalseConnect();
-      body.token = "XXXX-test-XXXX";
       const result = await createConnectSrv(body, baseURL);
       expect(result).toBeTruthy();
       expect(result.id).toBeTruthy();

@@ -69,11 +69,13 @@
         tag = version;
         uid = 1000;
         gid = 1000;
-        contents = [srv] ++ (with pkgs; [nodejs secretspec sops]);
+        contents = [srv pkgs.dockerTools.caCertificates] ++ (with pkgs; [nodejs secretspec sops]);
 
         config = {
           Env = [
             "PATH=/bin"
+            "SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt"
+            "NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-bundle.crt"
           ];
 
           Cmd = [
