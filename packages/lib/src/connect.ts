@@ -34,7 +34,7 @@ export const connectBodySchema = object({
   ),
 
   markdown: optional(boolean()),
-  token: optional(string()),
+  token: pipe(string(), maxLength(1024)),
 });
 
 export type ConnectBody = InferOutput<typeof connectBodySchema>;
@@ -83,6 +83,7 @@ export const getFalseConnect = (): ConnectBody => ({
   email: randEmail(),
   message: randText({ charCount: 128 }),
   markdown: false,
+  token: randText({ maxCharCount: 256 }),
 });
 
 /**

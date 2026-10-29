@@ -181,7 +181,14 @@ export const ConnectForm: FC<Props> = ({ apiURL, sitekey }) => {
         <CardFooter>
           <div className="w-full flex flex-col items-center gap-2">
             <div id="turstile-container" ref={turnstileRef} className="fade-in fade-out"></div>
-            <Button variant="default" className="w-full" type="submit" form="connect-form">
+
+            <Button
+              variant="default"
+              className="w-full"
+              type="submit"
+              form="connect-form"
+              disabled={!form.isValid}
+            >
               {!form.isSubmitting ? (
                 <>
                   <SendIcon data-icon="inline-start" />
