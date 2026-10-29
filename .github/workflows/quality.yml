@@ -9,6 +9,7 @@ on:
 
 jobs:
   check:
+    name: Quality checks
     runs-on: ubuntu-latest
 
     steps:

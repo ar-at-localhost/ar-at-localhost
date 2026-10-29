@@ -11,6 +11,7 @@ permissions: {}
 
 jobs:
   hash-check:
+    name: Verify Nix hash for pnpm dependencies
     runs-on: ubuntu-latest
     permissions:
       contents: write

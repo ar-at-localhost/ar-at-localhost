@@ -19,7 +19,8 @@ on:
     inputs: *deployment_inputs
 
 jobs:
-  deploy:
+  deploy-service:
+    name: Deploy service
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
