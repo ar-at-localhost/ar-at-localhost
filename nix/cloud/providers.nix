@@ -20,10 +20,38 @@ in {
       location = region;
       format = "DOCKER";
       repository_id = project_name;
+      cleanup_policy_dry_run = true;
 
       lifecycle = {
         prevent_destroy = true;
       };
+
+      cleanup_policies = [
+        {
+          id = "keep-latest";
+          action = "KEEP";
+          condition = {
+            tag_state = "TAGGED";
+            tag_prefixes = ["latest"];
+          };
+        }
+        {
+          id = "max-3-tags";
+          action = "KEEP";
+
+          most_recent_versions = {
+            package_name_prefixes = ["srv"];
+            keep_count = 3;
+          };
+        }
+        {
+          id = "delete-rest";
+          action = "DELETE";
+          condition = {
+            tag_state = "ANY";
+          };
+        }
+      ];
     };
 
     google_project_service =
