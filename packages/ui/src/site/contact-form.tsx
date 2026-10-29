@@ -4,36 +4,37 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/field";
 import { Input } from "@/components/input";
 import { Textarea } from "@/components/textarea";
 import { useForm, Form, Field as FField, SubmitHandler, setInput, reset } from "@formisch/react";
-import { contactBodySchema, createContactSrv } from "lib";
+import { connectBodySchema, createConnectSrv } from "lib";
 import { CheckCircle, LoaderCircle, PlusCircleIcon, SendIcon } from "lucide-react";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 
 type Props = {
   apiURL?: string;
   sitekey?: string;
 };
 
-export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
+export const ConnectForm: FC<Props> = ({ apiURL, sitekey }) => {
+  const turnstileRef = useRef<HTMLDivElement>(null);
   const [showDataPolicy, setShowDataPolicy] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionId, setSubmissionId] = useState<string | null>(null);
   const [turnstile, setTurnstile] = useState<boolean>(false);
 
   const form = useForm({
-    schema: contactBodySchema,
+    schema: connectBodySchema,
   });
 
-  const handleSubmit: SubmitHandler<typeof contactBodySchema> = async (body) => {
+  const handleSubmit: SubmitHandler<typeof connectBodySchema> = async (body) => {
     setSubmissionError(null);
-    await createContactSrv(body, apiURL)
-      .then((res) => setSubmissionId(res._id?.toString()))
+    await createConnectSrv(body, apiURL)
+      .then((res) => setSubmissionId(res.id?.toString()))
       .catch((err: Error) => {
         setSubmissionError(err?.message || "Something went off!");
       });
   };
 
   useEffect(() => {
-    document.querySelector("#contact-form-placeholder")?.classList?.add("hidden");
+    document.querySelector("#connect-form-placeholder")?.classList?.add("hidden");
     reset(form);
     // oxlint-disable-next-line react-hooks/exhaustive-deps :do only on mount
   }, []);
@@ -49,6 +50,7 @@ export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
           });
 
           window.turnstile.__token = token;
+          turnstileRef?.current?.remove();
         },
       });
     }
@@ -81,7 +83,7 @@ export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
 
       <CardContent>
         {!submissionId ? (
-          <Form of={form} id="contact-form" onSubmit={handleSubmit} data-testid="contact-form">
+          <Form of={form} id="connect-form" onSubmit={handleSubmit} data-testid="connect-form">
             <FieldGroup>
               <FField of={form} path={["firstName"]}>
                 {(field) => (
@@ -178,9 +180,8 @@ export const ContactForm: FC<Props> = ({ apiURL, sitekey }) => {
       {!submissionId && (
         <CardFooter>
           <div className="w-full flex flex-col items-center gap-2">
-            <div id="turstile-container"></div>
-            <Button variant="default" className="w-full" type="submit" form="contact-form">
-              {/* FIXME: Loading doesn't seem to work */}
+            <div id="turstile-container" ref={turnstileRef} className="fade-in fade-out"></div>
+            <Button variant="default" className="w-full" type="submit" form="connect-form">
               {!form.isSubmitting ? (
                 <>
                   <SendIcon data-icon="inline-start" />

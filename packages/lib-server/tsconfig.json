@@ -17,5 +17,5 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },
-  "include": ["src", "./env.d.ts"]
+  "include": ["src", "./drizzle.config.ts", "./env.d.ts"]
 }

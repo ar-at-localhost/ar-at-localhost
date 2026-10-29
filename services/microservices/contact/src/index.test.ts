@@ -1,20 +1,20 @@
+import { createConnectSrv, getFalseConnect } from "lib";
 import { describe, expect, it } from "vitest";
-import { createContactSrv, getFalseContact } from "lib";
 
 const baseURL = "http://localhost:5000";
 
 describe("Contact", () => {
   describe("create", () => {
     it("should create a record", async () => {
-      const body = getFalseContact();
+      const body = getFalseConnect();
       body.token = "XXXX-test-XXXX";
-      const result = await createContactSrv(body, baseURL);
+      const result = await createConnectSrv(body, baseURL);
       expect(result).toBeTruthy();
-      expect(result._id).toBeTruthy();
+      expect(result.id).toBeTruthy();
     }, 30_000);
 
     it("raise validation error", async () => {
-      const body = getFalseContact();
+      const body = getFalseConnect();
       body.email = "foo@";
 
       const req = await fetch(`${baseURL}/`, {

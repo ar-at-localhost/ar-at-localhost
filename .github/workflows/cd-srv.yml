@@ -18,36 +18,43 @@ on:
   workflow_call:
     inputs: *deployment_inputs
 
+env:
+  NODE_ENV: "production"
+  SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+  SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
 jobs:
-  deploy:
+  deploy-service:
+    name: Deploy service
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          fetch-depth: 0
+
+      - uses: cachix/install-nix-action@v31
+
+      - uses: cachix/cachix-action@v16
+        with:
+          name: devenv
+
+      - name: Install devenv.sh
+        run: nix profile add nixpkgs#devenv nixpkgs#sops
 
       - name: Authenticate Google Cloud
-        env:
-          SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        shell: devenv shell -- bash -e {0}
         run: |
           export keyfile="$RUNNER_TEMP/gcp.json"
           # shellcheck disable=SC2016
-          nix develop -c secretspec run -- bash -euo pipefail -c '
+          secretspec run -- bash -euo pipefail -c '
             printf '%s' "$GOOGLE_CREDENTIALS" > "$keyfile"
             gcloud auth activate-service-account --key-file "$keyfile" --quiet
           '
 
       - name: Deploy service
         env:
-          SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
-          NODE_ENV: "production"
           SERVICE: ${{ inputs.service || github.ref_name }}
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        shell: devenv shell -- bash -e {0}
         run: |
-          export service="${SERVICE%@*}"
-          # shellcheck disable=SC2016
-          nix develop -c secretspec run -- bash -euo pipefail -c '
-            nix run .#tofu-view > config.tf.json
-            tofu init -input=false
-            nix run .#deploy-service "$service" "$SECRETSPEC_PROFILE"
-          '
+          export SERVICE="${SERVICE%@*}"
+          devenv tasks run "aal:deploy-service"

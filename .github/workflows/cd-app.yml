@@ -20,21 +20,33 @@ on:
 
 jobs:
   deploy:
+    name: Deploy app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          fetch-depth: 0
+
+      - uses: cachix/install-nix-action@v31
+
+      - uses: cachix/cachix-action@v16
+        with:
+          name: devenv
+
+      - name: Install devenv.sh
+        run: nix profile add nixpkgs#devenv nixpkgs#sops
 
       - name: Write Google Credentials
         env:
           SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        shell: devenv shell -- bash -e {0}
         run: |
+          export credentials_file="$RUNNER_TEMP/gcp.json"
           # shellcheck disable=SC2016
-          nix develop -c secretspec run -- bash -euo pipefail -c '
-            credentials="$1"
-            echo "$GOOGLE_CREDENTIALS" > "$credentials"
-          ' -- "$RUNNER_TEMP/gcp.json"
+          devenv shell secretspec run -- bash -euo pipefail -c '
+            echo "$GOOGLE_CREDENTIALS" > "$credentials_file"
+          '
 
       - name: Deploy application
         env:
@@ -43,11 +55,6 @@ jobs:
           APP: ${{ inputs.app || github.ref_name }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
-          export app="${APP%@*}"
+          export APP="${APP%@*}"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/gcp.json"
-
-          # shellcheck disable=SC2016
-          nix develop -c secretspec run -- bash -euo pipefail -c '
-            pnpm turbo --filter "$app" build
-            pnpm --filter "$app" firebase --project "$SECRETSPEC_PROFILE" deploy
-          '
+          devenv tasks run "aal:deploy-app"

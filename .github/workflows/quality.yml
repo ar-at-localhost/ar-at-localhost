@@ -9,17 +9,48 @@ on:
 
 jobs:
   check:
+    name: Quality checks
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v5
-      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          fetch-depth: 0
+
+      - uses: cachix/install-nix-action@v31
+
+      - uses: cachix/cachix-action@v16
+        with:
+          name: devenv
+
+      - name: Install devenv.sh
+        run: nix profile add nixpkgs#devenv nixpkgs#sops
 
       - name: Check & Test
         env:
           SECRETSPEC_PROFILE: "ci"
-          MONGODB_DB: "test_db_${{ github.run_id }}"
+          DB_ID: "ci-${{ github.run_id }}-${{ github.run_attempt }}"
           NODE_ENV: ci
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        shell: devenv shell -- bash -e {0}
         run: |
-          nix develop -c secretspec run pnpm quality
+          export DB_NAME="$DB_ID"
+
+          # shellcheck disable=SC2016
+          secretspec run -- bash -euo pipefail -c '
+            cleanup() {
+              pnpm --filter lib-server exec neon branches delete --project "$NEON_PROJECT_ID" "$DB_NAME"
+            }
+
+            trap cleanup EXIT
+
+            DB_URI="$(
+              pnpm --filter lib-server exec neon branches create --project "$NEON_PROJECT_ID" --name "$DB_NAME" --parent "$NEON_BASE" \
+              | grep "^postgresql://" \
+              | head -n 1
+            )"
+
+            export DB_URI
+            pnpm --filter lib-server drizzle-kit migrate
+            pnpm quality
+          '

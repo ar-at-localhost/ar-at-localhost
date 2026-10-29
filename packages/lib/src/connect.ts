@@ -15,9 +15,9 @@ import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso"
 import { getAPIBaseURL } from "./env.ts";
 
 /**
- * Schema to validate a contact
+ * Schema to validate a connect
  */
-export const contactBodySchema = object({
+export const connectBodySchema = object({
   firstName: pipe(
     string(required("First name")),
     minLength(1, required("First name")),
@@ -37,22 +37,24 @@ export const contactBodySchema = object({
   token: optional(string()),
 });
 
-export type ContactBody = InferOutput<typeof contactBodySchema>;
-export type ContactDoc = ContactBody & {
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
+export type ConnectBody = InferOutput<typeof connectBodySchema>;
+
+export type Connect = ConnectBody & {
+  id: string;
+  created_at: string;
+  updated_at: string;
 };
-export type CreateContactResp = Pick<ContactDoc, "_id">;
+
+export type CreateConnectResp = Pick<Connect, "id">;
 
 /**
- * a fetch function for creating a new contact
+ * a fetch function for creating a new connect
  */
-export const createContactSrv = async (
-  body: ContactBody,
+export const createConnectSrv = async (
+  body: ConnectBody,
   path?: string,
-): Promise<CreateContactResp> =>
-  fetch(path ?? `${getAPIBaseURL()}/contact`, {
+): Promise<CreateConnectResp> =>
+  fetch(path ?? `${getAPIBaseURL()}/connect`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
@@ -61,7 +63,7 @@ export const createContactSrv = async (
   })
     .then(async (res) => {
       if (res.ok) {
-        return res.json() as unknown as Promise<CreateContactResp>;
+        return res.json() as unknown as Promise<CreateConnectResp>;
       }
 
       throw await res.json().catch(() => {
@@ -73,9 +75,9 @@ export const createContactSrv = async (
     });
 
 /**
- * Create a false contact body object for testing
+ * Create a false connect body object for testing
  */
-export const getFalseContact = (): ContactBody => ({
+export const getFalseConnect = (): ConnectBody => ({
   firstName: randFirstName(),
   lastName: randLastName(),
   email: randEmail(),
@@ -84,11 +86,11 @@ export const getFalseContact = (): ContactBody => ({
 });
 
 /**
- * Contact Links
+ * Connect Links
  */
 export const links = {
   fiverr: "https://www.fiverr.com/s/gvvXllo",
-  form: "#contact-form-container",
+  form: "#connect-form-container",
   github: "https://github.com/ar-at-localhost",
   linkedin: "https://linkedin.com/in/ar124officialwd",
   mail: "mailto:pro.se.ahmad.raza.1@gmail.com",

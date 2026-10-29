@@ -1,0 +1,40 @@
+name: "Continuous Cloud Sync"
+
+on:
+  push:
+    tags:
+      - "srv-*"
+
+  workflow_dispatch:
+    inputs: &deployment_inputs
+      profile:
+        default: "staging"
+        type: string
+
+  workflow_call:
+    inputs: *deployment_inputs
+
+env:
+  NODE_ENV: "production"
+  SECRETSPEC_PROFILE: ${{ inputs.profile || 'staging' }}
+  SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
+jobs:
+  sync-cloud:
+    name: Sync cloud resources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+
+      - uses: cachix/cachix-action@v16
+        with:
+          name: devenv
+
+      - name: Install devenv.sh
+        run: nix profile add nixpkgs#devenv nixpkgs#sops
+
+      - name: Sync Cloud
+        shell: devenv shell -- bash -e {0}
+        run: |
+          devenv tasks run "aal:sync-cloud"

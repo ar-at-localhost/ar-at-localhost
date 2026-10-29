@@ -11,6 +11,7 @@ permissions: {}
 
 jobs:
   hash-check:
+    name: Verify Nix hash for pnpm dependencies
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -18,34 +19,25 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
+          fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: cachix/install-nix-action@v31
+      - uses: cachix/cachix-action@v16
+        with:
+          name: devenv
+
+      - name: Install devenv.sh
+        run: nix profile add nixpkgs#devenv nixpkgs#sops
 
       - name: Check & Test
         id: hash_check
         env:
           SECRETSPEC_PROFILE: "ci"
-          MONGODB_DB: "test_db_${{ github.run_id }}"
           NODE_ENV: ci
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
           AUTHOR_NAME: ${{ github.actor }}
           AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+        shell: devenv shell -- bash -e {0}
         run: |
-          # shellcheck disable=SC2016
-          nix develop -c secretspec run -- bash -c '
-            hash_path="nix/hash.txt"
-            specified_hash="$(cat "$hash_path")"
-            got_hash=$(nix run .#pnpm-hash)
-
-            if [[ -n "$got_hash" && "$specified_hash" != "$got_hash" ]]; then
-              echo "$got_hash" > "$hash_path"
-              git add "$hash_path"
-              git config user.name "$AUTHOR_NAME"
-              git config user.email "$AUTHOR_EMAIL"
-              git commit -m "fix(nix): update pnpm hash"
-              git push --no-verify origin HEAD
-              echo "pnpm Hash has been updated. Please pull to integrate first."
-              exit 1
-            fi
-          '
+          devenv tasks run "aal:pnpm-hash"

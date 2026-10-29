@@ -6,7 +6,6 @@ packages:
 allowBuilds:
   esbuild: true
   kerberos: false
-  mongodb-client-encryption: true
   protobufjs: true
   re2: true
 
@@ -22,9 +21,6 @@ catalog:
   "@vitest/browser-playwright": ^5.0.3
   fastify: 5.12.5
   lucide-react: 1.54.0
-  mongodb: ^7.7.0
-  mongodb-client-encryption: ^7.2.1
-  mongoose: ^9.11.1
   nodemailer: "npm:10.1.0"
   oxfmt: 0.61.0
   oxlint: 1.82.0

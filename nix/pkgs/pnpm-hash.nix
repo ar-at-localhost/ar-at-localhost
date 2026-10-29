@@ -2,6 +2,7 @@
 pkgs.writeShellApplication {
   name = "pnpm-hash";
   runtimeInputs = with pkgs; [nix gnused coreutils];
+
   text = ''
     output=$(nix build .#pnpm-deps 2>&1) || true
 
