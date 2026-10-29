@@ -49,7 +49,7 @@ export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase, name 
 
   const app = Fastify({
     forceCloseConnections: true,
-    pluginTimeout: 3 * 60 * 1000,
+    pluginTimeout: 5 * 60 * 1000,
     rewriteUrl:
       name && isDev()
         ? (req) => req.url?.replace(`/${name}`, "/").replace("//", "/") as unknown as string

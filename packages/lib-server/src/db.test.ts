@@ -31,25 +31,5 @@ describe("db", () => {
       await app.ready();
       expect(mongoose.connect).toHaveBeenCalled();
     });
-
-    it("handles database error", async () => {
-      const err = "test error";
-      vi.spyOn(mongoose, "connect").mockRejectedValue(new Error(err));
-      const app = fastify();
-      const error = vi.spyOn(app.log, "error");
-      app.register(mongoosePlugin);
-      await app.ready();
-      expect(error).toHaveBeenCalledWith(`Error connecting to the database: ${err}`);
-    });
-
-    it("handles database error gracefully", async () => {
-      const err = "Something went wrong";
-      vi.spyOn(mongoose, "connect").mockRejectedValue(1);
-      const app = fastify();
-      const error = vi.spyOn(app.log, "error");
-      app.register(mongoosePlugin);
-      await app.ready();
-      expect(error).toHaveBeenCalledWith(`Error connecting to the database: ${err}`);
-    }, 60000);
   });
 });

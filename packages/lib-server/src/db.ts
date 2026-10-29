@@ -9,6 +9,7 @@ export const mongooseConnect = async (
   opts?: ConnectOptions,
 ): Promise<typeof mongoose> => {
   return mongoose.connect(uri || process.env.MONGODB_URI!, {
+    serverSelectionTimeoutMS: 60 * 1000,
     dbName: process.env.MONGODB_DB,
 
     autoEncryption: {
@@ -46,8 +47,7 @@ export const mongoosePlugin: FastifyPluginAsync = fp(async (app) => {
     })
     .catch((err: Error) => {
       app.log.error(`Error connecting to the database: ${err?.message || "Something went wrong"}`);
-
       app.log.debug(err);
-      return false;
+      throw err;
     });
 });
