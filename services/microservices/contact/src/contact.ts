@@ -1,12 +1,12 @@
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
-import { contactBodySchema, type ContactBody } from "lib";
-import { ContactModel } from "lib-server";
+import { type ConnectBody, connectBodySchema, type CreateConnectResp } from "lib";
+import { connectsTable } from "lib-server";
 import { object, pipe, string, regex } from "valibot";
 
 export const contactRest: FastifyPluginAsync = async (app) => {
   app.post("/", {
     schema: {
-      body: contactBodySchema,
+      body: connectBodySchema,
       response: {
         201: object({
           _id: pipe(string(), regex(/^[a-f\d]{24}$/)),
@@ -14,13 +14,26 @@ export const contactRest: FastifyPluginAsync = async (app) => {
       },
     },
     handler: async (req: FastifyRequest, rep: FastifyReply) => {
-      if (!(await app.turnstile(req, rep))) return;
-      const body = req.body as unknown as ContactBody;
-      const record = await ContactModel.create(body);
+      try {
+        if (!(await app.turnstile(req, rep))) return;
+        const body = req.body as unknown as ConnectBody;
+        const result = await app.db
+          .insert(connectsTable)
+          .values(body)
+          .returning({ id: connectsTable.id });
 
-      rep.send({
-        _id: record._id.toString(),
-      });
+        if (!result.length) throw new Error("Unexpected insert result!");
+
+        rep.send({
+          id: result[0].id,
+        } as CreateConnectResp);
+      } catch (err) {
+        const e = err as unknown as Error;
+        app.log.error(err);
+        rep.status(500).send({
+          message: e?.message || "Something went wrong!",
+        });
+      }
     },
   });
 };

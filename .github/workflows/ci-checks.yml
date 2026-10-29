@@ -6,15 +6,15 @@ on:
       - main
 
 jobs:
-  quality-checks:
-    uses: "ar-at-localhost/ar-at-localhost/.github/workflows/quality.yml@main"
-    secrets:
-      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-
   pnpm-hash:
-    needs: quality-checks
     uses: ./.github/workflows/pnpm-deps-hash.yml
     permissions:
       contents: write
+    secrets:
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
+  quality-checks:
+    needs: pnpm-hash
+    uses: ./.github/workflows/quality.yml
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}

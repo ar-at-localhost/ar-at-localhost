@@ -1,2 +1,3 @@
 # automatically activate dev shell
-use flake
+eval "$(devenv direnvrc)"
+use devenv

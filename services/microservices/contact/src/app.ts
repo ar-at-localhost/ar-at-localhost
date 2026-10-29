@@ -1,14 +1,16 @@
 import packageInfo from "../package.json" with { type: "json" };
-import { type BaseAppOpts, getBaseApp } from "lib-server";
+import { type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
 import { contactRest } from "./contact.ts";
 
 const { name, version } = packageInfo;
 
-export const createApp = async (opts?: BaseAppOpts) => {
+export const createApp = async (
+  opts?: BaseAppOpts & {
+    noDatabase?: boolean;
+  },
+) => {
   const app = await getBaseApp({
     name: opts?.name,
-    noDatabase: opts?.noDatabase,
-    dontAwaitDatabase: opts?.dontAwaitDatabase,
     swagger: {
       openapi: {
         openapi: "3.0.3",
@@ -19,6 +21,10 @@ export const createApp = async (opts?: BaseAppOpts) => {
       },
     },
   });
+
+  if (!opts?.noDatabase) {
+    await app.register(pgPlugin);
+  }
 
   app.register(contactRest);
   return app;

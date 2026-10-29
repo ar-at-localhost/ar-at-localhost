@@ -5,10 +5,6 @@
 }: let
   crypt_shared = pkgs.callPackage ./pkgs/crypt_shared.nix {};
   httpMethods = ["delete" "get" "head" "options" "patch" "post" "put"];
-  mongocrypt = pkgs.fetchurl {
-    url = "https://github.com/mongodb-js/mongodb-client-encryption/releases/download/v7.2.1/mongodb-client-encryption-v7.2.1-napi-v9-linux-x64.tar.gz";
-    hash = "sha256-A5Yhbhf83xh817sd7c2CFuzCC0CZmG960aRQCVQufms=";
-  };
 
   mkSrvPkg = {service, ...}: let
     package = service + "/package.json";
@@ -56,15 +52,8 @@
       installPhase = ''
         runHook preInstall
 
-        sed -i 's/mongodb-client-encryption: true/mongodb-client-encryption: false/' pnpm-workspace.yaml
-        grep -q 'mongodb-client-encryption: false' pnpm-workspace.yaml
         pnpm --offline --filter="${name}" deploy -P $out/srv
         cp -r secrets/ secretspec.toml .sops.yaml $out/srv
-
-        # install mongodb-client-encryption
-        dir="$out/srv/node_modules/.pnpm/mongodb-client-encryption@7.2.1/node_modules/mongodb-client-encryption"
-        tar -xzf ${mongocrypt} -C "$dir"
-        test -f "$dir/build/Release/mongocrypt.node"
 
         runHook postInstall
       '';

@@ -1,6 +1,5 @@
 import Fastify, { type FastifyInstance } from "fastify";
 import { type GenericSchema, parse, safeParse } from "valibot";
-import { mongoosePlugin } from "./db.ts";
 import fastifyCors from "@fastify/cors";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyRateLimit from "@fastify/rate-limit";
@@ -17,18 +16,6 @@ export type BaseAppOpts = {
   swagger?: FastifyDynamicSwaggerOptions;
 
   /**
-   * Do not plugin the database plugin
-   * Useful in cases, like generating the swagger specs
-   */
-  noDatabase?: boolean;
-
-  /**
-   * Do not wait for the database before listening,
-   * useful where early ping meters, i.e. health checks
-   */
-  dontAwaitDatabase?: boolean;
-
-  /**
    *
    */
   prefix?: string;
@@ -39,7 +26,7 @@ export type BaseAppOpts = {
   name?: string;
 };
 
-export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase, name }: BaseAppOpts) => {
+export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
   let safeRate = 1000;
   if (isProduction()) {
     safeRate = 1;
@@ -149,11 +136,6 @@ export const getBaseApp = async ({ swagger, noDatabase, dontAwaitDatabase, name 
   app.get("/health", async (_, resp) => {
     resp.status(200).send();
   });
-
-  if (!noDatabase) {
-    const dbPromise = app.register(mongoosePlugin);
-    if (!dontAwaitDatabase) await dbPromise;
-  }
 
   return app;
 };
