@@ -1,0 +1,30 @@
+listen = "[::]:$PORT"
+
+[database]
+url = "$ATTIC_DB_URI"
+
+[storage]
+type = "s3"
+bucket = "$ATTIC_BUCKET"
+region = "$ATTIC_BUCKET_REGION"
+endpoint = "https://storage.googleapis.com"
+
+[storage.credentials]
+access_key_id = "$ATTIC_BUCKET_KEY_ID"
+secret_access_key = "$ATTIC_BUCKET_KEY"
+
+[chunking]
+nar-size-threshold = 65536 # chunk files that are 64 KiB or larger
+min-size = 16384           # 16 KiB
+avg-size = 65536           # 64 KiB
+max-size = 262144          # 256 KiB
+
+[compression]
+type = "zstd"
+
+[garbage-collection]
+interval = "1 day"
+default-retention-period = "30 days"
+
+[jwt.signing]
+token-rs256-secret-base64 = "$ATTIC_SERVER_TOKEN_RS256_SECRET_BASE64"

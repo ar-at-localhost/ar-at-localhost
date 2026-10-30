@@ -25,16 +25,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: cachix/install-nix-action@v31
 
-      - uses: cachix/cachix-action@v16
+      - uses: ./.github/actions/setup-nix
         with:
-          name: devenv
-
-      - name: Install devenv.sh
-        run: nix profile add nixpkgs#devenv nixpkgs#sops
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Sync Cloud
-        shell: devenv shell -- bash -e {0}
+        shell: devenv shell --profile cloud -- bash -e {0}
         run: |
-          devenv tasks run "aal:sync-cloud"
+          devenv tasks --profile cloud run --quiet "aal:sync-cloud"
+
+      - uses: ./.github/actions/nix-cache

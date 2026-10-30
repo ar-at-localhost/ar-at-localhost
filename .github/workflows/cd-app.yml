@@ -27,24 +27,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: cachix/install-nix-action@v31
-
-      - uses: cachix/cachix-action@v16
+      - uses: ./.github/actions/setup-nix
         with:
-          name: devenv
-
-      - name: Install devenv.sh
-        run: nix profile add nixpkgs#devenv nixpkgs#sops
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Write Google Credentials
         env:
           SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-        shell: devenv shell -- bash -e {0}
+        shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           export credentials_file="$RUNNER_TEMP/gcp.json"
           # shellcheck disable=SC2016
-          devenv shell secretspec run -- bash -euo pipefail -c '
+          secretspec run -- bash -euo pipefail -c '
             echo "$GOOGLE_CREDENTIALS" > "$credentials_file"
           '
 
@@ -54,7 +49,10 @@ jobs:
           NODE_ENV: "production"
           APP: ${{ inputs.app || github.ref_name }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           export APP="${APP%@*}"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/gcp.json"
-          devenv tasks run "aal:deploy-app"
+          devenv --profile cloud tasks run "aal:deploy-app"
+
+      - uses: ./.github/actions/nix-cache

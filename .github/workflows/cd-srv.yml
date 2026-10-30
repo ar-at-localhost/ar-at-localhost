@@ -32,14 +32,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: cachix/install-nix-action@v31
-
-      - uses: cachix/cachix-action@v16
+      - uses: ./.github/actions/setup-nix
         with:
-          name: devenv
-
-      - name: Install devenv.sh
-        run: nix profile add nixpkgs#devenv nixpkgs#sops
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Authenticate Google Cloud
         shell: devenv shell -- bash -e {0}
@@ -54,7 +49,9 @@ jobs:
       - name: Deploy service
         env:
           SERVICE: ${{ inputs.service || github.ref_name }}
-        shell: devenv shell -- bash -e {0}
+        shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           export SERVICE="${SERVICE%@*}"
-          devenv tasks run "aal:deploy-service"
+          devenv tasks --profile cloud run "aal:deploy-service"
+
+      - uses: ./.github/actions/nix-cache
