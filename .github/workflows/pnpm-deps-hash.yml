@@ -22,13 +22,9 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: cachix/install-nix-action@v31
-      - uses: cachix/cachix-action@v16
+      - uses: ./.github/actions/setup-nix
         with:
-          name: devenv
-
-      - name: Install devenv.sh
-        run: nix profile add nixpkgs#devenv nixpkgs#sops
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Check & Test
         id: hash_check
@@ -41,3 +37,5 @@ jobs:
         shell: devenv shell -- bash -e {0}
         run: |
           devenv tasks run "aal:pnpm-hash"
+
+      - uses: ./.github/actions/nix-cache

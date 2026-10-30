@@ -15,3 +15,6 @@
     lib'.services;
 in
   images
+  // {
+    attic = lib'.attic.image;
+  }

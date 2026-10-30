@@ -108,6 +108,66 @@
         ) (dirs (servicesDir + "/${group}"))
       )
   ) (dirs servicesDir);
+
+  attic = {
+    image = pkgs.dockerTools.buildLayeredImage (
+      let
+        name = "attic";
+        version = "0.0.1";
+      in {
+        inherit name;
+        tag = version;
+
+        contents =
+          [
+            (pkgs.stdenv.mkDerivation {
+              pname = "attic-context";
+              inherit version;
+              dontBuild = true;
+
+              src = lib.fileset.toSource {
+                root = ../.;
+                fileset = lib.fileset.unions [
+                  ../attic-template.toml
+                  ../secrets
+                  ../secretspec.toml
+                  ../.sops.yaml
+                ];
+              };
+
+              installPhase = ''
+                mkdir -p "$out/attic"
+                cp -rf "$src/." "$out/attic"
+              '';
+            })
+            (pkgs.writeShellScriptBin "attic-server.sh" ''
+              set -euo pipefail
+              attic_ctx="/atticd-ctx"
+              attic_cfg="$attic_ctx/attic.toml"
+              "${pkgs.coreutils}/bin/mkdir" -p "$attic_ctx"
+              ${pkgs.secretspec}/bin/secretspec run ${pkgs.envsubst}/bin/envsubst -i ./attic-template.toml -o "$attic_cfg"
+              exec ${pkgs.attic-server}/bin/atticd --config "$attic_cfg"
+            '')
+          ]
+          ++ (with pkgs; [attic-client attic-server bash coreutils dockerTools.caCertificates openssl secretspec sops]);
+
+        config = {
+          Env = [
+            "PATH=/bin"
+            "SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt"
+          ];
+
+          Cmd = [
+            "bash"
+            "-c"
+            "/bin/attic-server.sh"
+          ];
+
+          WorkingDir = "/attic";
+        };
+      }
+    );
+  };
 in {
-  inherit httpMethods mkSrvPkg mkSrvImage services;
+  inherit attic httpMethods mkSrvPkg mkSrvImage services;
 }

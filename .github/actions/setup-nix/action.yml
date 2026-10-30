@@ -1,0 +1,31 @@
+name: Setup Nix
+description: Installs nix, required programs and setups binary cache
+
+inputs:
+  age-key:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: cachix/install-nix-action@v31
+
+    - name: Setup nix
+      shell: bash
+      run: |
+        nix profile add nixpkgs#attic-client nixpkgs#devenv nixpkgs#sops
+
+    - name: Setup binary cache
+      shell: devenv shell -- bash -e {0}
+      env:
+        SECRETSPEC_PROFILE: ci
+        SOPS_AGE_KEY: ${{ inputs.age-key }}
+
+      run: |
+        secretspec run -- bash -c '
+          if [[ -n "${ATTIC_TOKEN:-}" ]]; then
+            echo "attic login ar-at-localhost https://attic-cache-1061913196395.us-central1.run.app ${ATTIC_TOKEN}"
+            attic login ar-at-localhost "https://attic-cache-1061913196395.us-central1.run.app" "${ATTIC_TOKEN}"
+            attic use ar-at-localhost
+          fi
+        '

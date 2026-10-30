@@ -1,0 +1,25 @@
+name: Push cache
+description: Push binary cache to attic cache server
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup binary cache
+      shell: bash
+
+      run: |
+        paths=$(
+          {
+            find .devenv -type l -not -path '.devenv/state/*' -print0 2>/dev/null
+            find . -maxdepth 1 -type l -name 'result*' -print0 2>/dev/null
+          } | xargs -0 -r readlink -f | grep '^/nix/store/' | cut -d/ -f1-4 | sort -u
+        )
+
+        if [[ -z "$paths" ]]; then
+          echo "No store paths found in .devenv"
+          exit 0
+        fi
+
+        echo "$paths" | xargs attic push ar-at-localhost 2>&1 || {
+          echo "::warning::Some errors were encountered and suppressed. Make sure to check output."
+        }

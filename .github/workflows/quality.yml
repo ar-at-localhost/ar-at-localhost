@@ -7,6 +7,11 @@ on:
       SOPS_AGE_KEY:
         required: true
 
+env:
+  SECRETSPEC_PROFILE: "ci"
+  DB_ID: "ci-${{ github.run_id }}-${{ github.run_attempt }}"
+  NODE_ENV: ci
+
 jobs:
   check:
     name: Quality checks
@@ -17,22 +22,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: cachix/install-nix-action@v31
-
-      - uses: cachix/cachix-action@v16
+      - uses: ./.github/actions/setup-nix
         with:
-          name: devenv
-
-      - name: Install devenv.sh
-        run: nix profile add nixpkgs#devenv nixpkgs#sops
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Check & Test
-        env:
-          SECRETSPEC_PROFILE: "ci"
-          DB_ID: "ci-${{ github.run_id }}-${{ github.run_attempt }}"
-          NODE_ENV: ci
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         shell: devenv shell -- bash -e {0}
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           export DB_NAME="$DB_ID"
           devenv tasks run "aal:test"
+
+      - uses: ./.github/actions/nix-cache

@@ -45,78 +45,153 @@ in {
 
   packages = [chromium] ++ (with pkgs; [doctl google-cloud-sdk jq nodejs opentofu playwright postgresql pnpm secretspec skopeo sops]);
 
-  services = {
-    postgres = {
-      enable = true;
-      listen_addresses = "127.0.0.1";
-      port = 5432;
-      initialDatabases = [
-        {
-          name = "ar-at-localhost";
-        }
-      ];
+  profiles = {
+    cloud.module = {
+      packages = with pkgs; [google-cloud-sdk opentofu skopeo];
+
+      tasks = {
+        "aal:deploy-app".exec =
+          #bash
+          ''
+            set -euo pipefail
+            name="$APP"
+            profile="$SECRETSPEC_PROFILE"
+
+            if [[ -z "$name" || -z "$profile" ]]; then
+              echo "APP / SECRETSPEC_PROFILE env vars are required" >&2
+              exit 1
+            fi
+
+            secretspec run pnpm turbo --filter "$name" build
+            secretspec run pnpm --filter "$name" firebase --project "$profile" deploy
+          '';
+
+        "aal:deploy-service".exec =
+          #bash
+          ''
+            set -euo pipefail
+            export name="$SERVICE"
+            export profile="$SECRETSPEC_PROFILE"
+
+            if [[ -z "$name" || -z "$profile" ]]; then
+              echo "SERVICE / SECRETSPEC_PROFILE env vars are required" >&2
+              exit 1
+            fi
+
+            export out="result-$name"
+            export target=".#images.${system}.$name"
+            export version=$(nix eval --raw "$target.imageTag")
+            nix build "$target" -o "$out"
+
+            # shellcheck disable=SC2016
+            secretspec run -- bash -c '
+              set -euo pipefail
+
+              skopeo copy \
+                --dest-creds "_json_key:$GOOGLE_CREDENTIALS"  \
+                "docker-archive:./$out" \
+                "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:$version"
+
+              skopeo copy \
+                --dest-creds "_json_key:''${GOOGLE_CREDENTIALS}"  \
+                "docker-archive:./$out" \
+                "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:latest"
+
+              # Ensure resource is created
+              tofu apply -auto-approve -target "google_cloud_run_v2_service.$name"
+
+              # Update service
+              gcloud run services update \
+                --project "$TF_VAR_project_name" "$name" \
+                --region "$TF_VAR_region" \
+                --image "$TF_VAR_region-docker.pkg.dev/''${TF_VAR_project_name}/''${TF_VAR_project_name}/''${name}:latest"
+            '
+          '';
+
+        "aal:init-cloud" = {
+          exec =
+            #bash
+            ''
+              secretspec run tofu init
+              secretspec run tofu validate
+            '';
+
+          before = ["aal:deploy-service" "aal:sync-cloud"];
+        };
+
+        "aal:migrate-database" = {
+          before = ["aal:sync-cloud" "aal:deploy-service"];
+          exec =
+            #bash
+            ''
+              set -euo pipefail
+              secretspec run pnpm --filter lib-server drizzle-kit migrate
+            '';
+        };
+
+        "aal:sync-cloud" = {
+          exec =
+            #bash
+            ''
+              set -euo pipefail
+              secretspec run tofu apply -consolidate-errors -concise -auto-approve
+            '';
+        };
+
+        "aal:sync-tofu" = let
+          terraformConfig = terranix.lib.terranixConfiguration {
+            inherit system;
+            modules = [./nix/cloud];
+          };
+        in {
+          exec =
+            #bash
+            ''
+              profile="$SECRETSPEC_PROFILE"
+              if [[ -z "$SECRETSPEC_PROFILE" ]]; then
+                echo "Profile is not set!"
+                exit 1
+              fi
+
+              if [[ -e config.tf.json ]]; then
+                rm -f config.tf.json
+              fi
+
+              cp ${terraformConfig} config.tf.json
+            '';
+
+          before = ["aal:init-cloud"];
+        };
+      };
+    };
+
+    e2e.module = {
+      extends = ["services"];
+      packages = with pkgs; [chromium playwright];
+
+      env = {
+        PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = 1;
+        CHROMIUM_PATH = "${chromium}/bin/chromium";
+      };
+    };
+
+    services.module = {
+      services = {
+        postgres = {
+          enable = true;
+          listen_addresses = "127.0.0.1";
+          port = 5432;
+          initialDatabases = [
+            {
+              name = "ar-at-localhost";
+            }
+          ];
+        };
+      };
     };
   };
 
   tasks = {
-    "aal:deploy-app".exec =
-      #bash
-      ''
-        set -euo pipefail
-        name="$APP"
-        profile="$SECRETSPEC_PROFILE"
-
-        if [[ -z "$name" || -z "$profile" ]]; then
-          echo "APP / SECRETSPEC_PROFILE env vars are required" >&2
-          exit 1
-        fi
-
-        secretspec run pnpm turbo --filter "$name" build
-        secretspec run pnpm --filter "$name" firebase --project "$profile" deploy
-      '';
-
-    "aal:deploy-service".exec =
-      #bash
-      ''
-        set -euo pipefail
-        export name="$SERVICE"
-        export profile="$SECRETSPEC_PROFILE"
-
-        if [[ -z "$name" || -z "$profile" ]]; then
-          echo "SERVICE / SECRETSPEC_PROFILE env vars are required" >&2
-          exit 1
-        fi
-
-        export out="result-$name"
-        export target=".#images.${system}.$name"
-        export version=$(nix eval --raw "$target.imageTag")
-        nix build "$target" -o "$out"
-
-        # shellcheck disable=SC2016
-        secretspec run -- bash -c '
-          set -euo pipefail
-
-          skopeo copy \
-            --dest-creds "_json_key:$GOOGLE_CREDENTIALS"  \
-            "docker-archive:./$out" \
-            "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:$version"
-
-          skopeo copy \
-            --dest-creds "_json_key:''${GOOGLE_CREDENTIALS}"  \
-            "docker-archive:./$out" \
-            "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:latest"
-
-          # Ensure resource is created
-          tofu apply -auto-approve -target "google_cloud_run_v2_service.$name"
-
-          # Update service
-          gcloud run services update \
-            --project "$TF_VAR_project_name" "$name" \
-            --region "$TF_VAR_region" \
-            --image "$TF_VAR_region-docker.pkg.dev/''${TF_VAR_project_name}/''${TF_VAR_project_name}/''${name}:latest"
-        '
-      '';
-
     "aal:pnpm-hash".exec = let
       pnpm-hash-fetch = pkgs.callPackage ./nix/pkgs/pnpm-hash.nix {};
     in
@@ -142,60 +217,6 @@ in {
         fi
       '';
 
-    "aal:sync-tofu" = let
-      terraformConfig = terranix.lib.terranixConfiguration {
-        inherit system;
-        modules = [./nix/cloud];
-      };
-    in {
-      exec =
-        #bash
-        ''
-          profile="$SECRETSPEC_PROFILE"
-          if [[ -z "$SECRETSPEC_PROFILE" ]]; then
-            echo "Profile is not set!"
-            exit 1
-          fi
-
-          if [[ -e config.tf.json ]]; then
-            rm -f config.tf.json
-          fi
-
-          cp ${terraformConfig} config.tf.json
-        '';
-
-      before = ["aal:init-cloud"];
-    };
-
-    "aal:init-cloud" = {
-      exec =
-        #bash
-        ''
-          secretspec run tofu init
-          secretspec run tofu validate
-        '';
-
-      before = ["aal:deploy-service" "aal:sync-cloud"];
-    };
-
-    "aal:migrate-database" = {
-      exec =
-        #bash
-        ''
-          set -euo pipefail
-          secretspec run pnpm --filter lib-server drizzle-kit migrate
-        '';
-
-      before = ["aal:sync-cloud"];
-    };
-
-    "aal:sync-cloud".exec =
-      #bash
-      ''
-        set -euo pipefail
-        secretspec run tofu apply -auto-approve
-      '';
-
     "aal:test".exec =
       #bash
       ''
@@ -205,13 +226,13 @@ in {
 
           if [[ "$CI" == "true" ]]; then
             cleanup() {
-              pnpm --filter lib-server exec neon branches delete --project "$NEON_PROJECT_ID" "$DB_NAME"
+              pnpm --filter lib-server exec neon branches delete --project-id "$NEON_PROJECT_ID" "$DB_NAME"
             }
 
             trap cleanup EXIT
 
             DB_URI="$(
-              pnpm --filter lib-server exec neon branches create --project "$NEON_PROJECT_ID" --name "$DB_NAME" --parent "$NEON_BASE" \
+              pnpm --filter lib-server exec neon branches create --project-id "$NEON_PROJECT_ID" --name "$DB_NAME" --parent "$NEON_BASE" \
               | grep "^postgresql://" \
               | head -n 1
             )"

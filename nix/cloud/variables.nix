@@ -1,5 +1,10 @@
 _: let
   variables = {
+    attic = {
+      type = "bool";
+      default = "false";
+    };
+
     domain_name = {
       type = "string";
     };
