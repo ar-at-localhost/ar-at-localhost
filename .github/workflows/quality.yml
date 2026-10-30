@@ -35,22 +35,4 @@ jobs:
         shell: devenv shell -- bash -e {0}
         run: |
           export DB_NAME="$DB_ID"
-
-          # shellcheck disable=SC2016
-          secretspec run -- bash -euo pipefail -c '
-            cleanup() {
-              pnpm --filter lib-server exec neon branches delete --project "$NEON_PROJECT_ID" "$DB_NAME"
-            }
-
-            trap cleanup EXIT
-
-            DB_URI="$(
-              pnpm --filter lib-server exec neon branches create --project "$NEON_PROJECT_ID" --name "$DB_NAME" --parent "$NEON_BASE" \
-              | grep "^postgresql://" \
-              | head -n 1
-            )"
-
-            export DB_URI
-            pnpm --filter lib-server drizzle-kit migrate
-            pnpm quality
-          '
+          devenv tasks run "aal:test"

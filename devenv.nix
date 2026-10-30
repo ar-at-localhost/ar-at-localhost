@@ -27,7 +27,7 @@ in {
   '';
 
   enterTest = ''
-    pnpm quality
+    secretspec run pnpm quality
   '';
 
   git-hooks.hooks = {
@@ -178,11 +178,50 @@ in {
       before = ["aal:deploy-service" "aal:sync-cloud"];
     };
 
+    "aal:migrate-database" = {
+      exec =
+        #bash
+        ''
+          set -euo pipefail
+          secretspec run pnpm --filter lib-server drizzle-kit migrate
+        '';
+
+      before = ["aal:sync-cloud"];
+    };
+
     "aal:sync-cloud".exec =
       #bash
       ''
         set -euo pipefail
         secretspec run tofu apply -auto-approve
+      '';
+
+    "aal:test".exec =
+      #bash
+      ''
+        # shellcheck disable=SC2016
+        secretspec run -- bash -euo pipefail -c '
+          CI="''${CI:-}"
+
+          if [[ "$CI" == "true" ]]; then
+            cleanup() {
+              pnpm --filter lib-server exec neon branches delete --project "$NEON_PROJECT_ID" "$DB_NAME"
+            }
+
+            trap cleanup EXIT
+
+            DB_URI="$(
+              pnpm --filter lib-server exec neon branches create --project "$NEON_PROJECT_ID" --name "$DB_NAME" --parent "$NEON_BASE" \
+              | grep "^postgresql://" \
+              | head -n 1
+            )"
+
+            export DB_URI
+          fi
+
+          pnpm --filter lib-server drizzle-kit migrate
+          pnpm quality
+        '
       '';
   };
 }
