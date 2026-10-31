@@ -29,7 +29,7 @@ in {
     google_dns_record_set = {
       app-production = mkRecord {
         type = "A";
-        rrdatas = ["ar-at-localhost.web.app"];
+        rrdatas = ["199.36.158.100"];
       };
 
       app-staging = mkRecord {
@@ -66,7 +66,7 @@ in {
       };
 
       txt = mkRecord {
-        rrdatas = ["v=spf1 include:spf.privateemail.com ~all" "google-site-verification=YTL0kSa9Aj3RTo7A054IdBpR090SFU2s4f9vG8-PoSg"];
+        rrdatas = ["v=spf1 include:spf.privateemail.com ~all" "google-site-verification=YTL0kSa9Aj3RTo7A054IdBpR090SFU2s4f9vG8-PoSg" "hosting-site=ar-at-localhost"];
       };
     };
   };
