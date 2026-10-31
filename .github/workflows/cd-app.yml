@@ -31,18 +31,6 @@ jobs:
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
 
-      - name: Write Google Credentials
-        env:
-          SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-        shell: devenv shell --profile cloud -- bash -e {0}
-        run: |
-          export credentials_file="$RUNNER_TEMP/gcp.json"
-          # shellcheck disable=SC2016
-          secretspec run -- bash -euo pipefail -c '
-            echo "$GOOGLE_CREDENTIALS" > "$credentials_file"
-          '
-
       - name: Deploy application
         env:
           SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
@@ -52,7 +40,7 @@ jobs:
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           export APP="${APP%@*}"
-          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/gcp.json"
+          export credentials_file="$RUNNER_TEMP/gcp.json"
           devenv --profile cloud tasks run "aal:deploy-app"
 
       - uses: ./.github/actions/nix-cache
