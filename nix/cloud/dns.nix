@@ -1,6 +1,7 @@
 _: let
+  count = ''''${ var.secretspec_profile == "prod" ? 1 : 0 }'';
   domain = "\${var.domain_name}";
-  dns_name = "\${google_dns_managed_zone.main.dns_name}";
+  dns_name = "\${google_dns_managed_zone.main[0].dns_name}";
   quote = s: "\"${s}\"";
   mkRecord = {
     ttl ? 3600,
@@ -8,8 +9,8 @@ _: let
     name ? dns_name,
     rrdatas ? [],
   }: {
-    inherit name ttl type;
-    managed_zone = "\${google_dns_managed_zone.main.name}";
+    inherit count name ttl type;
+    managed_zone = "\${google_dns_managed_zone.main[0].name}";
     rrdatas =
       if type == "TXT"
       then (map quote rrdatas)
@@ -18,6 +19,7 @@ _: let
 in {
   resource = {
     google_dns_managed_zone.main = {
+      inherit count;
       name = "\${replace(var.domain_name, \".\", \"-\")}";
       dns_name = "${domain}.";
       description = "DNS for domain ${domain}";
@@ -25,13 +27,10 @@ in {
     };
 
     google_dns_record_set = {
-      /*
-      TODO:
       app-production = mkRecord {
         type = "A";
-        rrdatas = [""];
+        rrdatas = ["ar-at-localhost.web.app"];
       };
-      */
 
       app-staging = mkRecord {
         name = "staging.${dns_name}";
@@ -72,5 +71,5 @@ in {
     };
   };
 
-  output.nameservers.value = "\${google_dns_managed_zone.main.name_servers}";
+  output.nameservers.value = "\${var.attic == true ? try(google_dns_managed_zone.main[0].name_servers, null) : null}";
 }

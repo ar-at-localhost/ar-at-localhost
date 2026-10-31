@@ -54,16 +54,28 @@ in {
           #bash
           ''
             set -euo pipefail
-            name="$APP"
-            profile="$SECRETSPEC_PROFILE"
+            export name="$APP"
+            export profile="''${SECRETSPEC_PROFILE}"
 
             if [[ -z "$name" || -z "$profile" ]]; then
               echo "APP / SECRETSPEC_PROFILE env vars are required" >&2
               exit 1
             fi
 
-            secretspec run pnpm turbo --filter "$name" build
-            secretspec run pnpm --filter "$name" firebase --project "$profile" deploy
+            secretspec run -- bash -euo pipefail -c '
+              credentials_file="''${credentials_file:-$HOME/gcp.json}"
+              printf "%s" "$GOOGLE_CREDENTIALS" > "$credentials_file"
+              ls -l "$credentials_file"
+
+              cleanup() {
+                rm -rf "$credentials_file"
+              }
+
+              trap cleanup EXIT
+              secretspec run pnpm turbo --filter "$name" build
+              export GOOGLE_APPLICATION_CREDENTIALS="$credentials_file"
+              secretspec run pnpm --filter "$name" firebase --project "$profile" deploy
+            '
           '';
 
         "aal:deploy-service".exec =

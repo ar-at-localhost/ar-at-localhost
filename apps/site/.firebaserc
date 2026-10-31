@@ -2,7 +2,7 @@
   "projects": {
     "default": "ar-at-localhost-staging",
     "staging": "ar-at-localhost-staging",
-    "prod": "speedy-elf-362819"
+    "prod": "ar-at-localhost"
   },
   "targets": {},
   "etags": {}

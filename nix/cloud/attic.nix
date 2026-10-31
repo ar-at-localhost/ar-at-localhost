@@ -3,7 +3,7 @@
   location = ref.vars.region;
   count = ''''${ var.attic == true ? 1 : 0 }'';
 in {
-  output."${name}-bucket".value = "\${google_storage_bucket.${name}[0].url}";
+  output."${name}-bucket".value = "\${var.attic == true ? google_storage_bucket.${name}[0].url : null}";
 
   resource = {
     google_cloud_run_v2_service."${name}" = {
