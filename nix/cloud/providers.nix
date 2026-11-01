@@ -59,6 +59,7 @@ in {
         "apigateway"
         "artifactregistry"
         "cloudresourcemanager"
+        "cloudtasks"
         "compute"
         "dns"
         "iam"
