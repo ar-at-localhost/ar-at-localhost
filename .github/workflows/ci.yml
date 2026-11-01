@@ -64,6 +64,7 @@ jobs:
     if: needs.change-detection.outputs.services != '[]'
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         service: ${{ fromJSON(needs.change-detection.outputs.services) }}
     uses: ./.github/workflows/cd-srv.yml
@@ -78,6 +79,7 @@ jobs:
     if: needs.change-detection.outputs.apps != '[]'
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         app: ${{ fromJSON(needs.change-detection.outputs.apps) }}
     uses: ./.github/workflows/cd-app.yml
