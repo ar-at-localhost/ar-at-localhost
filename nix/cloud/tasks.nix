@@ -19,6 +19,13 @@ in {
           audience = "\${google_cloud_run_v2_service.srv-internal.uri}";
         };
       };
+
+      retry_config = {
+        max_attempts = 5;
+        max_backoff = "300s";
+        min_backoff = "10s";
+        max_doublings = 4;
+      };
     };
 
     google_cloud_tasks_queue_iam_member.services = {

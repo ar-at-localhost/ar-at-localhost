@@ -52,6 +52,8 @@
 
         pnpm --offline --filter="${name}" deploy -P $out/srv
         cp -r secrets/ secretspec.toml .sops.yaml $out/srv
+        # FIXME: This is a hack, should better fix with templates bucket
+        cp -r $src/packages/lib-server/src/templates/*.{html,txt} $out/srv/dist
 
         runHook postInstall
       '';

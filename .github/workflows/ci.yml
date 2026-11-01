@@ -1,16 +1,19 @@
-name: "Continuous Integration"
+name: "CI/CD"
 
 on:
   push:
     branches:
-      - main
+      - main # Deploy on staging
+    tags:
+      - "prod@*" # Deploy on production
 
 env:
   NODE_ENV: "production"
-  SECRETSPEC_PROFILE: staging
+  SECRETSPEC_PROFILE: &secretspec_profile >-
+    ${{ github.ref == 'refs/heads/main' && 'staging' ||
+        startsWith(github.ref, 'refs/tags/prod@') && 'prod' ||
+        'ci' }}
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-  TURBO_SCM_BASE: ${{ github.event.before }}
-  TURBO_SCM_HEAD: ${{ github.sha }}
 
 jobs:
   quality-checks:
@@ -20,7 +23,7 @@ jobs:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
   change-detection:
-    name: Detect changed packages for staging deployment
+    name: Detect changed packages for deployment
     needs: quality-checks
     runs-on: ubuntu-latest
     outputs:
@@ -34,6 +37,30 @@ jobs:
       - uses: ./.github/actions/setup-nix
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
+
+      - name: Determine change references
+        shell: devenv shell -- bash -e {0}
+        env:
+          TURBO_SCM_HEAD: ${{ github.sha }}
+          TURBO_SCM_BASE: ${{ github.event.before }}
+        run: |
+          if [[ "$SECRETSPEC_PROFILE" == "prod" ]]; then
+            current="$GITHUB_REF_NAME"
+
+            base=$(git tag --list 'prod@*' --sort=-version:refname \
+              | grep -Fxv "$current" \
+              | head -n 1
+            ) || true
+
+            if [[ -z "$base" ]]; then
+              base="$(git rev-list --max-parents=0 HEAD)"
+            fi
+
+            TURBO_SCM_BASE="$base"
+          fi
+
+          echo "TURBO_SCM_HEAD=$TURBO_SCM_HEAD" >> "$GITHUB_ENV"
+          echo "TURBO_SCM_BASE=$TURBO_SCM_BASE" >> "$GITHUB_ENV"
 
       - name: Detect changed services
         id: changed-services-detection
@@ -70,13 +97,17 @@ jobs:
     uses: ./.github/workflows/cd-srv.yml
     with:
       service: ${{ matrix.service }}
-      profile: "staging"
+      profile: *secretspec_profile
     secrets: inherit
 
   deploy-apps:
     name: Deploy apps on cloud
     needs: [change-detection, deploy-services]
-    if: needs.change-detection.outputs.apps != '[]'
+    if: >-
+      always() && 
+      needs.change-detection.result == 'success' &&
+      needs.change-detection.outputs.apps != '[]' &&
+      (needs.deploy-services.result == 'success' || needs.deploy-services.result == 'skipped' )
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -85,7 +116,7 @@ jobs:
     uses: ./.github/workflows/cd-app.yml
     with:
       app: ${{ matrix.app }}
-      profile: "staging"
+      profile: *secretspec_profile
     secrets: inherit
 
   sync-cloud:
@@ -93,5 +124,5 @@ jobs:
     needs: [deploy-services]
     uses: ./.github/workflows/cd-cloud.yml
     with:
-      profile: "staging"
+      profile: *secretspec_profile
     secrets: inherit
