@@ -19,7 +19,8 @@ export const sendMail = async (
     subject: isProduction()
       ? opts.subject
       : `[TEST - ${getStage()} - ${typeof opts.to == "string" ? opts.to : opts.to.join(",")}] ${opts.subject}`,
-    to: isProduction() ? opts.to : (getContactPerson() as unknown as string[]),
+    to: isProduction() ? opts.to : ([getContactPerson(true)] as string[]),
+    cc: isProduction() ? opts.cc : ([getContactPerson(true)].filter((i) => !!i) as string[]),
   };
 
   return transport.sendMail(finalOpts).then((res) => {
