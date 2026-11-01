@@ -44,3 +44,4 @@ jobs:
           devenv --profile cloud tasks run "aal:deploy-app"
 
       - uses: ./.github/actions/nix-cache
+        if: always()

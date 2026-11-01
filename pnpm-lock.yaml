@@ -21,6 +21,9 @@ catalogs:
     '@vitest/browser-playwright':
       specifier: ^5.0.3
       version: 5.0.4
+    drizzle-orm:
+      specifier: 1.0.0-rc.5
+      version: 1.0.0-rc.5
     fastify:
       specifier: 5.12.5
       version: 5.12.5
@@ -220,6 +223,9 @@ importers:
       '@fastify/swagger':
         specifier: ^9.9.2
         version: 9.9.2(supports-color@7.2.0)
+      '@google-cloud/tasks':
+        specifier: ^7.3.1
+        version: 7.3.1(supports-color@7.2.0)
       '@neondatabase/serverless':
         specifier: ^1.2.0
         version: 1.2.0
@@ -227,7 +233,7 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0(valibot@1.5.0(typescript@6.0.3))
       drizzle-orm:
-        specifier: 1.0.0-rc.5
+        specifier: 'catalog:'
         version: 1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7)
       fastify-plugin:
         specifier: ^6.0.1
@@ -275,6 +281,9 @@ importers:
       drizzle-kit:
         specifier: ^1.0.0-rc.5
         version: 1.0.0-rc.5-ab785fc
+      drizzle-seed:
+        specifier: ^1.0.0-rc.5
+        version: 1.0.0-rc.5-ab785fc(drizzle-orm@1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7))
       fastify:
         specifier: 'catalog:'
         version: 5.12.5
@@ -402,6 +411,9 @@ importers:
       '@fastify/rate-limit':
         specifier: ^11.2.1
         version: 11.2.1
+      '@google-cloud/tasks':
+        specifier: ^7.3.1
+        version: 7.3.1(supports-color@7.2.0)
       fastify:
         specifier: 'catalog:'
         version: 5.12.5
@@ -421,6 +433,58 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.5
+      tsdown:
+        specifier: 'catalog:'
+        version: 0.23.1(@volar/typescript@2.4.28(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+      vite:
+        specifier: ^8.3.3
+        version: 8.3.4(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.4(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/browser-playwright@5.0.4)(@vitest/coverage-v8@5.0.3)(@vitest/ui@5.0.4)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
+
+  services/microservices/internal:
+    dependencies:
+      '@fastify/cors':
+        specifier: ^11.3.1
+        version: 11.3.1
+      '@fastify/helmet':
+        specifier: ^13.1.2
+        version: 13.1.2
+      '@fastify/rate-limit':
+        specifier: ^11.2.1
+        version: 11.2.1
+      '@google-cloud/tasks':
+        specifier: ^7.3.1
+        version: 7.3.1(supports-color@7.2.0)
+      fastify:
+        specifier: 'catalog:'
+        version: 5.12.5
+      lib:
+        specifier: workspace:*
+        version: link:../../../packages/lib
+      lib-server:
+        specifier: workspace:*
+        version: link:../../../packages/lib-server
+      resend:
+        specifier: 'catalog:'
+        version: 6.32.1
+      valibot:
+        specifier: ^1.5.0
+        version: 1.5.0(typescript@6.0.3)
+    devDependencies:
+      '@ngneat/falso':
+        specifier: 'catalog:'
+        version: 8.0.2
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
+      drizzle-orm:
+        specifier: 'catalog:'
+        version: 1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7)
       tsdown:
         specifier: 'catalog:'
         version: 0.23.1(@volar/typescript@2.4.28(typescript@6.0.3))(tsx@4.23.15)(typescript@6.0.3)
@@ -1529,6 +1593,10 @@ packages:
   '@google-cloud/sql@0.25.0':
     resolution: {integrity: sha512-OKAA98q2M25rQcqcFvbQniix4zTFcbeSyauj+PcPd+6ngn7eXvAUqpuCRVxbIGmA8r5OtE6Ru/oCJ1xwcUR2vA==}
     engines: {node: '>=18'}
+
+  '@google-cloud/tasks@7.3.1':
+    resolution: {integrity: sha512-RA+Fzm7dA00q/FqxxstSmkD3gVozFR2In8L6hqy78jnbUB0TvF+kMvfwHE2jTSQsrLbsht6oEkzxS6u4UNyB/w==}
+    engines: {node: '>=22'}
 
   '@googleapis/sqladmin@38.1.1':
     resolution: {integrity: sha512-piWbtan+dw/cYzGopUsFH131mVx23osOeBAFSM78fgTzgRJjehgA5QnGGZiGYn+zgSNqdnf+7/ZzdHN1XkUAEg==}
@@ -4073,6 +4141,11 @@ packages:
       zod:
         optional: true
 
+  drizzle-seed@1.0.0-rc.5-ab785fc:
+    resolution: {integrity: sha512-PWczx16j7xF7HoMwlqKnXvad8i1mdU5H1RYnvot6gkBqZrdPyzQ9veWyiCB8TyFlcgS8o4D6o+G7/YozooJikA==}
+    peerDependencies:
+      drizzle-orm: '>=1.0.0-beta.2'
+
   dset@3.1.4:
     resolution: {integrity: sha512-2QF/g9/zTaPDc3BjNcVTGoBbXBgYfMTTceLaYcFJ/W9kggFUkhxD/hMEeuLKbugyef9SqAx8cpgwlIP/jinUTA==}
     engines: {node: '>=4'}
@@ -4688,6 +4761,10 @@ packages:
   google-gax@5.0.8:
     resolution: {integrity: sha512-M4vpZcXQIC1gqIVGQ7eaU3jXQA6zecStyTXu514TYfThlgSurYJOxHZo9fzU6hAgwPWvuEynAVHWyaIk80VeEA==}
     engines: {node: '>=18'}
+
+  google-gax@6.13.0:
+    resolution: {integrity: sha512-7Q60oxwV2M2zWytwB5siHUlip1jTVWoSxfF25NI13wGKlJ9jUwyWvKWrDfXjAuBOI5NVrv0R/tPaYi80V/5ZFg==}
+    engines: {node: '>=22'}
 
   google-logging-utils@0.0.2:
     resolution: {integrity: sha512-NEgUnEcBiP5HrPzufUkBzJOD/Sxsco3rLNo1F1TNf7ieU8ryUzBhqba8r756CjLX7rn3fHl6iLEwPYuqpoKgQQ==}
@@ -6481,6 +6558,10 @@ packages:
     resolution: {integrity: sha512-E1sbAYg3aEbXrq0n1ojJkRHQJGE1kaE/O6GLA94y8rnJBfgvOPTOd1b9hOceQK1FFZI9qMh1vBERCyO2ifubcw==}
     engines: {node: '>=18'}
 
+  proto3-json-serializer@4.1.0:
+    resolution: {integrity: sha512-Z0Blk2BTZTPp9ZXOWnRG/P3bkEs53FtMv59sl4xU44xcDdYhKlVO/AqAHTYXAlW9HdislqQxjSornP3457wkag==}
+    engines: {node: '>=22'}
+
   protobufjs@7.6.6:
     resolution: {integrity: sha512-dYDWdjSl5RNb7SgPxGQcRU+GtvP7s2fpkrY0r432PcOIaZ0/rBcxEZnQN67iJhFuQiVw754JDoPruPCNdGsbjg==}
     engines: {node: '>=12.0.0'}
@@ -6496,6 +6577,9 @@ packages:
   pupa@2.1.1:
     resolution: {integrity: sha512-l1jNAspIBSFqbT+y+5FosojNpVpF94nlI+wDUpqP9enwOTfHx9f0gh5nB96vl+6yTpsJsypeNrwfzPrKuHB41A==}
     engines: {node: '>=8'}
+
+  pure-rand@6.1.0:
+    resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
 
   qified@0.10.1:
     resolution: {integrity: sha512-+Owyggi9IxT1ePKGafcI87ubSmxol6smwJ+RAHDQlx9+9cPwFWDiKFFCPuWhr9ignlGpZ9vDQLw67N4dcTVFEA==}
@@ -6660,6 +6744,10 @@ packages:
   retry-request@8.0.4:
     resolution: {integrity: sha512-pI6/7eabUYkZxamkOq0g0uMxKLLGnjzhefY+vL8bVXag5rto4OU2YBTPytWLuHH7aEKD6fn7kJycQfid0Mwnkw==}
     engines: {node: '>=18'}
+
+  retry-request@9.1.0:
+    resolution: {integrity: sha512-FILyVbis+DTo3KRbtKceqpj1595wIF+XQFW/+AVOBdCQmxwNDgcNXXr2FNM0Ej2qD7zVXbJGfH7lo4jB0wwhKA==}
+    engines: {node: '>=22'}
 
   retry@0.13.1:
     resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
@@ -8777,6 +8865,12 @@ snapshots:
   '@google-cloud/sql@0.25.0(supports-color@7.2.0)':
     dependencies:
       google-gax: 5.0.8(supports-color@7.2.0)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@google-cloud/tasks@7.3.1(supports-color@7.2.0)':
+    dependencies:
+      google-gax: 6.13.0(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -11067,6 +11161,11 @@ snapshots:
       valibot: 1.5.0(typescript@6.0.3)
       zod: 4.6.7
 
+  drizzle-seed@1.0.0-rc.5-ab785fc(drizzle-orm@1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7)):
+    dependencies:
+      drizzle-orm: 1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7)
+      pure-rand: 6.1.0
+
   dset@3.1.4: {}
 
   dts-resolver@3.0.0: {}
@@ -12036,6 +12135,22 @@ snapshots:
       protobufjs: 7.6.6
       retry-request: 8.0.4(supports-color@7.2.0)
       rimraf: 5.0.10
+    transitivePeerDependencies:
+      - supports-color
+
+  google-gax@6.13.0(supports-color@7.2.0):
+    dependencies:
+      '@grpc/grpc-js': 1.14.6
+      '@grpc/proto-loader': 0.8.1
+      '@opentelemetry/api': 1.9.1
+      duplexify: 4.1.3
+      google-auth-library: 11.3.1(supports-color@7.2.0)
+      google-logging-utils: 2.1.0
+      node-fetch: 3.3.2
+      object-hash: 3.0.0
+      proto3-json-serializer: 4.1.0
+      protobufjs: 7.6.6
+      retry-request: 9.1.0
     transitivePeerDependencies:
       - supports-color
 
@@ -14072,6 +14187,10 @@ snapshots:
     dependencies:
       protobufjs: 7.6.6
 
+  proto3-json-serializer@4.1.0:
+    dependencies:
+      protobufjs: 7.6.6
+
   protobufjs@7.6.6:
     dependencies:
       '@protobufjs/aspromise': 1.1.2
@@ -14096,6 +14215,8 @@ snapshots:
   pupa@2.1.1:
     dependencies:
       escape-goat: 2.1.1
+
+  pure-rand@6.1.0: {}
 
   qified@0.10.1:
     dependencies:
@@ -14267,6 +14388,10 @@ snapshots:
       teeny-request: 10.1.4(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
+
+  retry-request@9.1.0:
+    dependencies:
+      extend: 3.0.2
 
   retry@0.13.1: {}
 

@@ -1,0 +1,53 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "srv-internal",
+    "version": "0.0.3"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/connect/{id}": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

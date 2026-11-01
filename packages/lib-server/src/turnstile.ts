@@ -5,10 +5,11 @@ import {
   type FastifyReply,
   type FastifyRequest,
 } from "fastify";
-import { getTurnstile } from "./env.ts";
+import { getTurnstile, isDev } from "./env.ts";
 
 export const turnstilePlugin: FastifyPluginAsync = fp(async (app: FastifyInstance) => {
   app.decorate("turnstile", async (req: FastifyRequest, rep: FastifyReply) => {
+    if (isDev()) return true;
     const { token } = req.body as unknown as { token: string };
 
     const errResp = (code?: number) => {

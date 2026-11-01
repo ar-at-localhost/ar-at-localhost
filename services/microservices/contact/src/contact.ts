@@ -1,6 +1,6 @@
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
 import { type ConnectBody, connectBodySchema, type CreateConnectResp } from "lib";
-import { connectsTable } from "lib-server";
+import { connectsTable, enqueueConnect } from "lib-server";
 import { object, pipe, string, regex } from "valibot";
 
 export const contactRest: FastifyPluginAsync = async (app) => {
@@ -23,10 +23,9 @@ export const contactRest: FastifyPluginAsync = async (app) => {
           .returning({ id: connectsTable.id });
 
         if (!result.length) throw new Error("Unexpected insert result!");
-
-        rep.send({
-          id: result[0].id,
-        } as CreateConnectResp);
+        const { id } = result[0];
+        await enqueueConnect(id);
+        rep.send({ id } satisfies CreateConnectResp);
       } catch (err) {
         const e = err as unknown as Error;
         app.log.error(err);

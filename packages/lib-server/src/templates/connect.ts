@@ -17,7 +17,7 @@ export const getConnectTextTemplate = () =>
  * Render "Connect" email template
  */
 export const renderConnectTemplate = async (data: {
-  firstName: string;
+  first_name: string;
   links?: {
     whatsapp?: string;
     linkedin?: string;
@@ -30,7 +30,7 @@ export const renderConnectTemplate = async (data: {
  * Render "Connect" email template
  */
 export const renderConnectTextTemplate = async (data: {
-  firstName: string;
+  first_name: string;
   links?: {
     whatsapp?: string;
     linkedin?: string;

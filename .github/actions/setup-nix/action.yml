@@ -24,8 +24,9 @@ runs:
       run: |
         secretspec run -- bash -c '
           if [[ -n "${ATTIC_TOKEN:-}" ]]; then
-            echo "attic login ar-at-localhost https://attic-cache-1061913196395.us-central1.run.app ${ATTIC_TOKEN}"
-            attic login ar-at-localhost "https://attic-cache-1061913196395.us-central1.run.app" "${ATTIC_TOKEN}"
-            attic use ar-at-localhost
+            echo "attic login ar-at-localhost https://attic-cache-1061913196395.us-central1.run.app ${ATTIC_TOKEN}" \
+              && attic login ar-at-localhost "https://attic-cache-1061913196395.us-central1.run.app" "${ATTIC_TOKEN}" \
+              && attic use ar-at-localhost \
+            || true
           fi
         '

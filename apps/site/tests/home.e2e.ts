@@ -5,8 +5,8 @@ test("it should submit", async ({ page }) => {
   test.setTimeout(60_000);
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.getByTestId("connect-form").waitFor();
-  await page.locator("form [name=firstName]").fill(randFirstName());
-  await page.locator("form [name=lastName]").fill(randLastName());
+  await page.locator("form [name=first_name]").fill(randFirstName());
+  await page.locator("form [name=last_name]").fill(randLastName());
   await page.locator("form [name=email]").fill(randEmail());
   await page.locator("form [name=message]").fill(randText({ charCount: 128 }));
   await page.waitForFunction(() => (window as any)?.turnstile?.__token);
