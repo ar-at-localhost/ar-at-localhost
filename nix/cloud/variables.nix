@@ -18,6 +18,10 @@ _: let
       default = "ar-at-localhost";
     };
 
+    project_number = {
+      type = "string";
+    };
+
     region = {
       type = "string";
       default = "us-central1";

@@ -37,6 +37,10 @@
 
               env = [
                 {
+                  name = "SRV_INT_URL";
+                  value = "https://srv-internal-\${var.project_number}.${location}.run.app";
+                }
+                {
                   name = "SECRETSPEC_PROFILE";
                   value = ref.vars.secretspec_profile;
                 }

@@ -36,10 +36,10 @@ export const connectMail = async (id: number) => {
 };
 
 export const enqueueConnect = async (id: number) => {
-  if (isDev() || isCI()) return connectMail(id).catch(() => undefined);
+  const { TF_VAR_project_name, TF_VAR_region, SRV_INT_URL } = process.env;
+  if (isDev() || isCI() || !SRV_INT_URL) return connectMail(id).catch(() => undefined);
 
   const client = new CloudTasksClient();
-  const { TF_VAR_project_name, TF_VAR_region } = process.env;
 
   const [task] = await client.createTask({
     parent: client.queuePath(
@@ -51,7 +51,7 @@ export const enqueueConnect = async (id: number) => {
     task: {
       httpRequest: {
         httpMethod: "POST",
-        url: `/connect/${id}`,
+        url: `${SRV_INT_URL}/connect/${id}`,
       },
     },
   });
