@@ -35,3 +35,4 @@ jobs:
           devenv tasks run "aal:test"
 
       - uses: ./.github/actions/nix-cache
+        if: always()

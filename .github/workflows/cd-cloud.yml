@@ -36,3 +36,4 @@ jobs:
           devenv tasks --profile cloud run --quiet "aal:sync-cloud"
 
       - uses: ./.github/actions/nix-cache
+        if: always()

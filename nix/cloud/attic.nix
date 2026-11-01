@@ -11,7 +11,6 @@ in {
       deletion_protection = true;
 
       template = {
-        execution_environment = "EXECUTION_ENVIRONMENT_GEN2";
         service_account = "\${google_service_account.${name}[0].email}";
         timeout = "3600s";
 
@@ -22,50 +21,10 @@ in {
 
         containers = [
           {
-            name = "nginx";
-            image = "nginx:stable";
-
-            ports = {
-              name = "h2c";
-              container_port = 8080;
-            };
-
-            command = ["/bin/sh"];
-
-            args = [
-              "-c"
-              ''
-                cat > /etc/nginx/conf.d/default.conf <<'EOF'
-                server {
-                  listen 0.0.0.0:8080;
-                  http2 on;
-                  client_max_body_size 0;
-
-                  location / {
-                    proxy_pass http://127.0.0.1:8081;
-                    proxy_http_version 1.1;
-                    proxy_set_header Host $host;
-                    proxy_request_buffering off;
-                    proxy_buffering off;
-                    proxy_read_timeout 3600s;
-                    proxy_send_timeout 3600s;
-                  }
-                }
-                EOF
-
-                exec nginx -g 'daemon off;'
-              ''
-            ];
-          }
-          {
             name = "attic";
             image = "\${var.region}-docker.pkg.dev/\${var.project_id}/\${var.project_id}/${name}:latest";
 
             env = [
-              {
-                name = "PORT";
-                value = "8081";
-              }
               {
                 name = "SECRETSPEC_PROFILE";
                 value = ref.vars.secretspec_profile;
@@ -86,11 +45,7 @@ in {
               timeout_seconds = 10;
               period_seconds = 10;
               failure_threshold = 10;
-
-              http_get = {
-                path = "/";
-                port = 8081;
-              };
+              http_get.path = "/";
             };
           }
         ];

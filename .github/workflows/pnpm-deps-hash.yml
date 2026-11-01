@@ -39,3 +39,4 @@ jobs:
           devenv tasks run "aal:pnpm-hash"
 
       - uses: ./.github/actions/nix-cache
+        if: always()

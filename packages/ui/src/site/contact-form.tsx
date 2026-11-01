@@ -85,13 +85,13 @@ export const ConnectForm: FC<Props> = ({ apiURL, sitekey }) => {
         {!submissionId ? (
           <Form of={form} id="connect-form" onSubmit={handleSubmit} data-testid="connect-form">
             <FieldGroup>
-              <FField of={form} path={["firstName"]}>
+              <FField of={form} path={["first_name"]}>
                 {(field) => (
                   <Field data-invalid={field.errors !== null}>
-                    <FieldLabel htmlFor="firstName">First name</FieldLabel>
+                    <FieldLabel htmlFor="first_name">First name</FieldLabel>
                     <Input
                       {...field.props}
-                      name="firstName"
+                      name="first_name"
                       defaultValue={field.input || ""}
                       placeholder="First name"
                       type="text"
@@ -104,13 +104,13 @@ export const ConnectForm: FC<Props> = ({ apiURL, sitekey }) => {
                 )}
               </FField>
 
-              <FField of={form} path={["lastName"]}>
+              <FField of={form} path={["last_name"]}>
                 {(field) => (
                   <Field data-invalid={field.errors !== null}>
-                    <FieldLabel htmlFor="lastName">Last name</FieldLabel>
+                    <FieldLabel htmlFor="last_name">Last name</FieldLabel>
                     <Input
                       {...field.props}
-                      name="lastName"
+                      name="last_name"
                       defaultValue={field.input || ""}
                       placeholder="Last name"
                       type="text"

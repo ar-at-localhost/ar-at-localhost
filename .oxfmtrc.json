@@ -4,8 +4,14 @@
   "ignorePatterns": [
     "dist/**",
     "*.min.js",
+    ".devenv/**/*",
+    ".direnv/**/*",
+    ".turbo/**",
+    ".terraform/**",
     ".pnp.*",
     ".yarn/**",
+    "node_modules",
+    "result*",
     "packages/lib-server/src/templates/*.html",
     "secrets/**"
   ]

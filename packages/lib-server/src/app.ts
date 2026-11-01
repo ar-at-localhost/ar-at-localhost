@@ -140,9 +140,9 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
   return app;
 };
 
-export const testSetup = async (app: FastifyInstance) => {
+export const testSetup = async (app: FastifyInstance, opts?: { port?: number }) => {
   await app.listen({
-    port: getPort(),
+    port: opts?.port || getPort(),
   });
 
   await app.ready();

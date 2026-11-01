@@ -3,4 +3,5 @@ export * from "./connect.ts";
 export * from "./pg.ts";
 export * from "./env.ts";
 export * from "./fs.ts";
+export * from "./mailer/index.ts";
 export * from "./templates/connect.ts";

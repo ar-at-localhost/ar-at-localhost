@@ -2,9 +2,9 @@ import { createTestAccount, createTransport } from "nodemailer";
 
 import { createResendTransport } from "./resend.ts";
 import type { MailTransport } from "./types.ts";
+import { isProduction } from "../env.ts";
 
-const { MAIL_SERVER, MAIL_PORT, MAIL_SECURE, MAIL_USER, MAIL_PWD, RESEND_API_KEY, NODE_ENV } =
-  process.env;
+const { MAIL_SERVER, MAIL_PORT, MAIL_SECURE, MAIL_USER, MAIL_PWD, RESEND_API_KEY } = process.env;
 
 export const getTransport: () => Promise<MailTransport> = (() => {
   let transport: MailTransport;
@@ -12,7 +12,7 @@ export const getTransport: () => Promise<MailTransport> = (() => {
   return async () => {
     if (transport) return transport;
 
-    if (NODE_ENV == "production") {
+    if (isProduction()) {
       transport = createResendTransport(RESEND_API_KEY!);
     } else {
       const testAcc = await createTestAccount();

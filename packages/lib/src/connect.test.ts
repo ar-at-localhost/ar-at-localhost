@@ -20,18 +20,18 @@ describe("Connect", () => {
     it("Allows good values", async () => {
       connect.message = randText({ charCount: 128 });
       const result = await parseAsync(connectBodySchema, connect);
-      expect(result.firstName).toEqual(connect.firstName);
+      expect(result.first_name).toEqual(connect.first_name);
     });
 
     it("Performs transforms", async () => {
       connect.email = randEmail().toUpperCase();
       const result = await parseAsync(connectBodySchema, connect);
-      expect(result.firstName).toEqual(connect.firstName);
+      expect(result.first_name).toEqual(connect.first_name);
       expect(result.email).toEqual(connect.email.toLowerCase());
     });
 
     it("Rejects bad values", async () => {
-      connect.firstName = "";
+      connect.first_name = "";
       await expect(parseAsync(connectBodySchema, connect)).rejects.toThrow();
     });
   });

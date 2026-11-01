@@ -4,6 +4,7 @@ export default defineConfig({
   dts: true,
   deps: {
     alwaysBundle: ["lib", "lib-server", "valibot", "drizzle-orm"],
+    neverBundle: ["@google-cloud/tasks", "google-gax"],
     onlyBundle: false,
   },
   entry: "src/index.ts",

@@ -17,6 +17,7 @@
     "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD",
     "PORT",
     "PUBLIC_SRV_URL",
+    "PUBLIC_STAGE",
     "PUBLIC_TURNSTILE_SITEKEY",
     "RESEND_API_KEY",
     "SECRETSPEC_PROFILE",
@@ -27,70 +28,38 @@
   ],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**",
-        "!.next/dev/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "!.next/dev/**"]
     },
     "check": {
-      "dependsOn": [
-        "^format",
-        "^lint",
-        "^typecheck"
-      ]
+      "dependsOn": ["^format", "^lint", "^typecheck"]
     },
     "fix": {
-      "dependsOn": [
-        "^format:fix",
-        "^lint:fix"
-      ]
+      "dependsOn": ["^format:fix", "^lint:fix"]
     },
     "format": {
-      "dependsOn": [
-        "^format"
-      ]
+      "dependsOn": ["^format"]
     },
     "format:fix": {
-      "dependsOn": [
-        "^format:fix"
-      ]
+      "dependsOn": ["^format:fix"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "lint:fix": {
-      "dependsOn": [
-        "^lint:fix"
-      ]
+      "dependsOn": ["^lint:fix"]
     },
     "quality": {
-      "dependsOn": [
-        "build",
-        "check",
-        "test"
-      ]
+      "dependsOn": ["build", "check", "test"]
     },
     "test": {
-      "dependsOn": [
-        "^test"
-      ]
+      "dependsOn": ["^test"]
     },
     "test:e2e": {
-      "dependsOn": [
-        "^test:e2e"
-      ]
+      "dependsOn": ["^test:e2e"]
     },
     "typecheck": {
-      "dependsOn": [
-        "^typecheck"
-      ]
+      "dependsOn": ["^typecheck"]
     },
     "dev": {
       "persistent": true,

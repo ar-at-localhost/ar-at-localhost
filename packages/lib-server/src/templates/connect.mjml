@@ -19,7 +19,7 @@
     <mj-section>
       <mj-column>
         <mj-text>
-          <b>Hi {{ firstName }},</b>
+          <b>Hi {{ first_name }},</b>
         </mj-text>
 
         <mj-text>

@@ -18,13 +18,13 @@ import { getAPIBaseURL } from "./env.ts";
  * Schema to validate a connect
  */
 export const connectBodySchema = object({
-  firstName: pipe(
+  first_name: pipe(
     string(required("First name")),
     minLength(1, required("First name")),
     maxLength(128, tooLong("Name", 128)),
   ),
 
-  lastName: optional(pipe(string(), maxLength(128, tooLong("Name", 128)))),
+  last_name: optional(pipe(string(), maxLength(128, tooLong("Name", 128)))),
   email: pipe(string(required("Email")), email("Invalid email!"), toLowerCase()),
 
   message: pipe(
@@ -40,7 +40,7 @@ export const connectBodySchema = object({
 export type ConnectBody = InferOutput<typeof connectBodySchema>;
 
 export type Connect = ConnectBody & {
-  id: string;
+  id: number;
   created_at: string;
   updated_at: string;
 };
@@ -78,8 +78,8 @@ export const createConnectSrv = async (
  * Create a false connect body object for testing
  */
 export const getFalseConnect = (): ConnectBody => ({
-  firstName: randFirstName(),
-  lastName: randLastName(),
+  first_name: randFirstName(),
+  last_name: randLastName(),
   email: randEmail(),
   message: randText({ charCount: 128 }),
   markdown: false,
