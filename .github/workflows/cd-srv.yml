@@ -36,15 +36,10 @@ jobs:
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
 
-      - name: Authenticate Google Cloud
-        shell: devenv shell -- bash -e {0}
-        run: |
-          export keyfile="$RUNNER_TEMP/gcp.json"
-          # shellcheck disable=SC2016
-          secretspec run -- bash -euo pipefail -c '
-            printf '%s' "$GOOGLE_CREDENTIALS" > "$keyfile"
-            gcloud auth activate-service-account --key-file "$keyfile" --quiet
-          '
+      - uses: ./.github/actions/setup-gcp
+        with:
+          profile: ${{ inputs.profile }}
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Deploy service
         env:

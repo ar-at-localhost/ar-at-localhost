@@ -14,16 +14,22 @@ in {
       secret_data = ref.vars.sops_age_key;
     };
 
+    google_secret_manager_secret_iam_member.sops_age_key_runtime = {
+      inherit project;
+      secret_id = "\${google_secret_manager_secret.sops_age_key.secret_id}";
+      role = "roles/secretmanager.secretAccessor";
+      member = "serviceAccount:\${google_service_account.runtime.email}";
+    };
+
     google_service_account.runtime = {
       inherit project;
       account_id = "runtime";
       display_name = "Cloud Run runtime identity";
     };
 
-    google_secret_manager_secret_iam_member.sops_age_key_runtime = {
-      inherit project;
-      secret_id = "\${google_secret_manager_secret.sops_age_key.secret_id}";
-      role = "roles/secretmanager.secretAccessor";
+    google_service_account_iam_member.runtime_acts_as_services = {
+      service_account_id = "\${google_service_account.services.name}";
+      role = "roles/iam.serviceAccountUser";
       member = "serviceAccount:\${google_service_account.runtime.email}";
     };
   };

@@ -63,17 +63,7 @@ in {
             fi
 
             secretspec run -- bash -euo pipefail -c '
-              credentials_file="''${credentials_file:-$HOME/gcp.json}"
-              printf "%s" "$GOOGLE_CREDENTIALS" > "$credentials_file"
-              ls -l "$credentials_file"
-
-              cleanup() {
-                rm -rf "$credentials_file"
-              }
-
-              trap cleanup EXIT
               secretspec run pnpm turbo --filter "$name" build
-              export GOOGLE_APPLICATION_CREDENTIALS="$credentials_file"
               secretspec run pnpm --filter "$name" firebase --project "$profile" deploy
             '
           '';
@@ -97,15 +87,13 @@ in {
 
             # shellcheck disable=SC2016
             secretspec run -- bash -c '
-              set -euo pipefail
-
               skopeo copy \
-                --dest-creds "_json_key:$GOOGLE_CREDENTIALS"  \
+                --dest-creds "_json_key:$GCP_KEY"  \
                 "docker-archive:./$out" \
                 "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:$version"
 
               skopeo copy \
-                --dest-creds "_json_key:''${GOOGLE_CREDENTIALS}"  \
+                --dest-creds "_json_key:''${GCP_KEY}"  \
                 "docker-archive:./$out" \
                 "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:latest"
 
@@ -145,7 +133,6 @@ in {
           exec =
             #bash
             ''
-              set -euo pipefail
               secretspec run tofu apply -consolidate-errors -concise -auto-approve
             '';
         };

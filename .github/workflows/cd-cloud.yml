@@ -30,6 +30,11 @@ jobs:
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
 
+      - uses: ./.github/actions/setup-gcp
+        with:
+          profile: ${{ inputs.profile }}
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
+
       - name: Sync Cloud
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
