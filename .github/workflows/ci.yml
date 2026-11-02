@@ -7,6 +7,10 @@ on:
     tags:
       - "prod@*" # Deploy on production
 
+concurrency:
+  group: ci-cd
+  cancel-in-progress: false
+
 env:
   NODE_ENV: "production"
   SECRETSPEC_PROFILE: &secretspec_profile >-

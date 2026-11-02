@@ -1,6 +1,6 @@
 {
   "name": "ar-at-localhost",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "exports": {
     ".": "./apps/apis/dist/index.mjs",
     "./package.json": "./package.json"
@@ -11,6 +11,7 @@
     "cs": "pnpm changeset",
     "dev": "turbo dev",
     "fix": "oxfmt --write && oxlint --fix && turbo fix",
+    "prod": "",
     "quality": "turbo run quality",
     "test": "turbo test",
     "test:e2e": "turbo test:e2e"
