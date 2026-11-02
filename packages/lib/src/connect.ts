@@ -1,3 +1,4 @@
+import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso";
 import {
   boolean,
   email,
@@ -10,9 +11,9 @@ import {
   toLowerCase,
   type InferOutput,
 } from "valibot";
-import { required, tooLong, tooShort } from "./schema.ts";
-import { randEmail, randFirstName, randLastName, randText } from "@ngneat/falso";
+
 import { getAPIBaseURL } from "./env.ts";
+import { required, tooLong, tooShort } from "./schema.ts";
 
 /**
  * Schema to validate a connect
@@ -98,3 +99,5 @@ export const links = {
   upwork: "https://www.upwork.com/freelancers/~013dd6d70690822d44",
   whatsapp: "https://wa.me/923011353415",
 };
+
+export type Links = typeof links;

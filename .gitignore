@@ -3,9 +3,12 @@
 
 # builds
 dist/
+build
 
-# direnv
-.direnv
+# devenv direnv
+.devenv/
+.direnv/
+devenv.local.yaml
 
 # env
 .env
@@ -27,15 +30,17 @@ node_modules
 # pre-commit
 .pre-commit-config.yaml
 
+# svelte
+.svelte-kit
+
 # tests
 test-results/
+__snapshots__
+coverage/
+.vitest/
 
 # turbo
 .turbo
-
-# vite / vitest
-coverage/
-.vitest/
 
 # yarn
 .yarn/install-state.gz

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { required, tooLong, tooShort } from "./schema";
 
 describe("Schemas", () => {

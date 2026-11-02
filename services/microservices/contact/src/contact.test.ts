@@ -1,7 +1,7 @@
 import { createConnectSrv, getFalseConnect } from "lib";
 import { describe, expect, it } from "vitest";
 
-const baseURL = "http://localhost:5000";
+import { baseURL } from "./test-setup";
 
 describe("Contact", () => {
   describe("create", () => {

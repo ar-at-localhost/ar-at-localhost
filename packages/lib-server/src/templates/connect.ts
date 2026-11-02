@@ -1,5 +1,6 @@
-import Mustache from "mustache";
 import { readFile } from "node:fs/promises";
+
+import Mustache from "mustache";
 
 const read = (name: string) => readFile(new URL(name, import.meta.url), "utf8");
 

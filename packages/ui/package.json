@@ -2,28 +2,45 @@
   "name": "ui",
   "version": "0.0.3",
   "private": true,
+  "files": [
+    "env.d.ts",
+    "src/**/*"
+  ],
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "types": "./dist/index.d.ts",
+  "svelte": "./dist/index.js",
+  "imports": {
+    "#components/*": "./src/components/*",
+    "#svelte/*": "./src/svelte/*",
+    "#utils": "./src/utils.ts",
+    "#utils.js": "./src/utils.ts"
+  },
   "exports": {
     "./globals.css": "./src/globals.css",
     "./components/*": "./src/components/*.tsx",
-    "./site/*": "./src/site/*.tsx"
+    "./site/*": "./src/site/*.tsx",
+    "./svelte/*.svelte": "./src/svelte/*.svelte",
+    "./svelte/*": "./src/svelte/*.ts"
   },
   "scripts": {
+    "check": "pnpm format && pnpm lint && pnpm typecheck",
+    "fix": "pnpm format:fix && pnpm lint:fix",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && svelte-kit sync && svelte-check src/svelte --tsconfig tsconfig.svelte.json",
+    "prepare": "svelte-kit sync || echo ''",
+    "prepack": "svelte-kit sync && svelte-package -i src/svelte && publint"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
-    "@fontsource-variable/geist": "^5.3.0",
-    "@fontsource-variable/jetbrains-mono": "^5.3.0",
-    "@fontsource-variable/roboto": "^5.3.0",
-    "@fontsource-variable/roboto-slab": "^5.3.0",
     "@formisch/react": "^1.1.0",
     "class-variance-authority": "^0.7.1",
-    "cn": "^0.4.0",
+    "cn": "^0.5.0",
     "lib": "workspace:*",
     "lucide-react": "catalog:",
     "react": "^19.3.0",
@@ -34,19 +51,31 @@
   },
   "devDependencies": {
     "@eslint/js": "^10",
+    "@internationalized/date": "^3.12.4",
+    "@lucide/svelte": "^1.65.0",
+    "@sveltejs/adapter-auto": "^8.0.0",
+    "@sveltejs/kit": "^3.0.0",
+    "@sveltejs/package": "^2.5.8",
+    "@sveltejs/vite-plugin-svelte": "^7.2.0",
     "@tailwindcss/vite": "^4",
     "@turbo/gen": "^2.11.7",
     "@types/node": "catalog:",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "eslint": "^10",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.7",
+    "bits-ui": "^2.20.2",
     "globals": "^17",
     "lib-server": "workspace:^",
+    "publint": "^0.3.21",
+    "shadcn-svelte": "^1.7.2",
+    "svelte": "^5.57.1",
+    "svelte-check": "^4.6.0",
+    "tailwind-variants": "^3.3.1",
     "tailwindcss": "^4",
     "typescript": "catalog:",
     "typescript-eslint": "^8",
     "vite": "^8.3.4"
+  },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
   }
 }
