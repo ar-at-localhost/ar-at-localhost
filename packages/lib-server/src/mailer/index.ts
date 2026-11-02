@@ -1,11 +1,12 @@
 export * from "./types.ts";
 import { getTestMessageUrl } from "nodemailer";
+
+import { getContactPerson, getStage, isDev, isProduction } from "../env.ts";
 import { getTransport } from "./transport.ts";
 import type { SendEmailPayload } from "./types.ts";
-import { getContactPerson, getStage, isProduction } from "../env.ts";
 const { MAIL_SERVER, MAIL_FROM } = process.env;
 
-const isTest = !MAIL_SERVER;
+const isTest = isDev() || !MAIL_SERVER;
 
 export const sendMail = async (
   opts: Omit<SendEmailPayload, "from"> & {
@@ -23,12 +24,17 @@ export const sendMail = async (
     cc: isProduction() ? opts.cc : ([getContactPerson(true)].filter((i) => !!i) as string[]),
   };
 
-  return transport.sendMail(finalOpts).then((res) => {
-    if (isTest) {
-      const previewUrl = getTestMessageUrl(res);
-      console.info("Test email sent:", previewUrl);
-    }
+  return transport
+    .sendMail(finalOpts)
+    .then((res) => {
+      if (isTest) {
+        const previewUrl = getTestMessageUrl(res);
+        console.info("Test email sent:", previewUrl);
+      }
 
-    return res;
-  });
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

@@ -1,8 +1,8 @@
 import { createTestAccount, createTransport } from "nodemailer";
 
+import { isProduction } from "../env.ts";
 import { createResendTransport } from "./resend.ts";
 import type { MailTransport } from "./types.ts";
-import { isProduction } from "../env.ts";
 
 const { MAIL_SERVER, MAIL_PORT, MAIL_SECURE, MAIL_USER, MAIL_PWD, RESEND_API_KEY } = process.env;
 

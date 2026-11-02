@@ -43,7 +43,7 @@ in {
     };
   };
 
-  packages = [chromium] ++ (with pkgs; [convco google-cloud-sdk jq nodejs opentofu playwright postgresql pnpm secretspec skopeo sops]);
+  packages = [chromium] ++ (with pkgs; [convco jq libxml2 nodejs opentofu playwright postgresql pnpm secretspec skopeo sops]);
 
   profiles = {
     cloud.module = {

@@ -29,13 +29,12 @@ node_modules
 
 # tests
 test-results/
+__snapshots__
+coverage/
+.vitest/
 
 # turbo
 .turbo
-
-# vite / vitest
-coverage/
-.vitest/
 
 # yarn
 .yarn/install-state.gz

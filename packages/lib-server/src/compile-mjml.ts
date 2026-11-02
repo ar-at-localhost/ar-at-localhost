@@ -1,8 +1,10 @@
-import { dirname, join } from "node:path";
-import { testDirectory } from "./fs.ts";
 import { readFile, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+
 import { globby } from "globby";
 import mjml from "mjml";
+
+import { testDirectory } from "./fs.ts";
 
 const main = async () => {
   const dir = join(dirname(import.meta.url.replace("file:/", "")), "templates");

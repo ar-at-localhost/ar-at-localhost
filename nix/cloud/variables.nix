@@ -9,6 +9,11 @@ _: let
       type = "string";
     };
 
+    jwt = {
+      type = "string";
+      sensitive = true;
+    };
+
     project_id = {
       type = "string";
     };

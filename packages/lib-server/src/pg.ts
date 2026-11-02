@@ -1,6 +1,6 @@
-import pg from "pg";
-import fp from "fastify-plugin";
 import { drizzle } from "drizzle-orm/node-postgres";
+import fp from "fastify-plugin";
+import pg from "pg";
 
 const pool = new pg.Pool({
   connectionString: process.env.DB_URI,

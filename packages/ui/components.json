@@ -12,9 +12,14 @@
   },
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/utils",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "utils": "@/utils",
+    "ui": "@/components",
+    "hooks": "@/hooks",
+    "lib": "@"
   },
-  "iconLibrary": "lucide"
+  "typescript": true,
+  "registry": "https://shadcn-svelte.com/registry",
+  "iconLibrary": "lucide",
+  "menuColor": "default",
+  "menuAccent": "subtle"
 }

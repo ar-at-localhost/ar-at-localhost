@@ -20,9 +20,9 @@
     }
   },
   "scripts": {
-    "build": "tsdown",
     "check": "pnpm format && pnpm lint && pnpm typecheck",
-    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "build:watch": "tsdown --watch",
     "format": "oxfmt",
     "format:fix": "oxfmt --write",
     "fix": "pnpm format:fix && pnpm lint:fix",

@@ -12,6 +12,18 @@ export const getPort = () => {
   return parseInt(process.env.PORT! || "5000");
 };
 
+export const getEnv = (key: string) => {
+  let value: string | undefined = "";
+
+  if (globalThis.process) {
+    value = process.env[key]?.toString();
+  } else if (import.meta?.env) {
+    value = import.meta.env[key]?.toString();
+  }
+
+  return value;
+};
+
 /**
  * Get base URL of a running server
  */
@@ -28,3 +40,4 @@ export const getBaseURL = () => {
 };
 
 export const getAPIBaseURL = (base?: string) => `${base || getBaseURL()}`;
+export const isDebug = () => getEnv("DEBUG");

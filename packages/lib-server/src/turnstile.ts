@@ -1,10 +1,11 @@
-import fp from "fastify-plugin";
 import {
   type FastifyInstance,
   type FastifyPluginAsync,
   type FastifyReply,
   type FastifyRequest,
 } from "fastify";
+import fp from "fastify-plugin";
+
 import { getTurnstile, isDev } from "./env.ts";
 
 export const turnstilePlugin: FastifyPluginAsync = fp(async (app: FastifyInstance) => {

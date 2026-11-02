@@ -1,0 +1,40 @@
+<!-- TEMPLATE SYNTAX: mustache -->
+Hi {{ first_name }},
+
+I hope you are doing well. I'm updating my professional portfolio and would appreciate if
+you take a few minutes and share a few words about your experience working with me. Your
+feedback helps me showcase my work to potential client.
+
+If you'd prefer not to participate, you can simply ignore this email - no action is
+required.
+
+Share your thoughts by clicking following link:
+{{{ links.cta }}}
+
+--------------------------------------------------------------------------------
+[ Data Privacy Policy ] Here's how your information is handled:
+-----------------------
+
+* Your first name, last name initial, company name, and testimonial may be
+  displayed publicly on websites.
+* Your email is only used to manage this request and is deleted once you submit
+  your testimonial or the request expires.
+* This link automatically expires in 30 days, removing the request and all
+  associated information.
+* You can use the same link to delete your request at any time before submitting
+  your testimonial.
+--------------------------------------------------------------------------------
+
+Best regards,
+Ahmad Raza
+
+{{#links}}
+--------------------------------------------------------------------------------
+| Links |
+---------
+{{#whatsapp}}WhatsApp: {{{.}}}{{/whatsapp}}
+{{#linkedin}}LinkedIn: {{{.}}}{{/linkedin}}
+{{#upwork}}Upwork: {{{.}}}{{/upwork}}
+{{#fiverr}}Fiverr: {{{.}}}{{/fiverr}}
+--------------------------------------------------------------------------------
+{{/links}}

@@ -1,4 +1,5 @@
 {
+  "extends": "$app/tsconfig",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
@@ -9,7 +10,8 @@
       "@/*": ["./src/*"]
     },
     "resolvePackageJsonImports": true,
-    "types": ["node"]
+    "strict": true,
+    "types": ["node", "$app/types"]
   },
-  "include": ["src", "env.d.ts"]
+  "include": ["src", "vite.config.ts", "env.d.ts"]
 }

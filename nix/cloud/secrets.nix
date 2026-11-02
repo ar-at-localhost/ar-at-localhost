@@ -1,41 +1,44 @@
-{ref, ...}: let
+{
+  lib,
+  ref,
+  ...
+}: let
   project = ref.vars.project_id;
+  commonSecrets = ["sops_age_key" "jwt"];
 in {
-  resource = {
-    google_secret_manager_secret.sops_age_key = {
-      inherit project;
-      secret_id = "sops_age_key";
-      replication.auto = {};
-      depends_on = ["google_project_service.secretmanager"];
-    };
+  resource =
+    {
+      google_service_account.runtime = {
+        inherit project;
+        account_id = "runtime";
+        display_name = "Cloud Run runtime identity";
+      };
 
-    google_secret_manager_secret_version.sops_age_key = {
-      secret = "\${google_secret_manager_secret.sops_age_key.id}";
-      secret_data = ref.vars.sops_age_key;
-    };
+      google_service_account_iam_member.runtime_acts_as_services = {
+        service_account_id = "\${google_service_account.services.name}";
+        role = "roles/iam.serviceAccountUser";
+        member = "serviceAccount:\${google_service_account.runtime.email}";
+      };
+    }
+    // lib.foldl' lib.recursiveUpdate {} (builtins.map (name: {
+        google_secret_manager_secret.${name} = {
+          inherit project;
+          secret_id = name;
+          replication.auto = {};
+          depends_on = ["google_project_service.secretmanager"];
+        };
 
-    google_secret_manager_secret_iam_member.sops_age_key_runtime = {
-      inherit project;
-      secret_id = "\${google_secret_manager_secret.sops_age_key.secret_id}";
-      role = "roles/secretmanager.secretAccessor";
-      member = "serviceAccount:\${google_service_account.runtime.email}";
-    };
+        google_secret_manager_secret_version.${name} = {
+          secret = "\${google_secret_manager_secret.${name}.id}";
+          secret_data = ref.vars.${name};
+        };
 
-    google_service_account.runtime = {
-      inherit project;
-      account_id = "runtime";
-      display_name = "Cloud Run runtime identity";
-    };
-
-    google_service_account_iam_member.runtime_acts_as_services = {
-      service_account_id = "\${google_service_account.services.name}";
-      role = "roles/iam.serviceAccountUser";
-      member = "serviceAccount:\${google_service_account.runtime.email}";
-    };
-  };
-
-  output.SOPS_AGE_KEY = {
-    value = "\${google_secret_manager_secret_version.sops_age_key.secret_data}";
-    sensitive = true;
-  };
+        google_secret_manager_secret_iam_member."${name}_runtime" = {
+          inherit project;
+          secret_id = "\${google_secret_manager_secret.${name}.secret_id}";
+          role = "roles/secretmanager.secretAccessor";
+          member = "serviceAccount:\${google_service_account.runtime.email}";
+        };
+      })
+      commonSecrets);
 }

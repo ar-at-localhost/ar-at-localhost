@@ -17,7 +17,23 @@ runs:
     - name: Setup nix
       shell: bash
       run: |
-        nix profile add nixpkgs#devenv .#gcloud nixpkgs#jq nixpkgs#sops
+        nix profile add nixpkgs#devenv .#gcloud nixpkgs#jq nixpkgs#rclone nixpkgs#sops
+
+    - name: Prepare nix cache
+      shell: bash
+      run: |
+        export CACHE_DIR="/nix-cache"
+        sudo mkdir -p "$CACHE_DIR"
+        sudo chown "$(id -u):$(id -g)" "$CACHE_DIR"
+        echo "NIX_CACHE=$CACHE_DIR" >> "$GITHUB_ENV"
+
+    - name: Cache nix binaries
+      uses: actions/cache@v5
+      with:
+        path: /nix-cache
+        key: nix-cache-${{ runner.os }}-${{ github.run_id }}
+        restore-keys: |
+          nix-cache-${{ runner.os }}-
 
     - name: Setup auth and nix cache
       shell: bash
@@ -89,8 +105,24 @@ runs:
             echo "| OK: Build health package. Cache should be ready."
 
             echo "> Starting binary cache server..."
-            setsid gcloud --project "$TF_VAR_project_id" run services proxy attic-cache --region us-central1 --port "$port" \
-              > "$RUNNER_TEMP/proxy.log" 2>&1 &
+            export RCLONE_S3_PROVIDER="GCS"
+            export RCLONE_S3_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
+            export RCLONE_S3_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
+            export RCLONE_S3_ENDPOINT="https://storage.googleapis.com"
+            setsid rclone serve http ":s3:$ATTIC_BUCKET" \
+              --addr "127.0.0.1:$port" \
+              --read-only \
+              --no-modtime \
+              --no-checksum \
+              --vfs-cache-mode full \
+              --vfs-cache-max-size 4G \
+              --vfs-cache-max-age 8760h \
+              --vfs-read-chunk-size 64M \
+              --vfs-read-chunk-size-limit off \
+              --dir-cache-time 5m \
+              --s3-no-check-bucket \
+              --cache-dir "$NIX_CACHE" \
+              > "$RUNNER_TEMP/nix-cache.log" 2>&1 &
             echo "| DONE: Started binary cache server..."
 
             echo "> Waiting for binary cache server health..."

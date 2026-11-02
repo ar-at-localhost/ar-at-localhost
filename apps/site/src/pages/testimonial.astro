@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+const { PUBLIC_SRV_CONTACT_URL } = import.meta.env;
+import { Star } from '@lucide/astro';
+import { TestimonialForm } from "ui/site/testimonial-form";
+import Section from '../components/section.astro'
+---
+
+<script>
+  const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const isDark = theme == "dark";
+  document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+</script>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Share your testimonial | ar-at-localhost</title>
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="bingbot" content="noindex, nofollow">
+	</head>
+
+  <body class="w-screen h-screen relative smooth">
+    <Section>
+      <header class="flex flex-col items-center justify-center py-8 md:py-16 gap-8 text-center px-8">
+        <div class="size-40 flex flex-col items-center justify-center rounded-full border-none sm:border-2 border-yellow-900 dark:border-yellow-300 text-yellow-500 dark:text-yellow-200">
+          <Star size="96"/>
+          <h1 class="font-bold text-yellow-900 dark:text-yellow-300">Testimonial</h1>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <p>Thank you for taking your time to share a testimonial. It should be real quick.</p>
+          <p>Please make sure to check data policy next to form before submitting.</p>
+        </div>
+      </header>
+
+      <TestimonialForm baseURL={PUBLIC_SRV_CONTACT_URL} client:load />
+    </Section>
+  </body>
+</html>

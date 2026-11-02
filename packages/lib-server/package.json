@@ -30,9 +30,10 @@
     }
   },
   "scripts": {
+    "check": "pnpm format && pnpm lint && pnpm typecheck",
     "compile-templates": "node src/compile-mjml.ts",
     "build": "tsdown",
-    "dev": "tsdown --watch",
+    "build:watch": "tsdown --watch",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",
     "lint": "oxlint",
@@ -48,19 +49,24 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.5.0",
+    "@date-fns/utc": "^2.1.1",
     "@fastify/cors": "^11.3.1",
     "@fastify/helmet": "^13.1.2",
     "@fastify/rate-limit": "^11.2.1",
     "@fastify/swagger": "^9.9.2",
-    "@google-cloud/tasks": "^7.3.1",
-    "@neondatabase/serverless": "^1.2.0",
+    "@google-cloud/secret-manager": "catalog:",
+    "@google-cloud/tasks": "catalog:",
     "@valibot/to-json-schema": "^1.8.0",
+    "date-fns": "^4.4.0",
     "drizzle-orm": "catalog:",
     "fastify-plugin": "^6.0.1",
     "globby": "^16.2.4",
+    "jose": "^6.2.13",
     "lib": "workspace:*",
     "mjml": "^5.4.1",
     "mustache": "^4.2.0",
+    "node-argon2": "^1.0.0",
     "nodemailer": "catalog:",
     "pg": "^8.23.1",
     "resend": "catalog:"

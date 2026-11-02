@@ -1,6 +1,9 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "globalEnv": [
+    "ADMIN_NAME",
+    "ADMIN_EMAIL",
+    "ADMIN_PASSWORD",
     "CONTACT_PERSON_NAME",
     "CONTACT_PERSON_EMAIL",
     "CORS_ALLOW",
@@ -16,6 +19,8 @@
     "NODE_ENV",
     "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD",
     "PORT",
+    "PUBLIC_SITE_URL",
+    "PUBLIC_SRV_AUTH_URL",
     "PUBLIC_SRV_URL",
     "PUBLIC_STAGE",
     "PUBLIC_TURNSTILE_SITEKEY",
@@ -23,6 +28,7 @@
     "SECRETSPEC_PROFILE",
     "SITE_APP_ID",
     "SOPS_AGE_KEY",
+    "TF_VAR_jwt",
     "TURBO_TOKEN",
     "TURNSTILE_SECRET_KEY"
   ],
@@ -73,6 +79,5 @@
     ".sops.yaml",
     "nix/images.nix",
     "nix/lib.nix"
-  ],
-  "concurrency": "3"
+  ]
 }
