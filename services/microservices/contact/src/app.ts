@@ -1,6 +1,8 @@
+import { authPlugin, type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
+
 import packageInfo from "../package.json" with { type: "json" };
-import { type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
 import { contactRest } from "./contact.ts";
+import { testimonialRest } from "./testimonial.ts";
 
 const { name, version } = packageInfo;
 
@@ -26,6 +28,10 @@ export const createApp = async (
     await app.register(pgPlugin);
   }
 
+  app.register(authPlugin);
   app.register(contactRest);
+  app.register(testimonialRest, {
+    prefix: "/testimonial",
+  });
   return app;
 };

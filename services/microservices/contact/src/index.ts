@@ -1,4 +1,5 @@
 import { getHost, getPort } from "lib";
+
 import { createApp } from "./app.ts";
 
 const host = getHost();

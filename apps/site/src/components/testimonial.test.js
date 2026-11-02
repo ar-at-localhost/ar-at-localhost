@@ -1,9 +1,9 @@
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { describe, expect, it } from "vitest";
-import Testmonial from "./testimonial.astro";
+import Testimonial from "./testimonial.astro";
 import { randAvatar, randCompanyName, randFullName, randNumber, randQuote } from "@ngneat/falso";
 
-describe("Testmonial", () => {
+describe("Testimonial", () => {
   it("should render", async () => {
     const container = await AstroContainer.create();
 
@@ -15,7 +15,7 @@ describe("Testmonial", () => {
       quote: randQuote({ maxCharCount: 256 }),
     };
 
-    const result = await container.renderToString(Testmonial, {
+    const result = await container.renderToString(Testimonial, {
       props: {
         rating: props.rating,
       },

@@ -3,7 +3,7 @@ import { defineConfig } from "tsdown";
 export default defineConfig({
   dts: true,
   deps: {
-    neverBundle: ["@google-cloud/tasks", "google-gax"],
+    neverBundle: ["@google-cloud/secret-manager", "@google-cloud/tasks", "google-gax"],
   },
   exports: {
     devExports: true,

@@ -1,4 +1,5 @@
 import { generateSwagger } from "lib-server";
+
 import { createApp } from "./app.ts";
 
 const main = async () => {

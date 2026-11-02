@@ -1,11 +1,9 @@
 ---
 import Bullet from './bullet.astro';
-import { Button } from "ui/components/button";
 import { LayoutTemplate, Settings, SquareDashed, Rocket } from '@lucide/astro';
-import {Card, CardTitle} from "ui/components/card";
 import Section from './section.astro';
 import ServiceCard from './service-card.astro';
-import Testmonial from './testimonial.astro';
+import Testimonial from './testimonial.astro';
 ---
 
 <Section extraClass="md:bg-linear-to-tr text-stone-900">
@@ -57,11 +55,11 @@ import Testmonial from './testimonial.astro';
       </ServiceCard>
     </div>
 
-    <Testmonial extraClass="w-9/10 md:w-[448px] lg:w-3/5">
+    <Testimonial extraClass="w-9/10 md:w-[448px] lg:w-3/5">
       <span slot="avatar">J</span>
       <span slot="name">Jackson J.</span>
       <span slot="company">Rixor</span>
       <span slot="quote">I got Ahmad to help with building the initial version of my site. He was very responsive and was extremely skilled, particularly with back end work. I have some development experience so I know enough to know when someone knows what they are doing. Ahmad didn't just do the work I told him to do like a robot, but would often give feedback and suggestions on what would perhaps work better. He was also very good at keeping me updated with what he was working on instead of waiting to submit everything the day I needed it done.</span>
-    </Testmonial>
+    </Testimonial>
   </div>
 </Section>

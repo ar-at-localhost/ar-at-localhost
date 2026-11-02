@@ -1,7 +1,8 @@
-import { beforeEach, describe, expect, it } from "vitest";
-import { type ConnectBody, connectBodySchema, getFalseConnect } from "./connect";
 import { randEmail, randText } from "@ngneat/falso";
 import { parseAsync } from "valibot";
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { type ConnectBody, connectBodySchema, getFalseConnect } from "./connect";
 
 let connect: ConnectBody;
 

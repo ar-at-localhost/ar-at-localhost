@@ -2,10 +2,11 @@ import { CloudTasksClient } from "@google-cloud/tasks";
 import { eq } from "drizzle-orm";
 import { integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { links } from "lib";
+
 import { getContactPerson, isCI, isDev } from "./env.ts";
+import { sendMail } from "./mailer/index.ts";
 import { db } from "./pg.ts";
 import { timestamps } from "./schema.ts";
-import { sendMail } from "./mailer/index.ts";
 import { renderConnectTemplate, renderConnectTextTemplate } from "./templates/connect.ts";
 
 export const connectsTable = pgTable("connects", {

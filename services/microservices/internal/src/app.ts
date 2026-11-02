@@ -1,5 +1,6 @@
-import packageInfo from "../package.json" with { type: "json" };
 import { type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
+
+import packageInfo from "../package.json" with { type: "json" };
 import { connectIntRest } from "./connect.ts";
 
 const { name, version } = packageInfo;

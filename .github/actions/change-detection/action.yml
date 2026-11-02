@@ -3,13 +3,14 @@ description: Detect changed packages
 
 inputs:
   age-key:
+    description: "SOPS AGE key for SecretSpec"
     required: true
   gitref:
+    description: "Git reference to compare against for changes"
     required: true
-    type: string
   profile:
+    description: "SecretSpec profile to use"
     default: "staging"
-    type: string
 
 outputs:
   services:

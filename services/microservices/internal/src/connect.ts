@@ -1,7 +1,7 @@
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
+import { getAPIBaseURL } from "lib";
 import { connectMail } from "lib-server";
 import { object, boolean, type InferOutput, pipe, string, integer, transform } from "valibot";
-import { getAPIBaseURL } from "lib";
 
 const postPathSchema = object({
   id: pipe(string(), transform(Number), integer("Invalid id!")),

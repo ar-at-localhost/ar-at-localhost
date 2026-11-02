@@ -3,11 +3,17 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/overpass";
-@source "../../../apps/**/*.{ts,tsx}";
-@source "./**/*.{ts,tsx}";
+@import "shadcn-svelte/tailwind.css";
+
+@source "../../../apps/*/**/*.{ts,tsx,svelte}";
+@source "./**/*.{ts,tsx,svelte}";
 
 * {
   font-family: "Overpass Variable", sans-serif;
+}
+
+button {
+  cursor: pointer;
 }
 
 @media (max-width: 528px) {

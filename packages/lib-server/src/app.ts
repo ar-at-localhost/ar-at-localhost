@@ -1,15 +1,17 @@
-import Fastify, { type FastifyInstance } from "fastify";
-import { type GenericSchema, parse, safeParse } from "valibot";
+import assert from "node:assert";
+import { writeFile } from "node:fs/promises";
+import { cwd } from "node:process";
+
 import fastifyCors from "@fastify/cors";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyRateLimit from "@fastify/rate-limit";
-import assert from "node:assert";
-import { getCors, isDev, isProduction } from "./env.ts";
-import { getPort, isValibot } from "lib";
 import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import { toJsonSchema } from "@valibot/to-json-schema";
-import { cwd } from "node:process";
-import { writeFile } from "node:fs/promises";
+import Fastify, { type FastifyInstance } from "fastify";
+import { getPort, isValibot } from "lib";
+import { type GenericSchema, parse, safeParse } from "valibot";
+
+import { getCors, isDev, isProduction } from "./env.ts";
 import { turnstilePlugin } from "./turnstile.ts";
 
 export type BaseAppOpts = {
@@ -140,16 +142,25 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
   return app;
 };
 
-export const testSetup = async (app: FastifyInstance, opts?: { port?: number }) => {
-  await app.listen({
+let _app: FastifyInstance;
+
+export const testSetup = async (
+  appFactory: () => Promise<FastifyInstance>,
+  opts?: { port?: number; after?: () => Promise<void>; before?: () => Promise<void> },
+) => {
+  await opts?.before?.();
+  _app = await appFactory();
+
+  await _app.listen({
     port: opts?.port || getPort(),
   });
 
-  await app.ready();
+  await _app.ready();
+  await opts?.after?.();
 };
 
-export const testTeardown = async (app: FastifyInstance) => {
-  await app.close();
+export const testTeardown = async () => {
+  await _app?.close();
 };
 
 export const generateSwagger = async (app: FastifyInstance) => {

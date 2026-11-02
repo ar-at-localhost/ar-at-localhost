@@ -1,0 +1,14 @@
+{
+  "extends": "$app/tsconfig",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "resolvePackageJsonImports": true,
+    "strict": true,
+    "types": ["node", "$app/types"]
+  },
+  "include": ["src/svelte", "vite.config.ts", "env.d.ts"]
+}

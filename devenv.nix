@@ -7,6 +7,8 @@
   inherit (pkgs.stdenv) system;
   inherit (pkgs) chromium;
 in {
+  devcontainer.enable = true;
+
   languages = {
     javascript = {
       enable = true;
@@ -43,7 +45,7 @@ in {
     };
   };
 
-  packages = [chromium] ++ (with pkgs; [convco google-cloud-sdk jq nodejs opentofu playwright postgresql pnpm secretspec skopeo sops]);
+  packages = [chromium] ++ (with pkgs; [convco jq libxml2 nodejs opentofu playwright postgresql pnpm secretspec skopeo sops]);
 
   profiles = {
     cloud.module = {
@@ -216,7 +218,8 @@ in {
             export DB_URI
           fi
 
-          pnpm --filter lib-server drizzle-kit migrate
+          pnpm --filter lib-server db:migrate
+          pnpm --filter lib-server db:seed
           pnpm quality
         '
       '';

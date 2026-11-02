@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "astro": true,
+  "sortImports": true,
   "ignorePatterns": [
     "dist/**",
     "*.min.js",
