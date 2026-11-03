@@ -11,7 +11,8 @@ pkgs.writeShellApplication {
       head -n 1) || true
 
     if [[ -z "$hash" ]]; then
-      echo "Failed to generate pnpm hash" >&2
+      echo "::warning::Couldn't detect changed hash, check log if build fails." >&2
+      echo "$output" >&2
     fi
 
     echo "$hash"

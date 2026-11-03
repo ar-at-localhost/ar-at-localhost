@@ -10,7 +10,7 @@
     info = builtins.fromJSON (builtins.readFile package);
     inherit (info) name version;
   in
-    pkgs.stdenv.mkDerivation (finalAttrs: {
+    pkgs.stdenv.mkDerivation (_: {
       pname = name;
       inherit version;
       src = lib.fileset.toSource {
