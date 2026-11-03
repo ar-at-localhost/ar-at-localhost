@@ -9,6 +9,10 @@ on:
 
 permissions: {}
 
+env:
+  NODE_ENV: ci
+  SECRETSPEC_PROFILE: "ci"
+
 jobs:
   hash-check:
     name: Verify Nix hash for pnpm dependencies
@@ -22,21 +26,17 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: ./.github/actions/setup-nix
+      - uses: ./.github/actions/setup
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: ${{ env.SECRETSPEC_PROFILE }}
 
       - name: Check & Test
         id: hash_check
         env:
-          SECRETSPEC_PROFILE: "ci"
-          NODE_ENV: ci
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
           AUTHOR_NAME: ${{ github.actor }}
           AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
         shell: devenv shell -- bash -e {0}
         run: |
           devenv tasks run "aal:pnpm-hash"
-
-      - uses: ./.github/actions/nix-cache
-        if: always()

@@ -22,9 +22,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/setup-nix
+      - uses: ./.github/actions/setup
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: ${{ env.SECRETSPEC_PROFILE }}
 
       - name: Check & Test
         shell: devenv shell -- bash -e {0}
@@ -33,6 +34,3 @@ jobs:
         run: |
           export DB_NAME="$DB_ID"
           devenv tasks run "aal:test"
-
-      - uses: ./.github/actions/nix-cache
-        if: always()

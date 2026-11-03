@@ -1,0 +1,96 @@
+name: Setup Nix
+description: Installs nix, required programs and setups binary cache
+
+inputs:
+  age-key:
+    required: true
+  profile:
+    default: "ci"
+  skip-install:
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: cachix/install-nix-action@v31
+
+    - name: Setup nix
+      shell: bash
+      run: |
+        nix profile add nixpkgs#google-cloud-sdk nixpkgs#jq nixpkgs#attic-client nixpkgs#devenv nixpkgs#sops
+
+    - name: Setup auth and nix cache
+      shell: bash
+      env:
+        SECRETSPEC_PROFILE: ${{ inputs.profile }}
+        SOPS_AGE_KEY: ${{ inputs.age-key }}
+
+      run: |
+        export credentials_file="$RUNNER_TEMP/gcp.json"
+        export hook_script="${{ github.action_path }}/push-hook.sh"
+        export hook_env="/etc/nix/push-hook.env"
+        export signing_key="/etc/nix/signing-key"
+        export GITHUB_ENV
+
+        secretspec run -- bash -c '
+          set -euo pipefail
+          umask 077
+          echo "::add-mask::$GCP_KEY"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$credentials_file" >> "$GITHUB_ENV"
+          echo "GCP_KEY=$GCP_KEY" >> "$GITHUB_ENV"
+          printf "%s" "$GCP_KEY" > "$credentials_file"
+          gcloud auth activate-service-account --key-file "$credentials_file" --quiet
+        '
+
+        secretspec run --profile ci -- bash -c '
+          set -euo pipefail
+          if [[ "${ATTIC:-}" == "true" ]]; then
+            sudo install -m 755 "$hook_script" /etc/nix/push-hook.sh
+            printf "%s" "$ATTIC_KEY_PRIV" | sudo tee $signing_key >/dev/null
+
+            {
+              echo "ATTIC_BUCKET=$ATTIC_BUCKET"
+              echo "ATTIC_BUCKET_REGION=$ATTIC_BUCKET_REGION"
+              echo "AWS_ACCESS_KEY_ID=$ATTIC_BUCKET_KEY_ID"
+              echo "AWS_SECRET_ACCESS_KEY=$ATTIC_BUCKET_KEY"
+            } | sudo tee "$hook_env" >/dev/null
+
+            sudo chmod 600 "$hook_env"
+            sudo chmod 600 $signing_key
+
+            setsid gcloud run services proxy attic-cache --region us-central1 --port 8300 \
+              > "$RUNNER_TEMP/proxy.log" 2>&1 &
+
+            for i in $(seq 1 60); do
+              curl -sf http://localhost:8300/nix-cache-info >/dev/null && break
+              sleep 1
+            done
+
+            {
+              echo "extra-substituters = http://localhost:8300?priority=1"
+              echo "extra-trusted-public-keys = $ATTIC_KEY_PUB"
+              echo "post-build-hook = /etc/nix/push-hook.sh"
+            } | sudo tee -a /etc/nix/nix.conf
+
+            sudo systemctl restart nix-daemon
+          fi
+        '
+
+    - name: Cache node modules
+      if: ${{ inputs.skip-install != 'true'}}
+      uses: actions/cache@v5
+      with:
+        path: .pnpm
+        key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          pnpm-${{ runner.os }}-
+
+    - name: Instal node modules
+      if: ${{ inputs.skip-install != 'true'}}
+      shell: devenv shell -- bash -e {0}
+      env:
+        SECRETSPEC_PROFILE: ${{ inputs.profile }}
+        SOPS_AGE_KEY: ${{ inputs.age-key }}
+
+      run: |
+        pnpm install --frozen-lockfile

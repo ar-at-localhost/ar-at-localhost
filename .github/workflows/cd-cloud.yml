@@ -26,19 +26,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: ./.github/actions/setup-nix
+      - uses: ./.github/actions/setup
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
-
-      - uses: ./.github/actions/setup-gcp
-        with:
           profile: ${{ inputs.profile }}
-          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Sync Cloud
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           devenv tasks --profile cloud run --quiet "aal:sync-cloud"
-
-      - uses: ./.github/actions/nix-cache
-        if: always()
