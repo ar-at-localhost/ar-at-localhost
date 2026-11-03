@@ -22,6 +22,7 @@ result*
 
 # nodejs
 node_modules
+.pnpm
 
 # pre-commit
 .pre-commit-config.yaml
