@@ -39,6 +39,10 @@
         {
           pnpm-deps = pkgs.callPackage ./nix/pkgs/pnpm-deps.nix {};
           gcloud = pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.cloud-run-proxy];
+
+          health = pkgs.writeShellScriptBin "aal-health" ''
+            echo "OK..."
+          '';
         }
         // (import ./nix/pkgs/services.nix {inherit lib pkgs;})
     );
