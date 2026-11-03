@@ -1,17 +1,17 @@
 {
   hash ? (builtins.readFile ../hash.txt),
-  pname ? null,
   pkgs,
   lib,
-  version ? null,
   ...
 }: let
   root = ../../.;
   info = builtins.fromJSON (builtins.readFile (root + "/package.json"));
 in
   pkgs.fetchPnpmDeps {
-    inherit hash;
+    pname = info.name;
+    inherit (info) version;
     fetcherVersion = 4;
+    inherit hash;
 
     src = lib.fileset.toSource {
       inherit root;
@@ -24,13 +24,4 @@ in
         (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/services"))
       ];
     };
-
-    pname =
-      if pname != null
-      then pname
-      else info.name;
-    version =
-      if version != null
-      then version
-      else info.version;
   }

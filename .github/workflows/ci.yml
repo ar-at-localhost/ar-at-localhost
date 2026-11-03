@@ -38,9 +38,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/setup-nix
+      - uses: ./.github/actions/setup
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: ${{ env.SECRETSPEC_PROFILE }}
 
       - name: Determine change references
         shell: devenv shell -- bash -e {0}
@@ -85,9 +86,6 @@ jobs:
               jq -c '[.packages.items[].name | select(test("^app-"))]'
           )
           echo "apps=${apps}" >> "$GITHUB_OUTPUT"
-
-      - uses: ./.github/actions/nix-cache
-        if: always()
 
   deploy-services:
     name: Deploy services on cloud

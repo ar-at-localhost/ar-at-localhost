@@ -10,7 +10,10 @@ in {
       inherit name location count;
       deletion_protection = true;
 
-      template = {
+      template = let
+        path = "/nix-store";
+      in {
+        execution_environment = "EXECUTION_ENVIRONMENT_GEN2";
         service_account = "\${google_service_account.${name}[0].email}";
         timeout = "3600s";
 
@@ -19,25 +22,42 @@ in {
           max_instance_count = 1;
         };
 
+        volumes = {
+          inherit name;
+
+          gcs = {
+            bucket = "\${google_storage_bucket.${name}[0].name}";
+            read_only = true;
+            mount_options = ["implicit-dirs"];
+          };
+        };
+
         containers = [
           {
-            name = "attic";
-            image = "\${var.region}-docker.pkg.dev/\${var.project_id}/\${var.project_id}/${name}:latest";
+            name = "nginx";
+            image = "nginx:stable";
+            ports.container_port = 8080;
+            command = ["/bin/sh"];
 
-            env = [
-              {
-                name = "SECRETSPEC_PROFILE";
-                value = ref.vars.secretspec_profile;
-              }
-              {
-                name = "SOPS_AGE_KEY";
-                value_source = {
-                  secret_key_ref = {
-                    secret = "\${google_secret_manager_secret.sops_age_key.secret_id}";
-                    version = "latest";
-                  };
-                };
-              }
+            volume_mounts = {
+              name = "${name}";
+              mount_path = path;
+            };
+
+            args = [
+              "-c"
+              ''
+                cat > /etc/nginx/conf.d/default.conf <<'EOF'
+                server {
+                  listen 0.0.0.0:8080;
+                  http2 on;
+                  server_name _;
+                  root ${path};
+                }
+                EOF
+
+                exec nginx -g 'daemon off;'
+              ''
             ];
 
             startup_probe = {
@@ -45,7 +65,7 @@ in {
               timeout_seconds = 10;
               period_seconds = 10;
               failure_threshold = 10;
-              http_get.path = "/";
+              http_get.path = "/nix-cache-info";
             };
           }
         ];
@@ -58,15 +78,6 @@ in {
         "google_storage_bucket.${name}"
         "google_storage_bucket_iam_member.${name}"
       ];
-    };
-
-    google_cloud_run_v2_service_iam_member."${name}-public" = {
-      inherit count;
-      project = "\${google_cloud_run_v2_service.${name}[0].project}";
-      location = "\${google_cloud_run_v2_service.${name}[0].location}";
-      name = "\${google_cloud_run_v2_service.${name}[0].name}";
-      role = "roles/run.invoker";
-      member = "allUsers";
     };
 
     google_storage_bucket.${name} = {

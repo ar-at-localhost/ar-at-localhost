@@ -37,9 +37,7 @@
         pkg-config
       ];
 
-      pnpmDeps = pkgs.callPackage ./pkgs/pnpm-deps.nix {
-        inherit (finalAttrs) pname version;
-      };
+      pnpmDeps = pkgs.callPackage ./pkgs/pnpm-deps.nix {};
 
       buildPhase = ''
         runHook preBuild

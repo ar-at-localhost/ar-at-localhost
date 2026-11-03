@@ -32,14 +32,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/setup-nix
+      - uses: ./.github/actions/setup
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
-
-      - uses: ./.github/actions/setup-gcp
-        with:
           profile: ${{ inputs.profile }}
-          age-key: ${{ secrets.SOPS_AGE_KEY }}
 
       - name: Deploy service
         env:
@@ -48,6 +44,3 @@ jobs:
         run: |
           export SERVICE="${SERVICE%@*}"
           devenv tasks --profile cloud run "aal:deploy-service"
-
-      - uses: ./.github/actions/nix-cache
-        if: always()

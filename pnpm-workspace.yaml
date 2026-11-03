@@ -1,17 +1,8 @@
-packages:
-  - "apps/*"
-  - "packages/*"
-  - "services/*/*"
-
 allowBuilds:
   esbuild: true
   kerberos: false
   protobufjs: true
   re2: true
-
-peerDependencyRules:
-  ignoreMissing:
-    - kerberos
 
 catalog:
   "@formisch/react": "^1.1.0"
@@ -35,6 +26,17 @@ catalog:
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - fastify@5.12.7
+
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "services/*/*"
+
+peerDependencyRules:
+  ignoreMissing:
+    - kerberos
+
+storeDir: .pnpm
 
 supportedArchitectures:
   os:
