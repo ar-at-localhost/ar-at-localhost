@@ -13,7 +13,7 @@ catalog:
   drizzle-orm: "1.0.0-rc.5"
   fastify: 5.12.5
   lucide-react: 1.54.0
-  nodemailer: "npm:10.1.0"
+  nodemailer: "10.1.0"
   oxfmt: 0.61.0
   oxlint: 1.82.0
   playwright: 1.62.1
@@ -24,8 +24,6 @@ catalog:
   vitest: ^5.0.3
 
 minimumReleaseAge: 10080
-minimumReleaseAgeExclude:
-  - fastify@5.12.7
 
 packages:
   - "apps/*"
@@ -37,11 +35,3 @@ peerDependencyRules:
     - kerberos
 
 storeDir: .pnpm
-
-supportedArchitectures:
-  os:
-    - current
-  cpu:
-    - current
-  libc:
-    - current

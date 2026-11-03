@@ -10,8 +10,8 @@ in
   pkgs.fetchPnpmDeps {
     pname = info.name;
     inherit (info) version;
-    fetcherVersion = 4;
     inherit hash;
+    fetcherVersion = 4;
 
     src = lib.fileset.toSource {
       inherit root;

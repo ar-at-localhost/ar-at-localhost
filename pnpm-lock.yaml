@@ -31,7 +31,7 @@ catalogs:
       specifier: 1.54.0
       version: 1.54.0
     nodemailer:
-      specifier: npm:10.1.0
+      specifier: 10.1.0
       version: 10.1.0
     oxfmt:
       specifier: 0.61.0

@@ -10,7 +10,7 @@
     info = builtins.fromJSON (builtins.readFile package);
     inherit (info) name version;
   in
-    pkgs.stdenv.mkDerivation (_: {
+    pkgs.stdenv.mkDerivation {
       pname = name;
       inherit version;
       src = lib.fileset.toSource {
@@ -55,7 +55,7 @@
 
         runHook postInstall
       '';
-    });
+    };
 
   mkSrvImage = {service, ...}:
     pkgs.dockerTools.buildLayeredImage (

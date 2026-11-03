@@ -207,12 +207,14 @@ in {
           echo "$got_hash" > "$hash_path"
 
           if [[ "$CI" == "true" ]]; then
-            git add "$hash_path"
+            pnpm install --force
+            git add "$hash_path" pnpm-lock.yaml
             git config user.name "$AUTHOR_NAME"
             git config user.email "$AUTHOR_EMAIL"
             git commit -m "fix(nix): update pnpm hash"
             git push --no-verify origin HEAD
             echo "pnpm Hash has been updated. Please pull to integrate first."
+            echo "pnpm: $(pnpm --version)"
             exit 1
           fi
         fi
