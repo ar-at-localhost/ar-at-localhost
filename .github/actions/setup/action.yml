@@ -17,7 +17,7 @@ runs:
     - name: Setup nix
       shell: bash
       run: |
-        nix profile add nixpkgs#google-cloud-sdk nixpkgs#jq nixpkgs#attic-client nixpkgs#devenv nixpkgs#sops
+        nix profile add .#gcloud nixpkgs#jq nixpkgs#devenv nixpkgs#sops
 
     - name: Setup auth and nix cache
       shell: bash
@@ -58,7 +58,7 @@ runs:
             sudo chmod 600 "$hook_env"
             sudo chmod 600 $signing_key
 
-            setsid gcloud run services proxy attic-cache --region us-central1 --port 8300 \
+            setsid gcloud --project "$TF_VAR_project_id" run services proxy attic-cache --region us-central1 --port 8300 \
               > "$RUNNER_TEMP/proxy.log" 2>&1 &
 
             for i in $(seq 1 60); do
