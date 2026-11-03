@@ -47,7 +47,7 @@ in {
 
   profiles = {
     cloud.module = {
-      packages = with pkgs; [google-cloud-sdk opentofu skopeo];
+      packages = with pkgs; [(google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.cloud-run-proxy]) opentofu skopeo];
 
       tasks = {
         "aal:deploy-app".exec =
