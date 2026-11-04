@@ -1,27 +1,43 @@
 {
-  hash ? (builtins.readFile ../hash.txt),
   pkgs,
   lib,
   ...
 }: let
   root = ../../.;
   info = builtins.fromJSON (builtins.readFile (root + "/package.json"));
+  pname = info.name;
+  hashPath = root + "/nix/hash.txt";
+
+  hash =
+    if builtins.pathExists hashPath
+    then (lib.removeSuffix "\n" (builtins.readFile hashPath))
+    else lib.fakeHash;
+
+  workspacesManifests = lib.fileset.unions [
+    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/apps"))
+    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/packages"))
+    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/services"))
+  ];
+
+  fileset' = lib.fileset.unions [
+    (root + "/package.json")
+    (root + "/pnpm-workspace.yaml")
+    (root + "/pnpm-lock.yaml")
+    workspacesManifests
+  ];
+
+  workspaces = map (p: (lib.importJSON p).name) (lib.fileset.toList workspacesManifests);
 in
   pkgs.fetchPnpmDeps {
-    pname = info.name;
+    inherit pname hash;
     inherit (info) version;
-    inherit hash;
     fetcherVersion = 4;
+    pnpmWorkspaces = workspaces;
 
-    src = lib.fileset.toSource {
-      inherit root;
-      fileset = lib.fileset.unions [
-        (root + "/package.json")
-        (root + "/pnpm-workspace.yaml")
-        (root + "/pnpm-lock.yaml")
-        (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/apps"))
-        (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/packages"))
-        (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/services"))
-      ];
-    };
+    src = let
+      fileset = fileset';
+    in
+      lib.fileset.toSource {
+        inherit root fileset;
+      };
   }

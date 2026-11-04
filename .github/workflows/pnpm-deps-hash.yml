@@ -39,4 +39,4 @@ jobs:
           AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
         shell: devenv shell -- bash -e {0}
         run: |
-          devenv tasks run "aal:pnpm-hash"
+          devenv --no-tui --verbose tasks run "aal:pnpm-hash"
