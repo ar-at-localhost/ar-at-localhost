@@ -10,7 +10,7 @@
     info = builtins.fromJSON (builtins.readFile package);
     inherit (info) name version;
   in
-    pkgs.stdenv.mkDerivation {
+    pkgs.stdenv.mkDerivation (finalAttrs: {
       pname = name;
       inherit version;
       src = lib.fileset.toSource {
@@ -37,7 +37,13 @@
         pkg-config
       ];
 
-      pnpmDeps = pkgs.callPackage ./pkgs/pnpm-deps.nix {};
+      prePnpmInstall = ''
+        pnpm config delete storeDir
+      '';
+
+      pnpmDeps = pkgs.callPackage ./pkgs/pnpm-deps.nix {
+        inherit (finalAttrs) prePnpmInstall;
+      };
 
       buildPhase = ''
         runHook preBuild
@@ -55,7 +61,7 @@
 
         runHook postInstall
       '';
-    };
+    });
 
   mkSrvImage = {service, ...}:
     pkgs.dockerTools.buildLayeredImage (
