@@ -208,10 +208,7 @@ in {
         fi
 
         code=0
-        nix build -L .#pnpm-deps --option print-build-logs true \
-          --option substituters https://cache.nixos.org \
-          > "$output" 2>&1 \
-          || code="$?"
+        nix build -L .#pnpm-deps > "$output" 2>&1 || code="$?"
         cat "$output"
 
         if [[ $code -eq 0 ]]; then

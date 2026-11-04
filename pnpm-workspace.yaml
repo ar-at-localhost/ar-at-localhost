@@ -35,5 +35,3 @@ packages:
 peerDependencyRules:
   ignoreMissing:
     - kerberos
-
-storeDir: .pnpm

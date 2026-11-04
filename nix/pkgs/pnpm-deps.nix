@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  prePnpmInstall ? "",
   ...
 }: let
   root = ../../.;
@@ -29,7 +30,7 @@
   workspaces = map (p: (lib.importJSON p).name) (lib.fileset.toList workspacesManifests);
 in
   pkgs.fetchPnpmDeps {
-    inherit pname hash;
+    inherit prePnpmInstall pname hash;
     inherit (info) version;
     fetcherVersion = 4;
     pnpmWorkspaces = workspaces;

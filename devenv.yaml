@@ -17,3 +17,6 @@ inputs:
 secretspec:
   enable: true
   profile: default
+
+cachix:
+  enable: false
