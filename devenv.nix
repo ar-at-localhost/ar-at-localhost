@@ -83,7 +83,7 @@ in {
             export out="result-$name"
             export target=".#images.${system}.$name"
             export version=$(nix eval --raw "$target.imageTag")
-            nix build "$target" -o "$out"
+            nix build --fallback "$target" -o "$out"
 
             # shellcheck disable=SC2016
             secretspec run -- bash -c '
