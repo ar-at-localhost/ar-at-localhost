@@ -193,30 +193,54 @@ in {
   };
 
   tasks = {
-    "aal:pnpm-hash".exec = let
-      pnpm-hash-fetch = pkgs.callPackage ./nix/pkgs/pnpm-hash.nix {};
-    in
+    "aal:pnpm-hash".exec =
       #bash
       ''
         set -euo pipefail
+        output="$(mktemp)"
+        trap  'rm -rf "$output"' EXIT
         hash_path="nix/hash.txt"
-        specified_hash="$(cat "$hash_path")"
-        got_hash=$("${pnpm-hash-fetch}/bin/pnpm-hash")
+        specified_hash="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+        got_hash=""
 
-        if [[ -n "$got_hash" && "$specified_hash" != "$got_hash" ]]; then
+        if [[ -f "$hash_path" ]]; then
+          specified_hash="$(cat "$hash_path")"
+        fi
+
+        code=0
+        nix build -L .#pnpm-deps --option print-build-logs true \
+          --option substituters https://cache.nixos.org \
+          > "$output" 2>&1 \
+          || code="$?"
+        cat "$output"
+
+        if [[ $code -eq 0 ]]; then
+          echo "> pnpm-hash | Hash is up to date."
+          exit 0
+        fi
+
+        got_hash=$(printf "%s\n" "$(cat "$output")" |\
+          sed -n 's/^[[:space:]]*got:[[:space:]]*\(sha256-[^[:space:]]*\).*$/\1/p' |\
+          head -n 1) || true
+
+        if [[ "$got_hash" != sha256-* ]]; then
+          echo "> pnpm-hash | Error: Build failed without hash mismatch." >&2
+          exit 1
+        fi
+
+        if [[ "''${CI:-}" == "true" ]]; then
           echo "$got_hash" > "$hash_path"
-
-          if [[ "$CI" == "true" ]]; then
-            pnpm install --force
-            git add "$hash_path" pnpm-lock.yaml
-            git config user.name "$AUTHOR_NAME"
-            git config user.email "$AUTHOR_EMAIL"
-            git commit -m "fix(nix): update pnpm hash"
-            git push --no-verify origin HEAD
-            echo "pnpm Hash has been updated. Please pull to integrate first."
-            echo "pnpm: $(pnpm --version)"
-            exit 1
-          fi
+          pnpm install --force
+          git add "$hash_path" pnpm-lock.yaml
+          git config user.name "$AUTHOR_NAME"
+          git config user.email "$AUTHOR_EMAIL"
+          git commit -m "fix(nix): update pnpm hash"
+          git push --no-verify origin HEAD
+          echo "pnpm Hash has been updated. Please pull to integrate first."
+          exit 1
+        else
+          echo "New Hash: $got_hash"
+          echo "pnpm: $(pnpm --version)"
         fi
       '';
 
