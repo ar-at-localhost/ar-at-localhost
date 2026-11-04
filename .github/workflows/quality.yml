@@ -6,6 +6,11 @@ on:
     secrets:
       SOPS_AGE_KEY:
         required: true
+    outputs:
+      services:
+        value: ${{ jobs.check.outputs.services }}
+      apps:
+        value: ${{ jobs.check.outputs.apps }}
 
 env:
   SECRETSPEC_PROFILE: "ci"
@@ -16,6 +21,9 @@ jobs:
   check:
     name: Quality checks
     runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.change-detection.outputs.apps }}
+      services: ${{ steps.change-detection.outputs.services }}
 
     steps:
       - uses: actions/checkout@v5
@@ -27,10 +35,16 @@ jobs:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
           profile: ${{ env.SECRETSPEC_PROFILE }}
 
-      - name: Check & Test
+      - name: Format / Lint / Type-Check / Build / Test
         shell: devenv shell -- bash -e {0}
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           export DB_NAME="$DB_ID"
           devenv tasks run "aal:test"
+
+      - uses: ./.github/actions/change-detection
+        id: change-detection
+        with:
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: ${{ env.SECRETSPEC_PROFILE }}
