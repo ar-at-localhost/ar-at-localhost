@@ -5,18 +5,45 @@ on:
     branches:
       - main
 
-jobs:
-  pnpm-hash:
-    name: Verify Nix hash
-    uses: ./.github/workflows/pnpm-deps-hash.yml
-    permissions:
-      contents: write
-    secrets:
-      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+env:
+  SECRETSPEC_PROFILE: ci
 
-  quality-checks:
+jobs:
+  checks:
     name: Run quality checks
-    needs: pnpm-hash
     uses: ./.github/workflows/quality.yml
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
+  srv-hash:
+    name: Check service hash
+    needs: checks
+    runs-on: ubuntu-latest
+    if: needs.checks.outputs.services != '[]'
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: true
+      max-parallel: 1
+      matrix:
+        service: ${{ fromJSON(needs.checks.outputs.services) }}
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup
+        with:
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: ${{ env.SECRETSPEC_PROFILE }}
+
+      - name: Check hash
+        env:
+          service: ${{ matrix.service }}
+          AUTHOR_NAME: ${{ github.actor }}
+          AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+          GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          export AUTHOR_EMAIL AUTHOR_NAME GIT_BRANCH
+          nix run .#hash-check "$service"
