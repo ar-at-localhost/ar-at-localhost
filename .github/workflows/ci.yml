@@ -31,8 +31,8 @@ jobs:
     needs: quality-checks
     runs-on: ubuntu-latest
     outputs:
-      apps: ${{ steps.changed-apps-detection.outputs.apps }}
-      services: ${{ steps.changed-services-detection.outputs.services }}
+      apps: ${{ steps.change-detection.outputs.apps }}
+      services: ${{ steps.change-detection.outputs.services }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -43,49 +43,8 @@ jobs:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
           profile: ${{ env.SECRETSPEC_PROFILE }}
 
-      - name: Determine change references
-        shell: devenv shell -- bash -e {0}
-        env:
-          TURBO_SCM_HEAD: ${{ github.sha }}
-          TURBO_SCM_BASE: ${{ github.event.before }}
-        run: |
-          if [[ "$SECRETSPEC_PROFILE" == "prod" ]]; then
-            current="$GITHUB_REF_NAME"
-
-            base=$(git tag --list 'prod@*' --sort=-version:refname \
-              | grep -Fxv "$current" \
-              | head -n 1
-            ) || true
-
-            if [[ -z "$base" ]]; then
-              base="$(git rev-list --max-parents=0 HEAD)"
-            fi
-
-            TURBO_SCM_BASE="$base"
-          fi
-
-          echo "TURBO_SCM_HEAD=$TURBO_SCM_HEAD" >> "$GITHUB_ENV"
-          echo "TURBO_SCM_BASE=$TURBO_SCM_BASE" >> "$GITHUB_ENV"
-
-      - name: Detect changed services
-        id: changed-services-detection
-        shell: devenv shell -- bash -e {0}
-        run: |
-          services=$(
-            pnpm turbo ls --affected --output json |
-              jq -c '[.packages.items[].name | select(test("^srv-"))]'
-          )
-          echo "services=${services}" >> "$GITHUB_OUTPUT"
-
-      - name: Detect changed apps
-        id: changed-apps-detection
-        shell: devenv shell -- bash -e {0}
-        run: |
-          apps=$(
-            pnpm turbo ls --affected --output json |
-              jq -c '[.packages.items[].name | select(test("^app-"))]'
-          )
-          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
+      - uses: ./.github/actions/change-detection
+        id: change-detection
 
   deploy-services:
     name: Deploy services on cloud

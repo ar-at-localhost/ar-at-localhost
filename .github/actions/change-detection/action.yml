@@ -1,0 +1,70 @@
+name: Change Detection
+description: Detect changed packages
+
+inputs:
+  age-key:
+    required: true
+  profile:
+    default: "staging"
+    type: string
+
+outputs:
+  services:
+    value: ${{ steps.changed-services-detection.outputs.services }}
+  apps:
+    value: ${{ steps.changed-apps-detection.outputs.apps }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Determine change references
+      shell: devenv shell -- bash -e {0}
+      env:
+        SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+        SOPS_AGE_KEY: ${{ inputs.age-key }}
+        TURBO_SCM_BASE: ${{ github.event.before }}
+        TURBO_SCM_HEAD: ${{ github.sha }}
+      run: |
+        if [[ "$SECRETSPEC_PROFILE" == "prod" ]]; then
+          current="$GITHUB_REF_NAME"
+
+          base=$(git tag --list 'prod@*' --sort=-version:refname \
+            | grep -Fxv "$current" \
+            | head -n 1
+          ) || true
+
+          if [[ -z "$base" ]]; then
+            base="$(git rev-list --max-parents=0 HEAD)"
+          fi
+
+          TURBO_SCM_BASE="$base"
+        fi
+
+        echo "TURBO_SCM_HEAD=$TURBO_SCM_HEAD" >> "$GITHUB_ENV"
+        echo "TURBO_SCM_BASE=$TURBO_SCM_BASE" >> "$GITHUB_ENV"
+
+    - name: Detect changed services
+      id: changed-services-detection
+      env:
+        SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+        SOPS_AGE_KEY: ${{ inputs.age-key }}
+      shell: devenv shell -- bash -e {0}
+      run: |
+        services=$(
+          pnpm turbo ls --affected --output json |
+            jq -c '[.packages.items[].name | select(test("^srv-"))]'
+        )
+        echo "services=${services}" >> "$GITHUB_OUTPUT"
+
+    - name: Detect changed apps
+      id: changed-apps-detection
+      env:
+        SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+        SOPS_AGE_KEY: ${{ inputs.age-key }}
+      shell: devenv shell -- bash -e {0}
+      run: |
+        apps=$(
+          pnpm turbo ls --affected --output json |
+            jq -c '[.packages.items[].name | select(test("^app-"))]'
+        )
+        echo "apps=${apps}" >> "$GITHUB_OUTPUT"
