@@ -37,23 +37,27 @@
         pkg-config
       ];
 
-      pnpmDeps = pkgs.callPackage ./pnpm-deps.nix {};
+      pnpmDeps = pkgs.callPackage ./pnpm-deps.nix {
+        workspace = service;
+      };
 
-      buildPhase = ''
-        runHook preBuild
-        pnpm turbo --filter ${name} build
-        runHook postBuild
-      '';
+      pnpmWorkspaces = ["lib" "lib-server" name];
 
       installPhase = ''
         runHook preInstall
 
-        pnpm --offline --filter="${name}" deploy -P $out/srv
+        pnpm --filter="${name}" deploy -P $out/srv
         cp -r secrets/ secretspec.toml .sops.yaml $out/srv
         # FIXME: This is a hack, should better fix with templates bucket
         cp -r $src/packages/lib-server/src/templates/*.{html,txt} $out/srv/dist
 
         runHook postInstall
+      '';
+
+      buildPhase = ''
+        runHook preBuild
+        pnpm turbo --filter ${name} build
+        runHook postBuild
       '';
     });
 

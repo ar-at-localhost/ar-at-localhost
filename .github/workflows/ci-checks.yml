@@ -5,18 +5,17 @@ on:
     branches:
       - main
 
+env:
+  SECRETSPEC_PROFILE: ci
+
 jobs:
-  pnpm-hash:
-    name: Verify Nix hash
-    uses: ./.github/workflows/pnpm-deps-hash.yml
+  checks:
+    name: Run quality checks
     permissions:
       contents: write
-    secrets:
-      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-
-  quality-checks:
-    name: Run quality checks
-    needs: pnpm-hash
     uses: ./.github/workflows/quality.yml
+    with:
+      hash-check: true
+      gitref: ${{ github.event.before }}
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}

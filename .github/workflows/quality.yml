@@ -6,6 +6,18 @@ on:
     secrets:
       SOPS_AGE_KEY:
         required: true
+    inputs:
+      gitref:
+        required: true
+        type: string
+      hash-check:
+        default: false
+        type: boolean
+    outputs:
+      services:
+        value: ${{ jobs.check.outputs.services }}
+      apps:
+        value: ${{ jobs.check.outputs.apps }}
 
 env:
   SECRETSPEC_PROFILE: "ci"
@@ -16,6 +28,11 @@ jobs:
   check:
     name: Quality checks
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      apps: ${{ steps.change-detection.outputs.apps }}
+      services: ${{ steps.change-detection.outputs.services }}
 
     steps:
       - uses: actions/checkout@v5
@@ -27,10 +44,32 @@ jobs:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
           profile: ${{ env.SECRETSPEC_PROFILE }}
 
-      - name: Check & Test
+      - name: Format / Lint / Type-Check / Build / Test
         shell: devenv shell -- bash -e {0}
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
           export DB_NAME="$DB_ID"
           devenv tasks run "aal:test"
+
+      - uses: ./.github/actions/change-detection
+        id: change-detection
+        with:
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: ${{ env.SECRETSPEC_PROFILE }}
+          gitref: ${{ inputs.gitref }}
+
+      - name: Check hash
+        if: ${{ inputs.hash-check }}
+        env:
+          AUTHOR_NAME: ${{ github.actor }}
+          AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+          GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
+          services: ${{ steps.change-detection.outputs.services }}
+        run: |
+          export AUTHOR_EMAIL AUTHOR_NAME GIT_BRANCH
+          for service in $(echo "$services" | jq -r '.[]'); do
+            echo "::group::Checking hash for the service: $service"
+            nix run .#hash-check "$service"
+            echo "::endgroup::"
+          done

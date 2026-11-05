@@ -1,39 +1,34 @@
 {
   pkgs,
   lib,
-  prePnpmInstall ? "",
+  workspace,
   ...
 }: let
   root = ../.;
-  info = builtins.fromJSON (builtins.readFile (root + "/package.json"));
+  packagePath = workspace + "/package.json";
+  hashPath = workspace + "/nix-hash.txt";
+  info = lib.importJSON packagePath;
   pname = info.name;
-  hashPath = root + "/nix/pnpm-deps.txt";
 
   hash =
     if builtins.pathExists hashPath
     then (lib.removeSuffix "\n" (builtins.readFile hashPath))
     else lib.fakeHash;
 
-  workspacesManifests = lib.fileset.unions [
-    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/apps"))
-    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/packages"))
-    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/services"))
-  ];
-
   fileset' = lib.fileset.unions [
     (root + "/package.json")
     (root + "/pnpm-workspace.yaml")
     (root + "/pnpm-lock.yaml")
-    workspacesManifests
+    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/apps"))
+    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/packages"))
+    (lib.fileset.fileFilter (f: f.name == "package.json") (root + "/services"))
   ];
-
-  workspaces = map (p: (lib.importJSON p).name) (lib.fileset.toList workspacesManifests);
 in
   pkgs.fetchPnpmDeps {
-    inherit prePnpmInstall pname hash;
+    inherit pname hash;
     inherit (info) version;
     fetcherVersion = 4;
-    pnpmWorkspaces = workspaces;
+    pnpmWorkspaces = ["lib" "lib-server" pname];
 
     src = let
       fileset = fileset';

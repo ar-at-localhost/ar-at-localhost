@@ -83,7 +83,7 @@ in {
             export out="result-$name"
             export target=".#images.${system}.$name"
             export version=$(nix eval --raw "$target.imageTag")
-            nix build -L --fallback "$target" -o "$out"
+            nix build --fallback "$target" -o "$out"
 
             # shellcheck disable=SC2016
             secretspec run -- bash -c '
@@ -193,54 +193,6 @@ in {
   };
 
   tasks = {
-    "aal:pnpm-hash".exec =
-      #bash
-      ''
-        set -euo pipefail
-        output="$(mktemp)"
-        trap  'rm -rf "$output"' EXIT
-        hash_path="nix/pnpm-deps.txt"
-        specified_hash="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
-        got_hash=""
-
-        if [[ -f "$hash_path" ]]; then
-          specified_hash="$(cat "$hash_path")"
-        fi
-
-        code=0
-        nix build -L --fallback .#pnpm-deps > "$output" 2>&1 || code="$?"
-        cat "$output"
-
-        if [[ $code -eq 0 ]]; then
-          echo "> pnpm-hash | Hash is up to date."
-          exit 0
-        fi
-
-        got_hash=$(printf "%s\n" "$(cat "$output")" |\
-          sed -n 's/^[[:space:]]*got:[[:space:]]*\(sha256-[^[:space:]]*\).*$/\1/p' |\
-          head -n 1) || true
-
-        if [[ "$got_hash" != sha256-* ]]; then
-          echo "> pnpm-hash | Error: Build failed without hash mismatch." >&2
-          exit 1
-        fi
-
-        if [[ "''${CI:-}" == "true" ]]; then
-          echo "$got_hash" > "$hash_path"
-          pnpm install --force
-          git add "$hash_path" pnpm-lock.yaml
-          git config user.name "$AUTHOR_NAME"
-          git config user.email "$AUTHOR_EMAIL"
-          git commit -m "fix(nix): update pnpm hash"
-          git push --no-verify origin HEAD
-          echo "pnpm Hash has been updated. Please pull to integrate first."
-          exit 1
-        else
-          echo "New Hash: $got_hash"
-          echo "pnpm: $(pnpm --version)"
-        fi
-      '';
-
     "aal:test".exec =
       #bash
       ''
