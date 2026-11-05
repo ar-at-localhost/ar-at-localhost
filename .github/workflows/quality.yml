@@ -13,6 +13,9 @@ on:
       hash-check:
         default: false
         type: boolean
+      profile:
+        default: "ci"
+        type: string
     outputs:
       services:
         value: ${{ jobs.check.outputs.services }}
@@ -56,7 +59,7 @@ jobs:
         id: change-detection
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
-          profile: ${{ env.SECRETSPEC_PROFILE }}
+          profile: ${{ inputs.profile }} # DO NOT USE env.SECRETSPEC_PROFILE here, it will always be "ci"
           gitref: ${{ inputs.gitref }}
 
       - name: Check hash

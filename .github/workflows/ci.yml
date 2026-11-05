@@ -20,45 +20,27 @@ env:
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
 jobs:
-  quality-checks:
-    name: Perform quality checks
+  checks:
+    name: Run quality checks
+    permissions:
+      contents: write
     uses: ./.github/workflows/quality.yml
+    with:
+      hash-check: true
+      gitref: ${{ github.event.before }}
+      profile: *secretspec_profile
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
-  change-detection:
-    name: Detect changed packages for deployment
-    needs: quality-checks
-    runs-on: ubuntu-latest
-    outputs:
-      apps: ${{ steps.change-detection.outputs.apps }}
-      services: ${{ steps.change-detection.outputs.services }}
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - uses: ./.github/actions/setup
-        with:
-          age-key: ${{ secrets.SOPS_AGE_KEY }}
-          profile: ${{ env.SECRETSPEC_PROFILE }}
-
-      - uses: ./.github/actions/change-detection
-        id: change-detection
-        with:
-          age-key: ${{ secrets.SOPS_AGE_KEY }}
-          profile: ${{ env.SECRETSPEC_PROFILE }}
-          gitref: ${{ github.event.before }}
-
   deploy-services:
     name: Deploy services on cloud
-    needs: change-detection
-    if: needs.change-detection.outputs.services != '[]'
+    needs: checks
+    if: needs.checks.outputs.services != '[]'
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        service: ${{ fromJSON(needs.change-detection.outputs.services) }}
+        service: ${{ fromJSON(needs.checks.outputs.services) }}
     uses: ./.github/workflows/cd-srv.yml
     with:
       service: ${{ matrix.service }}
@@ -67,17 +49,17 @@ jobs:
 
   deploy-apps:
     name: Deploy apps on cloud
-    needs: [change-detection, deploy-services]
+    needs: [checks, deploy-services]
     if: >-
       always() && 
-      needs.change-detection.result == 'success' &&
-      needs.change-detection.outputs.apps != '[]' &&
+      needs.checks.result == 'success' &&
+      needs.checks.outputs.apps != '[]' &&
       (needs.deploy-services.result == 'success' || needs.deploy-services.result == 'skipped' )
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        app: ${{ fromJSON(needs.change-detection.outputs.apps) }}
+        app: ${{ fromJSON(needs.checks.outputs.apps) }}
     uses: ./.github/workflows/cd-app.yml
     with:
       app: ${{ matrix.app }}
