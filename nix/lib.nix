@@ -10,7 +10,7 @@
     info = builtins.fromJSON (builtins.readFile package);
     inherit (info) name version;
   in
-    pkgs.stdenv.mkDerivation (finalAttrs: {
+    pkgs.stdenv.mkDerivation (_finalAttrs: {
       pname = name;
       inherit version;
       src = lib.fileset.toSource {
@@ -37,13 +37,7 @@
         pkg-config
       ];
 
-      prePnpmInstall = ''
-        pnpm config delete storeDir
-      '';
-
-      pnpmDeps = pkgs.callPackage ./pkgs/pnpm-deps.nix {
-        inherit (finalAttrs) prePnpmInstall;
-      };
+      pnpmDeps = pkgs.callPackage ./pnpm-deps.nix {};
 
       buildPhase = ''
         runHook preBuild

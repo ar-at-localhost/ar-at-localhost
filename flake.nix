@@ -37,7 +37,7 @@
         inherit (pkgs) lib;
       in
         {
-          pnpm-deps = pkgs.callPackage ./nix/pkgs/pnpm-deps.nix {};
+          pnpm-deps = pkgs.callPackage ./nix/pnpm-deps.nix {};
           gcloud = pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.cloud-run-proxy];
 
           health = pkgs.writeShellScriptBin "aal-health" ''

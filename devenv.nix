@@ -83,7 +83,7 @@ in {
             export out="result-$name"
             export target=".#images.${system}.$name"
             export version=$(nix eval --raw "$target.imageTag")
-            nix build --fallback "$target" -o "$out"
+            nix build -L --fallback "$target" -o "$out"
 
             # shellcheck disable=SC2016
             secretspec run -- bash -c '
@@ -199,7 +199,7 @@ in {
         set -euo pipefail
         output="$(mktemp)"
         trap  'rm -rf "$output"' EXIT
-        hash_path="nix/hash.txt"
+        hash_path="nix/pnpm-deps.txt"
         specified_hash="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
         got_hash=""
 
@@ -208,7 +208,7 @@ in {
         fi
 
         code=0
-        nix build -L .#pnpm-deps > "$output" 2>&1 || code="$?"
+        nix build -L --fallback .#pnpm-deps > "$output" 2>&1 || code="$?"
         cat "$output"
 
         if [[ $code -eq 0 ]]; then

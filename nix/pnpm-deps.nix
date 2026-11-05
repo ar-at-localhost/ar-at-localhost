@@ -4,10 +4,10 @@
   prePnpmInstall ? "",
   ...
 }: let
-  root = ../../.;
+  root = ../.;
   info = builtins.fromJSON (builtins.readFile (root + "/package.json"));
   pname = info.name;
-  hashPath = root + "/nix/hash.txt";
+  hashPath = root + "/nix/pnpm-deps.txt";
 
   hash =
     if builtins.pathExists hashPath
