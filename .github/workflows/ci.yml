@@ -37,7 +37,7 @@ jobs:
     needs: checks
     if: needs.checks.outputs.services != '[]'
     strategy:
-      fail-fast: false
+      fail-fast: true
       max-parallel: 1
       matrix:
         service: ${{ fromJSON(needs.checks.outputs.services) }}
@@ -56,8 +56,7 @@ jobs:
       needs.checks.outputs.apps != '[]' &&
       (needs.deploy-services.result == 'success' || needs.deploy-services.result == 'skipped' )
     strategy:
-      fail-fast: false
-      max-parallel: 1
+      fail-fast: true
       matrix:
         app: ${{ fromJSON(needs.checks.outputs.apps) }}
     uses: ./.github/workflows/cd-app.yml
