@@ -50,9 +50,9 @@ in {
   profiles = {
     cloud.module = {
       enterShell = ''
-        export AWS_ACCESS_KEY_ID="$(secretspec get ATTIC_BUCKET_KEY_ID)"
-        export AWS_SECRET_ACCESS_KEY="$(secretspec get ATTIC_BUCKET_KEY)"
-        export S3_BUCKET="$(secretspec get ATTIC_BUCKET)"
+        export AWS_ACCESS_KEY_ID="$(secretspec get ATTIC_BUCKET_KEY_ID || true)"
+        export AWS_SECRET_ACCESS_KEY="$(secretspec get ATTIC_BUCKET_KEY || true)"
+        export S3_BUCKET="$(secretspec get ATTIC_BUCKET || true)"
         export S3_ENDPOINT="https://storage.googleapis.com"
       '';
 
@@ -125,7 +125,7 @@ in {
               secretspec run tofu validate
             '';
 
-          before = ["aal:deploy-service" "aal:sync-cloud"];
+          before = ["aal:deploy-service" "aal:sync-cloud" "aal:sync-cloud-dns"];
         };
 
         "aal:migrate-database" = {
@@ -150,8 +150,6 @@ in {
           exec =
             #bash
             ''
-              secretspec run tofu init
-              secretspec run tofu validate
               secretspec run tofu apply -consolidate-errors -concise -auto-approve -target "google_dns_managed_zone.main"
             '';
         };
