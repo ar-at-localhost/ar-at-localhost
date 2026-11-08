@@ -150,6 +150,8 @@ in {
           exec =
             #bash
             ''
+              secretspec run tofu init
+              secretspec run tofu validate
               secretspec run tofu apply -consolidate-errors -concise -auto-approve -target "google_dns_managed_zone.main"
             '';
         };
