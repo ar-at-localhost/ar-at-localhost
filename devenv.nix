@@ -146,6 +146,14 @@ in {
             '';
         };
 
+        "aal:sync-cloud-dns" = {
+          exec =
+            #bash
+            ''
+              secretspec run tofu apply -consolidate-errors -concise -auto-approve -target "google_dns_managed_zone.main"
+            '';
+        };
+
         "aal:sync-tofu" = let
           terraformConfig = terranix.lib.terranixConfiguration {
             inherit system;

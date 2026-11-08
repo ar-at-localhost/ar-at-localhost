@@ -1,0 +1,26 @@
+name: "Sync Cloud DNS"
+
+on:
+  workflow_dispatch:
+
+env:
+  NODE_ENV: "production"
+  SECRETSPEC_PROFILE: "prod"
+  SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
+jobs:
+  sync-cloud-dns:
+    name: Sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./.github/actions/setup
+        with:
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: "ci"
+
+      - name: Sync Cloud DNS
+        shell: devenv shell --profile cloud -- bash -e {0}
+        run: |
+          devenv tasks --profile cloud run --quiet "aal:sync-cloud-dns"
