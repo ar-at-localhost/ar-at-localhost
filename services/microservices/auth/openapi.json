@@ -36,7 +36,10 @@
                     "maxLength": 32
                   }
                 },
-                "required": ["email", "password"]
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -56,7 +59,137 @@
                       "type": "string"
                     }
                   },
-                  "required": ["token", "refreshToken"]
+                  "required": [
+                    "token",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        400
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Bad Request"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        401
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Unauthenticated"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refresh-token": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        401
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Unauthenticated"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
                 }
               }
             }

@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "srv-contact",
-    "version": "0.0.1"
+    "version": "0.0.3"
   },
   "components": {
     "schemas": {}
@@ -46,9 +46,18 @@
                   },
                   "markdown": {
                     "type": "boolean"
+                  },
+                  "token": {
+                    "type": "string",
+                    "maxLength": 1024
                   }
                 },
-                "required": ["first_name", "email", "message"]
+                "required": [
+                  "first_name",
+                  "email",
+                  "message",
+                  "token"
+                ]
               }
             }
           }
@@ -66,7 +75,824 @@
                       "pattern": "^[a-f\\d]{24}$"
                     }
                   },
-                  "required": ["_id"]
+                  "required": [
+                    "_id"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "1"
+            },
+            "in": "query",
+            "name": "page",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "10"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "number"
+                    },
+                    "page": {
+                      "type": "number"
+                    },
+                    "limit": {
+                      "type": "number"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "first_name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "last_name": {
+                            "type": "string",
+                            "maxLength": 128
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "minLength": 128,
+                            "maxLength": 10000
+                          },
+                          "markdown": {
+                            "type": "boolean"
+                          },
+                          "id": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "deleted_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "first_name",
+                          "email",
+                          "message",
+                          "id",
+                          "created_at",
+                          "updated_at",
+                          "deleted_at"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "total",
+                    "page",
+                    "limit",
+                    "items"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        500
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Internal Server Error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testimonial/request": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                  },
+                  "last_name_initial": {
+                    "type": "string",
+                    "maxLength": 1
+                  },
+                  "company": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": [
+                  "first_name",
+                  "last_name_initial",
+                  "company",
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "id"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    },
+                    "last_name_initial": {
+                      "type": "string",
+                      "maxLength": 1
+                    },
+                    "company": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "deleted_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "expiry": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "first_name",
+                    "last_name_initial",
+                    "company",
+                    "email",
+                    "id",
+                    "created_at",
+                    "updated_at",
+                    "deleted_at",
+                    "expiry"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        401
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Unauthenticated"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        404
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Not Found"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        401
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Unauthenticated"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        404
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Not Found"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testimonial/record": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testimonial": {
+                    "type": "string",
+                    "minLength": 128,
+                    "maxLength": 10000
+                  },
+                  "rating": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "testimonial",
+                  "rating"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        404
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Not Found"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testimonial/requests": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "1"
+            },
+            "in": "query",
+            "name": "page",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "10"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "number"
+                    },
+                    "page": {
+                      "type": "number"
+                    },
+                    "limit": {
+                      "type": "number"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "first_name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          },
+                          "last_name_initial": {
+                            "type": "string",
+                            "maxLength": 1
+                          },
+                          "company": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email"
+                          },
+                          "id": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "deleted_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "expiry": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "first_name",
+                          "last_name_initial",
+                          "company",
+                          "email",
+                          "id",
+                          "created_at",
+                          "updated_at",
+                          "deleted_at",
+                          "expiry"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "total",
+                    "page",
+                    "limit",
+                    "items"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        500
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Internal Server Error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testimonial/": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "1"
+            },
+            "in": "query",
+            "name": "page",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "10"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "number"
+                    },
+                    "page": {
+                      "type": "number"
+                    },
+                    "limit": {
+                      "type": "number"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "first_name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          },
+                          "last_name_initial": {
+                            "type": "string",
+                            "maxLength": 1
+                          },
+                          "company": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          },
+                          "id": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "deleted_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
+                          },
+                          "testimonial": {
+                            "type": "string"
+                          },
+                          "rating": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "first_name",
+                          "last_name_initial",
+                          "company",
+                          "id",
+                          "created_at",
+                          "updated_at",
+                          "deleted_at",
+                          "testimonial",
+                          "rating"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "total",
+                    "page",
+                    "limit",
+                    "items"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        500
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Internal Server Error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
                 }
               }
             }

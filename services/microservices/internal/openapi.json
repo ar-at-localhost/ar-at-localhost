@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "srv-internal",
-    "version": "0.0.3"
+    "version": "0.0.1"
   },
   "components": {
     "schemas": {}
@@ -41,7 +41,9 @@
                       "type": "boolean"
                     }
                   },
-                  "required": ["ok"]
+                  "required": [
+                    "ok"
+                  ]
                 }
               }
             }
