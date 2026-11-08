@@ -11,7 +11,7 @@ export const createApp = async (
   },
 ) => {
   const app = await getBaseApp({
-    name: opts?.name,
+    name: "auth",
     swagger: {
       openapi: {
         openapi: "3.0.3",

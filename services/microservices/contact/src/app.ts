@@ -12,7 +12,7 @@ export const createApp = async (
   },
 ) => {
   const app = await getBaseApp({
-    name: opts?.name,
+    name: "contact",
     swagger: {
       openapi: {
         openapi: "3.0.3",

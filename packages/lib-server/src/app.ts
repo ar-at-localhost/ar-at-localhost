@@ -11,7 +11,7 @@ import Fastify, { type FastifyInstance } from "fastify";
 import { getPort, isValibot } from "lib";
 import { type GenericSchema, parse, safeParse } from "valibot";
 
-import { getCors, isDev, isProduction } from "./env.ts";
+import { getCors, isCI, isDev, isProduction } from "./env.ts";
 import { turnstilePlugin } from "./turnstile.ts";
 
 export type BaseAppOpts = {
@@ -40,7 +40,7 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
     forceCloseConnections: true,
     pluginTimeout: 5 * 60 * 1000,
     rewriteUrl:
-      name && isDev()
+      !!name && (isDev() || isCI())
         ? (req) => req.url?.replace(`/${name}`, "/").replace("//", "/") as unknown as string
         : undefined,
 
