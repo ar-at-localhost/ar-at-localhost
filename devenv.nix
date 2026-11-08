@@ -49,6 +49,13 @@ in {
 
   profiles = {
     cloud.module = {
+      enterShell = ''
+        export AWS_ACCESS_KEY_ID="$(secretspec get ATTIC_BUCKET_KEY_ID)"
+        export AWS_SECRET_ACCESS_KEY="$(secretspec get ATTIC_BUCKET_KEY)"
+        export S3_BUCKET="$(secretspec get ATTIC_BUCKET)"
+        export S3_ENDPOINT="https://storage.googleapis.com"
+      '';
+
       packages = with pkgs; [(google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.cloud-run-proxy]) opentofu skopeo];
 
       tasks = {
