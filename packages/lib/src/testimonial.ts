@@ -25,7 +25,13 @@ import {
 } from "valibot";
 
 import { mkClientSrv } from "./fetch.ts";
-import { paginatedRespSchema, paginationSchema, record, tooLong, tooShort } from "./schema.ts";
+import {
+  paginatedRespSchema,
+  paginationSchema,
+  recordSchema,
+  tooLong,
+  tooShort,
+} from "./schema.ts";
 
 /*
  * Create testimonial request
@@ -51,7 +57,7 @@ export type CreateTestimonialReqPayload = InferOutput<typeof createTestimonialRe
 
 export const testimonialReqSchema = object({
   ...createTestimonialReqBodySchema.entries,
-  ...record.entries,
+  ...recordSchema.entries,
   expiry: pipe(string(), isoTimestamp()),
 });
 
