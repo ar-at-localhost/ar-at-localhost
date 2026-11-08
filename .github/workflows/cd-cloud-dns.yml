@@ -5,7 +5,7 @@ on:
 
 env:
   NODE_ENV: "production"
-  SECRETSPEC_PROFILE: "prod"
+  SECRETSPEC_PROFILE: "staging"
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
 jobs:
@@ -23,4 +23,4 @@ jobs:
       - name: Sync Cloud DNS
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
-          devenv tasks --profile cloud run --quiet "aal:sync-cloud-dns"
+          devenv tasks --secretspec-profile prod --profile cloud run --quiet "aal:sync-cloud-dns"
