@@ -21,6 +21,6 @@ jobs:
           profile: "ci"
 
       - name: Sync Cloud DNS
-        shell: devenv shell --profile cloud -- bash -e {0}
+        shell: devenv --secretspec-profile prod shell --profile cloud -- bash -e {0}
         run: |
-          devenv tasks --profile cloud run --quiet "aal:sync-cloud-dns"
+          devenv --secretspec-profile prod --profile cloud tasks run --quiet "aal:sync-cloud-dns"
