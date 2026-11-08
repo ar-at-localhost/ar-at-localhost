@@ -5,6 +5,7 @@ import {
   maxLength,
   minLength,
   object,
+  omit,
   optional,
   pipe,
   string,
@@ -13,7 +14,15 @@ import {
 } from "valibot";
 
 import { getAPIBaseURL } from "./env.ts";
-import { required, tooLong, tooShort } from "./schema.ts";
+import { mkClientSrv } from "./fetch.ts";
+import {
+  paginatedRespSchema,
+  paginationSearchSchema,
+  recordSchema,
+  required,
+  tooLong,
+  tooShort,
+} from "./schema.ts";
 
 /**
  * Schema to validate a connect
@@ -40,12 +49,12 @@ export const connectBodySchema = object({
 
 export type ConnectBody = InferOutput<typeof connectBodySchema>;
 
-export type Connect = ConnectBody & {
-  id: number;
-  created_at: string;
-  updated_at: string;
-};
+export const connectSchema = object({
+  ...omit(connectBodySchema, ["token"]).entries,
+  ...recordSchema.entries,
+});
 
+export type Connect = InferOutput<typeof connectSchema>;
 export type CreateConnectResp = Pick<Connect, "id">;
 
 /**
@@ -74,6 +83,22 @@ export const createConnectSrv = async (
     .catch((err) => {
       throw new Error(err?.message || "Something went wrong!");
     });
+
+/**
+ * Fetch connects
+ */
+export const fetchConnectsQuerySchema = object({
+  ...paginationSearchSchema.entries,
+});
+
+export type FetchConnectsQuery = InferOutput<typeof fetchConnectsQuerySchema>;
+export const fetchConnectsRespSchema = paginatedRespSchema(connectSchema);
+export type FetchConnectsResp = InferOutput<typeof fetchConnectsRespSchema>;
+
+export const fetchConnectsSrv = mkClientSrv<FetchConnectsResp, [never, FetchConnectsQuery, never]>({
+  method: "GET",
+  endpoint: "/",
+});
 
 /**
  * Create a false connect body object for testing

@@ -1,9 +1,10 @@
-import { createConnectSrv, getFalseConnect } from "lib";
+import { createConnectSrv, fetchConnectsSrv, getFalseConnect } from "lib";
+import { getTestAuth } from "lib-server";
 import { describe, expect, it } from "vitest";
 
 import { baseURL } from "./test-setup";
 
-describe("Contact", () => {
+describe("Connect", () => {
   describe("create", () => {
     it("should create a record", async () => {
       const body = getFalseConnect();
@@ -29,6 +30,23 @@ describe("Contact", () => {
 
       expect(req.status).toBe(400);
       expect(result.message).toBe("Invalid email!");
+    });
+  });
+
+  describe("fetch", () => {
+    it("should return records", async () => {
+      const result = await fetchConnectsSrv({
+        baseURL,
+        bearer: (await getTestAuth()).token,
+        query: {
+          limit: 15,
+        },
+      });
+
+      expect(result.items).toBeTruthy();
+      expect(result.page).toBe(1);
+      expect(result.limit).toBe(15);
+      expect(result.prev).toBeFalsy();
     });
   });
 });

@@ -33,7 +33,7 @@ export const timestamps = object({
   deleted_at: undefinedable(nullable(pipe(string(), isoTimestamp()))),
 });
 
-export const record = object({
+export const recordSchema = object({
   id,
   ...timestamps.entries,
 });
@@ -44,6 +44,11 @@ export const paginationSchema = partial(
     limit: pipe(optional(string(), "10"), transform(Number), minValue(10), maxValue(50)),
   }),
 );
+
+export const paginationSearchSchema = object({
+  ...paginationSchema.entries,
+  search: optional(string()),
+});
 
 export type PaginationAttrs = InferOutput<typeof paginationSchema>;
 
