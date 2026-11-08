@@ -36,7 +36,7 @@ in {
       app-admin-staging = mkRecord {
         name = "admin-staging.${dns_name}";
         type = "CNAME";
-        rrdatas = ["ar-at-localhost-admin-staging.web.app"];
+        rrdatas = ["ar-at-localhost-adminstaging.web.app"];
       };
 
       app-production = mkRecord {

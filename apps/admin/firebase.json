@@ -1,7 +1,7 @@
 {
   "hosting": {
     "public": "build/",
-    "site": "ar-at-localhost-admin",
+    "target": "app",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

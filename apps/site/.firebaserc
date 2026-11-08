@@ -1,9 +1,23 @@
 {
   "projects": {
-    "default": "ar-at-localhost-staging",
     "staging": "ar-at-localhost-staging",
     "prod": "ar-at-localhost"
   },
-  "targets": {},
+  "targets": {
+    "ar-at-localhost": {
+      "hosting": {
+        "app": [
+          "ar-at-localhost-admin"
+        ]
+      }
+    },
+    "ar-at-localhost-staging": {
+      "hosting": {
+        "app": [
+          "ar-at-localhost-adminstaging"
+        ]
+      }
+    }
+  },
   "etags": {}
 }
