@@ -16,6 +16,7 @@ catalog:
   "cssnano": ^8.0.0
   drizzle-orm: "1.0.0-rc.5"
   fastify: 5.12.5
+  firebase-tools: "^15.34.0"
   lucide-react: 1.54.0
   nodemailer: "10.1.0"
   oxfmt: 0.61.0

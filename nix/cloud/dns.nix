@@ -27,6 +27,18 @@ in {
     };
 
     google_dns_record_set = {
+      app-admin-prod = mkRecord {
+        name = "admin.${dns_name}";
+        type = "CNAME";
+        rrdatas = ["ar-at-localhost-admin.web.app"];
+      };
+
+      app-admin-staging = mkRecord {
+        name = "admin-staging.${dns_name}";
+        type = "CNAME";
+        rrdatas = ["ar-at-localhost-admin-staging.web.app"];
+      };
+
       app-production = mkRecord {
         type = "A";
         rrdatas = ["199.36.158.100"];

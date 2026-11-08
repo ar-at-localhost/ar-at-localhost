@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "ar-at-localhost-staging",
+    "staging": "ar-at-localhost-staging",
+    "prod": "ar-at-localhost"
+  },
+  "targets": {},
+  "etags": {}
+}
