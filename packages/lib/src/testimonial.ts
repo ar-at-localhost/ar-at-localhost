@@ -68,7 +68,7 @@ export const createTestimonialReqSrv = mkClientSrv<
   [never, never, CreateTestimonialReqPayload]
 >({
   method: "POST",
-  endpoint: "/testimonial/request",
+  endpoint: "/contact/testimonial/request",
 });
 
 /*
@@ -76,7 +76,7 @@ export const createTestimonialReqSrv = mkClientSrv<
  */
 export const getTestimonialReqSrv = mkClientSrv<TestimonialRequest, [never, never, never]>({
   method: "GET",
-  endpoint: "/testimonial/request",
+  endpoint: "/contact/testimonial/request",
 });
 
 /*
@@ -84,7 +84,7 @@ export const getTestimonialReqSrv = mkClientSrv<TestimonialRequest, [never, neve
  */
 export const delTestimonialReqSrv = mkClientSrv<TestimonialRequest, [never, never, never]>({
   method: "DELETE",
-  endpoint: "/testimonial/request",
+  endpoint: "/contact/testimonial/request",
 });
 
 /*
@@ -116,7 +116,7 @@ export const recordTestimonialSrv = mkClientSrv<
   [never, never, RecordTestimonialPayload]
 >({
   method: "POST",
-  endpoint: "/testimonial/record",
+  endpoint: "/contact/testimonial/record",
 });
 
 /*
@@ -138,7 +138,7 @@ export const getTestimonialReqsSrv = mkClientSrv<
   [never, GetTestimonialReqsQuery, never]
 >({
   method: "GET",
-  endpoint: "/testimonial/requests",
+  endpoint: "/contact/testimonial/requests",
 });
 
 /*
@@ -168,7 +168,7 @@ export const getTestimonialsSrv = mkClientSrv<
   [never, GetTestimonialQuery, never]
 >({
   method: "GET",
-  endpoint: "/testimonial",
+  endpoint: "/contact/testimonial",
 });
 
 export const getFalseTestimonialRequest = () => {

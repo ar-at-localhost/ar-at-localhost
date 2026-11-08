@@ -97,7 +97,7 @@ export type FetchConnectsResp = InferOutput<typeof fetchConnectsRespSchema>;
 
 export const fetchConnectsSrv = mkClientSrv<FetchConnectsResp, [never, FetchConnectsQuery, never]>({
   method: "GET",
-  endpoint: "/",
+  endpoint: "/contact",
 });
 
 /**

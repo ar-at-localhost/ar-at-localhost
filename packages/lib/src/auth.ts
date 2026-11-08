@@ -22,10 +22,10 @@ export const loginService: Srv<LoginRespSchema, [never, never, EmailLoginBodySch
   [never, never, EmailLoginBodySchema]
 >({
   method: "POST",
-  endpoint: "/email",
+  endpoint: "/auth/email",
 });
 
 export const refreshTokenSrv = mkClientSrv<LoginRespSchema>({
   method: "POST",
-  endpoint: "/refresh-token",
+  endpoint: "/auth/refresh-token",
 });
