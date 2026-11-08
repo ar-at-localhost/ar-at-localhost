@@ -26,6 +26,7 @@ runs:
         sudo mkdir -p "$CACHE_DIR"
         sudo chown "$(id -u):$(id -g)" "$CACHE_DIR"
         echo "NIX_CACHE=$CACHE_DIR" >> "$GITHUB_ENV"
+        echo "NIX_CACHE_LOG=$RUNNER_TEMP/nix-cache.log" >> "$GITHUB_ENV"
 
     - name: Cache nix binaries
       uses: actions/cache@v5
@@ -122,7 +123,7 @@ runs:
               --dir-cache-time 5m \
               --s3-no-check-bucket \
               --cache-dir "$NIX_CACHE" \
-              > "$RUNNER_TEMP/nix-cache.log" 2>&1 &
+              > "$NIX_CACHE_LOG" 2>&1 &
             echo "| DONE: Started binary cache server..."
 
             echo "> Waiting for binary cache server health..."
@@ -151,7 +152,7 @@ runs:
               echo "| OK: Restarted Nix Daemon(2)..."
             else
               echo "::warning::Cache is not available. See logs below if available:"
-              cat "$RUNNER_TEMP/proxy.log" || true
+              cat "$NIX_CACHE_LOG" || true
             fi
           fi
         '
