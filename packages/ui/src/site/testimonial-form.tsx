@@ -119,6 +119,7 @@ export const TestimonialForm: FC<Props> = ({ baseURL }) => {
         setData(res);
       })
       .catch((err) => {
+        if (err?.statusCode == 401) err.statusCode = 404;
         setDataErr(err);
         const nf = (err as { statusCode: number })?.statusCode === 404;
         setupRedirect(nf ? undefined : 15, nf ? "/" : window.location.href);
