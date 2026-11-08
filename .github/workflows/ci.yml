@@ -36,11 +36,17 @@ jobs:
     name: Deploy services on cloud
     needs: checks
     if: needs.checks.outputs.services != '[]'
+
+    concurrency:
+      group: deploy-services
+      cancel-in-progress: false
+
     strategy:
       fail-fast: true
       max-parallel: 1
       matrix:
         service: ${{ fromJSON(needs.checks.outputs.services) }}
+
     uses: ./.github/workflows/cd-srv.yml
     with:
       service: ${{ matrix.service }}
