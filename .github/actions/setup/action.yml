@@ -150,8 +150,8 @@ runs:
               sudo systemctl restart nix-daemon
               echo "| OK: Restarted Nix Daemon(2)..."
             else
-              echo "::warning::Cache is not available. See logs below:"
-              cat "$RUNNER_TEMP/proxy.log"
+              echo "::warning::Cache is not available. See logs below if available:"
+              cat "$RUNNER_TEMP/proxy.log" || true
             fi
           fi
         '
