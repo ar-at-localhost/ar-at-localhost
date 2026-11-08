@@ -18,7 +18,7 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
-          profile: "ci"
+          profile: "prod"
 
       - name: Sync Cloud DNS
         shell: devenv --secretspec-profile prod shell --profile cloud -- bash -e {0}
