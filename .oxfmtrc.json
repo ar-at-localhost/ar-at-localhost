@@ -11,10 +11,11 @@
     ".terraform/**",
     ".pnp.*",
     ".yarn/**",
+    ".devcontainer/devcontainer.json",
     "node_modules",
     "result*",
     "packages/lib-server/src/templates/*.html",
     "secrets/**",
-    ".devcontainer/devcontainer.json"
+    "services/**/openapi.json"
   ]
 }
