@@ -9,6 +9,11 @@
     </mj-attributes>
 
     <mj-style>
+      p,
+      div {
+        line-height: 1.25 !important;
+      }
+
       li::before,
       li::after {
         content: "" !important;
@@ -19,7 +24,7 @@
 
       ol,
       ul {
-        padding-inline-start: 16px;
+        padding-inline-start: 8px;
       }
     </mj-style>
   </mj-head>
@@ -48,7 +53,7 @@
           required.
         </mj-text>
 
-        <mj-button href="{links.cta}" color="white">Share your thoughts</mj-button>
+        <mj-button href="{{ links.cta }}" color="white">Share your thoughts</mj-button>
       </mj-column>
     </mj-section>
 

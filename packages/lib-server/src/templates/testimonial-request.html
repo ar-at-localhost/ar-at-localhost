@@ -61,7 +61,12 @@
     </style>
      
     <style type="text/css">
-li::before,
+p,
+      div {
+        line-height: 1.25 !important;
+      }
+
+      li::before,
       li::after {
         content: "" !important;
         padding: 0 !important;
@@ -71,7 +76,7 @@ li::before,
 
       ol,
       ul {
-        padding-inline-start: 16px;
+        padding-inline-start: 8px;
       }
     </style>
     
@@ -223,7 +228,7 @@ li::before,
                align="center" bgcolor="#414141" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#414141;" valign="middle"
             >
               <a
-                 href="{links.cta}" style="display:inline-block;background:#414141;color:white;font-family:Overpass, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank"
+                 href="{{ links.cta }}" style="display:inline-block;background:#414141;color:white;font-family:Overpass, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank"
               >
                 Share your thoughts
               </a>
