@@ -9,7 +9,6 @@
     "CORS_ALLOW",
     "CHROMIUM_PATH",
     "DB_URI",
-    "DOCTL_TOKEN",
     "MAIL_FROM",
     "MAIL_SECURE",
     "MAIL_SERVER",
