@@ -20,7 +20,7 @@ in {
         member = "serviceAccount:\${google_service_account.runtime.email}";
       };
     }
-    // lib.foldl' lib.recursiveUpdate {} (builtins.map (name: {
+    // lib.foldl' lib.recursiveUpdate {} (builtins.map (name: (lib.recursiveUpdate {
         google_secret_manager_secret.${name} = {
           inherit project;
           secret_id = name;
@@ -39,6 +39,14 @@ in {
           role = "roles/secretmanager.secretAccessor";
           member = "serviceAccount:\${google_service_account.runtime.email}";
         };
-      })
-      commonSecrets);
+      }
+      (lib.optionalAttrs (name == "jwt") {
+        google_secret_manager_secret_iam_member."${name}_runtime_viewer" = {
+          inherit project;
+          secret_id = "\${google_secret_manager_secret.${name}.secret_id}";
+          role = "roles/secretmanager.viewer";
+          member = "serviceAccount:\${google_service_account.runtime.email}";
+        };
+      })))
+    commonSecrets);
 }
