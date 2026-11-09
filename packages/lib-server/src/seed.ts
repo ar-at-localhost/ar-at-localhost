@@ -10,14 +10,14 @@ import { testimonialsTable } from "./testimonial.ts";
 import { usersTable } from "./user.ts";
 
 const main = async () => {
-  await reset(db, {
-    connectsTable,
-    testimonialRequestsTable: testimonialRequestsTable,
-    testimonialsTable: testimonialsTable,
-    usersTable,
-  });
-
   if (!isProduction()) {
+    await reset(db, {
+      connectsTable,
+      testimonialRequestsTable: testimonialRequestsTable,
+      testimonialsTable: testimonialsTable,
+      usersTable,
+    });
+
     await seed(
       db,
       {
