@@ -20,7 +20,6 @@ on:
 
 env:
   NODE_ENV: "production"
-  SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
 jobs:
@@ -40,7 +39,10 @@ jobs:
       - name: Deploy service
         env:
           SERVICE: ${{ inputs.service || github.ref_name }}
+          SECRETSPEC_PROFILE: ${{ inputs.profile }}
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           export SERVICE="${SERVICE%@*}"
+          secretspec run pnpm --filter lib-server db:migrate
+          secretspec run pnpm --filter lib-server db:seed
           devenv tasks --profile cloud run "aal:deploy-service"

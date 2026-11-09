@@ -3,6 +3,7 @@ import { reset, seed } from "drizzle-seed";
 import { hash as hashPassword } from "node-argon2";
 
 import { connectsTable } from "./connect.ts";
+import { isProduction } from "./env.ts";
 import { db } from "./pg.ts";
 import { testimonialRequestsTable } from "./testimonial-request.ts";
 import { testimonialsTable } from "./testimonial.ts";
@@ -16,43 +17,45 @@ const main = async () => {
     usersTable,
   });
 
-  await seed(
-    db,
-    {
-      connects: connectsTable,
-      testimonialRequests: testimonialRequestsTable,
-      testimonials: testimonialsTable,
-      users: usersTable,
-    },
-    {
-      seed: Date.now(),
-    },
-  ).refine((f) => ({
-    connects: {
-      columns: {
-        email: f.email(),
-        message: f.loremIpsum({ sentencesCount: 10 }),
+  if (!isProduction()) {
+    await seed(
+      db,
+      {
+        connects: connectsTable,
+        testimonialRequests: testimonialRequestsTable,
+        testimonials: testimonialsTable,
+        users: usersTable,
       },
-      count: 10,
-    },
-    testimonialRequests: {
-      columns: {
-        email: f.email(),
-        last_name_initial: f.valuesFromArray({ values: ["A", "B", "C", "D"] }),
+      {
+        seed: Date.now(),
       },
-      count: 10,
-    },
-    testimonials: {
-      columns: {
-        last_name_initial: f.valuesFromArray({ values: ["A", "B", "C", "D"] }),
-        rating: f.number({ minValue: 1, maxValue: 5 }),
+    ).refine((f) => ({
+      connects: {
+        columns: {
+          email: f.email(),
+          message: f.loremIpsum({ sentencesCount: 10 }),
+        },
+        count: 10,
       },
-      count: 10,
-    },
-    users: {
-      count: 10,
-    },
-  }));
+      testimonialRequests: {
+        columns: {
+          email: f.email(),
+          last_name_initial: f.valuesFromArray({ values: ["A", "B", "C", "D"] }),
+        },
+        count: 10,
+      },
+      testimonials: {
+        columns: {
+          last_name_initial: f.valuesFromArray({ values: ["A", "B", "C", "D"] }),
+          rating: f.number({ minValue: 1, maxValue: 5 }),
+        },
+        count: 10,
+      },
+      users: {
+        count: 10,
+      },
+    }));
+  }
 
   const email = process.env.ADMIN_EMAIL;
   if (email) {
