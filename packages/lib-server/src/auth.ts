@@ -123,7 +123,8 @@ export const apiKeyAuth: AuthHandler = async function (req) {
 };
 
 export const jwtTokenAuth: AuthHandler<JwtAuthStrategyOpts> = async function (req, opts) {
-  const authorization = req.headers.authorization;
+  const forwarded = req.headers["x-forwarded-authorization"];
+  const authorization = typeof forwarded === "string" ? forwarded : req.headers.authorization;
 
   if (authorization?.startsWith("Bearer ")) {
     const token = authorization.replace("Bearer ", "");
@@ -134,7 +135,7 @@ export const jwtTokenAuth: AuthHandler<JwtAuthStrategyOpts> = async function (re
 
     if (opts?.aud) {
       const setA = typeof opts.aud == "string" ? [opts.aud] : opts.aud;
-      const setB = new Set(typeof payload.aud == "string" ? [payload.aud] : payload.aud);
+      const setB = new Set(typeof payload.aud === "string" ? [payload.aud] : payload.aud);
       if (!setA.some((a) => setB.has(a))) return;
     }
 
