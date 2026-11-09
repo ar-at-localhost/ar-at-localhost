@@ -1,7 +1,6 @@
 _: let
-  count = ''''${ var.secretspec_profile == "prod" ? 1 : 0 }'';
   domain = "\${var.domain_name}";
-  dns_name = "\${google_dns_managed_zone.main[0].dns_name}";
+  dns_name = "\${google_dns_managed_zone.main.dns_name}";
   quote = s: "\"${s}\"";
   mkRecord = {
     ttl ? 3600,
@@ -9,8 +8,8 @@ _: let
     name ? dns_name,
     rrdatas ? [],
   }: {
-    inherit count name ttl type;
-    managed_zone = "\${google_dns_managed_zone.main[0].name}";
+    inherit name ttl type;
+    managed_zone = "\${google_dns_managed_zone.main.name}";
     rrdatas =
       if type == "TXT"
       then (map quote rrdatas)
@@ -19,7 +18,6 @@ _: let
 in {
   resource = {
     google_dns_managed_zone.main = {
-      inherit count;
       name = "\${replace(var.domain_name, \".\", \"-\")}";
       dns_name = "${domain}.";
       description = "DNS for domain ${domain}";
@@ -83,5 +81,5 @@ in {
     };
   };
 
-  output.nameservers.value = "\${var.attic == true ? try(google_dns_managed_zone.main[0].name_servers, null) : null}";
+  output.nameservers.value = "google_dns_managed_zone.main.name_servers";
 }

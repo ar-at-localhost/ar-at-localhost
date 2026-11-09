@@ -71,22 +71,22 @@ runs:
 
         secretspec run --profile ci -- bash -c '
           set -euo pipefail
-          if [[ "${ATTIC:-}" == "true" ]]; then
+          if [[ -n "${NIX_CACHE_BUCKET:-}" ]]; then
             echo "> Installing build hook..."
             sudo install -m 755 "$hook_script" /etc/nix/push-hook.sh
             echo "| DONE: Installed build hook..."
 
             echo "> Installing private key..."
-            printf "%s" "$ATTIC_KEY_PRIV" | sudo tee "$signing_key" >/dev/null
+            printf "%s" "$NIX_CACHE_KEY_PRIV" | sudo tee "$signing_key" >/dev/null
             sudo chmod 600 "$signing_key"
             echo "| DONE: Installed private key..."
 
             echo "> Installing environment..."
             {
-              echo "ATTIC_BUCKET=$ATTIC_BUCKET"
-              echo "ATTIC_BUCKET_REGION=$ATTIC_BUCKET_REGION"
-              echo "AWS_ACCESS_KEY_ID=$ATTIC_BUCKET_KEY_ID"
-              echo "AWS_SECRET_ACCESS_KEY=$ATTIC_BUCKET_KEY"
+              echo "NIX_CACHE_BUCKET=$NIX_CACHE_BUCKET"
+              echo "NIX_CACHE_BUCKET_REGION=$NIX_CACHE_BUCKET_REGION"
+              echo "AWS_ACCESS_KEY_ID=$NIX_CACHE_BUCKET_KEY_ID"
+              echo "AWS_SECRET_ACCESS_KEY=$NIX_CACHE_BUCKET_KEY"
             } | sudo tee "$hook_env" >/dev/null
             sudo chmod 600 "$hook_env"
             echo "| DONE: Installed environment..."
@@ -107,10 +107,10 @@ runs:
 
             echo "> Starting binary cache server..."
             export RCLONE_S3_PROVIDER="GCS"
-            export RCLONE_S3_ACCESS_KEY_ID="$ATTIC_BUCKET_KEY_ID"
-            export RCLONE_S3_SECRET_ACCESS_KEY="$ATTIC_BUCKET_KEY"
+            export RCLONE_S3_ACCESS_KEY_ID="$NIX_CACHE_BUCKET_KEY_ID"
+            export RCLONE_S3_SECRET_ACCESS_KEY="$NIX_CACHE_BUCKET_KEY"
             export RCLONE_S3_ENDPOINT="https://storage.googleapis.com"
-            setsid rclone serve http ":s3:$ATTIC_BUCKET" \
+            setsid rclone serve http ":s3:$NIX_CACHE_BUCKET" \
               --addr "127.0.0.1:$port" \
               --read-only \
               --no-modtime \
@@ -143,7 +143,7 @@ runs:
               echo "> Configuring nix to use binary cache server..."
               {
                 echo "extra-substituters = http://localhost:$port?priority=1"
-                echo "extra-trusted-public-keys = $ATTIC_KEY_PUB"
+                echo "extra-trusted-public-keys = $NIX_CACHE_KEY_PUB"
               } | sudo tee -a /etc/nix/nix.conf
               echo "> DONE: Configuring nix to use binary cache server..."
 

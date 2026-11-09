@@ -50,9 +50,9 @@ in {
   profiles = {
     cloud.module = {
       enterShell = ''
-        export AWS_ACCESS_KEY_ID="$(secretspec get ATTIC_BUCKET_KEY_ID || true)"
-        export AWS_SECRET_ACCESS_KEY="$(secretspec get ATTIC_BUCKET_KEY || true)"
-        export S3_BUCKET="$(secretspec get ATTIC_BUCKET || true)"
+        export AWS_ACCESS_KEY_ID="$(secretspec get NIX_CACHE_BUCKET_KEY_ID || true)"
+        export AWS_SECRET_ACCESS_KEY="$(secretspec get NIX_CACHE_BUCKET_KEY || true)"
+        export S3_BUCKET="$(secretspec get NIX_CACHE_BUCKET || true)"
         export S3_ENDPOINT="https://storage.googleapis.com"
       '';
 
@@ -121,11 +121,11 @@ in {
           exec =
             #bash
             ''
-              secretspec run tofu init
+              secretspec run tofu init -reconfigure
               secretspec run tofu validate
             '';
 
-          before = ["aal:deploy-service" "aal:sync-cloud" "aal:sync-cloud-dns"];
+          before = ["aal:deploy-service" "aal:sync-cloud"];
         };
 
         "aal:migrate-database" = {
@@ -146,15 +146,12 @@ in {
             '';
         };
 
-        "aal:sync-cloud-dns" = {
-          exec =
-            #bash
-            ''
-              secretspec run tofu apply -consolidate-errors -concise -auto-approve -target "google_dns_managed_zone.main"
-            '';
-        };
-
         "aal:sync-tofu" = let
+          terraformCommonConfig = terranix.lib.terranixConfiguration {
+            inherit system;
+            modules = [./nix/cloud/common];
+          };
+
           terraformConfig = terranix.lib.terranixConfiguration {
             inherit system;
             modules = [./nix/cloud];
@@ -173,7 +170,12 @@ in {
                 rm -f config.tf.json
               fi
 
-              cp ${terraformConfig} config.tf.json
+              src="${terraformConfig}"
+              if [[ "''${TF_TARGET:-}" == "common" ]]; then
+                src="${terraformCommonConfig}"
+              fi
+
+              cp "$src" config.tf.json
             '';
 
           before = ["aal:init-cloud"];
