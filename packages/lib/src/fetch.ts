@@ -15,9 +15,10 @@ const jsonOrSth = async (res: Response, sth?: unknown) => {
 export type ReqMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT";
 export type ReqErrHandler = (resp: Response, url: string, opts: RequestInit) => Promise<unknown>;
 export type ReqErrHandlers = { [x: number]: ReqErrHandler };
+export type URLValue = string | number | boolean;
 export type ReqArgs<
-  Params extends Record<string, string | number | boolean> = {},
-  Query extends Record<string, string | number | boolean> = {},
+  Params extends Record<string, URLValue> = {},
+  Query extends Record<string, URLValue> = {},
   Body extends object = any,
 > = [Params, Query, Body];
 type Bearer = string | (() => string) | (() => Promise<string>);
@@ -62,7 +63,22 @@ const resolveBearer = async (bearer?: Bearer) =>
 export const mkClientSrv =
   <Result = any, Args extends ReqArgs = ReqArgs>(srvOpts: SrvOpts<Args>) =>
   async (reqOpts: ReqOpts<Args>) => {
-    const path = `${getAPIBaseURL(reqOpts?.baseURL ?? srvOpts?.baseURL)}${srvOpts.endpoint || "/"}`;
+    let endpoint = srvOpts.endpoint || "";
+
+    if (reqOpts.params) {
+      const params = reqOpts.params as Record<string, URLValue>;
+
+      endpoint = endpoint
+        .split("/")
+        .map((seg) => {
+          if (!seg.startsWith(":")) return seg;
+          const segname = seg.substring(1);
+          return params[segname] == null ? seg : encodeURIComponent(params[segname]);
+        })
+        .join("/");
+    }
+
+    const path = `${getAPIBaseURL(reqOpts?.baseURL ?? srvOpts?.baseURL)}${endpoint || "/"}`;
     const url = new URL(path);
     if (reqOpts.query) url.search = new URLSearchParams(reqOpts.query).toString();
     const bearer = (await resolveBearer(reqOpts.bearer)) || (await resolveBearer(srvOpts.bearer));

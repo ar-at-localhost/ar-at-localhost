@@ -1,11 +1,23 @@
-{ref, ...}: let
+{
+  lib,
+  ref,
+  ...
+}: let
   project = ref.vars.project_id;
   location = ref.vars.region;
+  tasks = ["connect" "testimonial-request"];
+
+  genAttrs = names: f:
+    builtins.listToAttrs (builtins.map (n: {
+        name = n;
+        value = f n;
+      })
+      names);
 in {
   resource = {
-    google_cloud_tasks_queue.connect = {
+    google_cloud_tasks_queue = genAttrs tasks (name: {
       inherit location;
-      name = "${project}-connect";
+      name = "${project}-${name}";
 
       http_target = {
         http_method = "POST";
@@ -26,13 +38,13 @@ in {
         min_backoff = "10s";
         max_doublings = 4;
       };
-    };
+    });
 
-    google_cloud_tasks_queue_iam_member.services = {
+    google_cloud_tasks_queue_iam_member = genAttrs tasks (name: {
       inherit location;
-      name = "\${google_cloud_tasks_queue.connect.name}";
+      name = "\${google_cloud_tasks_queue.${name}.name}";
       role = "roles/cloudtasks.enqueuer";
       member = "serviceAccount:\${google_service_account.runtime.email}";
-    };
+    });
   };
 }

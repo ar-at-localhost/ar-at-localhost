@@ -2,6 +2,7 @@ import { type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
 
 import packageInfo from "../package.json" with { type: "json" };
 import { connectIntRest } from "./connect.ts";
+import { testimonialRest } from "./testimonial.rest.ts";
 
 const { name, version } = packageInfo;
 
@@ -29,6 +30,10 @@ export const createApp = async (
 
   app.register(connectIntRest, {
     prefix: "connect",
+  });
+
+  app.register(testimonialRest, {
+    prefix: "testimonial",
   });
 
   return app;
