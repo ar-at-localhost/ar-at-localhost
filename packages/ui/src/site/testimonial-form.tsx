@@ -355,17 +355,14 @@ export const TestimonialForm: FC<Props> = ({ baseURL }) => {
                     form="connect-form"
                     disabled={!form.isValid}
                   >
-                    {!submission?.loading ? (
-                      <>
-                        <SendIcon data-icon="inline-start" />
-                        Submit
-                      </>
-                    ) : (
+                    {submission?.loading ? (
                       <>
                         <LoaderCircle data-icon="inline-start" className="animate-spin" />
-                        Submitting...
                       </>
+                    ) : (
+                      <></>
                     )}
+                    Submit
                   </Button>
 
                   <div className="text-[9px]">
@@ -511,6 +508,11 @@ export const TestimonialForm: FC<Props> = ({ baseURL }) => {
                   )}
 
                   <Button variant={"destructive"} className={"w-full"} onClick={deleteReq}>
+                    {deletion?.loading ? (
+                      <LoaderCircle data-icon="inline-start" className="animate-spin" />
+                    ) : (
+                      <></>
+                    )}
                     Delete this request now
                   </Button>
 
