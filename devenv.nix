@@ -84,7 +84,7 @@ in {
 
             secretspec run -- bash -euo pipefail -c '
               pnpm turbo --filter "$name" build
-              pnpm --filter "$name" firebase --project "$profile" deploy
+              pnpm --filter "$name" firebase deploy --project "$profile" --only hosting:app
             '
           '';
 

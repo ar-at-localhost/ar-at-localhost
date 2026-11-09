@@ -27,8 +27,7 @@ export const callSrv = <Resp = unknown, Args extends ReqArgs = ReqArgs>(
               },
             });
           })
-          .catch((err) => {
-            console.error(err);
+          .catch(() => {
             goto("/auth/login");
           });
       },

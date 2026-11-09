@@ -7,14 +7,14 @@
     "ar-at-localhost": {
       "hosting": {
         "app": [
-          "ar-at-localhost-admin"
+          "ar-at-localhost"
         ]
       }
     },
     "ar-at-localhost-staging": {
       "hosting": {
         "app": [
-          "ar-at-localhost-adminstaging"
+          "ar-at-localhost-staging"
         ]
       }
     }
