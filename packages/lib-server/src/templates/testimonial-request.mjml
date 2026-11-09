@@ -21,11 +21,6 @@
         margin: 0 !important;
         text-indent: 0 !important;
       }
-
-      ol,
-      ul {
-        padding-inline-start: 8px;
-      }
     </mj-style>
   </mj-head>
 
@@ -76,8 +71,10 @@
 
     <mj-section>
       <mj-column>
-        <mj-text> Best regards, </mj-text>
-        <mj-text> Ahmad Raza </mj-text>
+        <mj-text>
+          Best regards,<br />
+          Ahmad Raza
+        </mj-text>
       </mj-column>
     </mj-section>
 
