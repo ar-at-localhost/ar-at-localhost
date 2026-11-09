@@ -52,8 +52,19 @@ in {
       enterShell = ''
         export AWS_ACCESS_KEY_ID="$(secretspec get NIX_CACHE_BUCKET_KEY_ID || true)"
         export AWS_SECRET_ACCESS_KEY="$(secretspec get NIX_CACHE_BUCKET_KEY || true)"
+        export GCP_KEY="$(secretspec get GCP_KEY || true)"
         export S3_BUCKET="$(secretspec get NIX_CACHE_BUCKET || true)"
         export S3_ENDPOINT="https://storage.googleapis.com"
+        export GCP_KEY_FILE="$HOME/.gcp-key"
+
+        if [[ -n "$GCP_KEY" ]]; then
+          export GOOGLE_APPLICATION_CREDENTIALS="$GCP_KEY_FILE"
+
+          if [[ "$(cat $GCP_KEY_FILE 2>/dev/null)" != "$GCP_KEY" ]]; then
+            printf "%s" "$GCP_KEY" > "$GCP_KEY_FILE"
+            gcloud auth activate-service-account --key-file "$GCP_KEY_FILE" --quiet
+          fi
+        fi
       '';
 
       packages = with pkgs; [(google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.cloud-run-proxy]) opentofu skopeo];

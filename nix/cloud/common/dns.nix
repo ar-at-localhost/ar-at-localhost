@@ -28,13 +28,13 @@ in {
       app-admin-prod = mkRecord {
         name = "admin.${dns_name}";
         type = "CNAME";
-        rrdatas = ["ar-at-localhost-admin.web.app"];
+        rrdatas = ["ar-at-localhost-admin.web.app."];
       };
 
       app-admin-staging = mkRecord {
         name = "admin-staging.${dns_name}";
         type = "CNAME";
-        rrdatas = ["ar-at-localhost-adminstaging.web.app"];
+        rrdatas = ["ar-at-localhost-adminstaging.web.app."];
       };
 
       app-production = mkRecord {

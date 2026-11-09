@@ -4,6 +4,11 @@
   region = mkVar "region";
   zone = mkVar "zone";
 in {
+  terraform.required_providers = {
+    google.source = "registry.terraform.io/hashicorp/google";
+    google-beta.source = "registry.terraform.io/hashicorp/google-beta";
+  };
+
   provider.google = {
     inherit project region zone;
   };
