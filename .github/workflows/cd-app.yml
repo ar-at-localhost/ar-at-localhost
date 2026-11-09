@@ -41,4 +41,4 @@ jobs:
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           export APP="${APP%@*}"
-          devenv --profile cloud tasks run "aal:deploy-app"
+          devenv --profile cloud tasks run --show-output "aal:deploy-app"

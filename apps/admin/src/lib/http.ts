@@ -1,4 +1,4 @@
-import { PUBLIC_SRV_AUTH_URL } from "$app/env/public";
+import { PUBLIC_SRV_AUTH_URL, PUBLIC_SRV_URL } from "$app/env/public";
 import { goto } from "$app/navigation";
 import { refreshTokenSrv, type ReqArgs, type ReqOpts, type Srv } from "lib";
 
@@ -15,7 +15,7 @@ export const callSrv = <Resp = unknown, Args extends ReqArgs = ReqArgs>(
       401: async (_, url, opts) => {
         return await refreshTokenSrv({
           bearer: getRefreshToken(),
-          baseURL: PUBLIC_SRV_AUTH_URL,
+          baseURL: PUBLIC_SRV_AUTH_URL || PUBLIC_SRV_URL,
         })
           .then((res) => {
             setAuth(res);

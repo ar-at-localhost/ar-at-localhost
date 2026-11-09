@@ -32,7 +32,7 @@ runs:
       uses: actions/cache@v5
       with:
         path: /nix-cache
-        key: nix-cache
+        key: nix-cache-${{ runner.id }}
         restore-keys: |
           nix-cache-${{ runner.os }}-
 
@@ -166,7 +166,7 @@ runs:
         restore-keys: |
           pnpm-${{ runner.os }}-
 
-    - name: Instal node modules
+    - name: Install node modules
       if: ${{ inputs.skip-install != 'true'}}
       shell: devenv shell -- bash -e {0}
       env:

@@ -83,8 +83,8 @@ in {
             fi
 
             secretspec run -- bash -euo pipefail -c '
-              secretspec run pnpm turbo --filter "$name" build
-              secretspec run pnpm --filter "$name" firebase --project "$profile" deploy
+              pnpm turbo --filter "$name" build
+              pnpm --filter "$name" firebase --project "$profile" deploy
             '
           '';
 
