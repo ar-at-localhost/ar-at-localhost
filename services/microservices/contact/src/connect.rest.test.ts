@@ -10,7 +10,7 @@ describe("Connect", () => {
       const body = getFalseConnect();
       const result = await createConnectSrv(body, baseURL);
       expect(result).toBeTruthy();
-      expect(result.id).toBeTruthy();
+      expect(result.message).toBe("Request has been processed successfully!");
     }, 30_000);
 
     it("raise validation error", async () => {

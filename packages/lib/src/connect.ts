@@ -16,6 +16,7 @@ import {
 import { getAPIBaseURL } from "./env.ts";
 import { mkClientSrv, type ReqArgs } from "./fetch.ts";
 import {
+  type OkResp,
   paginatedRespSchema,
   paginationSearchSchema,
   recordSchema,
@@ -55,7 +56,7 @@ export const connectSchema = object({
 });
 
 export type Connect = InferOutput<typeof connectSchema>;
-export type CreateConnectResp = Pick<Connect, "id">;
+export type CreateConnectResp = OkResp;
 
 /**
  * a fetch function for creating a new connect

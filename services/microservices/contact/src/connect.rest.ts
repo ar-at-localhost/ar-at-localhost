@@ -9,17 +9,14 @@ import {
   fetchConnectsRespSchema,
   paginationQueryTransform,
 } from "lib";
-import { connectsTable, db, enqueueConnect, serverErrSchema } from "lib-server";
-import { object, pipe, string, regex } from "valibot";
+import { connectsTable, db, enqueueConnect, okSchema, serverErrSchema } from "lib-server";
 
 export const contactRest: FastifyPluginAsync = async (app) => {
   app.post("/", {
     schema: {
       body: connectBodySchema,
       response: {
-        201: object({
-          _id: pipe(string(), regex(/^[a-f\d]{24}$/)),
-        }),
+        200: okSchema,
       },
     },
     handler: async (req: FastifyRequest, rep: FastifyReply) => {
@@ -34,7 +31,9 @@ export const contactRest: FastifyPluginAsync = async (app) => {
         if (!result.length) throw new Error("Unexpected insert result!");
         const { id } = result[0];
         await enqueueConnect(id);
-        rep.send({ id } satisfies CreateConnectResp);
+        rep.send({
+          message: "Request has been processed successfully!",
+        } satisfies CreateConnectResp);
       } catch (err) {
         const e = err as unknown as Error;
         app.log.error(err);

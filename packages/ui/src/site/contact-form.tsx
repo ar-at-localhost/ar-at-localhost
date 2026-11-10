@@ -35,7 +35,7 @@ export const ConnectForm: FC<Props> = ({ apiURL, sitekey }) => {
   const handleSubmit: SubmitHandler<typeof connectBodySchema> = async (body) => {
     setSubmissionError(null);
     await createConnectSrv(body, apiURL)
-      .then((res) => setSubmissionId(res.id?.toString()))
+      .then((res) => setSubmissionId(res.message))
       .catch((err: Error) => {
         setSubmissionError(err?.message || "Something went off!");
       });

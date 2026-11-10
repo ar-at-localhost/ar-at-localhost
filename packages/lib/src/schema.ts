@@ -38,6 +38,9 @@ export const recordSchema = object({
   ...timestamps.entries,
 });
 
+/*
+ * Pagination
+ */
 export const paginationSchema = partial(
   object({
     page: pipe(optional(string(), "1"), transform(Number), minValue(1)),
@@ -91,5 +94,9 @@ export type PaginatedAPIResp<Schema extends GenericSchema> = InferOutput<
 export type APIError = {
   statusCode: number;
   error: string;
+  message: string;
+};
+
+export type OkResp = {
   message: string;
 };
