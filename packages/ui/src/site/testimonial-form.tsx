@@ -6,7 +6,7 @@ import {
   recordTestimonialSrv,
   type TestimonialRequest,
 } from "lib";
-import { ArrowLeft, LoaderCircle, RotateCw, SendIcon } from "lucide-react";
+import { ArrowLeft, LoaderCircle, RotateCw } from "lucide-react";
 import { useCallback, useEffect, useState, type FC } from "react";
 
 import {
@@ -33,8 +33,8 @@ type Props = {
 
 const ratingOptions: string[] = [];
 let rating = 5.0;
-while (rating) {
-  ratingOptions.push(rating.toString());
+while (rating >= 1) {
+  ratingOptions.push(rating.toPrecision(2));
   rating -= 0.5;
 }
 
