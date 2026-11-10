@@ -9,9 +9,16 @@ import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swag
 import { toJsonSchema } from "@valibot/to-json-schema";
 import Fastify, { type FastifyInstance } from "fastify";
 import { getPort, isValibot } from "lib";
-import { type GenericSchema, parse, safeParse } from "valibot";
+import { type AnySchema, type GenericSchema, parse, safeParse } from "valibot";
 
 import { getCors, isCI, isDev, isProduction } from "./env.ts";
+import {
+  badReqErrorSchema,
+  knownError as knownErrors,
+  okSchema,
+  serverErr,
+  serverErrSchema,
+} from "./schema.ts";
 import { turnstilePlugin } from "./turnstile.ts";
 
 export type BaseAppOpts = {
@@ -74,6 +81,35 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
       (data) =>
         JSON.stringify(isValibot(schema) ? parse(schema, data) : data),
   );
+
+  /**
+   * Set error handler
+   */
+  app.setErrorHandler(function (err: any, _, rep) {
+    if (
+      err?.statusCode <= 500 &&
+      (knownErrors.has(err?.error) || err.code === "FST_ERR_VALIDATION")
+    ) {
+      if (err.code === "FST_ERR_VALIDATION") {
+        err.error = "Bad Request";
+        delete err.code;
+      }
+
+      return rep.status(err.statusCode).send(err);
+    }
+
+    this.log.error(err);
+    rep.status(500).send(serverErr);
+  });
+
+  app.addHook("onRoute", (route) => {
+    route.schema ??= {};
+    route.schema.response ??= {};
+    const resp = route.schema.response as Record<number, GenericSchema>;
+    resp[200] ??= okSchema;
+    resp[400] ??= badReqErrorSchema;
+    resp[500] ??= serverErrSchema;
+  });
 
   /**
    * Swagger

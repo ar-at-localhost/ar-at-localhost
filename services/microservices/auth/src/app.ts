@@ -1,7 +1,7 @@
 import { authPlugin, type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
 
 import packageInfo from "../package.json" with { type: "json" };
-import { authRest } from "./auth.ts";
+import { authRest } from "./auth.rest.ts";
 
 const { name, version } = packageInfo;
 

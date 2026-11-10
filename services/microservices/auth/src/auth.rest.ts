@@ -6,12 +6,7 @@ import {
   loginRespSchema,
   type LoginRespSchema,
 } from "lib";
-import {
-  badReqErrorSchema as badReqErrSchema,
-  createTokenPair,
-  mkAuthErr,
-  unauthenticedReqErrSchema,
-} from "lib-server";
+import { createTokenPair, mkAuthErr, unauthenticedReqErrSchema } from "lib-server";
 import { usersTable } from "lib-server";
 import { verify } from "node-argon2";
 
@@ -21,36 +16,27 @@ export const authRest: FastifyPluginAsync = async (app) => {
       body: emailLoginBodySchema,
       response: {
         200: loginRespSchema,
-        400: badReqErrSchema,
         401: unauthenticedReqErrSchema,
       },
     },
     handler: async (req: FastifyRequest, rep: FastifyReply) => {
-      try {
-        const writeErr = () => {
-          const err = mkAuthErr("Invalid email or password!");
-          rep.status(err.statusCode).send(err);
-        };
+      const writeErr = () => {
+        const err = mkAuthErr("Invalid email or password!");
+        rep.status(err.statusCode).send(err);
+      };
 
-        const body = req.body as unknown as EmailLoginBodySchema;
+      const body = req.body as unknown as EmailLoginBodySchema;
 
-        const [user] = await app.db
-          .select()
-          .from(usersTable)
-          .where(eq(usersTable.email, body.email))
-          .limit(1);
+      const [user] = await app.db
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.email, body.email))
+        .limit(1);
 
-        if (!user || !user.hash || !(await verify({ hash: user.hash, password: body.password })))
-          return writeErr();
+      if (!user || !user.hash || !(await verify({ hash: user.hash, password: body.password })))
+        return writeErr();
 
-        rep.send((await createTokenPair(user)) satisfies LoginRespSchema);
-      } catch (err) {
-        const e = err as unknown as Error;
-        app.log.error(err);
-        rep.status(500).send({
-          message: e?.message || "Something went wrong!",
-        });
-      }
+      rep.send((await createTokenPair(user)) satisfies LoginRespSchema);
     },
   });
 

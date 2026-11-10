@@ -29,7 +29,6 @@ describe("Contact", () => {
         }),
       ).rejects.toThrow({
         statusCode: 400,
-        code: "FST_ERR_VALIDATION",
         error: "Bad Request",
         message: "Invalid id!",
       } satisfies BadReqAPIError);

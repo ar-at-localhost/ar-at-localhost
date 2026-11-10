@@ -2,12 +2,21 @@ import type { FastifyPluginAsync } from "fastify";
 import { mkClientSrv } from "lib";
 import {
   badReqErrorSchema,
-  OkResponse,
+  type OkResponse,
   okSchema,
   serverErrSchema,
   testimonialRequestMail,
 } from "lib-server";
-import { InferOutput, integer, minValue, number, object, pipe, string, transform } from "valibot";
+import {
+  type InferOutput,
+  integer,
+  minValue,
+  number,
+  object,
+  pipe,
+  string,
+  transform,
+} from "valibot";
 
 export const testimonialRest: FastifyPluginAsync = async (app) => {
   const postRequestSchema = object({

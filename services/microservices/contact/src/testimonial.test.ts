@@ -56,7 +56,6 @@ describe("Testimonial Request", () => {
       errPayload.message = "Invalid email!";
       errPayload.statusCode = 400;
       errPayload.error = "Bad Request";
-      errPayload.code = "FST_ERR_VALIDATION";
       const body = getFalseTestimonialRequest();
       body.email = "foo@";
 

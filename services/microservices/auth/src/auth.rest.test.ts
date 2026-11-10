@@ -46,7 +46,6 @@ describe("Auth", () => {
           },
         }),
       ).rejects.toThrow({
-        code: "FST_ERR_VALIDATION",
         error: "Bad Request",
         message: "Invalid email or password!",
         statusCode: 400,

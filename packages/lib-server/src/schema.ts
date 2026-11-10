@@ -19,16 +19,18 @@ export const timestamps = {
   deleted_at: timestamp(),
 };
 
+export const knownError = new Set([
+  "Internal Server Error",
+  "Not Found",
+  "Bad Request",
+  "Unauthorized",
+  "Unauthenticated",
+]);
+
 export const errorSchema = object({
   statusCode: pipe(number(), integer()),
   code: optional(pipe(string())),
-  error: picklist([
-    "Internal Server Error",
-    "Not Found",
-    "Bad Request",
-    "Unauthorized",
-    "Unauthenticated",
-  ]),
+  error: picklist(Array.from(knownError)),
   message: undefinedable(string()),
 });
 
@@ -41,6 +43,11 @@ export const serverErrSchema = object({
 });
 
 export type ServerAPIErr = InferOutput<typeof serverErrSchema>;
+export const serverErr: ServerAPIErr = {
+  statusCode: 500,
+  error: "Internal Server Error",
+  message: "Something went wrong!",
+};
 
 export const unauthenticedReqErrSchema = object({
   ...errorSchema.entries,
