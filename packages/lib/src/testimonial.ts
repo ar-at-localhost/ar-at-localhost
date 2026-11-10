@@ -162,11 +162,9 @@ export const getTestimonialsQuerySchema = partial(
 export type GetTestimonialQuery = InferOutput<typeof getTestimonialsQuerySchema>;
 export const getTestimonialsRespSchema = paginatedRespSchema(testimonialSchema);
 export type GetTestimonialsResp = InferOutput<typeof getTestimonialsRespSchema>;
+export type GetTestimonialArgs = [never, GetTestimonialQuery, never];
 
-export const getTestimonialsSrv = mkClientSrv<
-  GetTestimonialsResp,
-  [never, GetTestimonialQuery, never]
->({
+export const getTestimonialsSrv = mkClientSrv<GetTestimonialsResp, GetTestimonialArgs>({
   method: "GET",
   endpoint: "/contact/testimonial",
 });

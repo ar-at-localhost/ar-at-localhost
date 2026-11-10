@@ -9,7 +9,7 @@ import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swag
 import { toJsonSchema } from "@valibot/to-json-schema";
 import Fastify, { type FastifyInstance } from "fastify";
 import { getPort, isValibot } from "lib";
-import { type AnySchema, type GenericSchema, parse, safeParse } from "valibot";
+import { type GenericSchema, parse, safeParse } from "valibot";
 
 import { getCors, isCI, isDev, isProduction } from "./env.ts";
 import {

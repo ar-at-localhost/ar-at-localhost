@@ -27,6 +27,7 @@
     "@formisch/svelte": "^1.1.1",
     "@lucide/svelte": "^1.65.0",
     "@sveltejs/adapter-static": "^4.0.1",
+    "@tanstack/svelte-query": "^6.3.9",
     "bits-ui": "^2.20.2",
     "es-toolkit": "^1.53.1",
     "lib": "workspace:*",

@@ -9,6 +9,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./svelte": "./src/svelte.ts",
     "./package.json": "./package.json",
     "./env.d.ts": "./env.d.ts"
   },
@@ -38,6 +39,7 @@
     "valibot": "catalog:"
   },
   "devDependencies": {
+    "@tanstack/svelte-query": "^6.3.9",
     "@types/node": "catalog:",
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-v8": "catalog:",
@@ -45,5 +47,13 @@
     "typescript": "catalog:",
     "vite": "^8.3.4",
     "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@tanstack/svelte-query": "^6.3.9"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/svelte-query": {
+      "optional": true
+    }
   }
 }

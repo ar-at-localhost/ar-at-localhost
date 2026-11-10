@@ -5,6 +5,7 @@ allowBuilds:
   re2: true
 
 catalog:
+  "@astrojs/mdx": "^8.1.2"
   "@formisch/react": "^1.1.0"
   "@google-cloud/secret-manager": "^7.2.0"
   "@google-cloud/tasks": "^7.3.1"
@@ -13,7 +14,8 @@ catalog:
   "@types/node": ^26.6.5
   "@vitest/browser-playwright": 5.0.5
   "@vitest/coverage-v8": 5.0.5
-  "cssnano": ^8.0.0
+  astro: "^7.3.8"
+  cssnano: ^8.0.0
   drizzle-orm: "1.0.0-rc.5"
   fastify: 5.12.5
   firebase-tools: "^15.34.0"

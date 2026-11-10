@@ -127,3 +127,7 @@ export const mkClientSrv =
         throw eo;
       }) as Promise<Result>;
   };
+
+export type APIService<Result = any, Args extends ReqArgs = ReqArgs> = ReturnType<
+  typeof mkClientSrv<Result, Args>
+>;
