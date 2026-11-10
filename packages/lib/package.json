@@ -2,21 +2,24 @@
   "name": "lib",
   "version": "0.0.3",
   "private": true,
-  "description": "A simple example library built by tsdown",
+  "description": "Shared TypeScript library",
   "files": [
-    "dist"
+    "dist",
+    "src/"
   ],
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
     "./package.json": "./package.json",
-    "./env.d.ts": "./env.d.ts"
+    "./env.d.ts": "./env.d.ts",
+    "./svelte": "./src/svelte.ts"
   },
   "publishConfig": {
     "exports": {
       ".": "./dist/index.mjs",
       "./package.json": "./package.json",
-      "./env.d.ts": "./env.d.ts"
+      "./env.d.ts": "./env.d.ts",
+      "./svelte": "./src/svelte.ts"
     }
   },
   "scripts": {

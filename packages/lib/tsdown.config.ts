@@ -8,6 +8,7 @@ export default defineConfig({
 
     customExports: (exports) => {
       exports["./env.d.ts"] = "./env.d.ts";
+      exports["./svelte"] = "./src/svelte.ts";
       return exports;
     },
 

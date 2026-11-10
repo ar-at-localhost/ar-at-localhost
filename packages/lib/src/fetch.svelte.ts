@@ -1,6 +1,6 @@
 import { createQuery } from "@tanstack/svelte-query";
 
-import { ReqArgs, APIService } from "./fetch";
+import type { ReqArgs, APIService } from "./fetch";
 
 export const mkQuerySv =
   <Result = any, Args extends ReqArgs = ReqArgs>(service: APIService<Result, Args>) =>
