@@ -16,7 +16,7 @@
   import { Button } from 'ui/svelte/button/index';
   import { ChevronLeft, ChevronRightIcon, RotateCcw, SearchIcon, TriangleAlert } from '@lucide/svelte';
   import { InputGroup, InputGroupAddon, InputGroupInput } from 'ui/svelte/input-group/index';
-  import { debounce } from 'es-toolkit';
+  import { debounce, merge } from 'es-toolkit';
   import type { ReqArgs, ReqOpts, URLValues } from 'lib';
   import { mkOpts } from '#lib/http.ts';
   import type { QuerySv } from 'lib/svelte';
@@ -38,14 +38,13 @@
   const next = () => page = page + 1;
   
   // svelte-ignore state_referenced_locally
-  const result = queryFactory(() => mkOpts<ReqArgs<Params, Query, never>>({
+  const result = queryFactory(() => mkOpts<ReqArgs<Params, Query, never>>(merge({
     query: {
       page,
       limit,
       ...(searchKey ? { [searchKey]: search } : undefined)
     } as Query,
-    ...opts
-  }))
+  }, opts ?? {})));
 </script>
 
 <div class="flex flex-col w-full h-full p-1">
