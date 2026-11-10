@@ -23,7 +23,8 @@
     "./components/*": "./src/components/*.tsx",
     "./site/*": "./src/site/*.tsx",
     "./svelte/*.svelte": "./src/svelte/*.svelte",
-    "./svelte/*": "./src/svelte/*.ts"
+    "./svelte/*": "./src/svelte/*.ts",
+    "./utils": "./src/utils.ts"
   },
   "scripts": {
     "check": "pnpm format && pnpm lint && pnpm typecheck",
