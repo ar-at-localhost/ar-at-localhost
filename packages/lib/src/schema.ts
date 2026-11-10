@@ -52,7 +52,7 @@ export const paginationSearchSchema = object({
 
 export type PaginationAttrs = InferOutput<typeof paginationSchema>;
 
-export const paginationTransform = <T extends PaginationAttrs>(v: T) => {
+export const paginationQueryTransform = <T extends PaginationAttrs>(v: T) => {
   const page = v.page || 1;
   const limit = v.limit || 10;
   const offset = (page - 1) * limit;
@@ -68,6 +68,7 @@ export const paginationTransform = <T extends PaginationAttrs>(v: T) => {
 export const paginatedRespSchema = <Item extends GenericSchema>(item: Item) =>
   pipe(
     object({
+      offset: number(),
       total: number(),
       page: number(),
       limit: number(),
@@ -78,8 +79,14 @@ export const paginatedRespSchema = <Item extends GenericSchema>(item: Item) =>
       ...v,
       next: v.page * v.limit < v.total ? v.page + 1 : undefined,
       prev: v.page > 1 ? v.page - 1 : undefined,
+      nth_first: v.offset + 1,
+      nth_last: v.offset + v.items.length,
     })),
   );
+
+export type PaginatedAPIResp<Schema extends GenericSchema> = InferOutput<
+  ReturnType<typeof paginatedRespSchema<Schema>>
+>;
 
 export type APIError = {
   statusCode: number;

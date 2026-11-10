@@ -14,7 +14,7 @@ import {
 } from "valibot";
 
 import { getAPIBaseURL } from "./env.ts";
-import { mkClientSrv } from "./fetch.ts";
+import { mkClientSrv, type ReqArgs } from "./fetch.ts";
 import {
   paginatedRespSchema,
   paginationSearchSchema,
@@ -93,9 +93,10 @@ export const fetchConnectsQuerySchema = object({
 
 export type FetchConnectsQuery = InferOutput<typeof fetchConnectsQuerySchema>;
 export const fetchConnectsRespSchema = paginatedRespSchema(connectSchema);
+export type FetchConnectsArgs = ReqArgs<never, FetchConnectsQuery, never>;
 export type FetchConnectsResp = InferOutput<typeof fetchConnectsRespSchema>;
 
-export const fetchConnectsSrv = mkClientSrv<FetchConnectsResp, [never, FetchConnectsQuery, never]>({
+export const fetchConnectsSrv = mkClientSrv<FetchConnectsResp, FetchConnectsArgs>({
   method: "GET",
   endpoint: "/contact",
 });

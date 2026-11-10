@@ -7,7 +7,7 @@ import {
   type FetchConnectsQuery,
   fetchConnectsQuerySchema,
   fetchConnectsRespSchema,
-  paginationTransform,
+  paginationQueryTransform,
 } from "lib";
 import { connectsTable, db, enqueueConnect, serverErrSchema } from "lib-server";
 import { object, pipe, string, regex } from "valibot";
@@ -69,7 +69,7 @@ export const contactRest: FastifyPluginAsync = async (app) => {
     },
 
     handler: async (req, rep) => {
-      const query = paginationTransform(req.query as unknown as FetchConnectsQuery);
+      const query = paginationQueryTransform(req.query as unknown as FetchConnectsQuery);
       const search = query?.search ? `%${query.search}%` : undefined;
       const sqlWhere = search
         ? or(
@@ -92,7 +92,8 @@ export const contactRest: FastifyPluginAsync = async (app) => {
         db.select({ total: count() }).from(connectsTable).where(sqlWhere),
       ]);
 
-      return rep.status(200).send({
+      rep.status(200).send({
+        offset: query.offset,
         page: query.page,
         limit: query.limit,
         items,

@@ -16,9 +16,10 @@ export type ReqMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT";
 export type ReqErrHandler = (resp: Response, url: string, opts: RequestInit) => Promise<unknown>;
 export type ReqErrHandlers = { [x: number]: ReqErrHandler };
 export type URLValue = string | number | boolean;
+export type URLValues = Record<string, string | number | boolean>;
 export type ReqArgs<
-  Params extends Record<string, URLValue> = {},
-  Query extends Record<string, URLValue> = {},
+  Params extends URLValues = {},
+  Query extends URLValues = {},
   Body extends object = any,
 > = [Params, Query, Body];
 type Bearer = string | (() => string) | (() => Promise<string>);

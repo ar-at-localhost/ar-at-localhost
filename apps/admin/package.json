@@ -31,7 +31,8 @@
     "bits-ui": "^2.20.2",
     "es-toolkit": "^1.53.1",
     "lib": "workspace:*",
-    "ui": "workspace:*"
+    "ui": "workspace:*",
+    "valibot": "catalog:"
   },
   "devDependencies": {
     "@playwright/test": "catalog:",

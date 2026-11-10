@@ -9,7 +9,7 @@ import {
   getTestimonialsQuerySchema,
   getTestimonialsRespSchema,
   type GetTestimonialQuery,
-  paginationTransform,
+  paginationQueryTransform,
   getTestimonialReqsQuerySchema,
   getTestimonialReqsRespSchema,
 } from "lib";
@@ -210,7 +210,7 @@ export const testimonialRest: FastifyPluginAsync = async (app) => {
     },
 
     handler: async (req, rep) => {
-      const query = paginationTransform(req.query as unknown as GetTestimonialQuery);
+      const query = paginationQueryTransform(req.query as unknown as GetTestimonialQuery);
       const search = query?.search ? `%${query.search}%` : undefined;
       const sqlWhere = search
         ? or(
@@ -233,6 +233,7 @@ export const testimonialRest: FastifyPluginAsync = async (app) => {
       ]);
 
       return rep.status(200).send({
+        offset: query.offset,
         page: query.page,
         limit: query.limit,
         items,
@@ -263,7 +264,7 @@ export const testimonialRest: FastifyPluginAsync = async (app) => {
     },
 
     handler: async (req, rep) => {
-      const query = paginationTransform(req.query as unknown as GetTestimonialQuery);
+      const query = paginationQueryTransform(req.query as unknown as GetTestimonialQuery);
       const search = query?.search ? `%${query.search}%` : undefined;
       const sqlWhere = search
         ? or(
@@ -286,6 +287,7 @@ export const testimonialRest: FastifyPluginAsync = async (app) => {
       ]);
 
       return rep.status(200).send({
+        offset: query.offset,
         page: query.page,
         limit: query.limit,
         items,

@@ -6,7 +6,13 @@
   import Button from "ui/svelte/button/button.svelte";
 
   const { children } = $props();
-  const client = new QueryClient();
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 0
+      }
+    }
+  });
 
   const logout = () => {
     delAuth();

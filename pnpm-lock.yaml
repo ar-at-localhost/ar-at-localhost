@@ -116,6 +116,9 @@ importers:
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
+      valibot:
+        specifier: 'catalog:'
+        version: 1.5.0(typescript@6.0.3)
     devDependencies:
       '@playwright/test':
         specifier: 'catalog:'

@@ -1,4 +1,5 @@
 import { mkQuerySv } from "./fetch.svelte";
-import { getTestimonialsSrv } from "./testimonial";
+import { getTestimonialReqsSrv, getTestimonialsSrv } from "./testimonial";
 
 export const getTestimonialsQuerySv = mkQuerySv(getTestimonialsSrv);
+export const getTestimonialReqsQuerySv = mkQuerySv(getTestimonialReqsSrv);

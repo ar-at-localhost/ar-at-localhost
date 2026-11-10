@@ -18,5 +18,11 @@ export const mkQuerySv =
       };
     });
 
-export type MkQuerySv = typeof mkQuerySv;
-export type QuerySv = ReturnType<MkQuerySv>;
+export type QueryFactorySv<Result = any, Args extends ReqArgs = ReqArgs> = typeof mkQuerySv<
+  Result,
+  Args
+>;
+
+export type QuerySv<Result = any, Args extends ReqArgs = ReqArgs> = ReturnType<
+  QueryFactorySv<Result, Args>
+>;

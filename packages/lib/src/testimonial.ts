@@ -132,6 +132,7 @@ export const getTestimonialReqsQuerySchema = partial(
 export type GetTestimonialReqsQuery = InferOutput<typeof getTestimonialReqsQuerySchema>;
 export const getTestimonialReqsRespSchema = paginatedRespSchema(testimonialReqSchema);
 export type GetTestimonialReqsResp = InferOutput<typeof getTestimonialReqsRespSchema>;
+export type GetTestimonialReqsArgs = [never, GetTestimonialReqsQuery, never];
 
 export const getTestimonialReqsSrv = mkClientSrv<
   GetTestimonialReqsResp,
