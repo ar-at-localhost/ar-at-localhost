@@ -1,7 +1,7 @@
-import { createMutation, CreateMutationOptions, createQuery } from "@tanstack/svelte-query";
+import { createMutation, type CreateMutationOptions, createQuery } from "@tanstack/svelte-query";
 import { merge } from "es-toolkit";
 
-import type { ReqArgs, APIService } from "./fetch";
+import type { ReqArgs, APIService } from "./fetch.ts";
 
 /**
  * Creates a factory for Tan-Stack Svelte Query

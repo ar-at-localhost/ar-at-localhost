@@ -1,4 +1,4 @@
-import { loginService, refreshTokenSrv } from "lib";
+import { loginSrv, refreshTokenSrv } from "lib";
 import { getTestAuth } from "lib-server";
 import { describe, expect, it } from "vitest";
 
@@ -12,7 +12,7 @@ describe("Auth", () => {
   };
   describe("Email", () => {
     it("let user login", async () => {
-      const result = await loginService({
+      const result = await loginSrv({
         baseURL,
         body: {
           email: process.env.ADMIN_EMAIL!,
@@ -26,7 +26,7 @@ describe("Auth", () => {
 
     it("raise authentication error", async () => {
       await expect(
-        loginService({
+        loginSrv({
           baseURL,
           body: {
             email: process.env.ADMIN_EMAIL!,
@@ -38,7 +38,7 @@ describe("Auth", () => {
 
     it("raise validation error", async () => {
       await expect(
-        loginService({
+        loginSrv({
           baseURL,
           body: {
             email: process.env.ADMIN_EMAIL!,

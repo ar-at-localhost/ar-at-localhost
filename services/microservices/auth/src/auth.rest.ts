@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
 import {
-  type EmailLoginBodySchema,
+  type EmailLoginBody,
   emailLoginBodySchema,
   loginRespSchema,
   type LoginRespSchema,
@@ -25,7 +25,7 @@ export const authRest: FastifyPluginAsync = async (app) => {
         rep.status(err.statusCode).send(err);
       };
 
-      const body = req.body as unknown as EmailLoginBodySchema;
+      const body = req.body as unknown as EmailLoginBody;
 
       const [user] = await app.db
         .select()
