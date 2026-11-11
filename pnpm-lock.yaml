@@ -36,6 +36,9 @@ catalogs:
     drizzle-orm:
       specifier: 1.0.0-rc.5
       version: 1.0.0-rc.5
+    es-toolkit:
+      specifier: ^1.53.1
+      version: 1.53.1
     fastify:
       specifier: 5.12.5
       version: 5.12.5
@@ -111,7 +114,7 @@ importers:
         specifier: ^2.20.2
         version: 2.20.2(@internationalized/date@3.12.4)(@sveltejs/kit@3.1.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.1))(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))(svelte@5.57.3(@typescript-eslint/types@8.72.1))(typescript@6.0.3)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))(svelte@5.57.3(@typescript-eslint/types@8.72.1))
       es-toolkit:
-        specifier: ^1.53.1
+        specifier: 'catalog:'
         version: 1.53.1
       lib:
         specifier: workspace:*
@@ -296,6 +299,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: 'catalog:'
         version: 5.0.5(@vitest/browser@5.0.5)(vitest@5.0.5)
+      es-toolkit:
+        specifier: 'catalog:'
+        version: 1.53.1
       tsdown:
         specifier: 'catalog:'
         version: 0.23.1(@volar/typescript@2.4.28(typescript@6.0.3))(publint@0.3.25)(tsx@4.23.15)(typescript@6.0.3)

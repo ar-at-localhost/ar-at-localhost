@@ -45,16 +45,21 @@
     "@types/node": "catalog:",
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-v8": "catalog:",
+    "es-toolkit": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
     "vite": "^8.3.4",
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@tanstack/svelte-query": "^6.3.9"
+    "@tanstack/svelte-query": "^6.3.9",
+    "es-toolkit": "catalog:"
   },
   "peerDependenciesMeta": {
     "@tanstack/svelte-query": {
+      "optional": true
+    },
+    "es-toolkit": {
       "optional": true
     }
   }

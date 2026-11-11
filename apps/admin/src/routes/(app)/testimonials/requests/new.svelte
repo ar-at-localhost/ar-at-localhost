@@ -1,35 +1,37 @@
 <script lang="ts">
-  import {PUBLIC_SRV_CONTACT_URL} from '$app/env/public';
-  import { callSrv } from "#lib";
+  import { PUBLIC_SRV_CONTACT_URL } from '$app/env/public';
   import { createForm, Field as FField, Form as FForm } from "@formisch/svelte";
-  import { CirclePlus } from "@lucide/svelte";
-  import { createTestimonialReqBodySchema, createTestimonialReqSrv, type CreateTestimonialReqPayload } from "lib";
+  import { CirclePlus, LoaderCircle } from "@lucide/svelte";
+  import { createTestimonialReqBodySchema, type CreateTestimonialReqBody } from "lib";
   import { Button } from "ui/svelte/button/index";
   import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "ui/svelte/dialog/index";
   import { Field, FieldError, FieldTitle } from "ui/svelte/field/index";
   import { Input } from "ui/svelte/input/index";
+  import { createTestimonialReqMutationSv } from '../../../../../../../packages/lib/src/testimonial.svelte';
+  import { mkOpts } from '#lib';
 
   let { onsuccess }: { onsuccess?: (email: string) => void } = $props();
   let dialog = $state(false)
-  let apiError = $state('')
 
   const form = createForm({
     schema: createTestimonialReqBodySchema
   })
 
-  const handleSubmit = async (values: CreateTestimonialReqPayload) => {
-    apiError = '';
+  const srv = createTestimonialReqMutationSv({
+    srvArgs: mkOpts({
+      baseURL: PUBLIC_SRV_CONTACT_URL,
+    }),
+    opts: {
+      onSuccess: (data) => {
+        onsuccess?.(data.email)
+        dialog = false;
+      }
+    }
+  })
 
-    callSrv(createTestimonialReqSrv,{
-      body: values,
-      baseURL: PUBLIC_SRV_CONTACT_URL
-    }).then(() => {
-      onsuccess?.(values.email)
-      dialog = false;
-    }).catch((err) => {
-      apiError = err?.message || 'Something went wrong!';
-    })
-  }
+  const handleSubmit = (v: CreateTestimonialReqBody) => srv.mutate({
+    body: v
+  })
 </script>
 
 <Dialog bind:open={dialog}>
@@ -45,8 +47,8 @@
       <DialogTitle>New testimonial request</DialogTitle>
 
       <DialogDescription class="text-destructive">
-        {#if apiError}
-          <span>{apiError}</span>
+        {#if srv.error}
+          <span>{srv.error}</span>
         {:else}
           <span>Double check information, it can't be changed later.</span>
         {/if}
@@ -104,7 +106,13 @@
     </FForm>
     
     <DialogFooter>
-      <Button variant="default" class="w-full" type="submit" form="testimonial-request-form">Create</Button>
+      <Button variant="default" class="w-full" type="submit" form="testimonial-request-form">
+        {#if srv.isPending}
+          <LoaderCircle data-icon="inline-start" class="animate-spin" />
+        {/if}
+
+        Create
+      </Button>
     </DialogFooter>
   </DialogContent>
 </Dialog>
