@@ -16,7 +16,7 @@ button {
   cursor: pointer;
 }
 
-@media (max-width: 528px) {
+@media (max-width: 40rem) {
   * {
     border-radius: 0px !important;
     box-shadow: none !important;
