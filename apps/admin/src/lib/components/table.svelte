@@ -98,9 +98,9 @@
   </div>
 
   <div class="flex flex-col items-end">
-    <div class="text-sm px-2 w-full flex flex-row items-center justify-between bg-neutral-50">
-      <div>
-        <InputGroup class="max-w-[256px]">
+    <div class="text-sm px-2 w-full flex flex-row flex-wrap sm:flex-nowrap items-center justify-between bg-neutral-50">
+      <div class="order-3 sm:order-0 grow">
+        <InputGroup class="w-full sm:max-w-[256px]">
           <InputGroupInput type="search" class="" placeholder="Search" oninput={debounce((e) => search = e.target.value || '', 500)} />
 
           <InputGroupAddon>
@@ -109,13 +109,13 @@
         </InputGroup>
       </div>
 
-      <div class="flex flex-row items-center gap-2 p-1">
-        <span>
-          {#if result.data?.total && result.data.items.length > 1}
-            <span>Showing {result.data.nth_first}/{result.data.nth_last} of {result.data.total} results.</span>
-          {/if}
-        </span>
+      <span>
+        {#if result.data?.total && result.data.items.length > 1}
+          <span>Showing {result.data.nth_first}/{result.data.nth_last} of {result.data.total} results.</span>
+        {/if}
+      </span>
 
+      <div>
         {#if result.data?.page}
           <TableCell colspan={3} class="text-right flex flex-row items-center gap-2">
             <Button size="icon-sm" variant="outline" disabled={!result.data.prev} onclick={prev}><ChevronLeft /></Button>
