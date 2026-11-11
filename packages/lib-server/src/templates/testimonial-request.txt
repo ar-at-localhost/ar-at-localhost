@@ -1,4 +1,6 @@
-<!-- TEMPLATE SYNTAX: mustache -->
+---
+syntax: mustache
+---
 Hi {{ first_name }},
 
 I hope you are doing well. I'm updating my professional portfolio and would appreciate if

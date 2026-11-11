@@ -3,6 +3,8 @@ import { readFile } from "node:fs/promises";
 import type { Links } from "lib";
 import Mustache from "mustache";
 
+import { stripFrontmatter } from "./utils.ts";
+
 const read = (name: string) => readFile(new URL(name, import.meta.url), "utf8");
 
 /**
@@ -13,7 +15,7 @@ export const getTestimonialRequestTemplate = () => read("testimonial-request.htm
  * Get "Testimonial Request" email template
  */
 export const getTestimonialRequestTextTemplate = () =>
-  read("./testimonial-request.txt").then((txt) => txt.replace(/<!--[\s\S]*?-->/g, ""));
+  read("./testimonial-request.txt").then((txt) => stripFrontmatter(txt));
 
 /**
  * Render "Testimonial Request" email template

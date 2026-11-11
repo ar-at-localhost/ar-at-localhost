@@ -2,6 +2,8 @@ import { readFile } from "node:fs/promises";
 
 import Mustache from "mustache";
 
+import { stripFrontmatter } from "./utils.ts";
+
 const read = (name: string) => readFile(new URL(name, import.meta.url), "utf8");
 
 /**
@@ -12,7 +14,7 @@ export const getConnectTemplate = () => read("connect.html");
  * Get "Connect" email template
  */
 export const getConnectTextTemplate = () =>
-  read("./connect.txt").then((txt) => txt.replace(/<!--[\s\S]*?-->/g, ""));
+  read("./connect.txt").then((txt) => stripFrontmatter(txt));
 
 /**
  * Render "Connect" email template

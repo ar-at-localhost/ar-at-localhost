@@ -1,4 +1,6 @@
-<!-- TEMPLATE SYNTAX: mustache -->
+---
+syntax: mustache
+---
 Hi {{ first_name }},
 
 Thank you for getting in touch and submitting your brief. This is an automated email to confirm that it has successfully arrived. I'll review it and be in touch with you soon.
