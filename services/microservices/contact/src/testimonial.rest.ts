@@ -1,7 +1,6 @@
 import { count, desc, eq, ilike, or } from "drizzle-orm";
 import type { FastifyPluginAsync } from "fastify";
 import {
-  type CreateTestimonialReqPayload,
   createTestimonialReqBodySchema,
   recordTestimonialBodySchema,
   type RecordTestimonialPayload,
@@ -12,6 +11,7 @@ import {
   paginationQueryTransform,
   getTestimonialReqsQuerySchema,
   getTestimonialReqsRespSchema,
+  type CreateTestimonialReqBody,
 } from "lib";
 import {
   db,
@@ -25,6 +25,7 @@ import {
   unauthenticedReqErrSchema,
 } from "lib-server";
 import { type NotFoundAPIError, notFoundErrorSchema, type OkResponse, okSchema } from "lib-server";
+import { object } from "valibot";
 
 export const testimonialRest: FastifyPluginAsync = async (app) => {
   app.post("/request", {
@@ -40,19 +41,25 @@ export const testimonialRest: FastifyPluginAsync = async (app) => {
     schema: {
       body: createTestimonialReqBodySchema,
       response: {
-        201: okIdSchema,
+        201: {
+          email: object({
+            ...okIdSchema.entries,
+            email: createTestimonialReqBodySchema.entries.email,
+          }),
+        },
       },
     },
 
     handler: async (req, rep) => {
-      const body = req.body as unknown as CreateTestimonialReqPayload;
+      const body = req.body as unknown as CreateTestimonialReqBody;
       const [request] = await db.insert(testimonialRequestsTable).values(body).returning();
       if (!request) throw new Error("Error creating testimonial request!");
       await enqueueTestimonialRequest(request.id);
       rep.status(201).send({
         id: request.id,
+        email: request.email,
         message: "Testimonial request has been created!",
-      } satisfies OkIdResponse);
+      } satisfies OkIdResponse & { email: string });
     },
   });
 

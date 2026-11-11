@@ -8,7 +8,7 @@ export const emailLoginBodySchema = object({
   password: pipe(string(err), minLength(8, err), maxLength(32, err)),
 });
 
-export type EmailLoginBodySchema = InferOutput<typeof emailLoginBodySchema>;
+export type EmailLoginBody = InferOutput<typeof emailLoginBodySchema>;
 
 export const loginRespSchema = object({
   token: pipe(string("Invalid token")),
@@ -16,10 +16,11 @@ export const loginRespSchema = object({
 });
 
 export type LoginRespSchema = InferOutput<typeof loginRespSchema>;
+export type LoginServiceArgs = [never, never, EmailLoginBody];
 
-export const loginService: Srv<LoginRespSchema, [never, never, EmailLoginBodySchema]> = mkClientSrv<
+export const loginSrv: Srv<LoginRespSchema, LoginServiceArgs> = mkClientSrv<
   LoginRespSchema,
-  [never, never, EmailLoginBodySchema]
+  LoginServiceArgs
 >({
   method: "POST",
   endpoint: "/auth/email",

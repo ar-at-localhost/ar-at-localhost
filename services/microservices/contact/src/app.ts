@@ -2,7 +2,7 @@ import { authPlugin, type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
 
 import packageInfo from "../package.json" with { type: "json" };
 import { contactRest } from "./connect.rest.ts";
-import { testimonialRest } from "./testimonial.ts";
+import { testimonialRest } from "./testimonial.rest.ts";
 
 const { name, version } = packageInfo;
 

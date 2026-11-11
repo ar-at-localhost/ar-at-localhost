@@ -17,6 +17,7 @@ catalog:
   astro: "^7.3.8"
   cssnano: ^8.0.0
   drizzle-orm: "1.0.0-rc.5"
+  es-toolkit: "^1.53.1"
   fastify: 5.12.5
   firebase-tools: "^15.34.0"
   lucide-react: 1.54.0

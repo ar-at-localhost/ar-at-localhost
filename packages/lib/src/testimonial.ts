@@ -53,7 +53,7 @@ export const createTestimonialReqBodySchema = object({
   email: pipe(string("Invalid email!"), rfcEmail("Invalid email!")),
 });
 
-export type CreateTestimonialReqPayload = InferOutput<typeof createTestimonialReqBodySchema>;
+export type CreateTestimonialReqBody = InferOutput<typeof createTestimonialReqBodySchema>;
 
 export const testimonialReqSchema = object({
   ...createTestimonialReqBodySchema.entries,
@@ -65,7 +65,7 @@ export type TestimonialRequest = InferOutput<typeof testimonialReqSchema>;
 
 export const createTestimonialReqSrv = mkClientSrv<
   TestimonialRequest,
-  [never, never, CreateTestimonialReqPayload]
+  [never, never, CreateTestimonialReqBody]
 >({
   method: "POST",
   endpoint: "/contact/testimonial/request",
