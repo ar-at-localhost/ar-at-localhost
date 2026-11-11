@@ -59,7 +59,6 @@
 
             text = ''
               service="$1"
-              branch="''${GIT_BRANCH:-}"
               echo "  Running nix pnpm hash check for package: ''${service}"
 
               output="$(mktemp)"
@@ -98,16 +97,9 @@
               echo "::error::| Error: build failed due to hash mismatch."
               echo "| Actual Hash: $got_hash"
 
-              if [[ "''${CI:-}" == "true" && -n "$branch" ]]; then
-                echo "> Committing actual hash..."
+              if [[ "''${UPDATE_HASH_FILE:-}" == "true" ]]; then
+                echo "> Updating actual hash..."
                 echo "$got_hash" > "$hash_path"
-                git add "$hash_path"
-                git config user.name "$AUTHOR_NAME"
-                git config user.email "$AUTHOR_EMAIL"
-                git commit -m "fix($service): update pnpm/nix hash"
-                git push --no-verify origin "HEAD:refs/heads/$branch"
-                echo "::notice::| Actual hash has been committed. Please pull changes."
-                exit 1
               fi
             '';
           });

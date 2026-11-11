@@ -71,8 +71,19 @@ jobs:
           services: ${{ steps.change-detection.outputs.services }}
         run: |
           export AUTHOR_EMAIL AUTHOR_NAME GIT_BRANCH
+          export UPDATE_HASH_FILE="true"
+
           for service in $(echo "$services" | jq -r '.[]'); do
             echo "::group::Checking hash for the service: $service"
             nix run .#hash-check "$service"
             echo "::endgroup::"
           done
+
+          if [[ -n "$(git status --porcelain -- "services/**/nix-hash.txt")" ]]; then
+            git add "services/**/nix-hash.txt"
+            git config user.name "$AUTHOR_NAME"
+            git config user.email "$AUTHOR_EMAIL"
+            git commit -m "fix(nix-hash): update pnpm/nix hash"
+            git push --no-verify origin "HEAD:refs/heads/$GIT_BRANCH"
+            echo "::notice::| Update hash(es) are committed. Please pull changes."
+          fi
