@@ -1,6 +1,6 @@
 {
   "name": "srv-auth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Auth API service",
   "homepage": "https://github.com/ar-at-localhost/ar-at-localhost",
