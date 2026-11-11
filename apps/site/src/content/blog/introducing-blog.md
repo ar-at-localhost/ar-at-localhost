@@ -1,8 +1,8 @@
 ---
-title: 'ar-at-localhost Blog'
-description: 'Introducing my personal blog on ar-at-localhost!'
-pubDate: 'Nov 11 2026'
-heroImage: '../../assets/blog.png'
+title: "ar-at-localhost Blog"
+description: "Introducing my personal blog on ar-at-localhost!"
+pubDate: "Nov 11 2026"
+heroImage: "../../assets/blog.png"
 ---
 
 Hi everyone, you&rsquo;re reading the very first post on my blog. With this post, my personal project
