@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "build": "astro build --mode production",
+    "build": "astro sync && astro build --mode production",
     "check": "pnpm format && pnpm lint && pnpm typecheck",
     "dev": "astro dev --port $PORT",
     "format": "oxfmt",
@@ -16,7 +16,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "astro sync && tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/mdx": "catalog:",
