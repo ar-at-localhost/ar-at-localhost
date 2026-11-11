@@ -1,0 +1,5 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/refs/tags/v0.42.0/schema/markdownlint-config-schema.json",
+  "extends": "../../.markdownlint.json",
+  "no-inline-html": false
+}

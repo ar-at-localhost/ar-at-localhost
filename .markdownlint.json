@@ -1,0 +1,6 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/refs/tags/v0.42.0/schema/markdownlint-config-schema.json",
+  "line-length": {
+    "line_length": 100
+  }
+}

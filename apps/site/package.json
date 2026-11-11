@@ -19,7 +19,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@astrojs/mdx": "catalog:",
     "@astrojs/react": "^7.0.0",
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/overpass": "^5.3.0",
     "@formisch/react": "catalog:",
     "@lucide/astro": "^1.54.0",

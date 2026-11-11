@@ -1,39 +1,34 @@
 # **ar-at-localhost** /Your interactions to me/
 
-This codebase is related to my personal website. It is free and open source, feel
-free to clone and use as you wish. More details to be added later.
+This codebase is related to my personal website. It is free and open source, so feel
+free to clone, explore, and use it as you wish.
 
 Find [license here](../LICENSE).
+
+## About
+
+This repository contains the source code for my personal portfolio and CRM.
+It serves as a platform to showcase my work history and skills, while also helping me manage
+clients and professional engagements.
+
+More details about its features and implementation will be added in future updates.
+
+## AI Policy
+
+No part of this codebase is AI-generated. AI is used for research purposes only,
+as it has become a de facto search engine recently. However, some content, such as images,
+might still be AI-generated. AI may also be used for proofreading and code reviews.
+
+The core reason of opting out of AI-generated code in this project is to showcase my actual
+development skills first. This should not be interpreted as a blanket ban on AI. I have used
+AI in real-world and personal projects and am quite proficient with it.
 
 ## Credits
 
 ### Tabler Icons <https://tabler.io/icons>
 
-Following icons are provided by Tabler icons:
-
-- [../apps/site/src/assets/icons/brand-angular.svg](../apps/site/src/assets/icons/brand-angular.svg)
-- [../apps/site/src/assets/icons/brand-css3.svg](../apps/site/src/assets/icons/brand-css3.svg)
-- [../apps/site/src/assets/icons/brand-docker.svg](../apps/site/src/assets/icons/brand-docker.svg)
-- [../apps/site/src/assets/icons/external-link.svg](../apps/site/src/assets/icons/external-link.svg)
-- [../apps/site/src/assets/icons/brand-fiverr.svg](../apps/site/src/assets/icons/brand-fiverr.svg)
-- [../apps/site/src/assets/icons/brand-github.svg](../apps/site/src/assets/icons/brand-github.svg)
-- [../apps/site/src/assets/icons/brand-html5.svg](../apps/site/src/assets/icons/brand-html5.svg)
-- [../apps/site/src/assets/icons/brand-javascript.svg](../apps/site/src/assets/icons/brand-javascript.svg)
-- [../apps/site/src/assets/icons/brand-linkedin.svg](../apps/site/src/assets/icons/brand-linkedin.svg)
-- [../apps/site/src/assets/icons/brand-mongodb.svg](../apps/site/src/assets/icons/brand-mongodb.svg)
-- [../apps/site/src/assets/icons/brand-mysql.svg](../apps/site/src/assets/icons/brand-mysql.svg)
-- [../apps/site/src/assets/icons/brand-nodejs.svg](../apps/site/src/assets/icons/brand-nodejs.svg)
-- [../apps/site/src/assets/icons/brand-python.svg](../apps/site/src/assets/icons/brand-python.svg)
-- [../apps/site/src/assets/icons/brand-react.svg](../apps/site/src/assets/icons/brand-react.svg)
-- [../apps/site/src/assets/icons/brand-svelte.svg](../apps/site/src/assets/icons/brand-svelte.svg)
-- [../apps/site/src/assets/icons/brand-typescript.svg](../apps/site/src/assets/icons/brand-typescript.svg)
-- [../apps/site/src/assets/icons/brand-whatsapp.svg](../apps/site/src/assets/icons/brand-whatsapp.svg)
-- [../apps/site/src/assets/icons/mail.svg](../apps/site/src/assets/icons/mail.svg)
-- [../apps/site/src/assets/icons/terminal-2.svg](../apps/site/src/assets/icons/terminal-2.svg)
+**Tabler Icons** provides several SVG icons used in this project.
 
 ### theSVG Icons <https://thesvg.org/>
 
-Following icons are provided by theSVG:
-
-- [../apps/site/src/assets/icons/handlebars.svg](../apps/site/src/assets/icons/handlebars.svg)
-- [../apps/site/src/assets/icons/mjml.svg](../apps/site/src/assets/icons/mjml.svg)
+**theSVG** provides some of the SVG icons used in this project.

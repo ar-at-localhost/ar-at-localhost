@@ -1,0 +1,71 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import SocialLinks from './SocialLinks.astro';
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo.svg';
+import logoLight from '../../assets/logo-light.svg';
+---
+
+<header class="bg-white text-stone-500 dark:bg-stone-500 dark:text-white sticky top-0">
+	<nav>
+		<h2>
+      <a href="/">
+        <Image alt="logo" width="64" height="64" src={logo} class="inline-block dark:hidden" />
+        <Image alt="logo" width="64" height="64" src={logoLight} class="hidden dark:inline-block" />
+      </a>
+		</h2>
+
+		<div class="flex flex-row items-center justify-between">
+			<HeaderLink href="/">Home</HeaderLink>
+			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/about">About</HeaderLink>
+		</div>
+
+	  <SocialLinks />	
+	</nav>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+
+	.social-links,
+	.social-links a {
+		display: flex;
+	}
+
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
+	}
+</style>
