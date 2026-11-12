@@ -14,9 +14,9 @@
 
 🔗 Find me at [LinkedIn @ar124officialwd](https://www.linkedin.com/in/ar124officialwd)
 
-🤝 Hire me at [Upwork @ar124officialwd](https://www.upwork.com/freelancers/~013dd6d70690822d44)
+🤝 Hire me on [Upwork @ar124officialwd](https://www.upwork.com/freelancers/~013dd6d70690822d44)
 
-🤝 Hire me at [Fiverr @ar124officialwd](https://www.fiverr.com/ar124officialwd)
+🤝 Hire me on [Fiverr @ar124officialwd](https://www.fiverr.com/ar124officialwd)
 
 ---
 
