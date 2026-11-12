@@ -8,6 +8,9 @@ import Tech from '../components/tech.astro'
 import Footer from '../components/footer.astro'
 
 const { PUBLIC_SRV_URL, PUBLIC_TURNSTILE_SITEKEY } = import.meta.env;
+const title = "Ahmad Raza | @ar-at-localhost";
+const description = "Excellent full stack development services";
+import image from '../assets/banner.png';
 ---
 
 <script>
@@ -22,9 +25,14 @@ const { PUBLIC_SRV_URL, PUBLIC_TURNSTILE_SITEKEY } = import.meta.env;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Ahmad Raza | ar-at-localhost</title>
-    <meta name="description" content="Hire a full stack developer">
-
+    <title>{title}</title>
+    <meta name="description" content="">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image.src, Astro.url)} />
+    <meta name="twitter:card" content="summary_large_image" />
     <script is:inline	src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 	</head>
 
