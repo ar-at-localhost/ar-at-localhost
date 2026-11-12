@@ -21,6 +21,7 @@
   "dependencies": {
     "@astrojs/mdx": "catalog:",
     "@astrojs/react": "^7.0.0",
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/overpass": "^5.3.0",
     "@formisch/react": "catalog:",
@@ -32,8 +33,10 @@
     "canvas-confetti": "^1.9.4",
     "cn": "^0.4.0",
     "lib": "workspace:*",
+    "markdown-it": "^15.0.3",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "sanitize-html": "^2.18.1",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "ui": "workspace:*",

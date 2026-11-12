@@ -34,6 +34,12 @@ import image from '../assets/banner.png';
     <meta property="og:image" content={new URL(image.src, Astro.url)} />
     <meta name="twitter:card" content="summary_large_image" />
     <script is:inline	src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="ar-at-localhost's Blog"
+      href={new URL("blog.xml", Astro.site)}
+    />
 	</head>
 
   <body class="relative smooth">
