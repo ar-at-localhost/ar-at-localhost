@@ -15,13 +15,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-			}
-
 			.title {
 				margin-bottom: 1em;
 				padding: 1em 0;
@@ -40,6 +33,15 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.last-updated-on {
 				font-style: italic;
 			}
+
+      @media (min-width: 720px) {
+        .prose {
+          width: 720px;
+          max-width: calc(100% - 2em);
+          margin: auto;
+          padding: 1em;
+        }
+      }
 		</style>
 	</head>
 
