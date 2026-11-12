@@ -1,6 +1,6 @@
 {
   "name": "ar-at-localhost",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "exports": {
     ".": "./apps/apis/dist/index.mjs",
     "./package.json": "./package.json"
