@@ -44,7 +44,7 @@ const handleSubmit = async (body: EmailLoginBody) => {
         {#if srv.error}
           <span class="inline-flex items-center gap-1 text-red-500 text-sm">
             <TriangleAlert size="14" />
-            <span>{srv.error}</span>
+            <span>{srv.error.message}</span>
           </span>
         {:else}
           Enter your email / password to login.
