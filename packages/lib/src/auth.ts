@@ -1,7 +1,19 @@
-import { object, pipe, string, email, minLength, maxLength, type InferOutput } from "valibot";
+import {
+  object,
+  pipe,
+  string,
+  email,
+  minLength,
+  maxLength,
+  type InferOutput,
+  number,
+} from "valibot";
 
 import { mkClientSrv, type Srv } from "./fetch.ts";
 
+/*
+ * Login with email
+ */
 const err = "Invalid email or password!";
 export const emailLoginBodySchema = object({
   email: pipe(string(err), email(err)),
@@ -26,7 +38,34 @@ export const loginSrv: Srv<LoginRespSchema, LoginServiceArgs> = mkClientSrv<
   endpoint: "/auth/email",
 });
 
+/*
+ * Refresh token
+ */
 export const refreshTokenSrv = mkClientSrv<LoginRespSchema>({
   method: "POST",
   endpoint: "/auth/refresh-token",
+});
+
+/*
+ * Statement
+ */
+export const getStatementRespSchema = object({
+  connects: object({
+    inbound: number(),
+    outbound: number(),
+    total: number(),
+  }),
+  testimonials: object({
+    received: number(),
+    requested: number(),
+    total: number(),
+  }),
+});
+
+export type GetStatementResp = InferOutput<typeof getStatementRespSchema>;
+export type GetStatementArgs = [never, never, never];
+
+export const getStatementSrv = mkClientSrv<GetStatementResp>({
+  method: "GET",
+  endpoint: "/auth/statement",
 });

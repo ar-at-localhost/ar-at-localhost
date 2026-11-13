@@ -61,9 +61,10 @@ export type Srv<Resp = any, Args extends ReqArgs = ReqArgs> = (
 const resolveBearer = async (bearer?: Bearer) =>
   bearer ? (typeof bearer == "string" ? bearer : await bearer()) : null;
 
-export const mkClientSrv =
-  <Result = any, Args extends ReqArgs = ReqArgs>(srvOpts: SrvOpts<Args>) =>
-  async (reqOpts: ReqOpts<Args>) => {
+export const mkClientSrv = <Result = any, Args extends ReqArgs = ReqArgs>(
+  srvOpts: SrvOpts<Args>,
+) => {
+  const func = async (reqOpts: ReqOpts<Args>) => {
     let endpoint = srvOpts.endpoint || "";
 
     if (reqOpts.params) {
@@ -128,6 +129,12 @@ export const mkClientSrv =
         throw eo;
       }) as Promise<Result>;
   };
+
+  return Object.assign(func, {
+    method: srvOpts.method,
+    endpoint: srvOpts.endpoint,
+  });
+};
 
 export type APIService<Result = any, Args extends ReqArgs = ReqArgs> = ReturnType<
   typeof mkClientSrv<Result, Args>

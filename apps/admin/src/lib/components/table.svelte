@@ -38,13 +38,15 @@
   const next = () => page = page + 1;
   
   // svelte-ignore state_referenced_locally
-  const result = queryFactory(() => mkOpts<ReqArgs<Params, Query, never>>(merge({
-    query: {
-      page,
-      limit,
-      ...(searchKey ? { [searchKey]: search } : undefined)
-    } as Query,
-  }, opts ?? {})));
+  const result = queryFactory(() => ({
+    srvArgs: merge(mkOpts<ReqArgs<Params, Query, never>>({
+      query: {
+        page,
+        limit,
+        ...(searchKey ? { [searchKey]: search } : undefined)
+      } as Query,
+    }), opts || {}),
+  }));
 </script>
 
 <div class="flex flex-col w-full h-full p-1">

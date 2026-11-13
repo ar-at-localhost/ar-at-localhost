@@ -2,6 +2,7 @@ import { authPlugin, type BaseAppOpts, getBaseApp, pgPlugin } from "lib-server";
 
 import packageInfo from "../package.json" with { type: "json" };
 import { authRest } from "./auth.rest.ts";
+import { statementRest } from "./statement.rest.ts";
 
 const { name, version } = packageInfo;
 
@@ -29,5 +30,8 @@ export const createApp = async (
 
   app.register(authPlugin);
   app.register(authRest);
+  app.register(statementRest, {
+    prefix: "statement",
+  });
   return app;
 };

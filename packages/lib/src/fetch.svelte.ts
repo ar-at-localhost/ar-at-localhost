@@ -1,24 +1,41 @@
-import { createMutation, type CreateMutationOptions, createQuery } from "@tanstack/svelte-query";
+import {
+  createMutation,
+  type CreateMutationOptions,
+  createQuery,
+  CreateQueryOptions,
+} from "@tanstack/svelte-query";
 import { merge } from "es-toolkit";
 
-import type { ReqArgs, APIService } from "./fetch.ts";
+import type { ReqArgs, APIService, ReqOpts } from "./fetch.ts";
+
+type ServiceArgs<Service extends (...args: any) => any> = Parameters<Service>[0];
+
+type QueryArg<Result = any, ServiceArgs = any> = {
+  srvArgs?: ServiceArgs;
+  opts?: Omit<CreateQueryOptions<Result, Error, Result>, "queryKey" | "queryFn">;
+};
+
+type QueryArgs<Result, Service> = QueryArg<Result, Service> | (() => QueryArg<Result, Service>);
 
 /**
  * Creates a factory for Tan-Stack Svelte Query
  */
 export const mkQuerySv =
   <Result = any, Args extends ReqArgs = ReqArgs>(service: APIService<Result, Args>) =>
-  (args: Parameters<typeof service>[0] | (() => Parameters<typeof service>[0])) =>
+  (opts: QueryArgs<Result, ServiceArgs<typeof service>>) =>
     createQuery(() => {
-      const finalArgs = typeof args === "function" ? args() : args;
+      const o = typeof opts == "function" ? opts() : opts;
+
       return {
-        queryKey: [finalArgs?.params, finalArgs?.query],
-        queryFn: ({ queryKey }) =>
-          service({
-            ...finalArgs,
-            params: queryKey[0],
-            query: queryKey[1],
-          }),
+        ...o.opts,
+        queryKey: [service.method, service.endpoint, o.srvArgs?.params, o.srvArgs?.query],
+        queryFn: ({ queryKey: [, , params, query] }) =>
+          service(
+            merge(o.srvArgs || {}, {
+              params: params,
+              query: query,
+            }) as ReqOpts<Args>,
+          ),
       };
     });
 
@@ -31,7 +48,6 @@ export type QuerySv<Result = any, Args extends ReqArgs = ReqArgs> = ReturnType<
   QueryFactorySv<Result, Args>
 >;
 
-type ServiceArgs<Service extends (...args: any) => any> = Parameters<Service>[0];
 type MuatationArg<Result = any, ServiceArgs = any> = {
   srvArgs?: ServiceArgs;
   opts?: CreateMutationOptions<Result, Error, Partial<ServiceArgs>>;
