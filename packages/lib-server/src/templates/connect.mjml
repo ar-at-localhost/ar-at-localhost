@@ -7,6 +7,13 @@
     <mj-attributes>
       <mj-all color="#101828" font-family="Overpass, Arial, sans-serif"></mj-all>
     </mj-attributes>
+
+    <mj-style>
+      p,
+      div {
+        line-height: 1.25 !important;
+      }
+    </mj-style>
   </mj-head>
 
   <mj-body background-color="#f1f5f9">
