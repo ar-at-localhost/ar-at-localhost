@@ -7,7 +7,7 @@ import { isProduction } from "./env.ts";
 import { db } from "./pg.ts";
 import { testimonialRequestsTable } from "./testimonial-request.ts";
 import { testimonialsTable } from "./testimonial.ts";
-import { usersTable } from "./user.ts";
+import { usersTable } from "./user.db.ts";
 
 const main = async () => {
   if (!isProduction()) {

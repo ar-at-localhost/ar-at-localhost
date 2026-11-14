@@ -9,4 +9,4 @@ export * from "./schema.ts";
 export * from "./templates/connect.ts";
 export * from "./testimonial.ts";
 export * from "./testimonial-request.ts";
-export * from "./user.ts";
+export * from "./user.db.ts";

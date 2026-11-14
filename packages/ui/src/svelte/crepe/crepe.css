@@ -1,0 +1,8 @@
+@import "@milkdown/crepe/theme/common/style.css";
+@import "@milkdown/crepe/theme/frame.css";
+@import "@fontsource-variable/overpass-mono";
+
+.crepe .milkdown {
+  --crepe-font-default: "Overpass Variable", sans-serif;
+  --crepe-font-code: "Overpass Mono Variable", monospace;
+}

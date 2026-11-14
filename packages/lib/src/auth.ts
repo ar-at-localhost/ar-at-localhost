@@ -9,6 +9,8 @@ import {
   number,
   array,
   picklist,
+  integer,
+  optional,
 } from "valibot";
 
 import { mkClientSrv } from "./fetch.ts";
@@ -49,11 +51,19 @@ export const refreshTokenSrv = mkClientSrv<LoginRespSchema, LoginServiceArgs>({
 /*
  * Profile
  */
+
+export const userAssistantSchema = object({
+  user_id: pipe(number(), integer()),
+  assistant: pipe(string(), picklist(["claude", "gemini", "openapi"])),
+  key: optional(string()),
+});
+
 export const getProfileRespSchema = object({
   first_name: string(),
   last_name: string(),
   email: pipe(string(), email()),
   roles: pipe(array(picklist(["admin", "system", "unknown"]))),
+  assistants: array(userAssistantSchema),
   ...recordSchema.entries,
 });
 

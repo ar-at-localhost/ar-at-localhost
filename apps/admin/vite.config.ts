@@ -13,6 +13,9 @@ export default defineConfig({
       }),
 
       compilerOptions: {
+        experimental: {
+          async: true,
+        },
         runes: ({ filename }) =>
           filename.split(/[/\\]/).includes("node_modules") ? undefined : true,
       },

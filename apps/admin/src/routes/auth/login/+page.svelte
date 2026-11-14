@@ -8,8 +8,7 @@ import { Input } from 'ui/svelte/input/index';
 import { Field as InputField, FieldLabel } from 'ui/svelte/field/index';
 import { LoaderCircle, TriangleAlert } from '@lucide/svelte';
 import { emailLoginMutationSv } from 'lib/svelte';
-import { goto } from '$app/navigation';
-  import { setAuth } from '#lib';
+import { setAuth } from '#lib';
 
 
 const form = createForm({
@@ -24,7 +23,8 @@ const srv = emailLoginMutationSv({
   opts: {
     onSuccess: (res) => {
       setAuth(res);
-      goto('/')
+      // use full page reload to force pass through user guard
+      window.location.href = "/";
     }
   }
 })

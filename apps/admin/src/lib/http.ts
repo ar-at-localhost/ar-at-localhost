@@ -1,4 +1,4 @@
-import { PUBLIC_SRV_URL } from "$app/env/public";
+import { PUBLIC_SRV_AUTH_URL, PUBLIC_SRV_URL } from "$app/env/public";
 import { goto } from "$app/navigation";
 import { refreshTokenSrv, type APIService, type ReqArgs, type ReqOpts } from "lib";
 
@@ -6,7 +6,7 @@ import { getRefreshToken, getToken, setAuth } from "./auth";
 
 export const mkOpts = <Args extends ReqArgs = ReqArgs>(args: ReqOpts<Args>): ReqOpts<Args> => ({
   ...args,
-  baseURL: args.baseURL || PUBLIC_SRV_URL,
+  baseURL: args.baseURL || PUBLIC_SRV_AUTH_URL || PUBLIC_SRV_URL,
   bearer: getToken(),
   errorHandlers: {
     401: async (_: Response, url: string, opts: RequestInit) => {

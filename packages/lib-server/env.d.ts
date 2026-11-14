@@ -3,7 +3,7 @@ import "lib/env.d.ts";
 import "templates/env.d.ts";
 import type { LoginRespSchema } from "lib";
 
-import type { UserRecord, UserRole } from "./src/user.ts";
+import type { UserRecord, UserRole } from "./src/user.db.ts";
 
 declare global {
   type AuthStrategy = "jwt" | "apiKey";

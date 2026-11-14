@@ -15,14 +15,31 @@ export const setAuth = (auth: LoginRespSchema) => {
 export const delAuth = () => {
   localStorage.removeItem(TokenKey);
   localStorage.removeItem(RefreshTokenKey);
+  localStorage.removeItem(ProfileKey);
 };
 
 export const getToken = () => localStorage.getItem(TokenKey) || "";
 export const getRefreshToken = () => localStorage.getItem(RefreshTokenKey) || "";
 export const isLoggedIn = () => !!getToken();
 
+type AssistantsFlat = {
+  claude: {
+    key?: string;
+  };
+  gemini: {
+    key?: string;
+  };
+  openapi: {
+    key?: string;
+  };
+};
+
 export const loadProfile = (() => {
-  let profile: UserInfo | null = null;
+  let profile:
+    | (UserInfo & {
+        assistantsFlat: AssistantsFlat;
+      })
+    | null = null;
 
   return async () => {
     if (profile) return profile;
@@ -39,13 +56,26 @@ export const loadProfile = (() => {
         }),
       )
         .then((res) => {
-          localStorage.setItem(ProfileKey, JSON.stringify(res));
-          return res;
+          return {
+            ...res,
+            assistantsFlat: res.assistants.reduce(
+              (o, n) => {
+                o[n.assistant] = {
+                  key: n.key,
+                };
+
+                return o;
+              },
+              {} as Record<"claude" | "gemini" | "openapi", { key?: string }>,
+            ),
+          };
         })
         .catch((err) => {
           console.error(err);
           return null;
         });
+
+      localStorage.setItem(ProfileKey, JSON.stringify(profile));
     }
 
     return profile;

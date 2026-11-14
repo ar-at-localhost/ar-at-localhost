@@ -23,6 +23,7 @@
     "./components/*": "./src/components/*.tsx",
     "./site/*": "./src/site/*.tsx",
     "./svelte/*.svelte": "./src/svelte/*.svelte",
+    "./svelte/*.css": "./src/svelte/*.css",
     "./svelte/*": "./src/svelte/*.ts",
     "./utils": "./src/utils.ts"
   },
@@ -39,6 +40,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
+    "@fontsource-variable/overpass-mono": "^5.3.0",
     "@formisch/react": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.0",
@@ -53,7 +55,8 @@
   "devDependencies": {
     "@eslint/js": "^10",
     "@internationalized/date": "^3.12.4",
-    "@lucide/svelte": "^1.65.0",
+    "@lucide/svelte": "^1.70.0",
+    "@milkdown/crepe": "^7.23.0",
     "@sveltejs/adapter-auto": "^8.0.0",
     "@sveltejs/kit": "^3.0.0",
     "@sveltejs/package": "^2.5.8",
@@ -77,6 +80,15 @@
     "vite": "^8.3.4"
   },
   "peerDependencies": {
+    "@milkdown/crepe": "^7.23.0",
     "svelte": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@milkdown/crepe": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    }
   }
 }

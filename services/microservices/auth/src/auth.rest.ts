@@ -8,7 +8,7 @@ import {
   type LoginRespSchema,
   type UserInfo,
 } from "lib";
-import { createTokenPair, mkAuthErr, unauthenticedReqErrSchema } from "lib-server";
+import { createTokenPair, db, mkAuthErr, unauthenticedReqErrSchema } from "lib-server";
 import { usersTable } from "lib-server";
 import { verify } from "node-argon2";
 
@@ -93,7 +93,15 @@ export const authRest: FastifyPluginAsync = async (app) => {
     },
     handler: async (req: FastifyRequest, rep: FastifyReply) => {
       try {
-        const user = await req.getUser?.();
+        const user = await db.query.usersTable.findFirst({
+          where: {
+            id: req.userId!,
+          },
+          with: {
+            assistants: true,
+          },
+        });
+
         rep.send(JSON.parse(JSON.stringify(user!)) satisfies UserInfo);
       } catch (err) {
         const e = err as unknown as Error;

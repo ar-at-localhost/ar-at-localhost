@@ -11,7 +11,7 @@ import type { LoginRespSchema } from "lib";
 
 import { isCI, isDev } from "./env.ts";
 import { db } from "./pg.ts";
-import { usersTable, type UserRecord } from "./user.ts";
+import { usersTable, type UserRecord } from "./user.db.ts";
 
 /**
  * Resolve JWT Keys from the Google Cloud Secret Manager
