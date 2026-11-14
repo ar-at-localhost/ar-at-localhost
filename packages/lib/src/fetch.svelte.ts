@@ -2,9 +2,9 @@ import {
   createMutation,
   type CreateMutationOptions,
   createQuery,
-  CreateQueryOptions,
+  type CreateQueryOptions,
 } from "@tanstack/svelte-query";
-import { merge } from "es-toolkit";
+import { toMerged } from "es-toolkit";
 
 import type { ReqArgs, APIService, ReqOpts } from "./fetch.ts";
 
@@ -31,7 +31,7 @@ export const mkQuerySv =
         queryKey: [service.method, service.endpoint, o.srvArgs?.params, o.srvArgs?.query],
         queryFn: ({ queryKey: [, , params, query] }) =>
           service(
-            merge(o.srvArgs || {}, {
+            toMerged(o.srvArgs || {}, {
               params: params,
               query: query,
             }) as ReqOpts<Args>,
@@ -63,7 +63,7 @@ export const mkMutationSv =
       return {
         ...opts.opts,
         mutationFn: (args: Parameters<typeof service>[0]) =>
-          service(merge(opts.srvArgs || {}, args)),
+          service(toMerged(opts.srvArgs || {}, args)),
       };
     });
 

@@ -1,7 +1,7 @@
 <script>
   import { delAuth } from "#lib/auth.ts";
   import { goto } from "$app/navigation";
-  import { Contact, Star, LogOut, House } from "@lucide/svelte";
+  import { Contact, Star, LogOut, House, User } from "@lucide/svelte";
   import { Button } from "ui/svelte/button/index";
   import { cn } from "ui/utils";
 
@@ -28,6 +28,7 @@
     <Button size='icon' onclick={() => goto('/')}><House /></Button>
     <Button variant="outline" size='icon' onclick={() => goto('/connects')}><Contact /></Button>
     <Button variant="outline" size='icon' onclick={() => goto('/testimonials')}><Star /></Button>
+    <Button variant="outline" size='icon' onclick={() => goto('/profile')}><User /></Button>
     <Button variant="destructive" size='icon' onclick={logout}><LogOut /></Button>
   </div>
 </div>

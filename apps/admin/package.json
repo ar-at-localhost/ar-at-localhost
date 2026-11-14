@@ -24,11 +24,13 @@
     "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
+    "@date-fns/utc": "^2.1.1",
     "@formisch/svelte": "^1.1.1",
     "@lucide/svelte": "^1.65.0",
     "@sveltejs/adapter-static": "^4.0.1",
     "@tanstack/svelte-query": "^6.3.9",
     "bits-ui": "^2.20.2",
+    "date-fns": "^4.4.0",
     "es-toolkit": "catalog:",
     "lib": "workspace:*",
     "ui": "workspace:*",

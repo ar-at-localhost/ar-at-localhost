@@ -1,6 +1,6 @@
 import { PUBLIC_SRV_URL } from "$app/env/public";
 import { goto } from "$app/navigation";
-import { refreshTokenSrv, type ReqArgs, type ReqOpts, type Srv } from "lib";
+import { refreshTokenSrv, type APIService, type ReqArgs, type ReqOpts } from "lib";
 
 import { getRefreshToken, getToken, setAuth } from "./auth";
 
@@ -32,7 +32,7 @@ export const mkOpts = <Args extends ReqArgs = ReqArgs>(args: ReqOpts<Args>): Req
 });
 
 export const callSrv = <Resp = unknown, Args extends ReqArgs = ReqArgs>(
-  srv: Srv<Resp, Args>,
+  srv: APIService<Resp, Args>,
   opts: ReqOpts<Args>,
 ) => {
   return srv(mkOpts(opts));

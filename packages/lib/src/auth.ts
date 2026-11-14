@@ -7,9 +7,12 @@ import {
   maxLength,
   type InferOutput,
   number,
+  array,
+  picklist,
 } from "valibot";
 
-import { mkClientSrv, type Srv } from "./fetch.ts";
+import { mkClientSrv } from "./fetch.ts";
+import { recordSchema } from "./schema.ts";
 
 /*
  * Login with email
@@ -30,10 +33,7 @@ export const loginRespSchema = object({
 export type LoginRespSchema = InferOutput<typeof loginRespSchema>;
 export type LoginServiceArgs = [never, never, EmailLoginBody];
 
-export const loginSrv: Srv<LoginRespSchema, LoginServiceArgs> = mkClientSrv<
-  LoginRespSchema,
-  LoginServiceArgs
->({
+export const loginSrv = mkClientSrv<LoginRespSchema, LoginServiceArgs>({
   method: "POST",
   endpoint: "/auth/email",
 });
@@ -41,9 +41,29 @@ export const loginSrv: Srv<LoginRespSchema, LoginServiceArgs> = mkClientSrv<
 /*
  * Refresh token
  */
-export const refreshTokenSrv = mkClientSrv<LoginRespSchema>({
+export const refreshTokenSrv = mkClientSrv<LoginRespSchema, LoginServiceArgs>({
   method: "POST",
   endpoint: "/auth/refresh-token",
+});
+
+/*
+ * Profile
+ */
+export const getProfileRespSchema = object({
+  first_name: string(),
+  last_name: string(),
+  email: pipe(string(), email()),
+  roles: pipe(array(picklist(["admin", "system", "unknown"]))),
+  ...recordSchema.entries,
+});
+
+export type GetProfileResp = InferOutput<typeof getProfileRespSchema>;
+export type UserInfo = GetProfileResp;
+export type GetProfileArgs = [never, never, never];
+
+export const getProfileSrv = mkClientSrv<GetProfileResp>({
+  method: "GET",
+  endpoint: "/auth/profile",
 });
 
 /*

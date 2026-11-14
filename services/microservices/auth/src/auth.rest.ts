@@ -3,8 +3,10 @@ import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
 import {
   type EmailLoginBody,
   emailLoginBodySchema,
+  getProfileRespSchema,
   loginRespSchema,
   type LoginRespSchema,
+  type UserInfo,
 } from "lib";
 import { createTokenPair, mkAuthErr, unauthenticedReqErrSchema } from "lib-server";
 import { usersTable } from "lib-server";
@@ -62,6 +64,37 @@ export const authRest: FastifyPluginAsync = async (app) => {
         const user = await req.getUser?.();
         rep.send((await createTokenPair(user!)) satisfies LoginRespSchema);
         // TODO: Invalidate token
+      } catch (err) {
+        const e = err as unknown as Error;
+        app.log.error(err);
+        rep.status(500).send({
+          message: e?.message || "Something went wrong!",
+        });
+      }
+    },
+  });
+
+  app.get("/profile", {
+    config: {
+      auth: {
+        strategies: ["jwt", "apiKey"],
+        opts: {
+          jwt: {
+            aud: ["auth"],
+          },
+        },
+      },
+    },
+    schema: {
+      response: {
+        200: getProfileRespSchema,
+        401: unauthenticedReqErrSchema,
+      },
+    },
+    handler: async (req: FastifyRequest, rep: FastifyReply) => {
+      try {
+        const user = await req.getUser?.();
+        rep.send(JSON.parse(JSON.stringify(user!)) satisfies UserInfo);
       } catch (err) {
         const e = err as unknown as Error;
         app.log.error(err);

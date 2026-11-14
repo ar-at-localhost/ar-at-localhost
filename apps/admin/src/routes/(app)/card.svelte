@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { Dot, Info, LucideZodiacGemini, RobotArm, RobotVacuum, type LucideProps } from "@lucide/svelte";
+  import { Dot, Info, type LucideProps } from "@lucide/svelte";
   import type { Component } from "svelte";
   import { Avatar, AvatarFallback } from "ui/svelte/avatar/index";
   import { Badge } from "ui/svelte/badge/index";

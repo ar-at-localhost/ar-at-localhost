@@ -7,6 +7,8 @@
   import { mkOpts } from '#lib';
   import { Contact, Star } from '@lucide/svelte';
 
+  const { data } = $props()
+
   const result = getStatementQuerySv({
     srvArgs: mkOpts({
       baseURL: PUBLIC_SRV_AUTH_URL,
@@ -17,7 +19,7 @@
     }
   })
 
-  const data = $derived({
+  const statement = $derived({
     connects: {
       link: '/connects',
       title: 'Connects',
@@ -42,17 +44,18 @@
 </script>
 
 <div class="flex flex-col gap-4 pt-4 pb-16 px-8">
-  <div class="flex flex-col md:flex-row items-start md:items-end justify-between">
+  <div class="flex flex-col gap-2 md:gap-0 md:flex-row items-start justify-start md:items-end md:justify-between">
     <div class="flex flex-row items-center gap-4">
-      <img src={logo} alt="Logo" class="size-12" />
+      <img src={logo} alt="Logo" class="size-6 md:size-12" />
       <div class="flex flex-col gap-1 text-sm">
-        <b>👋 Hi, Ahmad</b>
-        <p>This is how things are currently.</p>
+        <b>👋 Hi, {data.first_name}</b>
+        <span class="hidden md:inline-block">This is how things look currently.</span>
       </div>
     </div>
 
-    <div class="flex flex-col gap-1 text-sm text-right px-16 md:px-0">
-      <p>Data will auto-update every minute.</p>
+    <div class="block md:flex flex-col gap-1 items-start text-sm md:text-right">
+      <span class="inline-block md:hidden ">This is how things look currently.</span>
+      <span>Data will update automatically every minute.</span>
     </div>
   </div>
 
@@ -61,7 +64,7 @@
   <div class="
     flex flex-row flex-wrap items-center justify-start gap-4
   ">
-     <Card data={data.connects} /> 
-     <Card data={data.testimonials} /> 
+     <Card data={statement.connects} /> 
+     <Card data={statement.testimonials} /> 
   </div>
 </div>

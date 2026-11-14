@@ -54,10 +54,6 @@ export type ReqOpts<Args extends ReqArgs = ReqArgs> = Pick<
   "baseURL" | "bearer" | "body" | "errorHandlers" | "headers" | "params" | "query"
 >;
 
-export type Srv<Resp = any, Args extends ReqArgs = ReqArgs> = (
-  opts: ReqOpts<Args>,
-) => Promise<Resp>;
-
 const resolveBearer = async (bearer?: Bearer) =>
   bearer ? (typeof bearer == "string" ? bearer : await bearer()) : null;
 
