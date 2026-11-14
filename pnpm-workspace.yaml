@@ -14,7 +14,7 @@ catalog:
   "@types/node": ^26.6.5
   "@vitest/browser-playwright": 5.0.5
   "@vitest/coverage-v8": 5.0.5
-  astro: "^7.3.8"
+  astro: "^7.4.7"
   cssnano: ^8.0.0
   drizzle-orm: "1.0.0-rc.5"
   es-toolkit: "^1.53.1"
