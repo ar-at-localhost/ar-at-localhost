@@ -41,12 +41,10 @@ export const testimonialRest: FastifyPluginAsync = async (app) => {
     schema: {
       body: createTestimonialReqBodySchema,
       response: {
-        201: {
-          email: object({
-            ...okIdSchema.entries,
-            email: createTestimonialReqBodySchema.entries.email,
-          }),
-        },
+        201: object({
+          ...okIdSchema.entries,
+          email: createTestimonialReqBodySchema.entries.email,
+        }),
       },
     },
 

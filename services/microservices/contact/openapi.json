@@ -11,6 +11,24 @@
     "/health": {
       "get": {
         "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
           "400": {
             "description": "Default Response",
             "content": {
@@ -436,103 +454,47 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
           "201": {
             "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "email": {
-                    "kind": "schema",
-                    "type": "object",
-                    "expects": "Object",
-                    "async": false,
-                    "entries": {
-                      "message": {
-                        "kind": "schema",
-                        "type": "undefinedable",
-                        "expects": "(string | undefined)",
-                        "async": false,
-                        "wrapped": {
-                          "kind": "schema",
-                          "type": "string",
-                          "expects": "string",
-                          "async": false,
-                          "~standard": {
-                            "version": 1,
-                            "vendor": "valibot"
-                          }
-                        },
-                        "~standard": {
-                          "version": 1,
-                          "vendor": "valibot"
-                        }
-                      },
-                      "id": {
-                        "kind": "schema",
-                        "type": "number",
-                        "expects": "number",
-                        "async": false,
-                        "~standard": {
-                          "version": 1,
-                          "vendor": "valibot"
-                        },
-                        "pipe": [
-                          {
-                            "kind": "schema",
-                            "type": "number",
-                            "expects": "number",
-                            "async": false,
-                            "~standard": {
-                              "version": 1,
-                              "vendor": "valibot"
-                            }
-                          },
-                          {
-                            "kind": "validation",
-                            "type": "integer",
-                            "async": false,
-                            "expects": null
-                          }
-                        ]
-                      },
-                      "email": {
-                        "kind": "schema",
-                        "type": "string",
-                        "expects": "string",
-                        "async": false,
-                        "message": "Invalid email!",
-                        "~standard": {
-                          "version": 1,
-                          "vendor": "valibot"
-                        },
-                        "pipe": [
-                          {
-                            "kind": "schema",
-                            "type": "string",
-                            "expects": "string",
-                            "async": false,
-                            "message": "Invalid email!",
-                            "~standard": {
-                              "version": 1,
-                              "vendor": "valibot"
-                            }
-                          },
-                          {
-                            "kind": "validation",
-                            "type": "rfc_email",
-                            "expects": null,
-                            "async": false,
-                            "requirement": {},
-                            "message": "Invalid email!"
-                          }
-                        ]
-                      }
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     },
-                    "~standard": {
-                      "version": 1,
-                      "vendor": "valibot"
+                    "id": {
+                      "type": "integer"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
                     }
-                  }
+                  },
+                  "required": [
+                    "message",
+                    "id",
+                    "email"
+                  ]
                 }
               }
             }
@@ -985,6 +947,24 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
           "201": {
             "description": "Default Response",
             "content": {

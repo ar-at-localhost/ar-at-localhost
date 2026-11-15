@@ -15,6 +15,7 @@ import { getCors, isCI, isDev, isProduction } from "./env.ts";
 import {
   badReqErrorSchema,
   knownError as knownErrors,
+  okSchema,
   serverErr,
   serverErrSchema,
 } from "./schema.ts";
@@ -105,6 +106,7 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
     route.schema ??= {};
     route.schema.response ??= {};
     const resp = route.schema.response as Record<number, GenericSchema>;
+    resp[200] ??= okSchema;
     resp[400] ??= badReqErrorSchema;
     resp[500] ??= serverErrSchema;
   });

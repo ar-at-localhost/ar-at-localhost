@@ -22,7 +22,7 @@ export type UserRecord = InferSelectModel<typeof usersTable>;
 export const userKeysEnum = pgEnum("user_key_type", userKeys);
 export type UserKeys = (typeof userKeysEnum.enumValues)[number];
 
-export const userAssistantsTable = pgTable(
+export const userKeysTable = pgTable(
   "user_keys",
   {
     user_id: integer()

@@ -6,18 +6,18 @@
   import { Crepe } from 'ui/svelte/crepe/index';
   import { onMount } from 'svelte';
   const { data } = $props();
-  const providers = $derived(data.assistants.map(i => ({
+  const providers = $derived(data.keys.map(i => ({
     ...i,
-    label: i.assistant.slice(0,1).toUpperCase().concat(i.assistant.slice(1)),
-    value: i.assistant,
+    label: i.type,
+    value: i.type,
     disabled: !i.key
   })));
 
   // svelte-ignore state_referenced_locally
   const provider = $state(providers.find(i => i.value))
 
-  const ai = $derived(provider?.value == 'gemini' ? {
-    provider: provider.value as 'gemini',
+  const ai = $derived(provider?.key == 'Gemini' ? {
+    provider: provider.value as 'Gemini',
     opts: {
       apiKey: provider.key!
     }

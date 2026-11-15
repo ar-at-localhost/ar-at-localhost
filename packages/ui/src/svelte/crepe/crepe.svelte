@@ -1,4 +1,4 @@
-<script lang="ts" generics="AI extends 'gemini'">
+<script lang="ts" generics="AI extends 'Gemini'">
   import { onMount } from 'svelte';
   import { Crepe } from '@milkdown/crepe';
   import { gemini, type ProviderOpts } from './providers/index';
@@ -32,7 +32,7 @@ This is an interactive markdown editor powered by AI. Use it to take notes and w
 
       featureConfigs: {
         // TODO: Support Claude / OpenAPI
-        ai: ai && ai.provider === 'gemini' ? {
+        ai: ai && ai.provider === 'Gemini' ? {
           provider: gemini(ai.opts),
           onError: console.error
         } : undefined

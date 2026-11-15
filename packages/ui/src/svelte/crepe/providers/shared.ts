@@ -7,7 +7,7 @@ export interface GeminiOpts extends BaseProviderOpts {}
 export type AIProviders = "gemini";
 
 export interface ProviderOpts {
-  gemini: GeminiOpts;
+  Gemini: GeminiOpts;
 }
 
 export async function* parseSSE(response: Response, signal: AbortSignal): AsyncGenerator<string> {

@@ -6,7 +6,7 @@ import pg from "pg";
 import { connectsTable } from "./connect.db.ts";
 import { testimonialRequestsTable } from "./testimonial-request.ts";
 import { testimonialsTable } from "./testimonial.ts";
-import { userAssistantsTable, usersTable } from "./user.db.ts";
+import { userKeysTable, usersTable } from "./user.db.ts";
 
 const pool = new pg.Pool({
   connectionString: process.env.DB_URI,
@@ -18,13 +18,13 @@ const relations = defineRelations(
     testimonialsTable,
     testimonialRequestsTable,
     usersTable,
-    userAssistantsTable,
+    userKeysTable,
   },
   (r) => ({
     usersTable: {
-      keys: r.many.userAssistantsTable({
+      keys: r.many.userKeysTable({
         from: r.usersTable.id,
-        to: r.userAssistantsTable.user_id,
+        to: r.userKeysTable.user_id,
       }),
     },
   }),
