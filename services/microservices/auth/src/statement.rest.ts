@@ -1,6 +1,6 @@
 import { type FastifyPluginAsync } from "fastify";
 import { getStatementRespSchema } from "lib";
-import { connectsTable, db, testimonialsTable, testimonialRequestsTable } from "lib-server";
+import { db, testimonialsTable, testimonialRequestsTable, connectsTable } from "lib-server";
 
 export const statementRest: FastifyPluginAsync = async (app) => {
   /**

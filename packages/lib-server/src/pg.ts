@@ -3,7 +3,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import fp from "fastify-plugin";
 import pg from "pg";
 
-import { connectsTable } from "./connect.ts";
+import { connectsTable } from "./connect.db.ts";
 import { testimonialRequestsTable } from "./testimonial-request.ts";
 import { testimonialsTable } from "./testimonial.ts";
 import { userAssistantsTable, usersTable } from "./user.db.ts";

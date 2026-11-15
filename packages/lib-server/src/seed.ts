@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { reset, seed } from "drizzle-seed";
 import { hash as hashPassword } from "node-argon2";
 
-import { connectsTable } from "./connect.ts";
+import { connectsTable } from "./connect.db.ts";
 import { isProduction } from "./env.ts";
 import { db } from "./pg.ts";
 import { testimonialRequestsTable } from "./testimonial-request.ts";

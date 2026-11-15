@@ -1,6 +1,7 @@
 export * from "./app.ts";
 export * from "./auth.ts";
 export * from "./connect.ts";
+export * from "./connect.db.ts";
 export * from "./pg.ts";
 export * from "./env.ts";
 export * from "./fs.ts";

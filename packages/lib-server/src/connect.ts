@@ -1,22 +1,12 @@
 import { CloudTasksClient } from "@google-cloud/tasks";
 import { eq } from "drizzle-orm";
-import { integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { links } from "lib";
 
+import { connectsTable } from "./connect.db.ts";
 import { getContactPerson, isCI, isDev } from "./env.ts";
 import { sendMail } from "./mailer/index.ts";
 import { db } from "./pg.ts";
-import { timestamps } from "./schema.ts";
 import { renderConnectTemplate, renderConnectTextTemplate } from "./templates/connect.ts";
-
-export const connectsTable = pgTable("connects", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  first_name: varchar({ length: 128 }).notNull(),
-  last_name: varchar({ length: 128 }),
-  email: varchar({ length: 255 }).notNull(),
-  message: text().notNull(),
-  ...timestamps,
-});
 
 export const connectMail = async (id: number) => {
   const [connect] = await db.select().from(connectsTable).where(eq(connectsTable.id, id)).limit(1);
