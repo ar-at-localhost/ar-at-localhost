@@ -36,6 +36,14 @@ in {
     actionlint.enable = true;
     alejandra.enable = true;
 
+    openapi = {
+      enable = true;
+      entry = "pnpm --filter 'srv-*' openapi";
+      name = "Generate openapi";
+      pass_filenames = false;
+      stages = ["pre-push"];
+    };
+
     quality = {
       enable = true;
       entry = "secretspec run pnpm quality";

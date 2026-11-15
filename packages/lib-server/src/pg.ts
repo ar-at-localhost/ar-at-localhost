@@ -22,7 +22,7 @@ const relations = defineRelations(
   },
   (r) => ({
     usersTable: {
-      assistants: r.many.userAssistantsTable({
+      keys: r.many.userAssistantsTable({
         from: r.usersTable.id,
         to: r.userAssistantsTable.user_id,
       }),

@@ -98,7 +98,7 @@ export const authRest: FastifyPluginAsync = async (app) => {
             id: req.userId!,
           },
           with: {
-            assistants: true,
+            keys: true,
           },
         });
 

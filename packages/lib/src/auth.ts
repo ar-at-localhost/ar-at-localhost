@@ -51,10 +51,13 @@ export const refreshTokenSrv = mkClientSrv<LoginRespSchema, LoginServiceArgs>({
 /*
  * Profile
  */
+export const userKeys = ["Claude", "Gemini", "GitHub", "OpenAPI"] as const;
+export type UserKey = (typeof userKeys)[number];
+export const userKeyset: Readonly<Set<UserKey>> = new Set<UserKey>(userKeys);
 
-export const userAssistantSchema = object({
+export const userKeysSchema = object({
   user_id: pipe(number(), integer()),
-  assistant: pipe(string(), picklist(["claude", "gemini", "openapi"])),
+  type: pipe(string(), picklist(Array.from(userKeyset))),
   key: optional(string()),
 });
 
@@ -63,7 +66,7 @@ export const getProfileRespSchema = object({
   last_name: string(),
   email: pipe(string(), email()),
   roles: pipe(array(picklist(["admin", "system", "unknown"]))),
-  assistants: array(userAssistantSchema),
+  keys: array(userKeysSchema),
   ...recordSchema.entries,
 });
 

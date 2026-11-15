@@ -1,5 +1,5 @@
 import { PUBLIC_SRV_AUTH_URL } from "$app/env/public";
-import { getProfileSrv, type LoginRespSchema, type UserInfo } from "lib";
+import { getProfileSrv, type LoginRespSchema, type UserInfo, type UserKey } from "lib";
 
 import { mkOpts } from "./http";
 
@@ -21,23 +21,12 @@ export const delAuth = () => {
 export const getToken = () => localStorage.getItem(TokenKey) || "";
 export const getRefreshToken = () => localStorage.getItem(RefreshTokenKey) || "";
 export const isLoggedIn = () => !!getToken();
-
-type AssistantsFlat = {
-  claude: {
-    key?: string;
-  };
-  gemini: {
-    key?: string;
-  };
-  openapi: {
-    key?: string;
-  };
-};
+type KeysFlat = Record<UserKey, string | undefined>;
 
 export const loadProfile = (() => {
   let profile:
     | (UserInfo & {
-        assistantsFlat: AssistantsFlat;
+        keysFlat: KeysFlat;
       })
     | null = null;
 
@@ -58,16 +47,10 @@ export const loadProfile = (() => {
         .then((res) => {
           return {
             ...res,
-            assistantsFlat: res.assistants.reduce(
-              (o, n) => {
-                o[n.assistant] = {
-                  key: n.key,
-                };
-
-                return o;
-              },
-              {} as Record<"claude" | "gemini" | "openapi", { key?: string }>,
-            ),
+            keysFlat: res.keys.reduce((o, n) => {
+              o[n.type] = n.key;
+              return o;
+            }, {} as KeysFlat),
           };
         })
         .catch((err) => {

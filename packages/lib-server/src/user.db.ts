@@ -1,5 +1,6 @@
 import { type InferSelectModel } from "drizzle-orm";
 import { integer, pgEnum, pgTable, unique, varchar } from "drizzle-orm/pg-core";
+import { userKeys } from "lib";
 
 import { timestamps } from "./schema.ts";
 
@@ -18,11 +19,11 @@ export const usersTable = pgTable("users", {
 
 export type UserRecord = InferSelectModel<typeof usersTable>;
 
-export const assistantEnum = pgEnum("assistants", ["gemini", "claude", "openapi"]);
-export type UserAssistant = (typeof assistantEnum.enumValues)[number];
+export const userKeysEnum = pgEnum("user_key_type", userKeys);
+export type UserKeys = (typeof userKeysEnum.enumValues)[number];
 
 export const userAssistantsTable = pgTable(
-  "user_assistants",
+  "user_keys",
   {
     user_id: integer()
       .notNull()
@@ -30,8 +31,8 @@ export const userAssistantsTable = pgTable(
         onDelete: "cascade",
       }),
 
-    assistant: assistantEnum().notNull(),
+    type: userKeysEnum().notNull(),
     key: varchar({ length: 512 }),
   },
-  (t) => [unique().on(t.user_id, t.assistant)],
+  (t) => [unique().on(t.user_id, t.type)],
 );
