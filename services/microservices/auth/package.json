@@ -54,6 +54,7 @@
     "@fastify/helmet": "^13.1.2",
     "@fastify/rate-limit": "^11.2.1",
     "@google-cloud/secret-manager": "catalog:",
+    "@google-cloud/storage": "^8.4.0",
     "@google-cloud/tasks": "catalog:",
     "date-fns": "^4.4.0",
     "drizzle-orm": "catalog:",
