@@ -162,7 +162,7 @@ object only.`),
           ({
             config: {
               provider: "Gemini",
-              model: "gemini-3.8-flash",
+              model: "gemini-3.1-flash-lite",
             },
 
             inputs: {
