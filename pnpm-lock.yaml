@@ -110,9 +110,15 @@ importers:
       '@lucide/svelte':
         specifier: ^1.65.0
         version: 1.65.0(svelte@5.57.3(@typescript-eslint/types@8.72.1))
+      '@milkdown/core':
+        specifier: ^7.23.0
+        version: 7.23.0(supports-color@7.2.0)
       '@milkdown/crepe':
         specifier: ^7.23.0
         version: 7.23.0(prosemirror-model@1.25.12)(prosemirror-state@1.4.4)(prosemirror-view@1.42.9)(supports-color@7.2.0)(typescript@6.0.3)
+      '@milkdown/kit':
+        specifier: ^7.23.0
+        version: 7.23.0(@codemirror/language@6.13.1)(@codemirror/state@6.7.6)(@codemirror/view@6.43.15)(supports-color@7.2.0)(typescript@6.0.3)
       '@sveltejs/adapter-static':
         specifier: ^4.0.1
         version: 4.0.1(@sveltejs/kit@3.1.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.1))(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))(svelte@5.57.3(@typescript-eslint/types@8.72.1))(typescript@6.0.3)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))
@@ -323,6 +329,9 @@ importers:
       es-toolkit:
         specifier: 'catalog:'
         version: 1.53.1
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
       tsdown:
         specifier: 'catalog:'
         version: 0.23.1(@volar/typescript@2.4.28(typescript@6.0.3))(publint@0.3.25)(tsx@4.23.15)(typescript@6.0.3)
@@ -359,6 +368,9 @@ importers:
       '@google-cloud/secret-manager':
         specifier: 'catalog:'
         version: 7.2.0(supports-color@7.2.0)
+      '@google-cloud/storage':
+        specifier: ^8.4.0
+        version: 8.4.0(supports-color@7.2.0)
       '@google-cloud/tasks':
         specifier: 'catalog:'
         version: 7.3.1(supports-color@7.2.0)
@@ -496,9 +508,15 @@ importers:
       '@lucide/svelte':
         specifier: ^1.70.0
         version: 1.70.0(svelte@5.57.3(@typescript-eslint/types@8.72.1))
+      '@milkdown/core':
+        specifier: ^7.23.0
+        version: 7.23.0(supports-color@7.2.0)
       '@milkdown/crepe':
         specifier: ^7.23.0
         version: 7.23.0(prosemirror-model@1.25.12)(prosemirror-state@1.4.4)(prosemirror-view@1.42.9)(supports-color@7.2.0)(typescript@6.0.3)
+      '@milkdown/kit':
+        specifier: ^7.23.0
+        version: 7.23.0(@codemirror/language@6.13.1)(@codemirror/state@6.7.6)(@codemirror/view@6.43.15)(supports-color@7.2.0)(typescript@6.0.3)
       '@sveltejs/adapter-auto':
         specifier: ^8.0.0
         version: 8.0.0(@sveltejs/kit@3.1.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.1))(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))(svelte@5.57.3(@typescript-eslint/types@8.72.1))(typescript@6.0.3)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))
@@ -635,6 +653,9 @@ importers:
       '@google-cloud/secret-manager':
         specifier: 'catalog:'
         version: 7.2.0(supports-color@7.2.0)
+      '@google-cloud/storage':
+        specifier: ^8.4.0
+        version: 8.4.0(supports-color@7.2.0)
       '@google-cloud/tasks':
         specifier: 'catalog:'
         version: 7.3.1(supports-color@7.2.0)
@@ -675,6 +696,12 @@ importers:
 
   services/microservices/internal:
     dependencies:
+      '@date-fns/tz':
+        specifier: ^1.5.0
+        version: 1.5.0
+      '@date-fns/utc':
+        specifier: ^2.1.1
+        version: 2.1.1
       '@fastify/cors':
         specifier: ^11.3.1
         version: 11.3.1
@@ -687,9 +714,21 @@ importers:
       '@google-cloud/secret-manager':
         specifier: 'catalog:'
         version: 7.2.0(supports-color@7.2.0)
+      '@google-cloud/storage':
+        specifier: ^8.4.0
+        version: 8.4.0(supports-color@7.2.0)
       '@google-cloud/tasks':
         specifier: 'catalog:'
         version: 7.3.1(supports-color@7.2.0)
+      '@google/genai':
+        specifier: ^3.0.0
+        version: 3.0.0(@modelcontextprotocol/sdk@1.32.1(supports-color@7.2.0)(zod@4.6.7))(supports-color@7.2.0)
+      date-fns:
+        specifier: ^4.4.0
+        version: 4.4.0
+      es-toolkit:
+        specifier: 'catalog:'
+        version: 1.53.1
       fastify:
         specifier: 'catalog:'
         version: 5.12.5
@@ -702,6 +741,9 @@ importers:
       resend:
         specifier: 'catalog:'
         version: 6.32.1
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
       valibot:
         specifier: ^1.5.0
         version: 1.5.0(typescript@6.0.3)
@@ -1781,6 +1823,10 @@ packages:
     resolution: {integrity: sha512-9bxQ/QNhcq5c6ra75khWjA5Q9UHWp0vQnhwesmqPpLLF5PxmxCIsadIA5ssLxKted4/iZ2RlRPkW/E8p68W8cg==}
     engines: {node: '>=18'}
 
+  '@google-cloud/paginator@7.2.0':
+    resolution: {integrity: sha512-l+x6YObHGTuqBCMvC0SXo3Cnyqg4FkWWKYRptf46PACHJ5GAUuhsd2b3wphgGrg1ybs/LAb+q5MnUTuG/3+v7w==}
+    engines: {node: '>=22'}
+
   '@google-cloud/precise-date@5.2.0':
     resolution: {integrity: sha512-ckZ1elVT/JXbO4kxltiT8tumYnTXGIY7OFrDMAJyVWAte/rUYiCuH1YbaKLQrZpYDp522xgTfPqqW/VxfXFdgA==}
     engines: {node: '>=18'}
@@ -1789,9 +1835,17 @@ packages:
     resolution: {integrity: sha512-u4lTO+UI9bwyd/qaVkhVpp57jVH0Pc7wkHE0snZkpQyoKheHDJwmfStao8cWXSF03DmrQltLLSoDjM2CGBpFJA==}
     engines: {node: '>=18'}
 
+  '@google-cloud/projectify@6.2.1':
+    resolution: {integrity: sha512-PV9oy7VpQRXLuqKuU5RSOHFQyWgvw2sT9MoTGykja9j6c9pv5+ttKTJiFsccu500YYIGiz8JCOsb60PfKmiV/w==}
+    engines: {node: '>=22'}
+
   '@google-cloud/promisify@5.1.0':
     resolution: {integrity: sha512-/j9zzWDxsgKg0hMuFBmLGI8ES9xj4DjXvQnDCKl0w5ed7WE3CGsgHmUoC35rvfBXshSW+5StQGnCUD+RBqITKA==}
     engines: {node: '>=18'}
+
+  '@google-cloud/promisify@6.2.1':
+    resolution: {integrity: sha512-/+RvLJ5u+WhGay6Z3aY6OApDQmNqq1427Mmt7Eov9kYp69gdUiGSwFnygeTxfz69XBtYZLAnWikGMIoFXtKt+A==}
+    engines: {node: '>=22'}
 
   '@google-cloud/pubsub@5.3.1':
     resolution: {integrity: sha512-xXAQBVVrFviWz8L8yDKEqv1ziVw/gMSpYHt3IxSYRSY0fTyjis+xOrKJILj8dd8PAUHGnGiAIYuTprflkE9jsQ==}
@@ -1805,9 +1859,22 @@ packages:
     resolution: {integrity: sha512-OKAA98q2M25rQcqcFvbQniix4zTFcbeSyauj+PcPd+6ngn7eXvAUqpuCRVxbIGmA8r5OtE6Ru/oCJ1xwcUR2vA==}
     engines: {node: '>=18'}
 
+  '@google-cloud/storage@8.4.0':
+    resolution: {integrity: sha512-M3kA6UA2Tjp5aznCrgKcm9CzOjiQyRMnquqalqXAeS5wvkqqZxN8wpNjjHafOSYs6lQ82U7f2i8we4eTfIrpkA==}
+    engines: {node: '>=22'}
+
   '@google-cloud/tasks@7.3.1':
     resolution: {integrity: sha512-RA+Fzm7dA00q/FqxxstSmkD3gVozFR2In8L6hqy78jnbUB0TvF+kMvfwHE2jTSQsrLbsht6oEkzxS6u4UNyB/w==}
     engines: {node: '>=22'}
+
+  '@google/genai@3.0.0':
+    resolution: {integrity: sha512-0o2uBXPWBNUu0jWg2Id5iBtCnsd7lnxKPQfnijKvNublG/zj40CToERvz/eyfNjzzXt2kwuvxpouLUrRCZ2WUQ==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      '@modelcontextprotocol/sdk': ^1.25.2
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
 
   '@googleapis/sqladmin@38.1.1':
     resolution: {integrity: sha512-piWbtan+dw/cYzGopUsFH131mVx23osOeBAFSM78fgTzgRJjehgA5QnGGZiGYn+zgSNqdnf+7/ZzdHN1XkUAEg==}
@@ -3313,6 +3380,9 @@ packages:
   '@types/relateurl@0.2.33':
     resolution: {integrity: sha512-bTQCKsVbIdzLqZhLkF5fcJQreE4y1ro4DIyVrlDNSCJRRwHhB8Z+4zXXa8jN6eDvc2HbRsEYgbvrnGvi54EpSw==}
 
+  '@types/retry@0.12.0':
+    resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
+
   '@types/sax@1.2.7':
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
 
@@ -3745,6 +3815,9 @@ packages:
 
   async-lock@1.4.1:
     resolution: {integrity: sha512-Az2ZTpuytrtqENulXwO3GGv1Bztugx6TT37NIo7imr/Qo0gsYiGtSdBa2B6fsXhTpVZDNfu1Qn3pk531e3q+nQ==}
+
+  async-retry@1.3.3:
+    resolution: {integrity: sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw==}
 
   async-sema@3.1.1:
     resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==}
@@ -5441,6 +5514,9 @@ packages:
   hookified@2.2.0:
     resolution: {integrity: sha512-p/LgFzRN5FeoD3DLS6bkUapeye6E4SI6yJs6KetENd18S+FBthqYq2amJUWpt5z0EQwwHemidjY5OqJGEKm5uA==}
 
+  html-entities@2.6.0:
+    resolution: {integrity: sha512-kig+rMn/QOVRvr7c86gQ8lWXq+Hkv6CbAH1hLu+RG338StTpE8Z0b44SDVaqVu7HGKf27frdmUYEs9hTUX/cLQ==}
+
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
 
@@ -6413,6 +6489,11 @@ packages:
     engines: {node: '>=4.0.0'}
     hasBin: true
 
+  mime@3.0.0:
+    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+
   mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
@@ -6864,6 +6945,10 @@ packages:
   p-queue@9.3.5:
     resolution: {integrity: sha512-Lki/zhXFVmDhesBUn/yHRLW9Bte7mE7xoFHzTR8sIomV7a2z+LxYAPkGvdfidNiu4fKSfjtawixxSHcZci5QcQ==}
     engines: {node: '>=20'}
+
+  p-retry@4.6.2:
+    resolution: {integrity: sha512-312Id396EbJdvRONlngUx0NydfrIQ5lsYu0znKVUzVvArzEIt08V1qhtyESbGVd1FGX7UKtiFp5uwKZdM8wIuQ==}
+    engines: {node: '>=8'}
 
   p-throttle@8.1.1:
     resolution: {integrity: sha512-xxWFBUyvbrQ10XC3VAr0SoXoOCKXqCX/yvbFIkBE98upphHFwjIKR6AId13ZH3jngFfF6yK43QTOtrngYAmFMA==}
@@ -7668,6 +7753,9 @@ packages:
       '@sveltejs/kit':
         optional: true
 
+  rxjs@7.8.2:
+    resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
+
   sade@1.8.1:
     resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
     engines: {node: '>=6'}
@@ -8054,6 +8142,10 @@ packages:
   teeny-request@10.1.4:
     resolution: {integrity: sha512-R1Cg4Vu0UULeDfHL/kjABLaTW++9yD/B6n2g48y5dJ04hsEaxcfmAqbNDzNsbqAYJyIpZafjklLG9YxRu9uzOg==}
     engines: {node: '>=18'}
+
+  teeny-request@11.1.1:
+    resolution: {integrity: sha512-I5OLOkPN3QDN2l1H/eGueuKaq32CdAcXt91WOF/bOfadtZD1WQ8/Fk28WsqDcGjIyhAW/GQDagYhVEjhuZUFyQ==}
+    engines: {node: '>=22'}
 
   teex@1.0.1:
     resolution: {integrity: sha512-eYE6iEI62Ni1H8oIa7KlDU6uQBtqr4Eajni3wX7rpfXD8ysFx8z0+dri+KWEPWpBsxXfxu58x/0jvTVT1ekOSg==}
@@ -10026,11 +10118,19 @@ snapshots:
     dependencies:
       extend: 3.0.2
 
+  '@google-cloud/paginator@7.2.0':
+    dependencies:
+      extend: 3.0.2
+
   '@google-cloud/precise-date@5.2.0': {}
 
   '@google-cloud/projectify@5.2.0': {}
 
+  '@google-cloud/projectify@6.2.1': {}
+
   '@google-cloud/promisify@5.1.0': {}
+
+  '@google-cloud/promisify@6.2.1': {}
 
   '@google-cloud/pubsub@5.3.1(supports-color@7.2.0)':
     dependencies:
@@ -10066,11 +10166,43 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@google-cloud/storage@8.4.0(supports-color@7.2.0)':
+    dependencies:
+      '@google-cloud/paginator': 7.2.0
+      '@google-cloud/projectify': 6.2.1
+      '@google-cloud/promisify': 6.2.1
+      abort-controller: 3.0.0
+      async-retry: 1.3.3
+      duplexify: 4.1.3
+      fast-xml-parser: 5.12.0
+      gaxios: 7.3.1(supports-color@7.2.0)
+      google-auth-library: 11.3.1(supports-color@7.2.0)
+      html-entities: 2.6.0
+      mime: 3.0.0
+      p-limit: 3.1.0
+      retry-request: 9.1.0
+      teeny-request: 11.1.1(supports-color@7.2.0)
+    transitivePeerDependencies:
+      - supports-color
+
   '@google-cloud/tasks@7.3.1(supports-color@7.2.0)':
     dependencies:
       google-gax: 6.13.0(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
+
+  '@google/genai@3.0.0(@modelcontextprotocol/sdk@1.32.1(supports-color@7.2.0)(zod@4.6.7))(supports-color@7.2.0)':
+    dependencies:
+      google-auth-library: 10.9.1(supports-color@7.2.0)
+      p-retry: 4.6.2
+      protobufjs: 7.6.6
+      ws: 8.22.0
+    optionalDependencies:
+      '@modelcontextprotocol/sdk': 1.32.1(supports-color@7.2.0)(zod@4.6.7)
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@googleapis/sqladmin@38.1.1(supports-color@7.2.0)':
     dependencies:
@@ -11568,6 +11700,8 @@ snapshots:
 
   '@types/relateurl@0.2.33': {}
 
+  '@types/retry@0.12.0': {}
+
   '@types/sax@1.2.7':
     dependencies:
       '@types/node': 26.6.5
@@ -12130,6 +12264,10 @@ snapshots:
       - yaml
 
   async-lock@1.4.1: {}
+
+  async-retry@1.3.3:
+    dependencies:
+      retry: 0.13.1
 
   async-sema@3.1.1: {}
 
@@ -14047,6 +14185,8 @@ snapshots:
 
   hookified@2.2.0: {}
 
+  html-entities@2.6.0: {}
+
   html-escaper@3.0.3: {}
 
   html-void-elements@3.0.0: {}
@@ -15079,6 +15219,8 @@ snapshots:
 
   mime@2.6.0: {}
 
+  mime@3.0.0: {}
+
   mimic-fn@2.1.0: {}
 
   mimic-fn@3.1.0: {}
@@ -15952,6 +16094,11 @@ snapshots:
       eventemitter3: 5.0.4
       p-timeout: 7.0.2
 
+  p-retry@4.6.2:
+    dependencies:
+      '@types/retry': 0.12.0
+      retry: 0.13.1
+
   p-throttle@8.1.1: {}
 
   p-timeout@7.0.2: {}
@@ -16789,6 +16936,10 @@ snapshots:
     optionalDependencies:
       '@sveltejs/kit': 3.1.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.1))(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))(svelte@5.57.3(@typescript-eslint/types@8.72.1))(typescript@6.0.3)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
 
+  rxjs@7.8.2:
+    dependencies:
+      tslib: 2.8.1
+
   sade@1.8.1:
     dependencies:
       mri: 1.2.0
@@ -17325,6 +17476,15 @@ snapshots:
       - supports-color
 
   teeny-request@10.1.4(supports-color@7.2.0):
+    dependencies:
+      http-proxy-agent: 7.0.2(supports-color@7.2.0)
+      https-proxy-agent: 7.0.6(supports-color@7.2.0)
+      node-fetch: 3.3.2
+      stream-events: 1.0.5
+    transitivePeerDependencies:
+      - supports-color
+
+  teeny-request@11.1.1(supports-color@7.2.0):
     dependencies:
       http-proxy-agent: 7.0.2(supports-color@7.2.0)
       https-proxy-agent: 7.0.6(supports-color@7.2.0)

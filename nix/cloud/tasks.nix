@@ -1,11 +1,7 @@
-{
-  lib,
-  ref,
-  ...
-}: let
+{ref, ...}: let
   project = ref.vars.project_id;
   location = ref.vars.region;
-  tasks = ["connect" "testimonial-request"];
+  tasks = ["connect" "testimonial-request" "sync-portfolio"];
 
   genAttrs = names: f:
     builtins.listToAttrs (builtins.map (n: {
@@ -46,5 +42,31 @@ in {
       role = "roles/cloudtasks.enqueuer";
       member = "serviceAccount:\${google_service_account.runtime.email}";
     });
+
+    google_cloud_scheduler_job.sync-portfolio-weekly = {
+      inherit project;
+      region = location;
+      name = "${project}-sync-portfolio-weekly";
+      schedule = "0 0 * * 1";
+      time_zone = "UTC";
+      attempt_deadline = "1800s";
+
+      retry_config = {
+        retry_count = 5;
+        min_backoff_duration = "10s";
+        max_backoff_duration = "300s";
+        max_doublings = 4;
+      };
+
+      http_target = {
+        http_method = "POST";
+        uri = "\${google_cloud_run_v2_service.srv-internal.uri}/leads/portfolio/schedule-syncs";
+
+        oidc_token = {
+          service_account_email = "\${google_service_account.services.email}";
+          audience = "\${google_cloud_run_v2_service.srv-internal.uri}";
+        };
+      };
+    };
   };
 }

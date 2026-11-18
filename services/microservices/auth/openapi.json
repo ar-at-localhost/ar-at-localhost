@@ -435,6 +435,30 @@
                         ]
                       }
                     },
+                    "handles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "GitHub"
+                            ]
+                          },
+                          "handle": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "user_id",
+                          "type"
+                        ]
+                      }
+                    },
                     "id": {
                       "type": "integer"
                     },
@@ -459,6 +483,293 @@
                     "email",
                     "roles",
                     "keys",
+                    "handles",
+                    "id",
+                    "created_at",
+                    "updated_at",
+                    "deleted_at"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        400
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Bad Request"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        401
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Unauthenticated"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "enum": [
+                        500
+                      ]
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "enum": [
+                        "Internal Server Error"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "personal_info": {
+                    "type": "object",
+                    "properties": {
+                      "first_name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "last_name": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": []
+                  },
+                  "keys": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Claude",
+                            "Gemini",
+                            "GitHub",
+                            "OpenAPI"
+                          ]
+                        },
+                        "key": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    }
+                  },
+                  "handles": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "GitHub"
+                          ]
+                        },
+                        "handle": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    }
+                  }
+                },
+                "required": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "admin",
+                          "system",
+                          "unknown"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "keys": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "Claude",
+                              "Gemini",
+                              "GitHub",
+                              "OpenAPI"
+                            ]
+                          },
+                          "key": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "user_id",
+                          "type"
+                        ]
+                      }
+                    },
+                    "handles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "GitHub"
+                            ]
+                          },
+                          "handle": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "user_id",
+                          "type"
+                        ]
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "deleted_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "roles",
+                    "keys",
+                    "handles",
                     "id",
                     "created_at",
                     "updated_at",

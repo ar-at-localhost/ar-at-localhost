@@ -17,6 +17,7 @@ inputs:
 secretspec:
   enable: true
   profile: default
+  provider: encrypted_file
 
 cachix:
   enable: false

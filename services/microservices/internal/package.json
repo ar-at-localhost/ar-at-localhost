@@ -36,7 +36,7 @@
   "scripts": {
     "build": "tsdown",
     "check": "pnpm format && pnpm lint && pnpm typecheck",
-    "dev": "PORT=5003 node --watch src/index.ts",
+    "dev": "DEBUG=true PORT=5003 node --watch src/index.ts",
     "fix": "pnpm format:fix && pnpm lint:fix",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",
@@ -50,15 +50,22 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.5.0",
+    "@date-fns/utc": "^2.1.1",
     "@fastify/cors": "^11.3.1",
     "@fastify/helmet": "^13.1.2",
     "@fastify/rate-limit": "^11.2.1",
     "@google-cloud/secret-manager": "catalog:",
+    "@google-cloud/storage": "^8.4.0",
     "@google-cloud/tasks": "catalog:",
+    "@google/genai": "^3.0.0",
+    "date-fns": "^4.4.0",
+    "es-toolkit": "catalog:",
     "fastify": "catalog:",
     "lib": "workspace:*",
     "lib-server": "workspace:*",
     "resend": "catalog:",
+    "rxjs": "^7.8.2",
     "valibot": "^1.5.0"
   },
   "devDependencies": {
@@ -71,10 +78,8 @@
     "vitest": "catalog:"
   },
   "inlinedDependencies": {
-    "@date-fns/utc": "2.1.1",
     "@fastify/swagger": "9.9.2",
     "@valibot/to-json-schema": "1.8.0",
-    "date-fns": "4.4.0",
     "debug": "4.4.3",
     "drizzle-orm": "1.0.0-rc.5",
     "fast-uri": "3.1.8",

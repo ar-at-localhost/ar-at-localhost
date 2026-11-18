@@ -18,22 +18,6 @@ declare global {
   } & {
     _latestVersion: number;
   };
-}
-
-declare module "fastify" {
-  interface FastifyInstance {
-    turnstile: (req: FastifyRequest, rep: FastifyReply) => Promise<boolean>;
-    db: NodePgDatabase;
-  }
-
-  interface FastifyRequest {
-    userId?: number;
-    getUser?: () => Promise<UserRecord>;
-    jwt_keys: JWT_KEYS;
-    routeOptions: {
-      auth?: AuthStrategies;
-    };
-  }
 
   type AuthOpts = {
     optional?: boolean;
@@ -51,6 +35,22 @@ declare module "fastify" {
       jwt: JwtAuthStrategyOpts;
     }>;
   };
+}
+
+declare module "fastify" {
+  interface FastifyInstance {
+    turnstile: (req: FastifyRequest, rep: FastifyReply) => Promise<boolean>;
+    db: NodePgDatabase;
+  }
+
+  interface FastifyRequest {
+    userId?: number;
+    getUser?: () => Promise<UserInfo>;
+    jwt_keys: JWT_KEYS;
+    routeOptions: {
+      auth?: AuthOpts;
+    };
+  }
 
   interface FastifyContextConfig {
     auth?: AuthOpts;

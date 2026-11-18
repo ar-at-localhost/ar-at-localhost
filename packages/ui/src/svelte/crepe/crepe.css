@@ -6,3 +6,10 @@
   --crepe-font-default: "Overpass Variable", sans-serif;
   --crepe-font-code: "Overpass Mono Variable", monospace;
 }
+
+.milkdown .milkdown-top-bar {
+  background: var(--background) !important;
+  color: var(--color-gray-500);
+  display: flex;
+  flex-wrap: wrap;
+}

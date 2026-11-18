@@ -9,6 +9,7 @@
     "CORS_ALLOW",
     "CHROMIUM_PATH",
     "DB_URI",
+    "DEBUG",
     "MAIL_FROM",
     "MAIL_SECURE",
     "MAIL_SERVER",
@@ -22,6 +23,7 @@
     "PUBLIC_SRV_URL",
     "PUBLIC_SRV_AUTH_URL",
     "PUBLIC_SRV_CONTACT_URL",
+    "PUBLIC_SRV_INT_URL",
     "PUBLIC_STAGE",
     "PUBLIC_TURNSTILE_SITEKEY",
     "RESEND_API_KEY",
@@ -29,6 +31,7 @@
     "SITE_APP_ID",
     "SOPS_AGE_KEY",
     "TF_VAR_jwt",
+    "TF_VAR_project_name",
     "TURBO_TOKEN",
     "TURNSTILE_SECRET_KEY"
   ],

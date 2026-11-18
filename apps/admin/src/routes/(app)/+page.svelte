@@ -6,8 +6,9 @@
   import { getStatementQuerySv } from 'lib/svelte';
   import { mkOpts } from '#lib';
   import { Contact, Star } from '@lucide/svelte';
+  import { user } from '#lib/auth.svelte.ts';
 
-  const { data } = $props()
+  const data = $derived(user.profile)
 
   const result = getStatementQuerySv({
     srvArgs: mkOpts({
@@ -43,28 +44,30 @@
   })
 </script>
 
-<div class="flex flex-col gap-4 pt-4 pb-16 px-8">
-  <div class="flex flex-col gap-2 md:gap-0 md:flex-row items-start justify-start md:items-end md:justify-between">
-    <div class="flex flex-row items-center gap-4">
-      <img src={logo} alt="Logo" class="size-6 md:size-12" />
-      <div class="flex flex-col gap-1 text-sm">
-        <b>👋 Hi, {data.first_name}</b>
-        <span class="hidden md:inline-block">This is how things look currently.</span>
+{#if data}
+  <div class="flex flex-col gap-4 pt-4 pb-16 px-8">
+    <div class="flex flex-col gap-2 md:gap-0 md:flex-row items-start justify-start md:items-end md:justify-between">
+      <div class="flex flex-row items-center gap-4">
+        <img src={logo} alt="Logo" class="size-6 md:size-12" />
+        <div class="flex flex-col gap-1 text-sm">
+          <b>👋 Hi, {data.first_name}</b>
+          <span class="hidden md:inline-block">This is how things look currently.</span>
+        </div>
+      </div>
+
+      <div class="block md:flex flex-col gap-1 items-start text-sm md:text-right">
+        <span class="inline-block md:hidden ">This is how things look currently.</span>
+        <span>Data will update automatically every minute.</span>
       </div>
     </div>
 
-    <div class="block md:flex flex-col gap-1 items-start text-sm md:text-right">
-      <span class="inline-block md:hidden ">This is how things look currently.</span>
-      <span>Data will update automatically every minute.</span>
+    <Separator />
+
+    <div class="
+      flex flex-row flex-wrap items-center justify-start gap-4
+    ">
+       <Card data={statement.connects} /> 
+       <Card data={statement.testimonials} /> 
     </div>
   </div>
-
-  <Separator />
-
-  <div class="
-    flex flex-row flex-wrap items-center justify-start gap-4
-  ">
-     <Card data={statement.connects} /> 
-     <Card data={statement.testimonials} /> 
-  </div>
-</div>
+{/if}

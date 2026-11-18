@@ -1,0 +1,9 @@
+{
+  "features": {
+    "ghcr.io/devcontainers/features/nix:1": {
+      "multiUser": false,
+      "packages": "devenv,sops",
+      "flakeUri": "/workspaces/ar-at-localhost"
+    }
+  }
+}

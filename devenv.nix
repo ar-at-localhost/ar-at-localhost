@@ -7,8 +7,6 @@
   inherit (pkgs.stdenv) system;
   inherit (pkgs) chromium;
 in {
-  devcontainer.enable = true;
-
   languages = {
     javascript = {
       enable = true;

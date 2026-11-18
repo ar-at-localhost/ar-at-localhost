@@ -30,8 +30,10 @@ export const createApp = async (
 
   app.register(authPlugin);
   app.register(authRest);
+
   app.register(statementRest, {
     prefix: "statement",
   });
+
   return app;
 };

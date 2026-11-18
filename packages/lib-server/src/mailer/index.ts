@@ -24,17 +24,12 @@ export const sendMail = async (
     cc: isProduction() ? opts.cc : ([getContactPerson(true)].filter((i) => !!i) as string[]),
   };
 
-  return transport
-    .sendMail(finalOpts)
-    .then((res) => {
-      if (isTest) {
-        const previewUrl = getTestMessageUrl(res);
-        console.info("Test email sent:", previewUrl);
-      }
+  return transport.sendMail(finalOpts).then((res) => {
+    if (isTest) {
+      const previewUrl = getTestMessageUrl(res);
+      console.info("Test email sent:", previewUrl);
+    }
 
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    return res;
+  });
 };

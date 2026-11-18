@@ -1,6 +1,6 @@
 import { type InferSelectModel } from "drizzle-orm";
 import { integer, pgEnum, pgTable, unique, varchar } from "drizzle-orm/pg-core";
-import { userKeys } from "lib";
+import { userHandles, userKeys } from "lib";
 
 import { timestamps } from "./schema.ts";
 
@@ -33,6 +33,24 @@ export const userKeysTable = pgTable(
 
     type: userKeysEnum().notNull(),
     key: varchar({ length: 512 }),
+  },
+  (t) => [unique().on(t.user_id, t.type)],
+);
+
+export const userHandlesEnum = pgEnum("user_handle_type", userHandles);
+export type UserHandles = (typeof userHandlesEnum.enumValues)[number];
+
+export const userHandlesTable = pgTable(
+  "user_handles",
+  {
+    user_id: integer()
+      .notNull()
+      .references(() => usersTable.id, {
+        onDelete: "cascade",
+      }),
+
+    type: userHandlesEnum().notNull(),
+    handle: varchar({ length: 256 }),
   },
   (t) => [unique().on(t.user_id, t.type)],
 );

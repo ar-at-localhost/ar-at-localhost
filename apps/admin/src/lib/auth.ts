@@ -1,7 +1,4 @@
-import { PUBLIC_SRV_AUTH_URL } from "$app/env/public";
-import { getProfileSrv, type LoginRespSchema, type UserInfo, type UserKey } from "lib";
-
-import { mkOpts } from "./http";
+import { type LoginRespSchema, type UserHandle, type UserInfo, type UserKey } from "lib";
 
 const TokenKey = "token";
 const RefreshTokenKey = "refresh-token";
@@ -22,45 +19,20 @@ export const getToken = () => localStorage.getItem(TokenKey) || "";
 export const getRefreshToken = () => localStorage.getItem(RefreshTokenKey) || "";
 export const isLoggedIn = () => !!getToken();
 type KeysFlat = Record<UserKey, string | undefined>;
+type HandlesFlat = Record<UserHandle, string | undefined>;
+export type UserProfile = UserInfo & {
+  keysFlat: KeysFlat;
+  handlesFlat: HandlesFlat;
+};
 
-export const loadProfile = (() => {
-  let profile:
-    | (UserInfo & {
-        keysFlat: KeysFlat;
-      })
-    | null = null;
-
-  return async () => {
-    if (profile) return profile;
-
-    try {
-      profile = JSON.parse(localStorage.getItem(ProfileKey)!);
-    } catch {}
-
-    if (!profile) {
-      profile = await getProfileSrv(
-        mkOpts({
-          baseURL: PUBLIC_SRV_AUTH_URL,
-          bearer: getToken(),
-        }),
-      )
-        .then((res) => {
-          return {
-            ...res,
-            keysFlat: res.keys.reduce((o, n) => {
-              o[n.type] = n.key;
-              return o;
-            }, {} as KeysFlat),
-          };
-        })
-        .catch((err) => {
-          console.error(err);
-          return null;
-        });
-
-      localStorage.setItem(ProfileKey, JSON.stringify(profile));
-    }
-
-    return profile;
-  };
-})();
+export const transform = (res: UserInfo): UserProfile => ({
+  ...res,
+  keysFlat: res.keys.reduce((o, n) => {
+    o[n.type] = n.key;
+    return o;
+  }, {} as KeysFlat),
+  handlesFlat: res.handles.reduce((o, n) => {
+    o[n.type] = n.handle;
+    return o;
+  }, {} as HandlesFlat),
+});

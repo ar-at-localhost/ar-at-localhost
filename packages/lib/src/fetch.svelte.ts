@@ -7,12 +7,14 @@ import {
 import { toMerged } from "es-toolkit";
 
 import type { ReqArgs, APIService, ReqOpts } from "./fetch.ts";
+import type { APIError } from "./schema.ts";
 
 type ServiceArgs<Service extends (...args: any) => any> = Parameters<Service>[0];
 
 type QueryArg<Result = any, ServiceArgs = any> = {
   srvArgs?: ServiceArgs;
-  opts?: Omit<CreateQueryOptions<Result, Error, Result>, "queryKey" | "queryFn">;
+  opts?: Omit<CreateQueryOptions<Result, APIError, Result>, "queryKey" | "queryFn">;
+  onResult?: (v: Result) => Promise<void>;
 };
 
 type QueryArgs<Result, Service> = QueryArg<Result, Service> | (() => QueryArg<Result, Service>);
@@ -35,7 +37,13 @@ export const mkQuerySv =
               params: params,
               query: query,
             }) as ReqOpts<Args>,
-          ),
+          ).then((v) => {
+            if (!o.onResult) return v;
+            return o
+              .onResult(v)
+              .then(() => v)
+              .catch(() => v);
+          }),
       };
     });
 
@@ -50,7 +58,7 @@ export type QuerySv<Result = any, Args extends ReqArgs = ReqArgs> = ReturnType<
 
 type MuatationArg<Result = any, ServiceArgs = any> = {
   srvArgs?: ServiceArgs;
-  opts?: CreateMutationOptions<Result, Error, Partial<ServiceArgs>>;
+  opts?: CreateMutationOptions<Result, APIError, Partial<ServiceArgs>>;
 };
 
 /**
@@ -67,7 +75,7 @@ export const mkMutationSv =
       };
     });
 
-export type MutationFactorySv<Result = any, Args extends ReqArgs = ReqArgs> = typeof mkQuerySv<
+export type MutationFactorySv<Result = any, Args extends ReqArgs = ReqArgs> = typeof mkMutationSv<
   Result,
   Args
 >;
