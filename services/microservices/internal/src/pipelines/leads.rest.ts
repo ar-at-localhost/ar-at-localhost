@@ -1,11 +1,9 @@
-import { writeFileSync } from "node:fs";
-
 import { UTCDate } from "@date-fns/utc";
 import { CloudTasksClient } from "@google-cloud/tasks";
 import { ApiError, GoogleGenAI } from "@google/genai";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import type { FastifyPluginAsync } from "fastify";
-import type { OkResp } from "lib";
+import { isDebug, type OkResp } from "lib";
 import {
   db,
   getFile,
@@ -43,7 +41,6 @@ export const leadsRest: FastifyPluginAsync = async (app) => {
       });
 
       const llm = await getLeadFindLLM(user!);
-      writeFileSync("/home/ar/leads-llm.json", JSON.stringify(llm));
 
       const result = await genai.models
         .generateContent({
@@ -76,6 +73,11 @@ ${i.content}
         })
         .catch((err) => {
           const e = err as ApiError;
+
+          if (isDebug()) {
+            console.error(err);
+          }
+
           if (e.status === 429) {
             return mkTooManyRequestsErr("LLM usage quota exceeded!");
           }
@@ -86,7 +88,6 @@ ${i.content}
         return rep.status(e.statusCode).send(e);
       }
 
-      writeFileSync("/home/ar/leads-llm-out.json", JSON.stringify(result));
       await getFile(`users/${user.id}/llm/leads.json`).save(JSON.stringify(result));
       rep.status(200).send({ message: "Leads results have been saved successfully!" });
     },
