@@ -1,3 +1,4 @@
+import { toJsonSchema } from "@valibot/to-json-schema";
 import { timestamp } from "drizzle-orm/pg-core";
 import {
   integer,
@@ -10,6 +11,7 @@ import {
   type InferOutput,
   picklist,
   optional,
+  type GenericSchema,
 } from "valibot";
 
 // columns.helpers.ts
@@ -107,3 +109,35 @@ export const okIdSchema = object({
 });
 
 export type OkIdResponse = InferOutput<typeof okIdSchema>;
+
+/*
+ * Valibot to swagger/openapi transformation
+ --------------------------------------------
+*/
+/**
+ * Strips empty required[] from openapi schema, that would otherwise be invalid
+ */
+const stripEmptyRequired = <T>(schema: T): T => {
+  if (Array.isArray(schema)) return schema.map((i) => stripEmptyRequired(i)) as T;
+  if (schema && typeof schema === "object") {
+    return Object.fromEntries(
+      Object.entries(schema as unknown[])
+        .filter(([k, v]) => !(k === "required" && Array.isArray(v) && v.length === 0))
+        .map(([k, v]) => [k, stripEmptyRequired(v)]),
+    ) as T;
+  }
+
+  return schema;
+};
+
+/**
+ * A wrapper over valibot's toJsonSchema to strip any empty required[]
+ */
+export const toJsonSchemaApp = (schema: GenericSchema) => {
+  const result = toJsonSchema(schema, {
+    target: "openapi-3.0",
+    errorMode: "ignore",
+  });
+
+  return stripEmptyRequired(result);
+};

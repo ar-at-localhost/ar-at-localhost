@@ -6,7 +6,6 @@ import fastifyCors from "@fastify/cors";
 import fastifyHelmet from "@fastify/helmet";
 import fastifyRateLimit from "@fastify/rate-limit";
 import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swagger";
-import { toJsonSchema } from "@valibot/to-json-schema";
 import Fastify, { type FastifyInstance } from "fastify";
 import { getPort, isValibot } from "lib";
 import { type GenericSchema, parse, safeParse } from "valibot";
@@ -18,6 +17,7 @@ import {
   okSchema,
   serverErr,
   serverErrSchema,
+  toJsonSchemaApp,
 } from "./schema.ts";
 import { turnstilePlugin } from "./turnstile.ts";
 
@@ -120,20 +120,16 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
       transform: ({ schema, url }) => {
         if (!schema) return { schema, url };
         const out = { ...schema } as unknown as typeof schema;
-        const jsonOpts = {
-          target: "openapi-3.0",
-          errorMode: "ignore",
-        } as const;
 
         for (const k of ["body", "params", "querystring"] as const) {
-          if (isValibot(schema[k])) out[k] = toJsonSchema(schema[k], jsonOpts) as unknown;
+          if (isValibot(schema[k])) out[k] = toJsonSchemaApp(schema[k]) as unknown;
         }
 
         if (schema.response) {
           out.response = Object.fromEntries(
             Object.entries(schema.response).map(([code, s]) => [
               code,
-              isValibot(s) ? toJsonSchema(s, jsonOpts) : s,
+              isValibot(s) ? toJsonSchemaApp(s) : s,
             ]),
           );
         }

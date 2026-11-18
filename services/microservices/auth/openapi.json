@@ -613,8 +613,7 @@
                         "type": "string",
                         "minLength": 1
                       }
-                    },
-                    "required": []
+                    }
                   },
                   "keys": {
                     "type": "array",
@@ -659,8 +658,7 @@
                       ]
                     }
                   }
-                },
-                "required": []
+                }
               }
             }
           }

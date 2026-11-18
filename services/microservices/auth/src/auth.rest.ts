@@ -139,6 +139,7 @@ export const authRest: FastifyPluginAsync = async (app) => {
       },
       schema: {
         body: updateProfileSchema,
+
         response: {
           200: getProfileRespSchema,
           401: unauthenticedReqErrSchema,
