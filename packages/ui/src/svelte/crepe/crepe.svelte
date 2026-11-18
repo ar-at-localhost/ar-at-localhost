@@ -1,19 +1,17 @@
-<script lang="ts" generics="AI extends 'Gemini'">
+<script lang="ts">
   import { onMount } from 'svelte';
   import { Crepe } from '@milkdown/crepe';
-  import { gemini, type ProviderOpts } from './providers/index';
+  import { type AIOpts, gemini } from './providers/index';
 
   interface Props {
-    id?: string;
+    ai?: AIOpts
     content?: string;
-    oncontent?: (content?: string) => void;
-    ai?: {
-      provider: AI,
-      opts: ProviderOpts[AI]
-    }
+    id?: string;
+    oncontent?: (content: string) => void;
+    readonly?: boolean,
   }
 
-  const { ai, id = "crepe", content, oncontent }: Props = $props()
+  const { ai, id = "crepe", readonly, content, oncontent }: Props = $props()
   let crepe: Crepe | undefined = undefined;
 
   onMount(() => {
@@ -24,26 +22,42 @@
 This is an interactive markdown editor powered by AI. Use it to take notes and write your texts. Get started by deleting this placeholder and adding your own notes 🚀.`,
 
       features: {
-        toolbar: true,
+        [Crepe.Feature.TopBar]: true,
+        [Crepe.Feature.Toolbar]: true,
+        [Crepe.Feature.CodeMirror]: true,
+        [Crepe.Feature.Latex]: false,
         ai: true,
-        "code-mirror": true,
-        latex: false,
       },
 
       featureConfigs: {
         // TODO: Support Claude / OpenAPI
-        ai: ai && ai.provider === 'Gemini' ? {
-          provider: gemini(ai.opts),
+        ai: ai?.type === 'Gemini' ? {
+          provider: gemini(ai.opts!),
           onError: console.error
-        } : undefined
-      }
+        } : undefined,
+
+        [Crepe.Feature.TopBar]: {
+          buildTopBar(builder) {
+            builder.addGroup('custom', 'Custom').addItem('Save', {
+              onRun: () => {
+                try {
+                  oncontent?.(crepe?.getMarkdown() || '')
+                } catch {}
+              },
+              active: () => false,
+              icon: '<span class="text-sm px-2">Save</span>',
+            })
+          },
+        }
+      },
     })
 
     crepe?.create();
+    if (readonly) {
+      crepe?.setReadonly(true)
+    }
 
     return () => {
-      const c = crepe?.getMarkdown();
-      oncontent?.(c)
       crepe?.destroy()
     }
   })

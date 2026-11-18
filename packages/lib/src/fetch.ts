@@ -1,15 +1,17 @@
 import { getAPIBaseURL, isDebug } from "./env.ts";
 
 const jsonOrSth = async (res: Response, sth?: unknown) => {
+  const clone = res.clone();
+
   if (isDebug()) {
     try {
-      const clone = res.clone();
-      console.log(clone.status, clone.statusText, await clone.json());
+      const debugClone = res.clone();
+      console.log(debugClone.status, debugClone.statusText, await debugClone.json());
     } catch {}
   }
 
-  if (res.headers.get("CONTENT-TYPE")?.startsWith("application/json")) return await res.json();
-  return sth;
+  if (clone.headers.get("CONTENT-TYPE")?.startsWith("application/json")) return await clone.json();
+  return sth || res;
 };
 
 export type ReqMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT";
@@ -24,7 +26,7 @@ export type ReqArgs<
 > = [Params, Query, Body];
 type Bearer = string | (() => string) | (() => Promise<string>);
 
-export type SrvOpts<Args extends ReqArgs = ReqArgs> = {
+export type SrvOpts<Args extends ReqArgs = ReqArgs, Resp = unknown> = {
   method: ReqMethod;
   endpoint?: string;
   params?: Args[0];
@@ -33,6 +35,7 @@ export type SrvOpts<Args extends ReqArgs = ReqArgs> = {
   baseURL?: string;
   headers?: Record<string, string>;
   bearer?: Bearer;
+  meta?: Record<string, any>;
 
   /**
    * Error handling functions. If an error of given code occurs,
@@ -47,11 +50,21 @@ export type SrvOpts<Args extends ReqArgs = ReqArgs> = {
    * - Uniform error interface
    */
   errorHandlers?: ReqErrHandlers;
+
+  /**
+   * Transform response
+   */
+  transformer?: (
+    result: unknown,
+    response: Response,
+    req: RequestInit,
+    meta: Record<string, any>,
+  ) => Promise<Resp>;
 };
 
 export type ReqOpts<Args extends ReqArgs = ReqArgs> = Pick<
   SrvOpts<Args>,
-  "baseURL" | "bearer" | "body" | "errorHandlers" | "headers" | "params" | "query"
+  "baseURL" | "bearer" | "body" | "errorHandlers" | "headers" | "meta" | "params" | "query"
 >;
 
 const resolveBearer = async (bearer?: Bearer) =>
@@ -85,16 +98,23 @@ export const mkClientSrv = <Result = any, Args extends ReqArgs = ReqArgs>(
       method: srvOpts.method,
       headers: {
         ...(reqOpts?.body && { "CONTENT-TYPE": "application/json" }),
-        ...(bearer && { Authorization: `Bearer ${bearer}` }),
+        ...srvOpts.headers,
         ...reqOpts.headers,
+        ...(bearer && { Authorization: `Bearer ${bearer}` }),
       },
       body: reqOpts?.body && JSON.stringify(reqOpts.body),
     };
 
+    if (isDebug()) {
+      console.log(opts);
+    }
+
     return fetch(url, opts)
       .then(async (res) => {
         if (res.ok) {
-          return jsonOrSth(res) as Promise<Result>;
+          const out = (await jsonOrSth(res)) as Promise<Result>;
+          if (!srvOpts.transformer) return out;
+          return srvOpts.transformer(out, res.clone(), opts, { ...srvOpts.meta, ...reqOpts.meta });
         }
 
         const handler =

@@ -46,6 +46,7 @@
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "es-toolkit": "catalog:",
+    "rxjs": "^7.8.2",
     "tsdown": "catalog:",
     "typescript": "catalog:",
     "vite": "^8.3.4",
@@ -53,7 +54,8 @@
   },
   "peerDependencies": {
     "@tanstack/svelte-query": "^6.3.9",
-    "es-toolkit": "catalog:"
+    "es-toolkit": "catalog:",
+    "rxjs": "^7.8.2"
   },
   "peerDependenciesMeta": {
     "@tanstack/svelte-query": {

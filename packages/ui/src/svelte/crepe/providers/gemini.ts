@@ -39,18 +39,15 @@ export const gemini = (opts: GeminiOpts): AIProvider =>
     if (!response.ok || !response.body) throw new Error("AI request failed");
 
     for await (const payload of parseSSE(response, signal)) {
-      console.log(payload);
       if (payload === "[DONE]") return;
 
       let event: GeminiStreamChunk;
       try {
         event = JSON.parse(payload) as GeminiStreamChunk;
       } catch {
-        console.error("Payload:", payload);
         continue;
       }
 
-      console.log("Event:", event);
       const delta = event?.delta?.text;
       if (delta) yield delta;
     }

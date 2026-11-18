@@ -11,10 +11,12 @@ import {
   picklist,
   integer,
   optional,
+  omit,
+  partial,
 } from "valibot";
 
 import { mkClientSrv } from "./fetch.ts";
-import { recordSchema } from "./schema.ts";
+import { recordSchema, tooShort } from "./schema.ts";
 
 /*
  * Login with email
@@ -49,16 +51,25 @@ export const refreshTokenSrv = mkClientSrv<LoginRespSchema, LoginServiceArgs>({
 });
 
 /*
- * Profile
+ * Get Profile
  */
 export const userKeys = ["Claude", "Gemini", "GitHub", "OpenAPI"] as const;
 export type UserKey = (typeof userKeys)[number];
 export const userKeyset: Readonly<Set<UserKey>> = new Set<UserKey>(userKeys);
+export const userHandles = ["GitHub"] as const;
+export type UserHandle = (typeof userHandles)[number];
+export const userHandleset: Readonly<Set<UserHandle>> = new Set<UserHandle>(userHandles);
 
 export const userKeysSchema = object({
   user_id: pipe(number(), integer()),
   type: pipe(string(), picklist(Array.from(userKeyset))),
   key: optional(string()),
+});
+
+export const userHandlesSchema = object({
+  user_id: pipe(number(), integer()),
+  type: pipe(string(), picklist(Array.from(userHandleset))),
+  handle: optional(string()),
 });
 
 export const getProfileRespSchema = object({
@@ -67,6 +78,7 @@ export const getProfileRespSchema = object({
   email: pipe(string(), email()),
   roles: pipe(array(picklist(["admin", "system", "unknown"]))),
   keys: array(userKeysSchema),
+  handles: array(userHandlesSchema),
   ...recordSchema.entries,
 });
 
@@ -76,6 +88,30 @@ export type GetProfileArgs = [never, never, never];
 
 export const getProfileSrv = mkClientSrv<GetProfileResp>({
   method: "GET",
+  endpoint: "/auth/profile",
+});
+
+/*
+ * Update profile
+ */
+export const updateProfileSchema = partial(
+  object({
+    personal_info: partial(
+      object({
+        first_name: pipe(string("First name is required"), minLength(1, tooShort("First name", 1))),
+        last_name: pipe(string("Last name is required"), minLength(1, tooShort("Last name", 1))),
+      }),
+    ),
+    keys: array(omit(userKeysSchema, ["user_id"])),
+    handles: array(omit(userHandlesSchema, ["user_id"])),
+  }),
+);
+
+export type UpdateUserBody = InferOutput<typeof updateProfileSchema>;
+export type UpdateUserArgs = [never, never, UpdateUserBody];
+
+export const updateProfileSrv = mkClientSrv<GetProfileResp, UpdateUserArgs>({
+  method: "PATCH",
   endpoint: "/auth/profile",
 });
 

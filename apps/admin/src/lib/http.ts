@@ -12,7 +12,7 @@ export const mkOpts = <Args extends ReqArgs = ReqArgs>(args: ReqOpts<Args>): Req
     401: async (_: Response, url: string, opts: RequestInit) => {
       return await refreshTokenSrv({
         bearer: getRefreshToken(),
-        baseURL: PUBLIC_SRV_URL,
+        baseURL: PUBLIC_SRV_AUTH_URL || PUBLIC_SRV_URL,
       })
         .then((res) => {
           setAuth(res);

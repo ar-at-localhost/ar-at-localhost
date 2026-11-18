@@ -69,7 +69,7 @@ export const badReqErrorSchema = object({
 export type BadReqAPIError = InferOutput<typeof badReqErrorSchema>;
 
 export const mkBadReqErr = (message: string) =>
-  ({ statusCode: 404, error: "Not Found", message }) satisfies NotFoundAPIError;
+  ({ statusCode: 400, error: "Bad Request", message }) satisfies BadReqAPIError;
 
 export const notFoundErrorSchema = object({
   ...errorSchema.entries,
@@ -82,15 +82,28 @@ export type NotFoundAPIError = InferOutput<typeof notFoundErrorSchema>;
 export const mkNotFoundErr = (message: string) =>
   ({ statusCode: 404, error: "Not Found", message }) satisfies NotFoundAPIError;
 
+export const tooManyRequestsErrorSchema = object({
+  ...errorSchema.entries,
+  statusCode: literal(429),
+  error: literal("Too Many Requests"),
+});
+
+export type TooManyRequestsAPIError = InferOutput<typeof tooManyRequestsErrorSchema>;
+
+export const mkTooManyRequestsErr = (message: string) =>
+  ({ statusCode: 429, error: "Too Many Requests", message }) satisfies TooManyRequestsAPIError;
+
 export const okSchema = object({
   message: errorSchema.entries.message,
 });
 
 export type OkResponse = InferOutput<typeof okSchema>;
 
+export const idSchema = pipe(number(), integer());
+
 export const okIdSchema = object({
   ...okSchema.entries,
-  id: pipe(number(), integer()),
+  id: idSchema,
 });
 
 export type OkIdResponse = InferOutput<typeof okIdSchema>;

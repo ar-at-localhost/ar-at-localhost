@@ -10,7 +10,7 @@
   const outbound = $derived(page.route.id == '/(app)/connects/outbound');
 </script>
 
-<div class="w-full h-full flex flex-col gap-1 relative">
+<div class="w-full h-full flex flex-col overflow-hidden gap-1 relative top-0 left-0">
   <div class="flex flex-row items-center justify-between">
     <div class="flex flex-row items-center px-2 pt-1 gap-1">
       <Button variant='outline' disabled={inbound} onclick={() =>goto('/connects/inbound')}>
@@ -27,7 +27,7 @@
 
   <Separator />
 
-  <div class="w-full grow">
+  <div class="w-full grow overflow-auto">
     {@render children()}
   </div>
 </div>

@@ -4,10 +4,16 @@ export type BaseProviderOpts = {
 };
 
 export interface GeminiOpts extends BaseProviderOpts {}
-export type AIProviders = "gemini";
+export type AIProvider = "Gemini" | "none";
 
 export interface ProviderOpts {
   Gemini: GeminiOpts;
+  none: undefined;
+}
+
+export interface AIOpts<AI extends AIProvider = AIProvider> {
+  type: AI;
+  opts: ProviderOpts[AI];
 }
 
 export async function* parseSSE(response: Response, signal: AbortSignal): AsyncGenerator<string> {

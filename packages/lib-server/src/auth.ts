@@ -7,11 +7,12 @@ import { eq } from "drizzle-orm";
 import type { FastifyRequest } from "fastify";
 import fp from "fastify-plugin";
 import { jwtVerify, SignJWT, type JWTPayload } from "jose";
-import type { LoginRespSchema } from "lib";
+import type { LoginRespSchema, UserInfo } from "lib";
 
 import { isCI, isDev } from "./env.ts";
 import { db } from "./pg.ts";
 import { usersTable, type UserRecord } from "./user.db.ts";
+import { getUserInfo } from "./user.ts";
 
 /**
  * Resolve JWT Keys from the Google Cloud Secret Manager
@@ -118,7 +119,8 @@ export const apiKeyAuth: AuthHandler = async function (req) {
       .limit(1);
 
     req.userId = user.id;
-    req.getUser = async () => user;
+    // FIXME: return UserInfo instead of UserRecord
+    req.getUser = async () => user as unknown as UserInfo;
   }
 };
 
@@ -143,11 +145,11 @@ export const jwtTokenAuth: AuthHandler<JwtAuthStrategyOpts> = async function (re
     req.userId = id;
 
     req.getUser = (() => {
-      let user: UserRecord | undefined = undefined;
+      let user: UserInfo | undefined = undefined;
 
       return async () => {
         if (!user) {
-          [user] = await db.select().from(usersTable).where(eq(usersTable.id, id)).limit(1);
+          user = await getUserInfo(id);
         }
 
         return user;

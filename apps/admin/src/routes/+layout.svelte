@@ -1,15 +1,17 @@
 <script lang="ts">
-	import './layout.css';
-	import favicon from '../static/favicon.svg';
-	import type { LayoutProps } from './$types';
+  import './layout.css';
+  import favicon from '../static/favicon.svg';
+  import type { LayoutProps } from './$types';
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+  import Profile from "./profile.svelte";
 
 	let { children }: LayoutProps = $props();
 
   const client = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: 0
+        retry: false,
+        staleTime: Infinity
       }
     }
   });
@@ -20,5 +22,7 @@
 </svelte:head>
 
 <QueryClientProvider client={client}>
-  {@render children()}
+  <Profile>
+    {@render children()}
+  </Profile>
 </QueryClientProvider>

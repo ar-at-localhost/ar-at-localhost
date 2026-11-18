@@ -56,7 +56,9 @@
     "@eslint/js": "^10",
     "@internationalized/date": "^3.12.4",
     "@lucide/svelte": "^1.70.0",
+    "@milkdown/core": "^7.23.0",
     "@milkdown/crepe": "^7.23.0",
+    "@milkdown/kit": "^7.23.0",
     "@sveltejs/adapter-auto": "^8.0.0",
     "@sveltejs/kit": "^3.0.0",
     "@sveltejs/package": "^2.5.8",
@@ -80,10 +82,15 @@
     "vite": "^8.3.4"
   },
   "peerDependencies": {
+    "@milkdown/core": "^7.23.0",
     "@milkdown/crepe": "^7.23.0",
+    "@milkdown/kit": "^7.23.0",
     "svelte": "^5.0.0"
   },
   "peerDependenciesMeta": {
+    "@milkdown/core": {
+      "optional": true
+    },
     "@milkdown/crepe": {
       "optional": true
     },

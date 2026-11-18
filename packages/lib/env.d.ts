@@ -11,6 +11,8 @@ declare global {
       PORT: string;
       TEST_PORT: string;
       TF_VAR_jwt: string;
+      TF_VAR_project_id: string;
+      PUBLIC_SRV_INT_URL: string;
     }
   }
 
