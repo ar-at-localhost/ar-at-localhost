@@ -23,6 +23,7 @@ in {
         "apigateway"
         "artifactregistry"
         "cloudresourcemanager"
+        "cloudscheduler"
         "cloudtasks"
         "compute"
         "dns"
