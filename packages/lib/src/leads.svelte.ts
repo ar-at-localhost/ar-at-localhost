@@ -1,31 +1,14 @@
 import { mkMutationSv, mkQuerySv } from "./fetch.svelte";
 import {
+  createLeadSrv,
   findLeadsSrv,
-  getLeadsSysPromptSrv,
-  getPortfolioSrv,
-  getPortfolioSyncPromptSrv,
-  getPortfolioSyncSysPromptSrv,
-  getPortfolioWhoamiSrv,
-  setLeadsSysPromptSrv,
-  setPortfolioSyncPromptSrv,
-  setPortfolioSyncSysPromptSrv,
-  setPortfolioWhoamiSrv,
+  getLeadsSrv,
+  jdToLeadSrv,
   syncPortfolioSrv,
 } from "./leads.ts";
 
-export const getPortfolioQuerySv = mkQuerySv(getPortfolioSrv);
-
-export const getLeadsSysPromptQuerySv = mkQuerySv(getLeadsSysPromptSrv);
-export const setLeadsSysPromptMutationSv = mkMutationSv(setLeadsSysPromptSrv);
-
-export const getPortfolioSyncPromptQuerySv = mkQuerySv(getPortfolioSyncPromptSrv);
-export const setPortfolioSyncPromptMutationSv = mkMutationSv(setPortfolioSyncPromptSrv);
-
-export const getPortfolioSyncSysPromptQuerySv = mkQuerySv(getPortfolioSyncSysPromptSrv);
-export const setPortfolioSyncSysPromptMutationSv = mkMutationSv(setPortfolioSyncSysPromptSrv);
-
-export const getPortfolioWhoamiQuerySv = mkQuerySv(getPortfolioWhoamiSrv);
-export const setPortfolioWhoamiMutationSv = mkMutationSv(setPortfolioWhoamiSrv);
-
-export const syncPortfolioMutationSv = mkMutationSv(syncPortfolioSrv);
+export const getLeadsQuerySv = mkQuerySv(getLeadsSrv);
 export const findLeadsMutationSv = mkMutationSv(findLeadsSrv);
+export const jdToLeadMutationSv = mkMutationSv(jdToLeadSrv);
+export const createLeadMutationSv = mkMutationSv(createLeadSrv);
+export const syncPortfolioMutationSv = mkMutationSv(syncPortfolioSrv);

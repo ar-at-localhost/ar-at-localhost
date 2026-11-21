@@ -4,7 +4,6 @@
   import Draft from '#lib/components/draft.svelte';
   import { LoaderPinwheel } from '@lucide/svelte';
   import { type MutationSv, type QuerySv } from 'lib/svelte';
-  import 'ui/svelte/crepe/crepe.css';
   import type { OkResp, PromptSchema } from 'lib';
 
   interface Props {

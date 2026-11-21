@@ -36,7 +36,7 @@
   "scripts": {
     "build": "tsdown",
     "check": "pnpm format && pnpm lint && pnpm typecheck",
-    "dev": "DEBUG=true PORT=5002 node --watch src/index.ts",
+    "dev": "DEBUG=true PORT=5002 tsx watch src/index.ts",
     "fix": "pnpm format:fix && pnpm lint:fix",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",
@@ -66,6 +66,7 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "tsdown": "catalog:",
+    "tsx": "^4.23.15",
     "typescript": "catalog:",
     "vite": "^8.3.3",
     "vitest": "catalog:"

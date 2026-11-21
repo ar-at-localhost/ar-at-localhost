@@ -6,6 +6,7 @@ export * from "./env.ts";
 export * from "./fs.ts";
 export * from "./pg.ts";
 export * from "./internal/index.ts";
+export * from "./lead.db.ts";
 export * from "./llm.ts";
 export * from "./mailer/index.ts";
 export * from "./schema.ts";

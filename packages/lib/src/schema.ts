@@ -15,12 +15,20 @@ import {
   undefinedable,
   type GenericSchema,
   isoTimestamp,
+  nullish,
+  minLength,
 } from "valibot";
 
 export const required = (kind: string) => `${kind} is required!`;
 export const tooLong = (kind: string, max: number) => `${kind} too long (max: ${max})`;
+export const tooLow = (kind: string, min: number) => `${kind} too low (min: ${min})`;
 export const tooShort = (kind: string, min: number) =>
   min == 1 ? `${kind} is required!` : `${kind} too short (min: ${min})`;
+export const tooHigh = (kind: string, max: number) => `${kind} too high (max: ${max})`;
+export const tStr = (name: string) => `${name} must be text!`;
+export const tNum = (name: string) => `${name} must be a number!`;
+export const requiredStr = (name: string) =>
+  pipe(string(required("Search")), minLength(1, tooShort(name, 1)));
 
 export const isValibot = (schema: unknown): schema is GenericSchema =>
   !!schema && typeof schema == "object" && (schema as any).kind === "schema";
@@ -50,7 +58,7 @@ export const paginationSchema = partial(
 
 export const paginationSearchSchema = object({
   ...paginationSchema.entries,
-  search: optional(string()),
+  search: nullish(string()),
 });
 
 export type PaginationAttrs = InferOutput<typeof paginationSchema>;

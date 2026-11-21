@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Draft from '#lib/components/draft.svelte';
   import { user } from '#lib/auth.svelte.ts';
+  import DocAlt from '../connects/outbound/doc-alt.svelte';
   const data = $derived(user.profile);
 
   let draft = $state('');
@@ -16,6 +16,6 @@
 </script>
 
 {#if data}
-  <Draft id="draft" content="" title="AI Draft" profile={data} />
+  <DocAlt id="draft" title="MarkAI" profile={data} path="notes.md" />
 {/if}
 

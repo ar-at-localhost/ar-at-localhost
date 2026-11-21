@@ -1,12 +1,27 @@
 <script lang="ts">
-  import { SquareText } from '@lucide/svelte';
+  import { Save, SquareText } from '@lucide/svelte';
   import { Separator } from 'ui/svelte/separator/index';
   import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'ui/svelte/select/index';
-  import { Crepe, type AIOpts } from 'ui/svelte/crepe/index';
+  import { Crepe as UICrepe, type AIOpts } from 'ui/svelte/crepe/index';
   import type { UserProfile } from '#lib/auth.ts';
+  import 'ui/svelte/crepe/crepe.css';
+  import { Button } from 'ui/svelte/button/index';
+  import { Crepe } from '@milkdown/crepe';
+  import type { Snippet } from 'svelte';
 
-  interface Props { content: string, profile: UserProfile, id: string, readonly?: boolean, title?: string, subtitle?: string, oncontent?: (v: string) => void }
-  const { content, profile, id, readonly, title, oncontent }: Props = $props();
+  interface Props {
+    content: string,
+    children?: Snippet<[]>,
+    profile: UserProfile,
+    id: string,
+    readonly?: boolean,
+    title?: string,
+    subtitle?: string,
+    oncontent?: (v: string) => void
+  };
+
+  const { children, content, profile, id, readonly, title, oncontent }: Props = $props();
+  let crepe: Crepe | undefined = $state.raw(); 
   const crepeId = $derived(id);
 
   const providers = $derived(profile.keys.map(i => ({
@@ -37,24 +52,34 @@
     {/if}
 
     <div class="flex flex-row items-center gap-1">
-      <Select type="single" items={providers} value={provider?.value}>
-        <SelectTrigger>
-          <SelectValue placeholder="Choose a provider"/>
-        </SelectTrigger>
+      {#if !readonly}
+        <Button variant="outline" size="icon" onclick={() => oncontent?.(crepe?.getMarkdown() || '')} disabled={!crepe}>
+          <Save />
+        </Button>
+      {/if}
 
-        <SelectContent>
-          {#each providers as provider}
-            <SelectItem {...provider} />
-          {/each}
-        </SelectContent>
-      </Select>
+      {@render children?.()}
+
+      {#if providers.length}
+        <Select type="single" items={providers} value={provider?.value}>
+          <SelectTrigger>
+            <SelectValue placeholder="Choose a provider"/>
+          </SelectTrigger>
+
+          <SelectContent>
+            {#each providers as provider}
+              <SelectItem {...provider} />
+            {/each}
+          </SelectContent>
+        </Select>
+      {/if}
     </div>
   </div>
 
   <Separator />
 
   <div class="w-full h-full grow overflow-hidden">
-    <Crepe content={content} ai={ai} id={crepeId} readonly={readonly} oncontent={oncontent} />
+    <UICrepe bind:crepe content={content} ai={ai} id={crepeId} readonly={readonly} toolbar={false} />
   </div>
 </div>
 

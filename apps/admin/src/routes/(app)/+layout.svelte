@@ -17,11 +17,11 @@
 </script>
 
 <div class={cn(
-  "w-screen h-screen p-0 sm:p-4 text-gray-700",
+  "w-screen h-dvh p-0 sm:p-4 text-gray-700",
   "flex flex-col justify-around items-center sm:p-4 gap-0 sm:gap-2 md:gap-4"
 )}>
   {#if data}
-    <div class="grow md:grow-0 md:h-9/10 w-full md:w-3/4 outline-2 rounded shadow-lg">
+    <div class="w-full h-auto overflow-hidden grow md:grow-0 md:h-9/10 md:w-3/4 outline-2 rounded shadow-lg">
       {@render children()}
     </div>
 

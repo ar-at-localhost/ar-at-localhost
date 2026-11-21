@@ -6,23 +6,23 @@
   interface Props {
     ai?: AIOpts
     content?: string;
+    crepe?: Crepe | undefined,
     id?: string;
-    oncontent?: (content: string) => void;
     readonly?: boolean,
+    toolbar?: boolean,
   }
 
-  const { ai, id = "crepe", readonly, content, oncontent }: Props = $props()
-  let crepe: Crepe | undefined = undefined;
+  let { ai, crepe = $bindable(), id = "crepe", readonly, toolbar, content }: Props = $props();
 
   onMount(() => {
-    crepe = new Crepe({
+    const instance = new Crepe({
       root: document.getElementById(id),
       defaultValue: content || `# Welcome to your draft.
 ---
 This is an interactive markdown editor powered by AI. Use it to take notes and write your texts. Get started by deleting this placeholder and adding your own notes 🚀.`,
 
       features: {
-        [Crepe.Feature.TopBar]: true,
+        [Crepe.Feature.TopBar]: toolbar,
         [Crepe.Feature.Toolbar]: true,
         [Crepe.Feature.CodeMirror]: true,
         [Crepe.Feature.Latex]: false,
@@ -35,30 +35,22 @@ This is an interactive markdown editor powered by AI. Use it to take notes and w
           provider: gemini(ai.opts!),
           onError: console.error
         } : undefined,
-
-        [Crepe.Feature.TopBar]: {
-          buildTopBar(builder) {
-            builder.addGroup('custom', 'Custom').addItem('Save', {
-              onRun: () => {
-                try {
-                  oncontent?.(crepe?.getMarkdown() || '')
-                } catch {}
-              },
-              active: () => false,
-              icon: '<span class="text-sm px-2">Save</span>',
-            })
-          },
-        }
       },
     })
 
-    crepe?.create();
-    if (readonly) {
-      crepe?.setReadonly(true)
-    }
+    let destroyed = false;
+
+    instance?.create().then(() => {
+      if (destroyed) return;
+      crepe = instance;
+
+      if (readonly) {
+        crepe?.setReadonly(true)
+      }
+    });
 
     return () => {
-      crepe?.destroy()
+      crepe?.destroy().then(() => destroyed = true);
     }
   })
 </script>

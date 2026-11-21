@@ -52,10 +52,7 @@
     }).then(refetch)
   }
 
-  const onview = (key: string) => {
-    const text = fieldTypes[key] === 'text';
-    fieldTypes[key] = text ? 'password' : 'text';
-  }
+  const onview = (key: string) =>  fieldTypes[key] = fieldTypes[key] === 'text' ? 'password' : 'text';
 </script>
 
 {#if data}
@@ -122,7 +119,7 @@
               <div class="flex flex-row items-center justify-between border-b p-1">
                 <FField of={form} path={['keys', idx, 'key']}>
                   {#snippet children(field)}
-                    <InputGroup class="max-w-1/3">
+                    <InputGroup class="max-w-2/3 md:max-w-1/3">
                       <InputGroupInput type={fieldTypes[key] || 'password'} placeholder={`${key} API Key`} {...field.props} value={field.input} />
                       <InputGroupAddon align="inline-end">
                         <InputGroupButton onclick={() => onview(key)}>
@@ -153,7 +150,7 @@
               <div class="flex flex-row items-center justify-between border-b p-1">
                 <FField of={form} path={['handles', index, 'handle']}>
                   {#snippet children(field)}
-                    <Input class="max-w-1/3" placeholder={`${key} Handle`} {...field.props} value={field.input}></Input>
+                    <Input class="max-w-2/3 md:max-w-1/3" placeholder={`${key} Handle`} {...field.props} value={field.input}></Input>
                   {/snippet}
                 </FField>
                 <span class="font-semibold">{key}</span>

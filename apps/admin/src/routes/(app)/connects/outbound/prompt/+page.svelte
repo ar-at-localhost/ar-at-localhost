@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { getPortfolioSyncPromptQuerySv, setPortfolioSyncPromptMutationSv } from 'lib/svelte';
   import 'ui/svelte/crepe/crepe.css';
-  import Doc from '../doc.svelte';
   import { user } from '#lib/auth.svelte.ts';
+  import DocAlt from '../doc-alt.svelte';
   const data = $derived(user.profile)
 </script>
 
 {#if data}
-  <Doc id="portfolio-prompt" title="Prompt" profile={data} query={getPortfolioSyncPromptQuerySv} mutation={setPortfolioSyncPromptMutationSv}  />
+  <DocAlt id="portfolio-prompt" title="Prompt" profile={data} path="llm/portfolio-p.md"  />
 {/if}

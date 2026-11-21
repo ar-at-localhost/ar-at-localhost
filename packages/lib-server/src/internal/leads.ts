@@ -1,4 +1,4 @@
-import { getEnv, mkClientSrv } from "lib";
+import { getEnv, mkClientSrv, type ContentBody, type Lead } from "lib";
 import { object, pipe, integer, type InferOutput, transform, string } from "valibot";
 
 export const userParamSchema = object({
@@ -20,5 +20,14 @@ export type FindLeadsArgs = [FindLeadsParams, never, never];
 export const findLeadsIntSrv = mkClientSrv({
   baseURL: getEnv("PUBLIC_SRV_INT_URL"),
   endpoint: "/internal/leads/find/:user",
+  method: "POST",
+});
+
+export type JdToLeadsParams = InferOutput<typeof userParamSchema>;
+export type JdToLeadsArgs = [JdToLeadsParams, never, ContentBody];
+
+export const jdToLeadIntSrv = mkClientSrv<Lead, JdToLeadsArgs>({
+  baseURL: getEnv("PUBLIC_SRV_INT_URL"),
+  endpoint: "/internal/leads/from-jd/:user",
   method: "POST",
 });
