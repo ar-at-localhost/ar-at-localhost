@@ -36,7 +36,7 @@ const handleSubmit = async (body: EmailLoginBody) => {
 }
 </script>
 
-<div class="w-screen h-screen flex flex-row items-center justify-center">
+<div class="w-screen h-dvh flex flex-row items-center justify-center">
   <Card class={`w-full md:w-3/4 lg:w-1/4 ${srv.error && 'outline outline-red-500'}`}>
     <CardHeader>
       <CardTitle>Login</CardTitle>

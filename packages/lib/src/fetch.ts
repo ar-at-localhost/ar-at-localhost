@@ -18,7 +18,7 @@ export type ReqMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT";
 export type ReqErrHandler = (resp: Response, url: string, opts: RequestInit) => Promise<unknown>;
 export type ReqErrHandlers = { [x: number]: ReqErrHandler };
 export type URLValue = string | number | boolean;
-export type URLValues = Record<string, string | number | boolean>;
+export type URLValues = Record<string, string | number | boolean | null | undefined>;
 export type ReqArgs<
   Params extends URLValues = {},
   Query extends URLValues = {},
@@ -91,7 +91,12 @@ export const mkClientSrv = <Result = any, Args extends ReqArgs = ReqArgs>(
 
     const path = `${getAPIBaseURL(reqOpts?.baseURL ?? srvOpts?.baseURL)}${endpoint || "/"}`;
     const url = new URL(path);
-    if (reqOpts.query) url.search = new URLSearchParams(reqOpts.query).toString();
+    url.search = new URLSearchParams(
+      Object.entries({ ...srvOpts.query, ...reqOpts.query })
+        .filter(([, v]) => v != null)
+        .map(([k, v]) => [k, String(v)]),
+    ).toString();
+
     const bearer = (await resolveBearer(reqOpts.bearer)) || (await resolveBearer(srvOpts.bearer));
 
     const opts: RequestInit = {

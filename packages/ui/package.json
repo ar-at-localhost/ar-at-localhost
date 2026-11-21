@@ -55,7 +55,7 @@
   "devDependencies": {
     "@eslint/js": "^10",
     "@internationalized/date": "^3.12.4",
-    "@lucide/svelte": "^1.70.0",
+    "@lucide/svelte": "^1.72.0",
     "@milkdown/core": "^7.23.0",
     "@milkdown/crepe": "^7.23.0",
     "@milkdown/kit": "^7.23.0",

@@ -3,7 +3,14 @@ import { CloudTasksClient } from "@google-cloud/tasks";
 import { ApiError, GoogleGenAI } from "@google/genai";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import type { FastifyPluginAsync } from "fastify";
-import { isDebug, type OkResp } from "lib";
+import {
+  type ContentBody,
+  contentSchema,
+  createLeadSchema,
+  isDebug,
+  type Lead,
+  type OkResp,
+} from "lib";
 import {
   db,
   getFile,
@@ -13,12 +20,13 @@ import {
   type ServerAPIErr,
   serverErrSchema,
   type SyncPortfolioParams,
+  toJsonSchemaApp,
   type TooManyRequestsAPIError,
   tooManyRequestsErrorSchema,
   userParamSchema,
 } from "lib-server";
 
-import { getLeadFindLLM, getPortfolioLLM } from "./llm.ts";
+import { getJdToLeadLLM, getLeadFindLLM, getPortfolioLLM } from "./llm.ts";
 const { TF_VAR_project_name, TF_VAR_region, SRV_INT_URL } = process.env;
 
 export const leadsRest: FastifyPluginAsync = async (app) => {
@@ -90,6 +98,83 @@ ${i.content}
 
       await getFile(`users/${user.id}/llm/leads.json`).save(JSON.stringify(result));
       rep.status(200).send({ message: "Leads results have been saved successfully!" });
+    },
+  });
+
+  app.post("/from-jd/:user", {
+    schema: {
+      body: contentSchema,
+
+      response: {
+        200: createLeadSchema,
+        429: tooManyRequestsErrorSchema,
+      },
+    },
+
+    handler: async (req, rep) => {
+      const user = await getUserInfo((req.params as SyncPortfolioParams).user);
+      const body = req.body as ContentBody;
+      if (!user) throw new Error("No such user!");
+
+      const genai = new GoogleGenAI({
+        apiKey: user.keys.find((i) => i.type === "Gemini")?.key || "",
+      });
+
+      const llm = await getJdToLeadLLM(user!, body.content);
+
+      const result = await genai.models
+        .generateContent({
+          model: llm.config.model,
+
+          config: {
+            systemInstruction: llm.inputs.systemPrompt,
+            responseMimeType: "application/json",
+            responseJsonSchema: toJsonSchemaApp(createLeadSchema),
+            temperature: 0,
+          },
+
+          contents: {
+            parts: [
+              { text: llm.inputs.prompt },
+              ...llm.inputs.context.map((i) => ({
+                text: `
+<context key="${i.key}">
+${i.content}
+</context>
+`,
+              })),
+            ],
+          },
+        })
+        .catch((err) => {
+          const e = err as ApiError;
+
+          if (isDebug()) {
+            console.error(err);
+          }
+
+          if (e.status === 429) {
+            return mkTooManyRequestsErr("LLM usage quota exceeded!");
+          }
+        });
+
+      if (result && "statusCode" in result) {
+        const e = result as TooManyRequestsAPIError;
+        return rep.status(e.statusCode).send(e);
+      }
+
+      let lead: Lead | undefined = undefined;
+      try {
+        lead = JSON.parse(
+          result?.candidates?.find((i) => i.content)?.content?.parts?.find((i) => i.text)?.text ||
+            "",
+        );
+
+        rep.status(200).send(lead);
+      } catch (err) {
+        req.log.error(err);
+        throw err;
+      }
     },
   });
 

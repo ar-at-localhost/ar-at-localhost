@@ -36,7 +36,7 @@
   "scripts": {
     "build": "tsdown",
     "check": "pnpm format && pnpm lint && pnpm typecheck",
-    "dev": "DEBUG=true PORT=5003 node --watch src/index.ts",
+    "dev": "DEBUG=true PORT=5003 tsx watch src/index.ts",
     "fix": "pnpm format:fix && pnpm lint:fix",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",
@@ -59,6 +59,7 @@
     "@google-cloud/storage": "^8.4.0",
     "@google-cloud/tasks": "catalog:",
     "@google/genai": "^3.0.0",
+    "@valibot/to-json-schema": "^1.8.0",
     "date-fns": "^4.4.0",
     "es-toolkit": "catalog:",
     "fastify": "catalog:",
@@ -73,13 +74,13 @@
     "@types/node": "catalog:",
     "drizzle-orm": "catalog:",
     "tsdown": "catalog:",
+    "tsx": "^4.23.15",
     "typescript": "catalog:",
     "vite": "^8.3.3",
     "vitest": "catalog:"
   },
   "inlinedDependencies": {
     "@fastify/swagger": "9.9.2",
-    "@valibot/to-json-schema": "1.8.0",
     "debug": "4.4.3",
     "drizzle-orm": "1.0.0-rc.5",
     "fast-uri": "3.1.8",

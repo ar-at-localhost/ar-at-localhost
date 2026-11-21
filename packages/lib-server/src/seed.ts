@@ -1,9 +1,20 @@
+import {
+  rand,
+  randCompanyName,
+  randDomainName,
+  randNumber,
+  randRole,
+  randText,
+  randUrl,
+} from "@ngneat/falso";
 import { eq } from "drizzle-orm";
 import { reset, seed } from "drizzle-seed";
+import { leadStatuses } from "lib";
 import { hash as hashPassword } from "node-argon2";
 
 import { connectsTable } from "./connect.db.ts";
 import { isProduction } from "./env.ts";
+import { leadsTable } from "./lead.db.ts";
 import { db } from "./pg.ts";
 import { testimonialRequestsTable } from "./testimonial-request.ts";
 import { testimonialsTable } from "./testimonial.ts";
@@ -13,6 +24,7 @@ const main = async () => {
   if (!isProduction()) {
     await reset(db, {
       connectsTable,
+      leadsTable,
       testimonialRequestsTable: testimonialRequestsTable,
       testimonialsTable: testimonialsTable,
       usersTable,
@@ -73,6 +85,32 @@ const main = async () => {
       hash,
       roles: ["admin"],
     });
+
+    await db.insert(leadsTable).values(
+      Array.from({ length: 10 }, (_, i) => {
+        const now = new Date();
+        return {
+          id: i + 1,
+          angle: randText({ maxCharCount: 32 }),
+          concerns: rand([[], ["Budget unclear"]]),
+          company: randCompanyName(),
+          contact_role: randRole(),
+          created_at: now,
+          deleted_at: null,
+          domain: `${i + 1}-${randDomainName()}`,
+          evidence: rand([[], [{ title: "Careers", url: "https://example.com/careers" }]]),
+          fit_reason: randText({ maxCharCount: 32 }),
+          fit_score: randNumber({ min: 1, max: 10 }),
+          last_seen_at: now,
+          matched_repos: rand([[], ["ar-at-localhost/ar-at-localhost"], ["ar-at-localhost/yalms"]]),
+          signals: rand([[], [{ type: "Hiring", summary: "Hiring a backend developer" }]]),
+          status: rand(leadStatuses),
+          updated_at: now,
+          url: randUrl(),
+          user_id: 11,
+        } satisfies typeof leadsTable.$inferInsert;
+      }),
+    );
   }
 };
 

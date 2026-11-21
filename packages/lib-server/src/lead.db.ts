@@ -10,29 +10,9 @@ import {
   uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
+import { leadStatuses, type LeadStatus } from "lib";
 
 import { usersTable } from "./user.db.ts";
-
-export type LeadStatus =
-  | "new"
-  | "reviewed"
-  | "contacted"
-  | "replied"
-  | "proposal"
-  | "won"
-  | "lost"
-  | "rejected";
-
-export const leadStatuses = [
-  "new",
-  "reviewed",
-  "contacted",
-  "replied",
-  "proposal",
-  "won",
-  "lost",
-  "rejected",
-] as const;
 
 export const leadStatusSet: Set<LeadStatus> = new Set(leadStatuses);
 export const leadStatusEnum = pgEnum("lead_status", leadStatuses);
@@ -71,6 +51,7 @@ export const leadsTable = pgTable(
       .notNull()
       .defaultNow()
       .$onUpdate(() => new Date()),
+    deleted_at: timestampCol(),
   },
   (t) => [
     uniqueIndex("lead_user_domain").on(t.user_id, t.domain),

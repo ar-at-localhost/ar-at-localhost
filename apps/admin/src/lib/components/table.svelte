@@ -10,42 +10,51 @@
 
 <script lang="ts" generics="
     Params extends URLValues = {},
-    Query extends URLValues & { page?: number, limit?: number } = URLValues & { page?: number, limit?: number }
+    Query extends URLValues & { page?: number, limit?: number } = URLValues & { page?: number, limit?: number },
 ">
+  import { Sheet, SheetContent } from 'ui/svelte/sheet/index';
   import { Table, TableHeader, TableBody, TableRow, TableCell } from 'ui/svelte/table/index';
   import { Button } from 'ui/svelte/button/index';
-  import { ChevronLeft, ChevronRightIcon, RotateCcw, SearchIcon, TriangleAlert } from '@lucide/svelte';
+  import { ChevronLeft, ChevronRightIcon, RotateCcw, SearchIcon, Settings, TriangleAlert } from '@lucide/svelte';
   import { InputGroup, InputGroupAddon, InputGroupInput } from 'ui/svelte/input-group/index';
-  import { debounce, merge } from 'es-toolkit';
+  import { debounce, toMerged } from 'es-toolkit';
   import type { ReqArgs, ReqOpts, URLValues } from 'lib';
   import { mkOpts } from '#lib/http.ts';
   import type { QuerySv } from 'lib/svelte';
   import type { Snippet } from 'svelte';
+  import SheetTrigger from 'ui/svelte/sheet/sheet-trigger.svelte';
+
+  type Opts = Partial<ReqOpts<ReqArgs<Params, Query, never>>>;
 
   type Props = {
     queryFactory: QuerySv<any, [Params, Query, never]>,
     searchKey?: string 
     defs: ColDefs,
-    opts?: Partial<ReqOpts<ReqArgs<Params, Query, never>>>
+    opts?: Opts,
+    sheet?: Snippet<[Opts, (opts: Opts) => void]>,
   };
 
-  const { defs, opts, searchKey = 'search', queryFactory }: Props = $props();
+  let container = $state<HTMLElement>();
+  const { defs, opts, searchKey = 'search', sheet, queryFactory }: Props = $props();
   let page = $state(1)
   let limit = $state(10)
   let search = $state('')
+  let sheetOpen = $state(false);
+  let sheetOpts = $state<Opts>({} as Opts)
+  const finalOpts = $derived<Opts>(toMerged(opts || {}, sheetOpts || {}));
   const loadingItems = $derived(Array.from({ length: limit }).map((_, i) => i+1))
   const prev = () => page = page - 1;
   const next = () => page = page + 1;
   
   // svelte-ignore state_referenced_locally
   const result = queryFactory(() => ({
-    srvArgs: merge(mkOpts<ReqArgs<Params, Query, never>>({
+    srvArgs: toMerged(mkOpts<ReqArgs<Params, Query, never>>({
       query: {
         page,
         limit,
         ...(searchKey ? { [searchKey]: search } : undefined)
       } as Query,
-    }), opts || {}),
+    }), finalOpts),
   }));
 </script>
 
@@ -99,9 +108,27 @@
     </Table>
   </div>
 
-  <div class="flex flex-col items-end">
+  <div bind:this={container} class="flex flex-col items-end relative">
     <div class="text-sm px-2 w-full flex flex-row flex-wrap sm:flex-nowrap items-center justify-between bg-neutral-50">
-      <div class="order-3 sm:order-0 grow">
+      <div class="order-3 sm:order-0 grow flex flex-row items-center gap-2">
+        {#if sheet}
+          <Sheet bind:open={sheetOpen}>
+            <SheetTrigger>
+              <Button>
+                <Settings></Settings>
+              </Button>
+            </SheetTrigger>
+
+            <SheetContent side="bottom" class="absolute pb-4" overlayClass="absolute" portalProps={{ to: container }}>
+              {@render sheet(sheetOpts, (opts) => {
+                console.log(opts)
+                sheetOpts = opts;
+                sheetOpen = false;
+              })}
+            </SheetContent>
+          </Sheet>
+        {/if}
+
         <InputGroup class="w-full sm:max-w-[256px]">
           <InputGroupInput type="search" class="" placeholder="Search" oninput={debounce((e) => search = e.target.value || '', 500)} />
 
