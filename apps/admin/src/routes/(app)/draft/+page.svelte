@@ -16,6 +16,6 @@
 </script>
 
 {#if data}
-  <DocAlt id="draft" title="MarkAI" profile={data} path="notes.md" />
+  <DocAlt id="draft" title="MarkAI" path="notes.md" />
 {/if}
 

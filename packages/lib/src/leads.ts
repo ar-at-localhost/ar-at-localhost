@@ -1,7 +1,7 @@
 import {
   array,
+  decimal,
   domain,
-  integer,
   isoTimestamp,
   maxValue,
   minLength,
@@ -119,8 +119,10 @@ export const createLeadSchema = object({
   evidence: array(leadEvidenceSchema),
   fit_score: pipe(
     union([string(), number()], "Fit score should be a number!"),
+    transform(String),
+    decimal(),
     transform(Number),
-    integer(tNum("Fit score")),
+    number(tNum("Fit score")),
     minValue(1, tooLow("Fit score", 1)),
     maxValue(10, tooHigh("Fit score", 10)),
   ),
@@ -130,7 +132,7 @@ export const createLeadSchema = object({
   reject_reason: nullish(string(tStr("Rejection reason"))),
   signals: pipe(array(leadSignalSchema), minLength(1, "At-least 1 signal must be provided!")),
   snooze_until: nullish(pipe(string(), isoTimestamp())),
-  status: pipe(string("Invalid status!"), picklist(leadStatuses, "Invalid status!")),
+  status: pipe(picklist(leadStatuses, "Invalid status!")),
   url: nullish(pipe(string("Invalid URL!"), url("Invalid URL!"))),
 });
 

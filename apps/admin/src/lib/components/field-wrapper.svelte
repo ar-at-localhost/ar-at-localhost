@@ -10,11 +10,13 @@
     of: FormStore<TSchema>,
     path: ValidPath<InferInput<TSchema>, TFieldPath>,
     title: string;
+    action?: Snippet<[FieldStore<TSchema, TFieldPath>]>
     children: Snippet<[FieldStore<TSchema, TFieldPath>]>
     class?: string;
+    error?: string;
   }
 
-  const { children, of, path, title, class: className }: Props = $props();
+  const { children, of, path, title, action, class: className, error }: Props = $props();
   // svelte-ignore state_referenced_locally
   const field = useField(of, {
     path
@@ -24,9 +26,15 @@
 <div class={className}>
   <Field>
     <FieldLabel class="flex flex-row items-center justify-between">
-      <span>{title}</span>
+      <span class="flex flex-row items-center gap-1">
+        {#if action}
+          {@render action(field)}
+        {/if}
 
-      <AppFieldError path={path} of={of}></AppFieldError>
+        <span>{title}</span>
+      </span>
+
+      <AppFieldError path={path} of={of} error={error} class={error ? 'text-gray-500!' : ''}></AppFieldError>
     </FieldLabel>
 
     {@render children(field)}

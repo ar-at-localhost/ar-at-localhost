@@ -1,32 +1,24 @@
 import { UTCDate } from "@date-fns/utc";
 import { CloudTasksClient } from "@google-cloud/tasks";
-import { ApiError, GoogleGenAI } from "@google/genai";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import type { FastifyPluginAsync } from "fastify";
-import {
-  type ContentBody,
-  contentSchema,
-  createLeadSchema,
-  isDebug,
-  type Lead,
-  type OkResp,
-} from "lib";
+import { type ContentBody, contentSchema, createLeadSchema, type Lead, type OkResp } from "lib";
 import {
   db,
   getFile,
+  getFindLeadsLLM,
+  getJdToLeadLLM,
+  getSyncPortfolioLLM,
   getUserInfo,
-  mkTooManyRequestsErr,
   okSchema,
+  runLLM,
   type ServerAPIErr,
   serverErrSchema,
   type SyncPortfolioParams,
-  toJsonSchemaApp,
-  type TooManyRequestsAPIError,
   tooManyRequestsErrorSchema,
   userParamSchema,
 } from "lib-server";
 
-import { getJdToLeadLLM, getLeadFindLLM, getPortfolioLLM } from "./llm.ts";
 const { TF_VAR_project_name, TF_VAR_region, SRV_INT_URL } = process.env;
 
 export const leadsRest: FastifyPluginAsync = async (app) => {
@@ -43,59 +35,8 @@ export const leadsRest: FastifyPluginAsync = async (app) => {
     handler: async (req, rep) => {
       const user = await getUserInfo((req.params as SyncPortfolioParams).user);
       if (!user) throw new Error("No such user!");
-
-      const genai = new GoogleGenAI({
-        apiKey: user.keys.find((i) => i.type === "Gemini")?.key || "",
-      });
-
-      const llm = await getLeadFindLLM(user!);
-
-      const result = await genai.models
-        .generateContent({
-          model: llm.config.model,
-
-          config: {
-            systemInstruction: llm.inputs.systemPrompt,
-            tools: [
-              {
-                googleSearch: {},
-              },
-              {
-                urlContext: {},
-              },
-            ],
-          },
-
-          contents: {
-            parts: [
-              { text: llm.inputs.prompt },
-              ...llm.inputs.context.map((i) => ({
-                text: `
-<context key="${i.key}">
-${i.content}
-</context>
-`,
-              })),
-            ],
-          },
-        })
-        .catch((err) => {
-          const e = err as ApiError;
-
-          if (isDebug()) {
-            console.error(err);
-          }
-
-          if (e.status === 429) {
-            return mkTooManyRequestsErr("LLM usage quota exceeded!");
-          }
-        });
-
-      if (result && "statusCode" in result) {
-        const e = result as TooManyRequestsAPIError;
-        return rep.status(e.statusCode).send(e);
-      }
-
+      const llm = await getFindLeadsLLM(db, user!);
+      const result = await runLLM(llm);
       await getFile(`users/${user.id}/llm/leads.json`).save(JSON.stringify(result));
       rep.status(200).send({ message: "Leads results have been saved successfully!" });
     },
@@ -116,59 +57,15 @@ ${i.content}
       const body = req.body as ContentBody;
       if (!user) throw new Error("No such user!");
 
-      const genai = new GoogleGenAI({
-        apiKey: user.keys.find((i) => i.type === "Gemini")?.key || "",
+      const llm = await getJdToLeadLLM(db, user!, {
+        "Job Description": body.content,
       });
 
-      const llm = await getJdToLeadLLM(user!, body.content);
-
-      const result = await genai.models
-        .generateContent({
-          model: llm.config.model,
-
-          config: {
-            systemInstruction: llm.inputs.systemPrompt,
-            responseMimeType: "application/json",
-            responseJsonSchema: toJsonSchemaApp(createLeadSchema),
-            temperature: 0,
-          },
-
-          contents: {
-            parts: [
-              { text: llm.inputs.prompt },
-              ...llm.inputs.context.map((i) => ({
-                text: `
-<context key="${i.key}">
-${i.content}
-</context>
-`,
-              })),
-            ],
-          },
-        })
-        .catch((err) => {
-          const e = err as ApiError;
-
-          if (isDebug()) {
-            console.error(err);
-          }
-
-          if (e.status === 429) {
-            return mkTooManyRequestsErr("LLM usage quota exceeded!");
-          }
-        });
-
-      if (result && "statusCode" in result) {
-        const e = result as TooManyRequestsAPIError;
-        return rep.status(e.statusCode).send(e);
-      }
+      const result = await runLLM(llm);
 
       let lead: Lead | undefined = undefined;
       try {
-        lead = JSON.parse(
-          result?.candidates?.find((i) => i.content)?.content?.parts?.find((i) => i.text)?.text ||
-            "",
-        );
+        lead = JSON.parse(result || "");
 
         rep.status(200).send(lead);
       } catch (err) {
@@ -190,35 +87,9 @@ ${i.content}
     handler: async (req, rep) => {
       const user = await getUserInfo((req.params as SyncPortfolioParams).user);
       if (!user) throw new Error("No such user!");
-
-      const genai = new GoogleGenAI({
-        apiKey: user.keys.find((i) => i.type === "Gemini")?.key || "",
-      });
-
-      const llm = await getPortfolioLLM(user!);
-
-      const result = await genai.models.generateContent({
-        model: llm.config.model,
-
-        config: {
-          systemInstruction: llm.inputs.systemPrompt,
-        },
-
-        contents: {
-          parts: [
-            { text: llm.inputs.prompt },
-            ...llm.inputs.context.map((i) => ({
-              text: `
-<context key="${i.key}">
-${i.content}
-</context>
-`,
-            })),
-          ],
-        },
-      });
-
-      await getFile(`users/${user.id}/llm/portfolio.md`).save(result.text || "");
+      const llm = await getSyncPortfolioLLM(db, user);
+      const result = await runLLM(llm);
+      await getFile(`users/${user.id}/llm/portfolio.md`).save(result || "");
       rep.status(200).send({ message: "Portfolio has been synced successfully!" });
     },
   });
@@ -239,7 +110,7 @@ ${i.content}
           },
 
           keys: {
-            type: "Gemini",
+            type: "Google AI",
             key: {
               isNotNull: true,
             },

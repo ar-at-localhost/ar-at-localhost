@@ -51,6 +51,6 @@
     <h1 class="font-bold text-lg text-gray-900">Loading...</h1>
   </div>
 {:else if content || (result.error && result.error.statusCode === 404)}
-  <Draft id={props.id} content={content || ''} oncontent={oncontent} readonly={readonly} title={props.title} profile={props.profile} />
+  <Draft kind="text" id={props.id} content={content || ''} oncontent={oncontent} readonly={readonly} title={props.title} />
 {/if}
 

@@ -8,17 +8,18 @@
     of: FormStore<TSchema>,
     path: ValidPath<InferInput<TSchema>, TFieldPath>,
     class?: string;
+    error?: string;
   }
 
-  const { of, path, class: className }: Props = $props();
+  const { of, path, class: className, error }: Props = $props();
   // svelte-ignore state_referenced_locally
   const field = useField(of, {
     path
   })
 </script>
 
-<div class={className}>
-  {#if (!of.isValid || field.isTouched || field.isDirty) && field.errors?.length}
-    <FieldError>{field.errors.at(0)}</FieldError>
+<div>
+  {#if error || ((!of.isValid || field.isTouched || field.isDirty) && field.errors?.length)}
+    <FieldError class={className}>{error || field?.errors?.at(0)}</FieldError>
   {/if}
 </div>

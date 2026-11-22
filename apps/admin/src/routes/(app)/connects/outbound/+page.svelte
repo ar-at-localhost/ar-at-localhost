@@ -10,7 +10,7 @@
   import Table, { type ColDefs } from '#lib/components/table.svelte';
   import { createForm, Field as FField, Form, reset } from '@formisch/svelte';
   import { pick } from 'valibot';
-  import { getLeadsQuerySchema, leadStatuses } from 'lib';
+  import { getLeadsQuerySchema, leadStatuses, type LeadStatus } from 'lib';
   import { FieldGroup, FieldLabel } from 'ui/svelte/field/index';
   import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from 'ui/svelte/select/index';
   import { Slider } from 'ui/svelte/slider/index';
@@ -79,7 +79,7 @@
         <FieldGroup class="flex flex-col md:flex-row flex-wrap mb-2">
           <FField of={form} path={['status']}>
             {#snippet children(field)}
-              <Select value={(opts?.query?.status as string) ?? field.input ?? ''} type="single" onValueChange={(v) => field.onInput(v)}>
+              <Select value={(opts?.query?.status as string) ?? field.input ?? ''} type="single" onValueChange={(v) => field.onInput(v as LeadStatus)}>
                 <SelectTrigger class="w-full md:w-1/3 grow">{field.input ? capitalize( field.input) : 'Status'}</SelectTrigger>
                 <SelectContent>
                   <SelectGroup>

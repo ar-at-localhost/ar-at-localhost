@@ -40,9 +40,26 @@ jobs:
         env:
           SERVICE: ${{ inputs.service || github.ref_name }}
           SECRETSPEC_PROFILE: ${{ inputs.profile }}
+          AUTHOR_NAME: ${{ github.actor }}
+          AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+          GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
-          export SERVICE="${SERVICE%@*}"
-          secretspec run pnpm --filter lib-server db:migrate
-          secretspec run pnpm --filter lib-server db:seed
-          devenv tasks --profile cloud run "aal:deploy-service"
+          export service="${SERVICE%@*}"
+          devenv tasks --profile cloud run "aal:tf" --input config="$service" --input apply=1
+          devenv tasks --profile cloud run --quiet "aal:sync-cloud"
+          url=$(gcloud run services describe srv-internal --project="$GCP_PROJECT" --region="$GCP_REGION" --format 'value(status.url)')
+          openapi="services/microservices/${service#srv-}/openapi.json"
+          curl --fail -sSL -H "Authorization: Bearer $(gcloud auth print-identity-token)" "$url/openapi.json" -o "$openapi"
+          oxfmt --write "$openapi"
+
+          if [[ -n "$(git status --porcelain -- "$openapi")" ]]; then
+            git add "$openapi"
+            version=$(jq -r '.info.version' "$openapi")
+            devenv tasks --secretspec-profile "$SECRETSPEC_PROFILE" --profile cloud run 'aal:tf' --input config="gateway" --input apply=1
+            git config user.name "$AUTHOR_NAME"
+            git config user.email "$AUTHOR_EMAIL"
+            git commit -m "build($service): v${version}"
+            git push --no-verify origin "HEAD:refs/heads/$GIT_BRANCH"
+            echo "::notice::| ${service}@${version} released. Please pull changes."
+          fi

@@ -34,14 +34,6 @@ in {
     actionlint.enable = true;
     alejandra.enable = true;
 
-    openapi = {
-      enable = true;
-      entry = "pnpm --filter 'srv-*' openapi";
-      name = "Generate openapi";
-      pass_filenames = false;
-      stages = ["pre-push"];
-    };
-
     quality = {
       enable = true;
       entry = "secretspec run pnpm quality";
@@ -59,9 +51,11 @@ in {
         export AWS_ACCESS_KEY_ID="$(secretspec get NIX_CACHE_BUCKET_KEY_ID || true)"
         export AWS_SECRET_ACCESS_KEY="$(secretspec get NIX_CACHE_BUCKET_KEY || true)"
         export GCP_KEY="$(secretspec get GCP_KEY || true)"
+        export GCP_KEY_FILE="$HOME/.gcp-key"
+        export GCP_PROJECT="$(secretspec get TF_VAR_project_name || true)"
+        export GCP_REGION="$(secretspec get TF_VAR_region || true)"
         export S3_BUCKET="$(secretspec get NIX_CACHE_BUCKET || true)"
         export S3_ENDPOINT="https://storage.googleapis.com"
-        export GCP_KEY_FILE="$HOME/.gcp-key"
 
         if [[ -n "$GCP_KEY" ]]; then
           export GOOGLE_APPLICATION_CREDENTIALS="$GCP_KEY_FILE"
@@ -160,6 +154,31 @@ in {
             #bash
             ''
               secretspec run tofu apply -consolidate-errors -concise -auto-approve
+            '';
+        };
+
+        "aal:tf" = {
+          exec =
+            #bash
+            ''
+              # dir=$(mktemp -d)
+              dir=$(pwd)
+              file="$dir/config.tf.json"
+
+              if [[ -f $file ]]; then
+                rm -f "$file"
+              fi
+
+
+              config=$(echo "$DEVENV_TASK_INPUT" | jq -r '.config')
+              apply=$(echo "$DEVENV_TASK_INPUT" | jq -r '.apply')
+              nix build --out-link "$file" ".#tf.${system}.$config"
+              secretspec run tofu -chdir="$dir" init -reconfigure
+              secretspec run tofu -chdir="$dir" validate
+
+              if [[ -n "$apply" ]]; then
+                secretspec run tofu -chdir="$dir" apply -consolidate-errors -concise -auto-approve
+              fi
             '';
         };
 

@@ -3,6 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?rev=48752ce043f693c1b57296b2f27cc392900f33f1";
+
+    terranix = {
+      url = "github:terranix/terranix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {self, ...} @ inputs: let
@@ -29,6 +34,24 @@
         import ./nix/images.nix {
           inherit pkgs;
           inherit (pkgs) lib;
+        }
+    );
+
+    tf = forEachSupportedSystem (
+      {
+        pkgs,
+        system,
+        ...
+      }:
+        import ./nix/cloud/services {
+          inherit inputs pkgs system;
+          inherit (pkgs) lib;
+        }
+        // {
+          gateway = import ./nix/cloud/gateway {
+            inherit inputs pkgs system;
+            inherit (pkgs) lib;
+          };
         }
     );
 

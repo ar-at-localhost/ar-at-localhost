@@ -3,28 +3,19 @@
   import { Separator } from 'ui/svelte/separator/index';
   import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'ui/svelte/select/index';
   import { Crepe as UICrepe, type AIOpts } from 'ui/svelte/crepe/index';
-  import type { UserProfile } from '#lib/auth.ts';
   import 'ui/svelte/crepe/crepe.css';
   import { Button } from 'ui/svelte/button/index';
   import { Crepe } from '@milkdown/crepe';
-  import type { Snippet } from 'svelte';
+  import { user } from '#lib/auth.svelte.ts';
+  import type { TextDraftProps } from './draft';
 
-  interface Props {
-    content: string,
-    children?: Snippet<[]>,
-    profile: UserProfile,
-    id: string,
-    readonly?: boolean,
-    title?: string,
-    subtitle?: string,
-    oncontent?: (v: string) => void
-  };
 
-  const { children, content, profile, id, readonly, title, oncontent }: Props = $props();
+  const profile = $derived(user.profile);
+  const { children, content, id, readonly, title, oncontent }: TextDraftProps = $props();
   let crepe: Crepe | undefined = $state.raw(); 
   const crepeId = $derived(id);
 
-  const providers = $derived(profile.keys.map(i => ({
+  const providers = $derived((profile?.keys || []).map(i => ({
     ...i,
     label: i.type,
     value: i.type,
@@ -34,8 +25,8 @@
   // svelte-ignore state_referenced_locally
   const provider = $state(providers.find(i => i.value))
 
-  const ai: AIOpts | undefined = $derived(provider?.type == 'Gemini' ? {
-    type: provider.value as 'Gemini',
+  const ai: AIOpts | undefined = $derived(provider?.type == 'Google AI' ? {
+    type: provider.value as 'Google AI',
     opts: {
       apiKey: provider.key!
     }
@@ -78,7 +69,7 @@
 
   <Separator />
 
-  <div class="w-full h-full grow overflow-hidden">
+  <div class="w-full h-full grow overflow-auto">
     <UICrepe bind:crepe content={content} ai={ai} id={crepeId} readonly={readonly} toolbar={false} />
   </div>
 </div>

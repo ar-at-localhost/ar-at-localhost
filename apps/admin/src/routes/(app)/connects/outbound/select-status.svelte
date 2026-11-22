@@ -2,7 +2,7 @@
   import AppFieldError from "#lib/components/app-field-error.svelte";
   import { Field as FField, type FormStore } from "@formisch/svelte";
   import { capitalize } from "es-toolkit";
-  import { createLeadSchema, leadSchema, leadStatuses } from "lib";
+  import { createLeadSchema, leadSchema, leadStatuses, type LeadStatus } from "lib";
   import { Field, FieldLabel } from "ui/svelte/field/index";
   import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "ui/svelte/select/index";
 
@@ -24,7 +24,7 @@
           <AppFieldError path={['status']} of={of}></AppFieldError>
         </FieldLabel>
 
-        <Select value={field.input ?? ''} type="single" onValueChange={(v) => field.onInput(v)}>
+        <Select value={field.input ?? ''} type="single" onValueChange={(v) => field.onInput(v as LeadStatus)}>
           <SelectTrigger class="w-full">{field.input ? capitalize(field.input) : 'Status'}</SelectTrigger>
           <SelectContent class="w-full">
             <SelectGroup class="w-full">
