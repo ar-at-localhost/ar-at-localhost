@@ -1,5 +1,5 @@
 @import "./global.css";
-@import "@fontsource-variable/overpass-mono";
+@import "@fontsource-variable/fira-code";
 
 /*
   The CSS in this style tag is based off of Bear Blog's default CSS.
@@ -19,8 +19,9 @@
 }
 
 code,
-pre {
-  font-family: "Overpass Mono Variable", monospace !important;
+pre,
+pre * {
+  font-family: "Fira Code Variable", monospace !important;
 }
 
 body {

@@ -1,11 +1,11 @@
 <script>
   import { delAuth } from "#lib/auth.ts";
   import { goto } from "$app/navigation";
-  import { Contact, Star, LogOut, House, User, SquareText } from "@lucide/svelte";
+  import { Contact, Star, LogOut, House, User, SquareText, LoaderCircle } from "@lucide/svelte";
   import { Button } from "ui/svelte/button/index";
   import { cn } from "ui/utils";
-  import { Loader } from '@lucide/svelte';
   import { user } from "#lib/auth.svelte.ts";
+  import logo from '../../static/favicon.svg';
 
   const { children } = $props();
   const data = $derived(user.profile)
@@ -38,7 +38,10 @@
     </div>
   {:else}
     <div class="w-full h-full flex flex-row items-center justify-center">
-      <Loader class="animate-spin" />
+      <div class="p-0 m-0 size-14 relative">
+        <LoaderCircle class="absolute stroke-1 stroke-gray-100 animate-spin size-14 -left-1 -top-1 z-0" />
+        <img src={logo} class="size-12" alt="Logo Loader" />
+      </div>
     </div>
   {/if}
 </div>

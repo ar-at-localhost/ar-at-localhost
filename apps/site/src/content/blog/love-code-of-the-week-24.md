@@ -34,8 +34,9 @@ be the default. Then I added a function to rotate them.</p>
 ```svelte
 <script lang="ts">
   // ...
-  const fieldTypes = $state<{ [key: string]: 'password' | 'text' }>({
-  }); // notice empty {}
+  const fieldTypes = $state<
+    { [key: string]: 'password' | 'text' }
+  >({}); // notice empty {}
 
   const onview = (key: string) =>
     fieldTypes[key] = fieldTypes[key] === 'text'

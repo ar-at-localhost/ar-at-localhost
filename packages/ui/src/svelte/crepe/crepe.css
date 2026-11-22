@@ -1,10 +1,10 @@
 @import "@milkdown/crepe/theme/common/style.css";
 @import "@milkdown/crepe/theme/frame.css";
-@import "@fontsource-variable/overpass-mono";
+@import "@fontsource-variable/fira-code";
 
 .crepe .milkdown {
   --crepe-font-default: "Overpass Variable", sans-serif;
-  --crepe-font-code: "Overpass Mono Variable", monospace;
+  --crepe-font-code: "Fira Code Variable", monospace;
 }
 
 .milkdown .milkdown-top-bar {

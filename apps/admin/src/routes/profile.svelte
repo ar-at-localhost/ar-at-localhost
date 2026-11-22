@@ -15,7 +15,8 @@
 
     opts: {
       refetchInterval: 60_000,
-      retry: false,
+      retry: true,
+      staleTime: 0
     },
 
     onResult: async (v) => {
