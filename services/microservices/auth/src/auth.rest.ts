@@ -172,7 +172,7 @@ export const authRest: FastifyPluginAsync = async (app) => {
             if (kept.length) {
               await tx
                 .insert(userKeysTable)
-                .values(kept.map((i) => ({ ...i, user_id: user.id })))
+                .values(kept.map((i) => ({ user_id: user.id, type: i.type, key: i.key })))
                 .onConflictDoUpdate({
                   target: [userKeysTable.user_id, userKeysTable.type],
                   set: { key: sql`excluded.key` },
@@ -196,7 +196,7 @@ export const authRest: FastifyPluginAsync = async (app) => {
             if (kept.length) {
               await tx
                 .insert(userHandlesTable)
-                .values(kept.map((i) => ({ ...i, user_id: user.id })))
+                .values(kept.map((i) => ({ user_id: user.id, type: i.type, handle: i.handle })))
                 .onConflictDoUpdate({
                   target: [userHandlesTable.user_id, userHandlesTable.type],
                   set: { handle: sql`excluded.handle` },

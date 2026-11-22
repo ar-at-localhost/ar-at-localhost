@@ -8,7 +8,7 @@ import fastifyRateLimit from "@fastify/rate-limit";
 import fastifySwagger, { type FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import Fastify, { type FastifyInstance } from "fastify";
 import { getPort, isValibot } from "lib";
-import { type GenericSchema, parse, safeParse } from "valibot";
+import { type GenericSchema, parse, safeParse, unknown } from "valibot";
 
 import { getCors, isCI, isDev, isProduction } from "./env.ts";
 import {
@@ -143,6 +143,10 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
       {
         schema: {
           hide: true,
+
+          response: {
+            200: unknown(),
+          },
         },
       },
       () => app.swagger(),

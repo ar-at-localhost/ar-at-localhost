@@ -42,7 +42,6 @@
     "format:fix": "oxfmt --write",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "openapi": "node ./src/specs.ts",
     "start": "pnpm build && node dist/index.mjs",
     "test": "vitest run",
     "test:cov": "vitest --coverage",
@@ -50,6 +49,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/valibot": "^3.0.81",
     "@date-fns/tz": "^1.5.0",
     "@date-fns/utc": "^2.1.1",
     "@fastify/cors": "^11.3.1",
@@ -60,6 +60,7 @@
     "@google-cloud/tasks": "catalog:",
     "@google/genai": "^3.0.0",
     "@valibot/to-json-schema": "^1.8.0",
+    "ai": "^7.0.173",
     "date-fns": "^4.4.0",
     "es-toolkit": "catalog:",
     "fastify": "catalog:",
@@ -80,9 +81,14 @@
     "vitest": "catalog:"
   },
   "inlinedDependencies": {
+    "@ai-sdk/google": "4.0.121",
+    "@ai-sdk/provider": "4.0.38",
+    "@ai-sdk/provider-utils": "5.0.81",
     "@fastify/swagger": "9.9.2",
+    "@workflow/serde": "4.1.0",
     "debug": "4.4.3",
     "drizzle-orm": "1.0.0-rc.5",
+    "eventsource-parser": "3.1.1",
     "fast-uri": "3.1.8",
     "fastify-plugin": "6.0.1",
     "has-flag": "4.0.0",
@@ -108,6 +114,7 @@
     "supports-color": "7.2.0",
     "valibot": "1.5.0",
     "xtend": "4.0.2",
-    "yaml": "2.9.1"
+    "yaml": "2.9.1",
+    "zod": "4.6.7"
   }
 }

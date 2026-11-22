@@ -16,7 +16,7 @@ import {
 } from "valibot";
 
 import { mkClientSrv } from "./fetch.ts";
-import { recordSchema, tooShort } from "./schema.ts";
+import { recordSchema, timestamps, tooShort } from "./schema.ts";
 
 /*
  * Login with email
@@ -53,8 +53,9 @@ export const refreshTokenSrv = mkClientSrv<LoginRespSchema, LoginServiceArgs>({
 /*
  * Get Profile
  */
-export const userKeys = ["Claude", "Gemini", "GitHub", "OpenAPI"] as const;
+export const userKeys = ["Anthropic", "Google AI", "GitHub", "OpenAI"] as const;
 export type UserKey = (typeof userKeys)[number];
+export type UserKeysFlat = Record<UserKey, string | undefined>;
 export const userKeyset: Readonly<Set<UserKey>> = new Set<UserKey>(userKeys);
 export const userHandles = ["GitHub"] as const;
 export type UserHandle = (typeof userHandles)[number];
@@ -64,12 +65,14 @@ export const userKeysSchema = object({
   user_id: pipe(number(), integer()),
   type: pipe(string(), picklist(Array.from(userKeyset))),
   key: optional(string()),
+  ...timestamps.entries,
 });
 
 export const userHandlesSchema = object({
   user_id: pipe(number(), integer()),
   type: pipe(string(), picklist(Array.from(userHandleset))),
   handle: optional(string()),
+  ...timestamps.entries,
 });
 
 export const getProfileRespSchema = object({

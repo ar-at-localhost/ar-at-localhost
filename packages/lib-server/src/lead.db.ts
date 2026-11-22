@@ -6,17 +6,16 @@ import {
   pgTable,
   smallint,
   text,
-  timestamp,
   uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
 import { leadStatuses, type LeadStatus } from "lib";
 
+import { timestampCol, timestampsCols } from "./db.ts";
 import { usersTable } from "./user.db.ts";
 
 export const leadStatusSet: Set<LeadStatus> = new Set(leadStatuses);
 export const leadStatusEnum = pgEnum("lead_status", leadStatuses);
-const timestampCol = () => timestamp({ withTimezone: true });
 
 export const leadsTable = pgTable(
   "leads",
@@ -45,13 +44,8 @@ export const leadsTable = pgTable(
     snooze_until: timestampCol(),
     notes: text(),
 
-    created_at: timestampCol().notNull().defaultNow(),
     last_seen_at: timestampCol().notNull(),
-    updated_at: timestampCol()
-      .notNull()
-      .defaultNow()
-      .$onUpdate(() => new Date()),
-    deleted_at: timestampCol(),
+    ...timestampsCols(),
   },
   (t) => [
     uniqueIndex("lead_user_domain").on(t.user_id, t.domain),

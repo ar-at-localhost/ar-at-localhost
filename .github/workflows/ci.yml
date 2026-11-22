@@ -32,9 +32,17 @@ jobs:
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
+  sync-cloud:
+    name: Sync cloud resources
+    uses: ./.github/workflows/cd-cloud.yml
+    needs: checks
+    with:
+      profile: *secretspec_profile
+    secrets: inherit
+
   deploy-services:
     name: Deploy services on cloud
-    needs: checks
+    needs: [checks, sync-cloud]
     if: needs.checks.outputs.services != '[]'
 
     concurrency:
@@ -55,12 +63,11 @@ jobs:
 
   deploy-apps:
     name: Deploy apps on cloud
-    needs: [checks, deploy-services]
+    needs: [checks]
     if: >-
       always() && 
       needs.checks.result == 'success' &&
-      needs.checks.outputs.apps != '[]' &&
-      (needs.deploy-services.result == 'success' || needs.deploy-services.result == 'skipped' )
+      needs.checks.outputs.apps != '[]'
     strategy:
       fail-fast: true
       matrix:
@@ -68,13 +75,5 @@ jobs:
     uses: ./.github/workflows/cd-app.yml
     with:
       app: ${{ matrix.app }}
-      profile: *secretspec_profile
-    secrets: inherit
-
-  sync-cloud:
-    name: Sync cloud resources
-    needs: [deploy-services]
-    uses: ./.github/workflows/cd-cloud.yml
-    with:
       profile: *secretspec_profile
     secrets: inherit

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { PUBLIC_SRV_AUTH_URL } from '$app/env/public';
-  import { mkOpts, type UserProfile } from '#lib';
+  import { mkOpts } from '#lib';
   import Draft from '#lib/components/draft.svelte';
   import { LoaderPinwheel } from '@lucide/svelte';
   import { downloadFileQuerySv, uploadFileMutationSv } from 'lib/svelte';
@@ -11,7 +11,6 @@
     children?: Snippet<[]>,
     download?: ReturnType<typeof downloadFileQuerySv>;
     title: string;
-    profile: UserProfile,
     path: string;
     readonly?: boolean
   }
@@ -28,7 +27,11 @@
       query: {
         path: props.path,
       }
-    })
+    }),
+
+    opts: {
+      refetchOnMount: true
+    }
   })
 
   $effect(() => {
@@ -60,7 +63,7 @@
     <h1 class="font-bold text-lg text-gray-900">Loading...</h1>
   </div>
 {:else if content || (download.error && download.error.statusCode === 404)}
-  <Draft id={props.id} content={content || ''} oncontent={oncontent} readonly={props.readonly} title={props.title} profile={props.profile}>
+  <Draft kind="text" id={props.id} content={content || ''} oncontent={oncontent} readonly={props.readonly} title={props.title}>
     {@render children?.()}
   </Draft>
 {/if}

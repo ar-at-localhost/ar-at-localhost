@@ -7,18 +7,19 @@ import {
   randText,
   randUrl,
 } from "@ngneat/falso";
-import { eq } from "drizzle-orm";
 import { reset, seed } from "drizzle-seed";
 import { leadStatuses } from "lib";
 import { hash as hashPassword } from "node-argon2";
+import { concatMap, from, lastValueFrom } from "rxjs";
 
 import { connectsTable } from "./connect.db.ts";
 import { isProduction } from "./env.ts";
 import { leadsTable } from "./lead.db.ts";
 import { db } from "./pg.ts";
+import { seeds } from "./seeds/index.ts";
 import { testimonialRequestsTable } from "./testimonial-request.ts";
 import { testimonialsTable } from "./testimonial.ts";
-import { usersTable } from "./user.db.ts";
+import { userHandlesTable, userKeysTable, usersTable } from "./user.db.ts";
 
 const main = async () => {
   if (!isProduction()) {
@@ -71,20 +72,48 @@ const main = async () => {
 
   const email = process.env.ADMIN_EMAIL;
   if (email) {
-    const [exists] = await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1);
-    if (exists) return;
-
     const name = process.env.ADMIN_NAME.split(" ");
     const [first_name, last_name] = [name[0], name.slice(1).join(" ")];
     const hash = await hashPassword(process.env.ADMIN_PASSWORD);
 
-    await db.insert(usersTable).values({
-      first_name,
-      last_name,
-      email,
-      hash,
-      roles: ["admin"],
-    });
+    const [user] = await db
+      .insert(usersTable)
+      .values({
+        first_name,
+        last_name,
+        email,
+        hash,
+        roles: ["admin"],
+      })
+      .returning()
+      .onConflictDoNothing();
+
+    await db
+      .insert(userKeysTable)
+      .values([
+        {
+          type: "GitHub",
+          key: process.env.AI_GITHUB_TOKEN || "",
+          user_id: user.id,
+        },
+        {
+          type: "Google AI",
+          key: process.env.AI_GOOGLE_GENERATIVE_API_KEY || "",
+          user_id: user.id,
+        },
+      ])
+      .onConflictDoNothing();
+
+    await db
+      .insert(userHandlesTable)
+      .values([
+        {
+          type: "GitHub",
+          handle: process.env.AI_GITHUB_HANDLE || "",
+          user_id: user.id,
+        },
+      ])
+      .onConflictDoNothing();
 
     await db.insert(leadsTable).values(
       Array.from({ length: 10 }, (_, i) => {
@@ -95,8 +124,6 @@ const main = async () => {
           concerns: rand([[], ["Budget unclear"]]),
           company: randCompanyName(),
           contact_role: randRole(),
-          created_at: now,
-          deleted_at: null,
           domain: `${i + 1}-${randDomainName()}`,
           evidence: rand([[], [{ title: "Careers", url: "https://example.com/careers" }]]),
           fit_reason: randText({ maxCharCount: 32 }),
@@ -105,13 +132,16 @@ const main = async () => {
           matched_repos: rand([[], ["ar-at-localhost/ar-at-localhost"], ["ar-at-localhost/yalms"]]),
           signals: rand([[{ type: "Hiring", summary: "Hiring a backend developer" }]]),
           status: rand(leadStatuses),
-          updated_at: now,
           url: randUrl(),
           user_id: 11,
         } satisfies typeof leadsTable.$inferInsert;
       }),
     );
   }
+
+  await lastValueFrom(
+    from(Object.entries(seeds).map(([, v]) => v)).pipe(concatMap((f) => from(f()))),
+  );
 };
 
 main();

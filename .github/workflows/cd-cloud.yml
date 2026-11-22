@@ -1,10 +1,6 @@
 name: "Continuous Cloud Sync"
 
 on:
-  push:
-    tags:
-      - "srv-*"
-
   workflow_dispatch:
     inputs: &deployment_inputs
       profile:
@@ -34,4 +30,6 @@ jobs:
       - name: Sync Cloud
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
+          secretspec run pnpm --filter lib-server db:migrate
+          secretspec run pnpm --filter lib-server db:seed
           devenv tasks --profile cloud run --quiet "aal:sync-cloud"

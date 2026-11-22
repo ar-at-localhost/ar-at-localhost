@@ -18,7 +18,6 @@ import {
   findLeadsIntSrv,
   jdToLeadIntSrv,
   leadsTable,
-  mkBadReqErr,
   okSchema,
   syncPortfolioIntSrv,
   type TooManyRequestsAPIError,
@@ -54,14 +53,6 @@ export const leadsRest: FastifyPluginAsync = async (app) => {
     },
 
     handler: async (req, rep) => {
-      const user: UserInfo = (await req.getUser?.())!;
-      const key = user?.keys.find((i) => i.type === "Gemini")?.key || "";
-
-      if (!key) {
-        const e = mkBadReqErr("Gemini not enabled. Please set Gemini key.");
-        return rep.status(e.statusCode).send(e);
-      }
-
       await syncPortfolioIntSrv({
         params: {
           user: req.userId!,
@@ -103,14 +94,6 @@ export const leadsRest: FastifyPluginAsync = async (app) => {
     },
 
     handler: async (req, rep) => {
-      const user: UserInfo = (await req.getUser?.())!;
-      const key = user?.keys.find((i) => i.type === "Gemini")?.key || "";
-
-      if (!key) {
-        const e = mkBadReqErr("Gemini not enabled. Please set Gemini key.");
-        return rep.status(e.statusCode).send(e);
-      }
-
       try {
         await findLeadsIntSrv({
           params: {
@@ -163,14 +146,6 @@ export const leadsRest: FastifyPluginAsync = async (app) => {
     },
 
     handler: async (req, rep) => {
-      const user: UserInfo = (await req.getUser?.())!;
-      const key = user?.keys.find((i) => i.type === "Gemini")?.key || "";
-
-      if (!key) {
-        const e = mkBadReqErr("Gemini not enabled. Please set Gemini key.");
-        return rep.status(e.statusCode).send(e);
-      }
-
       try {
         const result = await jdToLeadIntSrv({
           body: req.body as ContentBody,

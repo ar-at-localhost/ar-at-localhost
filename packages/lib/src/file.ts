@@ -5,15 +5,17 @@ import { fileTransformer } from "./fs.ts";
 import { contentSchema } from "./leads.ts";
 import { type OkResp, tStr } from "./schema.ts";
 
+export const filePathSchema = pipe(
+  string(tStr("Path")),
+  check((i) => !i.startsWith("/") && !/(^|\/)\.\.(\/|$)/.test(i)),
+);
+
 /*
  * Download file
  * ----------------------------------------
  */
 export const downloadFileQuery = object({
-  path: pipe(
-    string(tStr("Path")),
-    check((i) => !i.startsWith("/") && !/(^|\/)\.\.(\/|$)/.test(i)),
-  ),
+  path: filePathSchema,
 });
 
 export type DownloadFileQuery = InferOutput<typeof downloadFileQuery>;

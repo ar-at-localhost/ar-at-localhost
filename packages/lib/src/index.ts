@@ -6,5 +6,6 @@ export * from "./file.ts";
 export * from "./fs.ts";
 export * from "./github.ts";
 export * from "./leads.ts";
+export * from "./llm.ts";
 export * from "./schema.ts";
 export * from "./testimonial.ts";

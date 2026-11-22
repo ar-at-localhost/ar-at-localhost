@@ -1,8 +1,8 @@
 import { type InferSelectModel } from "drizzle-orm";
-import { integer, pgEnum, pgTable, unique, varchar } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, primaryKey, varchar } from "drizzle-orm/pg-core";
 import { userHandles, userKeys } from "lib";
 
-import { timestamps } from "./schema.ts";
+import { timestampsCols } from "./db.ts";
 
 export const rolesEnum = pgEnum("roles", ["admin", "system", "unknown"]);
 export type UserRole = (typeof rolesEnum.enumValues)[number];
@@ -14,13 +14,14 @@ export const usersTable = pgTable("users", {
   email: varchar({ length: 256 }).notNull(),
   hash: varchar({ length: 256 }),
   roles: rolesEnum().array().notNull().default(["unknown"]),
-  ...timestamps,
+  ...timestampsCols(),
 });
 
 export type UserRecord = InferSelectModel<typeof usersTable>;
 
 export const userKeysEnum = pgEnum("user_key_type", userKeys);
 export type UserKeys = (typeof userKeysEnum.enumValues)[number];
+export type UserKeyRecord = InferSelectModel<typeof userKeysTable>;
 
 export const userKeysTable = pgTable(
   "user_keys",
@@ -33,8 +34,9 @@ export const userKeysTable = pgTable(
 
     type: userKeysEnum().notNull(),
     key: varchar({ length: 512 }),
+    ...timestampsCols(),
   },
-  (t) => [unique().on(t.user_id, t.type)],
+  (t) => [primaryKey({ columns: [t.user_id, t.type] })],
 );
 
 export const userHandlesEnum = pgEnum("user_handle_type", userHandles);
@@ -51,6 +53,7 @@ export const userHandlesTable = pgTable(
 
     type: userHandlesEnum().notNull(),
     handle: varchar({ length: 256 }),
+    ...timestampsCols(),
   },
-  (t) => [unique().on(t.user_id, t.type)],
+  (t) => [primaryKey({ columns: [t.user_id, t.type] })],
 );

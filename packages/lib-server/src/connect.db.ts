@@ -1,6 +1,6 @@
 import { integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
 
-import { timestamps } from "./schema.ts";
+import { timestampsCols } from "./db.ts";
 
 export const connectsTable = pgTable("connects", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -8,5 +8,5 @@ export const connectsTable = pgTable("connects", {
   last_name: varchar({ length: 128 }),
   email: varchar({ length: 255 }).notNull(),
   message: text().notNull(),
-  ...timestamps,
+  ...timestampsCols(),
 });
