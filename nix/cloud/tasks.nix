@@ -50,6 +50,7 @@ in {
       schedule = "0 0 * * 1";
       time_zone = "UTC";
       attempt_deadline = "1800s";
+      depends_on = ["google_project_service.cloudscheduler"];
 
       retry_config = {
         retry_count = 5;
