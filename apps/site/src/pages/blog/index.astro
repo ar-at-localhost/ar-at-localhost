@@ -16,6 +16,7 @@ const posts = (await getCollection('blog')).sort(
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+
 		<style>
 			main {
 				width: 960px;
@@ -94,6 +95,7 @@ const posts = (await getCollection('blog')).sort(
 
 	<body class="flex flex-col min-h-screen bg-gray-100 text-stone-900 dark:bg-stone-600 dark:text-white">
 		<Header />
+
 		<main>
 			<section>
 				<ul>
