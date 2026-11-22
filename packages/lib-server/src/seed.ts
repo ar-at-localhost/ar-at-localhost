@@ -103,7 +103,7 @@ const main = async () => {
           fit_score: randNumber({ min: 1, max: 10 }),
           last_seen_at: now,
           matched_repos: rand([[], ["ar-at-localhost/ar-at-localhost"], ["ar-at-localhost/yalms"]]),
-          signals: rand([[], [{ type: "Hiring", summary: "Hiring a backend developer" }]]),
+          signals: rand([[{ type: "Hiring", summary: "Hiring a backend developer" }]]),
           status: rand(leadStatuses),
           updated_at: now,
           url: randUrl(),
