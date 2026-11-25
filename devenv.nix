@@ -1,9 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
-  inherit (inputs) terranix;
+{pkgs, ...}: let
   inherit (pkgs.stdenv) system;
   inherit (pkgs) chromium;
 in {
@@ -128,35 +123,6 @@ in {
             '
           '';
 
-        "aal:init-cloud" = {
-          exec =
-            #bash
-            ''
-              secretspec run tofu init -reconfigure
-              secretspec run tofu validate
-            '';
-
-          before = ["aal:deploy-service" "aal:sync-cloud"];
-        };
-
-        "aal:migrate-database" = {
-          before = ["aal:sync-cloud" "aal:deploy-service"];
-          exec =
-            #bash
-            ''
-              set -euo pipefail
-              secretspec run pnpm --filter lib-server drizzle-kit migrate
-            '';
-        };
-
-        "aal:sync-cloud" = {
-          exec =
-            #bash
-            ''
-              secretspec run tofu apply -consolidate-errors -concise -auto-approve
-            '';
-        };
-
         "aal:tf" = {
           exec =
             #bash
@@ -171,50 +137,28 @@ in {
 
 
               config=$(echo "$DEVENV_TASK_INPUT" | jq -r '.config')
-              apply=$(echo "$DEVENV_TASK_INPUT" | jq -r '.apply')
+              apply=$(echo "$DEVENV_TASK_INPUT" | jq -r '.apply // empty')
+              state=$(echo "$DEVENV_TASK_INPUT" | jq -r '.state // empty')
+
+              if [[ -z "$config" ]]; then
+                echo '|  Error: `config` is required!'
+                exit 1
+              fi
+
               nix build --out-link "$file" ".#tf.${system}.$config"
+              echo "$file"
               secretspec run tofu -chdir="$dir" init -reconfigure
               secretspec run tofu -chdir="$dir" validate
+
+              if [[ -n "$state" ]]; then
+                secretspec run tofu -chdir="$dir" refresh -consolidate-errors -concise
+                exit 0
+              fi
 
               if [[ -n "$apply" ]]; then
                 secretspec run tofu -chdir="$dir" apply -consolidate-errors -concise -auto-approve
               fi
             '';
-        };
-
-        "aal:sync-tofu" = let
-          terraformCommonConfig = terranix.lib.terranixConfiguration {
-            inherit system;
-            modules = [./nix/cloud/common];
-          };
-
-          terraformConfig = terranix.lib.terranixConfiguration {
-            inherit system;
-            modules = [./nix/cloud];
-          };
-        in {
-          exec =
-            #bash
-            ''
-              profile="$SECRETSPEC_PROFILE"
-              if [[ -z "$SECRETSPEC_PROFILE" ]]; then
-                echo "Profile is not set!"
-                exit 1
-              fi
-
-              if [[ -e config.tf.json ]]; then
-                rm -f config.tf.json
-              fi
-
-              src="${terraformConfig}"
-              if [[ "''${TF_TARGET:-}" == "common" ]]; then
-                src="${terraformCommonConfig}"
-              fi
-
-              cp "$src" config.tf.json
-            '';
-
-          before = ["aal:init-cloud"];
         };
       };
     };

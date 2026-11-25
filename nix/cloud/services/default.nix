@@ -1,29 +1,13 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  system,
-  ...
-}: let
-  inherit (inputs) terranix;
-  lib' = import ../../lib.nix {
-    inherit lib pkgs;
-  };
+{lib, ...}: let
+  lib' = lib.self;
 in
   builtins.mapAttrs (k: _:
-    terranix.lib.terranixConfiguration {
-      inherit system pkgs;
+    lib'.mkTf {
+      _module.args = {
+        name = k;
+        tag = "latest";
+      };
 
-      modules = [
-        {
-          _module.args = {
-            name = k;
-            tag = "latest";
-            inherit lib';
-          };
-
-          imports = [../providers.nix ../variables.nix ./service.nix];
-        }
-      ];
+      imports = [../providers.nix ../variables.nix ./service.nix];
     })
   lib'.services

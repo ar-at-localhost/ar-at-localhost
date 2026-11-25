@@ -1,12 +1,9 @@
 {
   lib,
-  pkgs,
   ref,
   ...
 }: let
-  lib' = import ../../lib.nix {
-    inherit lib pkgs;
-  };
+  lib' = lib.self;
 
   project = ref.vars.project_id;
   provider = "google-beta";

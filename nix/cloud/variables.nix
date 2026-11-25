@@ -1,11 +1,5 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
-  lib' = import ../lib.nix {
-    inherit lib pkgs;
-  };
+{lib, ...}: let
+  lib' = lib.self;
 
   variables = {
     attic = {
@@ -64,7 +58,7 @@ in {
 
   _module.args = {
     ref = {
-      inherit vars lib';
+      inherit vars;
     };
   };
 

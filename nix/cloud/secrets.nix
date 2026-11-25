@@ -15,9 +15,9 @@ in {
       };
 
       google_service_account_iam_member.runtime_acts_as_services = {
-        service_account_id = "\${google_service_account.services.name}";
+        service_account_id = "\${data.google_service_account.services.name}";
         role = "roles/iam.serviceAccountUser";
-        member = "serviceAccount:\${google_service_account.runtime.email}";
+        member = "serviceAccount:\${data.google_service_account.runtime.email}";
       };
     }
     // lib.foldl' lib.recursiveUpdate {} (builtins.map (name: (lib.recursiveUpdate {

@@ -1,11 +1,5 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
-  lib' = import ../lib.nix {
-    inherit lib pkgs;
-  };
+{lib, ...}: let
+  lib' = lib.self;
 
   services =
     lib.mapAttrs' (name: service: {

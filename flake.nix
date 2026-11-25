@@ -21,44 +21,75 @@
     forEachSupportedSystem = f:
       lib.genAttrs supportedSystems (
         system:
-          f {
-            inherit self system;
+          f (let
             pkgs = import inputs.nixpkgs {
               inherit system;
+
+              overlays = [
+                (_: prev: {
+                  lib = prev.lib.extend (_: __: {
+                    self = prev.callPackage ./nix/lib.nix {
+                      inherit inputs;
+                    };
+                  });
+                })
+              ];
             };
-          }
+
+            inherit (pkgs) lib;
+          in {
+            inherit self system inputs;
+            inherit pkgs;
+            lib =
+              lib
+              // {
+                self = import ./nix/lib.nix {
+                  inherit inputs lib system pkgs;
+                };
+              };
+          })
       );
   in {
     images = forEachSupportedSystem (
-      {pkgs, ...}:
+      {
+        pkgs,
+        lib,
+        ...
+      }:
         import ./nix/images.nix {
-          inherit pkgs;
-          inherit (pkgs) lib;
+          inherit pkgs lib;
         }
     );
 
     tf = forEachSupportedSystem (
       {
+        inputs,
+        lib,
         pkgs,
         system,
         ...
-      }:
-        import ./nix/cloud/services {
-          inherit inputs pkgs system;
-          inherit (pkgs) lib;
-        }
-        // {
-          gateway = import ./nix/cloud/gateway {
-            inherit inputs pkgs system;
-            inherit (pkgs) lib;
+      }: let
+        callTF = path:
+          pkgs.callPackage path {
+            inherit inputs lib pkgs system;
           };
+
+        inherit (lib.self) mkTf;
+      in
+        (callTF ./nix/cloud/services)
+        // {
+          default = mkTf ./nix/cloud;
+          common = mkTf ./nix/cloud/common;
+          gateway = mkTf ./nix/cloud/gateway;
         }
     );
 
     packages = forEachSupportedSystem (
-      {pkgs, ...}: let
-        inherit (pkgs) lib;
-      in
+      {
+        pkgs,
+        lib,
+        ...
+      }:
         {
           gcloud = pkgs.google-cloud-sdk.withExtraComponents [pkgs.google-cloud-sdk.components.cloud-run-proxy];
 

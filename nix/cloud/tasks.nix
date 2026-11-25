@@ -19,12 +19,12 @@ in {
         http_method = "POST";
 
         uri_override = {
-          host = "\${trimprefix(google_cloud_run_v2_service.srv-internal.uri, \"https://\")}";
+          host = "\${trimprefix(data.google_cloud_run_v2_service.srv-internal.uri, \"https://\")}";
         };
 
         oidc_token = {
-          service_account_email = "\${google_service_account.services.email}";
-          audience = "\${google_cloud_run_v2_service.srv-internal.uri}";
+          service_account_email = "\${data.google_service_account.services.email}";
+          audience = "\${data.google_cloud_run_v2_service.srv-internal.uri}";
         };
       };
 
@@ -40,7 +40,7 @@ in {
       inherit location;
       name = "\${google_cloud_tasks_queue.${name}.name}";
       role = "roles/cloudtasks.enqueuer";
-      member = "serviceAccount:\${google_service_account.runtime.email}";
+      member = "serviceAccount:\${data.google_service_account.runtime.email}";
     });
 
     google_cloud_scheduler_job.sync-portfolio-weekly = {
@@ -61,11 +61,11 @@ in {
 
       http_target = {
         http_method = "POST";
-        uri = "\${google_cloud_run_v2_service.srv-internal.uri}/leads/portfolio/schedule-syncs";
+        uri = "\${data.google_cloud_run_v2_service.srv-internal.uri}/leads/portfolio/schedule-syncs";
 
         oidc_token = {
-          service_account_email = "\${google_service_account.services.email}";
-          audience = "\${google_cloud_run_v2_service.srv-internal.uri}";
+          service_account_email = "\${data.google_service_account.services.email}";
+          audience = "\${data.google_cloud_run_v2_service.srv-internal.uri}";
         };
       };
     };

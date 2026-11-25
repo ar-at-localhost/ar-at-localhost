@@ -3,9 +3,7 @@
   pkgs,
   ...
 }: let
-  lib' = import ./lib.nix {
-    inherit lib pkgs;
-  };
+  lib' = lib.self;
 
   images =
     lib.mapAttrs' (name: service: {

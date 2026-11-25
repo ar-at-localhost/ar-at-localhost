@@ -21,7 +21,7 @@ in {
     google_storage_bucket_iam_member.${name} = {
       bucket = "\${google_storage_bucket.${name}.name}";
       role = "roles/storage.objectUser";
-      member = "serviceAccount:\${google_service_account.${name}.email}";
+      member = "serviceAccount:\${data.google_service_account.${name}.email}";
     };
   };
 }

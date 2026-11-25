@@ -57,7 +57,7 @@ in {
     google_storage_bucket_iam_member.runtime = {
       bucket = "\${google_storage_bucket.server.name}";
       role = "roles/storage.objectUser";
-      member = "serviceAccount:\${google_service_account.runtime.email}";
+      member = "serviceAccount:\${data.google_service_account.runtime.email}";
     };
   };
 

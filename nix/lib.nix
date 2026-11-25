@@ -1,6 +1,8 @@
 {
   lib,
+  inputs,
   pkgs,
+  system,
   ...
 }: let
   httpMethods = ["delete" "get" "head" "options" "patch" "post" "put"];
@@ -172,6 +174,21 @@
       }
     );
   };
+
+  mkTf = pathOrModule: let
+    inherit (inputs) terranix;
+  in
+    terranix.lib.terranixConfiguration {
+      inherit system pkgs;
+
+      modules = [
+        (
+          if builtins.isPath pathOrModule
+          then (import pathOrModule)
+          else pathOrModule
+        )
+      ];
+    };
 in {
-  inherit attic httpMethods mkSrvPkg mkSrvImage services;
+  inherit attic httpMethods mkSrvPkg mkSrvImage mkTf services;
 }
