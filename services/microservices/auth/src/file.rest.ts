@@ -9,6 +9,7 @@ import {
 import {
   badReqErrorSchema,
   getFile,
+  getUserFile,
   mkNotFoundErr,
   notFoundErrorSchema,
   okSchema,
@@ -48,7 +49,7 @@ export const fileRest: FastifyPluginAsync = async (app) => {
       {
         const query = req.query as DownloadFileQuery;
         const user: UserInfo = (await req.getUser?.())!;
-        const f = getFile(`users/${user.id}/${query.path}`);
+        const f = await getUserFile(`${query.path}`, user.id, true);
 
         const m = await f
           .getMetadata()
