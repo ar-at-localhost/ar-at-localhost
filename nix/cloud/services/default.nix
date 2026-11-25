@@ -8,6 +8,11 @@ in
         tag = "latest";
       };
 
-      imports = [../providers.nix ../variables.nix ./service.nix];
+      terraform.backend.gcs = {
+        bucket = "\${var.project_id}-tfstate";
+        prefix = "tofu/state-${k}";
+      };
+
+      imports = [../providers.nix ../variables.nix ./data.nix ./service.nix];
     })
   lib'.services

@@ -1,24 +1,16 @@
 {
   import = [
     {
-      to = "google_api_gateway_api_config.services";
-      id = "projects/\${var.project_id}/locations/global/apis/\${var.project_id}/configs/terraform-20261026114249875800000001";
-    }
-    {
-      to = "google_api_gateway_gateway.services";
-      id = "projects/\${var.project_id}/locations/\${var.region}/gateways/services";
+      to = "google_storage_bucket.server";
+      id = "\${var.project_id}-server";
     }
     {
       to = "google_artifact_registry_repository.repo";
       id = "projects/\${var.project_id}/locations/\${var.region}/repositories/\${var.project_id}";
     }
     {
-      to = "google_cloud_run_v2_service.srv-contact";
-      id = "projects/\${var.project_id}/locations/\${var.region}/services/srv-contact";
-    }
-    {
-      to = "google_cloud_run_v2_service_iam_member.srv-contact";
-      id = "projects/\${var.project_id}/locations/\${var.region}/services/srv-contact roles/run.invoker serviceAccount:services@\${var.project_id}.iam.gserviceaccount.com";
+      to = "google_secret_manager_secret.jwt";
+      id = "projects/\${var.project_id}/secrets/jwt";
     }
     {
       to = "google_secret_manager_secret.sops_age_key";
