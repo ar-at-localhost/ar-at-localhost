@@ -4,7 +4,6 @@ import {
   integer,
   maxValue,
   minValue,
-  nullable,
   number,
   object,
   optional,
@@ -12,7 +11,6 @@ import {
   pipe,
   string,
   transform,
-  undefinedable,
   type GenericSchema,
   isoTimestamp,
   nullish,
@@ -37,9 +35,11 @@ export const id = pipe(number("ID must be a number!"), integer("ID must be an in
 
 export const timestamps = object({
   created_at: pipe(string(), isoTimestamp()),
-  updated_at: undefinedable(nullable(pipe(string(), isoTimestamp()))),
-  deleted_at: undefinedable(nullable(pipe(string(), isoTimestamp()))),
+  updated_at: pipe(string(), isoTimestamp()),
+  deleted_at: nullish(pipe(string(), isoTimestamp())),
 });
+
+export type Timestamps = InferOutput<typeof timestamps>;
 
 export const recordSchema = object({
   id,

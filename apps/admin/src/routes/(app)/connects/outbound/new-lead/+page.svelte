@@ -80,7 +80,13 @@
               </SheetTrigger>
 
               <SheetContent class="outline rounded my-1 shadow-lg h-[75dvh]!" showCloseButton={false} side="bottom">
-                <Draft id="new-lead-jd" content={"# Job Description\n---\nReplace this with job description and hit `Save`."} title="Job Description" profile={profile} oncontent={onJobDescription} />
+                <Draft
+                  kind={'text'}
+                  id="new-lead-jd"
+                  content={"# Job Description\n---\nReplace this with job description and hit `Save`."}
+                  title="Job Description"
+                  oncontent={onJobDescription}
+                />
               </SheetContent>
             </Sheet>
           </div> 

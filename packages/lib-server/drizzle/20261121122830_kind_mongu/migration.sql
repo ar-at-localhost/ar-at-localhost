@@ -1,0 +1,1 @@
+ALTER TABLE "llm_config_model" RENAME TO "llm_config_models";

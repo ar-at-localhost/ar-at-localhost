@@ -11,7 +11,8 @@
     defaultOptions: {
       queries: {
         retry: false,
-        staleTime: Infinity
+        staleTime: Infinity,
+        refetchOnMount: true
       }
     }
   });

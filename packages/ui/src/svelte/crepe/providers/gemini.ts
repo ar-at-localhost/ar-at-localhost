@@ -1,8 +1,8 @@
 import { type AIProvider } from "@milkdown/crepe/feature/ai";
 
-import { type GeminiOpts, parseSSE } from "./shared";
+import { type GAIOpts, parseSSE } from "./shared";
 
-type GeminiStreamChunk = {
+type GAiStreamChunk = {
   index: number;
   delta: {
     text: string;
@@ -10,7 +10,7 @@ type GeminiStreamChunk = {
   };
 };
 
-export const gemini = (opts: GeminiOpts): AIProvider =>
+export const gemini = (opts: GAIOpts): AIProvider =>
   async function* (context, signal) {
     const config = {
       prompt: `${context.instruction}Do not add any extra context to your response.\n${context.selection}`,
@@ -41,9 +41,9 @@ export const gemini = (opts: GeminiOpts): AIProvider =>
     for await (const payload of parseSSE(response, signal)) {
       if (payload === "[DONE]") return;
 
-      let event: GeminiStreamChunk;
+      let event: GAiStreamChunk;
       try {
-        event = JSON.parse(payload) as GeminiStreamChunk;
+        event = JSON.parse(payload) as GAiStreamChunk;
       } catch {
         continue;
       }

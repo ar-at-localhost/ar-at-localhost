@@ -37,12 +37,9 @@ export const mkQuerySv =
               params: params,
               query: query,
             }) as ReqOpts<Args>,
-          ).then((v) => {
-            if (!o.onResult) return v;
-            return o
-              .onResult(v)
-              .then(() => v)
-              .catch(() => v);
+          ).then(async (v) => {
+            await o?.onResult?.(v).catch(() => null);
+            return v;
           }),
       };
     });

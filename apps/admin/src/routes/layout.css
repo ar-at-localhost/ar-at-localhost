@@ -1,2 +1,6 @@
 @import "ui/globals.css";
 @source "./**/*.svelte";
+
+.dragover {
+  @apply border border-amber-50;
+}

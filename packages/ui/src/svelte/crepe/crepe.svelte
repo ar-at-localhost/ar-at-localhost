@@ -31,7 +31,7 @@ This is an interactive markdown editor powered by AI. Use it to take notes and w
 
       featureConfigs: {
         // TODO: Support Claude / OpenAPI
-        ai: ai?.type === 'Gemini' ? {
+        ai: ai?.type === 'Google AI' ? {
           provider: gemini(ai.opts!),
           onError: console.error
         } : undefined,
@@ -55,5 +55,4 @@ This is an interactive markdown editor powered by AI. Use it to take notes and w
   })
 </script>
 
-<div id={id} class="w-full h-full p-0 m-0 overflow-auto relative top-0 left-0"></div>
-
+<div id={id} class="w-full h-full p-0 m-0"></div>

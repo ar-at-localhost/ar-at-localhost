@@ -6,6 +6,9 @@ declare global {
       ADMIN_EMAIL: string;
       ADMIN_NAME: string;
       ADMIN_PASSWORD: string;
+      AI_GITHUB_TOKEN: string;
+      AI_GITHUB_HANDLE: string;
+      AI_GOOGLE_GENERATIVE_API_KEY: string;
       CHROMIUM_PATH: string;
       MONGODB_URI: string;
       PORT: string;

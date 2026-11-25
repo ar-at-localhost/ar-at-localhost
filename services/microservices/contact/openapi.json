@@ -22,9 +22,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -37,27 +35,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -70,27 +60,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -133,12 +115,7 @@
                     "maxLength": 1024
                   }
                 },
-                "required": [
-                  "first_name",
-                  "email",
-                  "message",
-                  "token"
-                ]
+                "required": ["first_name", "email", "message", "token"]
               }
             }
           }
@@ -155,9 +132,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -170,27 +145,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -203,27 +170,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -336,13 +295,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "offset",
-                    "total",
-                    "page",
-                    "limit",
-                    "items"
-                  ]
+                  "required": ["offset", "total", "page", "limit", "items"]
                 }
               }
             }
@@ -355,27 +308,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -388,27 +333,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -444,12 +381,7 @@
                     "format": "email"
                   }
                 },
-                "required": [
-                  "first_name",
-                  "last_name_initial",
-                  "company",
-                  "email"
-                ]
+                "required": ["first_name", "last_name_initial", "company", "email"]
               }
             }
           }
@@ -466,9 +398,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -491,11 +421,7 @@
                       "format": "email"
                     }
                   },
-                  "required": [
-                    "message",
-                    "id",
-                    "email"
-                  ]
+                  "required": ["message", "id", "email"]
                 }
               }
             }
@@ -508,27 +434,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -541,27 +459,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -640,27 +550,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -673,27 +575,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        401
-                      ]
+                      "enum": [401]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Unauthenticated"
-                      ]
+                      "enum": ["Unauthenticated"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -706,27 +600,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        404
-                      ]
+                      "enum": [404]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Not Found"
-                      ]
+                      "enum": ["Not Found"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -739,27 +625,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -779,9 +657,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -794,27 +670,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -827,27 +695,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        401
-                      ]
+                      "enum": [401]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Unauthenticated"
-                      ]
+                      "enum": ["Unauthenticated"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -860,27 +720,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        404
-                      ]
+                      "enum": [404]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Not Found"
-                      ]
+                      "enum": ["Not Found"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -893,27 +745,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -939,10 +783,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "testimonial",
-                  "rating"
-                ]
+                "required": ["testimonial", "rating"]
               }
             }
           }
@@ -959,9 +800,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -977,9 +816,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -992,27 +829,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1025,27 +854,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        404
-                      ]
+                      "enum": [404]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Not Found"
-                      ]
+                      "enum": ["Not Found"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1058,27 +879,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1195,13 +1008,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "offset",
-                    "total",
-                    "page",
-                    "limit",
-                    "items"
-                  ]
+                  "required": ["offset", "total", "page", "limit", "items"]
                 }
               }
             }
@@ -1214,27 +1021,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1247,27 +1046,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1383,13 +1174,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "offset",
-                    "total",
-                    "page",
-                    "limit",
-                    "items"
-                  ]
+                  "required": ["offset", "total", "page", "limit", "items"]
                 }
               }
             }
@@ -1402,27 +1187,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1435,27 +1212,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1477,9 +1246,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -1492,27 +1259,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1525,27 +1284,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1567,9 +1318,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "message"
-                  ]
+                  "required": ["message"]
                 }
               }
             }
@@ -1582,27 +1331,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1615,27 +1356,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        429
-                      ]
+                      "enum": [429]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Too Many Requests"
-                      ]
+                      "enum": ["Too Many Requests"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1648,27 +1381,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1689,9 +1414,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "content"
-                ]
+                "required": ["content"]
               }
             }
           }
@@ -1738,9 +1461,7 @@
                             "format": "uri"
                           }
                         },
-                        "required": [
-                          "url"
-                        ]
+                        "required": ["url"]
                       }
                     },
                     "fit_score": {
@@ -1752,7 +1473,8 @@
                           "type": "number"
                         }
                       ],
-                      "type": "integer",
+                      "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
+                      "type": "number",
                       "minimum": 1,
                       "maximum": 10
                     },
@@ -1786,10 +1508,7 @@
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "type",
-                          "summary"
-                        ]
+                        "required": ["type", "summary"]
                       },
                       "minItems": 1
                     },
@@ -1799,7 +1518,6 @@
                       "nullable": true
                     },
                     "status": {
-                      "type": "string",
                       "enum": [
                         "new",
                         "reviewed",
@@ -1809,7 +1527,8 @@
                         "won",
                         "lost",
                         "rejected"
-                      ]
+                      ],
+                      "type": "string"
                     },
                     "url": {
                       "type": "string",
@@ -1841,27 +1560,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1874,27 +1585,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        429
-                      ]
+                      "enum": [429]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Too Many Requests"
-                      ]
+                      "enum": ["Too Many Requests"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1907,27 +1610,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -1978,9 +1673,7 @@
                           "format": "uri"
                         }
                       },
-                      "required": [
-                        "url"
-                      ]
+                      "required": ["url"]
                     }
                   },
                   "fit_score": {
@@ -1992,7 +1685,8 @@
                         "type": "number"
                       }
                     ],
-                    "type": "integer",
+                    "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
+                    "type": "number",
                     "minimum": 1,
                     "maximum": 10
                   },
@@ -2026,10 +1720,7 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "type",
-                        "summary"
-                      ]
+                      "required": ["type", "summary"]
                     },
                     "minItems": 1
                   },
@@ -2039,7 +1730,6 @@
                     "nullable": true
                   },
                   "status": {
-                    "type": "string",
                     "enum": [
                       "new",
                       "reviewed",
@@ -2049,7 +1739,8 @@
                       "won",
                       "lost",
                       "rejected"
-                    ]
+                    ],
+                    "type": "string"
                   },
                   "url": {
                     "type": "string",
@@ -2132,9 +1823,7 @@
                             "format": "uri"
                           }
                         },
-                        "required": [
-                          "url"
-                        ]
+                        "required": ["url"]
                       }
                     },
                     "fit_score": {
@@ -2146,7 +1835,8 @@
                           "type": "number"
                         }
                       ],
-                      "type": "integer",
+                      "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
+                      "type": "number",
                       "minimum": 1,
                       "maximum": 10
                     },
@@ -2180,10 +1870,7 @@
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "type",
-                          "summary"
-                        ]
+                        "required": ["type", "summary"]
                       },
                       "minItems": 1
                     },
@@ -2193,7 +1880,6 @@
                       "nullable": true
                     },
                     "status": {
-                      "type": "string",
                       "enum": [
                         "new",
                         "reviewed",
@@ -2203,7 +1889,8 @@
                         "won",
                         "lost",
                         "rejected"
-                      ]
+                      ],
+                      "type": "string"
                     },
                     "url": {
                       "type": "string",
@@ -2243,27 +1930,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -2276,27 +1955,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        429
-                      ]
+                      "enum": [429]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Too Many Requests"
-                      ]
+                      "enum": ["Too Many Requests"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -2309,27 +1980,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -2375,7 +2038,8 @@
                   "type": "number"
                 }
               ],
-              "type": "integer",
+              "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
+              "type": "number",
               "minimum": 1,
               "maximum": 10
             },
@@ -2385,7 +2049,6 @@
           },
           {
             "schema": {
-              "type": "string",
               "enum": [
                 "new",
                 "reviewed",
@@ -2395,7 +2058,8 @@
                 "won",
                 "lost",
                 "rejected"
-              ]
+              ],
+              "type": "string"
             },
             "in": "query",
             "name": "status",
@@ -2478,9 +2142,7 @@
                                   "format": "uri"
                                 }
                               },
-                              "required": [
-                                "url"
-                              ]
+                              "required": ["url"]
                             }
                           },
                           "fit_score": {
@@ -2492,7 +2154,8 @@
                                 "type": "number"
                               }
                             ],
-                            "type": "integer",
+                            "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
+                            "type": "number",
                             "minimum": 1,
                             "maximum": 10
                           },
@@ -2526,10 +2189,7 @@
                                   "type": "string"
                                 }
                               },
-                              "required": [
-                                "type",
-                                "summary"
-                              ]
+                              "required": ["type", "summary"]
                             },
                             "minItems": 1
                           },
@@ -2539,7 +2199,6 @@
                             "nullable": true
                           },
                           "status": {
-                            "type": "string",
                             "enum": [
                               "new",
                               "reviewed",
@@ -2549,7 +2208,8 @@
                               "won",
                               "lost",
                               "rejected"
-                            ]
+                            ],
+                            "type": "string"
                           },
                           "url": {
                             "type": "string",
@@ -2580,13 +2240,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "offset",
-                    "total",
-                    "page",
-                    "limit",
-                    "items"
-                  ]
+                  "required": ["offset", "total", "page", "limit", "items"]
                 }
               }
             }
@@ -2599,27 +2253,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        400
-                      ]
+                      "enum": [400]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Bad Request"
-                      ]
+                      "enum": ["Bad Request"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }
@@ -2632,27 +2278,19 @@
                   "type": "object",
                   "properties": {
                     "statusCode": {
-                      "enum": [
-                        500
-                      ]
+                      "enum": [500]
                     },
                     "code": {
                       "type": "string"
                     },
                     "error": {
-                      "enum": [
-                        "Internal Server Error"
-                      ]
+                      "enum": ["Internal Server Error"]
                     },
                     "message": {
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "statusCode",
-                    "error",
-                    "message"
-                  ]
+                  "required": ["statusCode", "error", "message"]
                 }
               }
             }

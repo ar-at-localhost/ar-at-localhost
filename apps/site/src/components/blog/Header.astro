@@ -2,16 +2,16 @@
 import HeaderLink from './HeaderLink.astro';
 import SocialLinks from './SocialLinks.astro';
 import { Image } from 'astro:assets';
-import logo from '../../assets/logo.svg';
-import logoLight from '../../assets/logo-light.svg';
+import logo from '../../assets/logo/logo.svg';
+import logoLight from '../../assets/logo/logo-light.svg';
 ---
 
 <header class="bg-white text-stone-500 dark:bg-stone-500 dark:text-white sticky top-0">
 	<nav>
 		<h2>
       <a href="/">
-        <Image alt="logo" widths={[48, 64, 96]} height={48} src={logo} class="inline-block dark:hidden" />
-        <Image alt="logo" widths={[48, 64, 96]} height={48} src={logoLight} class="hidden dark:inline-block" />
+        <Image alt="logo" src={logo} class="inline-block dark:hidden size-8 md:size-16 lg:size-24" />
+        <Image alt="logo" src={logoLight} class="hidden dark:inline-block size-8 md:size-16 lg:size-24" />
       </a>
 		</h2>
 

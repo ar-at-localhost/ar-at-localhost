@@ -3,11 +3,11 @@ export type BaseProviderOpts = {
   model?: string;
 };
 
-export interface GeminiOpts extends BaseProviderOpts {}
-export type AIProvider = "Gemini" | "none";
+export interface GAIOpts extends BaseProviderOpts {}
+export type AIProvider = "Google AI" | "none";
 
 export interface ProviderOpts {
-  Gemini: GeminiOpts;
+  "Google AI": GAIOpts;
   none: undefined;
 }
 
