@@ -130,11 +130,7 @@ in {
               # dir=$(mktemp -d)
               dir=$(pwd)
               file="$dir/config.tf.json"
-
-              if [[ -f $file ]]; then
-                rm -f "$file"
-              fi
-
+              rm -f "$file" >/dev/null 2>&1
 
               config=$(echo "$DEVENV_TASK_INPUT" | jq -r '.config')
               apply=$(echo "$DEVENV_TASK_INPUT" | jq -r '.apply // empty')
