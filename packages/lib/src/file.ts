@@ -32,11 +32,7 @@ export const downloadFileSrv = mkClientSrv<File, DownloadFileArgs>({
  * ----------------------------------------
  */
 export const uploadFileBody = object({
-  path: pipe(
-    string(tStr("Path")),
-    check((i) => !i.startsWith("/") && !/(^|\/)\.\.(\/|$)/.test(i)),
-  ),
-
+  path: filePathSchema,
   ...contentSchema.entries,
 });
 

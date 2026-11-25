@@ -47,6 +47,19 @@ runs:
         echo "TURBO_SCM_HEAD=$TURBO_SCM_HEAD" >> "$GITHUB_ENV"
         echo "TURBO_SCM_BASE=$TURBO_SCM_BASE" >> "$GITHUB_ENV"
 
+    - name: Detect changed templates
+      id: changed-templates-detection
+      env:
+        SECRETSPEC_PROFILE: ${{ inputs.profile || 'prod' }}
+        SOPS_AGE_KEY: ${{ inputs.age-key }}
+      shell: devenv shell -- bash -e {0}
+      run: |
+        services=$(
+          pnpm turbo ls --affected --output json |
+            jq -c '[.packages.items[].name | select(test("lib-server"))]'
+        )
+        echo "templates=1" >> "$GITHUB_OUTPUT"
+
     - name: Detect changed services
       id: changed-services-detection
       env:

@@ -38,6 +38,7 @@ jobs:
     needs: checks
     with:
       profile: *secretspec_profile
+      templates: ${{ needs.checks.outputs.templates == '1' }}
     secrets: inherit
 
   deploy-services:
