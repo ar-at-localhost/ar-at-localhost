@@ -11,6 +11,17 @@ in {
     service-url.value = "\${google_cloud_run_v2_service.${name}.uri}";
   };
 
+  import = [
+    {
+      to = "google_cloud_run_v2_service.${name}";
+      id = "projects/\${var.project_id}/locations/\${var.region}/services/${name}";
+    }
+    {
+      to = "google_cloud_run_v2_service_iam_member.${name}";
+      id = "projects/\${var.project_id}/locations/\${var.region}/services/${name} roles/run.invoker serviceAccount:\${data.google_service_account.services.email}";
+    }
+  ];
+
   resource = {
     google_cloud_run_v2_service.${name} = {
       inherit name location;
