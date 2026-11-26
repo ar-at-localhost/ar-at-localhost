@@ -8,6 +8,8 @@ env:
   SECRETSPEC_PROFILE: "prod"
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
+permissions: {}
+
 jobs:
   sync:
     runs-on: ubuntu-latest

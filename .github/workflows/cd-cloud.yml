@@ -18,6 +18,8 @@ env:
   SECRETSPEC_PROFILE: ${{ inputs.profile || 'staging' }}
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
+permissions: {}
+
 jobs:
   sync-cloud:
     name: Sync cloud resources

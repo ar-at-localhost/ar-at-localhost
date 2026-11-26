@@ -19,6 +19,8 @@ env:
         'ci' }}
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
+permissions: {}
+
 jobs:
   approval:
     uses: ./.github/workflows/approval.yml
@@ -51,6 +53,8 @@ jobs:
     name: Deploy services on cloud
     needs: [checks, sync-cloud]
     if: needs.checks.outputs.services != '[]'
+    permissions:
+      contents: write
 
     concurrency:
       group: deploy-services

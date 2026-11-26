@@ -29,6 +29,8 @@ env:
   DB_ID: "ci-${{ github.run_id }}-${{ github.run_attempt }}"
   NODE_ENV: ci
 
+permissions: {}
+
 jobs:
   check:
     name: Quality checks

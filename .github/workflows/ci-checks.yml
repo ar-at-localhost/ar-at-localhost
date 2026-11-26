@@ -8,6 +8,8 @@ on:
 env:
   SECRETSPEC_PROFILE: ci
 
+permissions: {}
+
 jobs:
   approval:
     uses: ./.github/workflows/approval.yml

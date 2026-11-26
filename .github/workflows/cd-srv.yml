@@ -22,10 +22,14 @@ env:
   NODE_ENV: "production"
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
+permissions: {}
+
 jobs:
   deploy-service:
     name: Deploy service
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
         with:

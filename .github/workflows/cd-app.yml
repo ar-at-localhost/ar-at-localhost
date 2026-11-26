@@ -18,6 +18,8 @@ on:
   workflow_call:
     inputs: *deployment_inputs
 
+permissions: {}
+
 jobs:
   deploy:
     name: Deploy app
