@@ -71,6 +71,7 @@ const main = async () => {
   }
 
   const email = process.env.ADMIN_EMAIL;
+  let user_id = 0;
   if (email) {
     const name = process.env.ADMIN_NAME.split(" ");
     const [first_name, last_name] = [name[0], name.slice(1).join(" ")];
@@ -115,11 +116,16 @@ const main = async () => {
       ])
       .onConflictDoNothing();
 
+    user_id = user.id;
+  }
+
+  if (user_id && !isProduction()) {
     await db.insert(leadsTable).values(
       Array.from({ length: 10 }, (_, i) => {
         const now = new Date();
         return {
           id: i + 1,
+          user_id,
           angle: randText({ maxCharCount: 32 }),
           concerns: rand([[], ["Budget unclear"]]),
           company: randCompanyName(),
@@ -133,7 +139,6 @@ const main = async () => {
           signals: rand([[{ type: "Hiring", summary: "Hiring a backend developer" }]]),
           status: rand(leadStatuses),
           url: randUrl(),
-          user_id: user.id,
         } satisfies typeof leadsTable.$inferInsert;
       }),
     );
