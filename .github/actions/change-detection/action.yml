@@ -17,6 +17,8 @@ outputs:
     value: ${{ steps.changed-services-detection.outputs.services }}
   apps:
     value: ${{ steps.changed-apps-detection.outputs.apps }}
+  templates:
+    value: ${{ steps.changed-apps-detection.outputs.templates }}
 
 runs:
   using: "composite"

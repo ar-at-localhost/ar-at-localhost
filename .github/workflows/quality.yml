@@ -21,6 +21,8 @@ on:
         value: ${{ jobs.check.outputs.services }}
       apps:
         value: ${{ jobs.check.outputs.apps }}
+      templates:
+        value: ${{ jobs.check.outputs.templates }}
 
 env:
   SECRETSPEC_PROFILE: "ci"
@@ -36,6 +38,7 @@ jobs:
     outputs:
       apps: ${{ steps.change-detection.outputs.apps }}
       services: ${{ steps.change-detection.outputs.services }}
+      templates: ${{ steps.change-detection.outputs.templates }}
 
     steps:
       - uses: actions/checkout@v5

@@ -20,10 +20,16 @@ env:
   SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
 jobs:
+  approval:
+    uses: ./.github/workflows/approval.yml
+
   checks:
+    needs: approval
+    if: ${{ !cancelled() && needs.approval.result != 'failure' }}
     name: Run quality checks
     permissions:
       contents: write
+
     uses: ./.github/workflows/quality.yml
     with:
       hash-check: true
