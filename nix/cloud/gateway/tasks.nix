@@ -1,7 +1,7 @@
 {ref, ...}: let
   project = ref.vars.project_id;
   location = ref.vars.region;
-  tasks = ["connect" "testimonial-request" "sync-portfolio"];
+  tasks = ["post-connect" "post-testimonial-request" "leads-sync-portfolio"];
 
   genAttrs = names: f:
     builtins.listToAttrs (builtins.map (n: {

@@ -35,7 +35,7 @@ export const enqueueTestimonialRequest = async (id: number) => {
     parent: client.queuePath(
       TF_VAR_project_name!,
       TF_VAR_region!,
-      `${TF_VAR_project_name!}-testimonial-request`,
+      `${TF_VAR_project_name!}-post-testimonial-request`,
     ),
 
     task: {

@@ -62,5 +62,4 @@ jobs:
     uses: ./.github/workflows/cd-srv-common.yml
     with:
       profile: ${{ inputs.profile }}
-    secrets:
-      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+    secrets: inherit

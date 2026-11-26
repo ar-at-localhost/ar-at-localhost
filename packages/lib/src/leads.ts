@@ -183,7 +183,7 @@ export const createLeadSrv = mkClientSrv<Lead, [never, never, CreateLeadBody]>({
  */
 export const syncPortfolioSrv = mkClientSrv<File, [never, never, never]>({
   method: "POST",
-  endpoint: "/contact/leads/sync-portfolio",
+  endpoint: "/contact/leads/leads-sync-portfolio",
   transformer: fileTransformer,
 });
 

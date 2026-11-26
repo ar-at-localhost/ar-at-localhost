@@ -14,7 +14,9 @@
     "url": "git+https://github.com/ar-at-localhost/ar-at-localhost.git"
   },
   "files": [
-    "dist"
+    "dist/",
+    "src/",
+    "package.json"
   ],
   "type": "module",
   "exports": {

@@ -36,7 +36,7 @@ export const enqueueConnect = async (id: number) => {
     parent: client.queuePath(
       TF_VAR_project_name!,
       TF_VAR_region!,
-      `${TF_VAR_project_name!}-connect`,
+      `${TF_VAR_project_name!}-post-connect`,
     ),
 
     task: {

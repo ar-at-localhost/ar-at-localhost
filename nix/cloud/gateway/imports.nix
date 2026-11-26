@@ -6,7 +6,7 @@
     }
     {
       to = "google_cloud_scheduler_job.sync-portfolio-weekly";
-      id = "projects/\${var.project_id}/locations/\${var.region}/jobs/ar-at-localhost-staging-sync-portfolio-weekly";
+      id = "projects/\${var.project_id}/locations/\${var.region}/jobs/\${var.project_id}-sync-portfolio-weekly";
     }
     {
       to = "google_cloud_tasks_queue.connect";
