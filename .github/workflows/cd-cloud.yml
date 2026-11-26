@@ -37,7 +37,7 @@ jobs:
         run: |
           secretspec run pnpm --filter lib-server db:migrate
           secretspec run pnpm --filter lib-server db:seed
-          devenv tasks --profile cloud run --quiet "aal:sync-cloud"
+          devenv tasks --profile cloud run --quiet "aal:tf" --input config="default"
 
           if [[ "$templates" == "true" ]]; then
             gcloud storage rsync --recursive \

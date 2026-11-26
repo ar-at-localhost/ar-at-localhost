@@ -47,7 +47,6 @@ jobs:
         run: |
           export service="${SERVICE%@*}"
           devenv tasks --profile cloud run "aal:tf" --input config="$service" --input apply=1
-          devenv tasks --profile cloud run --quiet "aal:sync-cloud"
           url=$(gcloud run services describe srv-internal --project="$GCP_PROJECT" --region="$GCP_REGION" --format 'value(status.url)')
           openapi="services/microservices/${service#srv-}/openapi.json"
           curl --fail -sSL -H "Authorization: Bearer $(gcloud auth print-identity-token)" "$url/openapi.json" -o "$openapi"
