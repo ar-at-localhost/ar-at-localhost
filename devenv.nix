@@ -87,7 +87,7 @@ in {
           #bash
           ''
             set -euo pipefail
-            export name="$SERVICE"
+            export name="$service"
             export profile="$SECRETSPEC_PROFILE"
 
             if [[ -z "$name" || -z "$profile" ]]; then
@@ -111,9 +111,6 @@ in {
                 --dest-creds "_json_key:''${GCP_KEY}"  \
                 "docker-archive:./$out" \
                 "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:latest"
-
-              # Ensure resource is created
-              tofu apply -auto-approve -target "google_cloud_run_v2_service.$name"
 
               # Update service
               gcloud run services update \
