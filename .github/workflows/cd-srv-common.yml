@@ -1,0 +1,40 @@
+name: "Service's Commons Deployment"
+
+on:
+  workflow_dispatch:
+    inputs: &deployment_inputs
+      profile:
+        default: "staging"
+        type: string
+
+  workflow_call:
+    inputs: *deployment_inputs
+
+env:
+  NODE_ENV: "production"
+  SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+
+permissions: {}
+
+jobs:
+  deploy-service:
+    name: Deploy service
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup
+        with:
+          age-key: ${{ secrets.SOPS_AGE_KEY }}
+          profile: ${{ inputs.profile }}
+
+      - name: Deploy service
+        env:
+          SECRETSPEC_PROFILE: ${{ inputs.profile }}
+        shell: devenv shell --profile cloud -- bash -e {0}
+        run: |
+          devenv tasks --secretspec-profile "$SECRETSPEC_PROFILE" --profile cloud run 'aal:tf' --input config="gateway" --input apply=1

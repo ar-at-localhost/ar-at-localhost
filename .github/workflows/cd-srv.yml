@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      common: ${{ steps.service-deployment.outputs.common }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -41,6 +43,7 @@ jobs:
           profile: ${{ inputs.profile }}
 
       - name: Deploy service
+        id: service-deployment
         env:
           SERVICE: ${{ inputs.service || github.ref_name }}
           SECRETSPEC_PROFILE: ${{ inputs.profile }}
@@ -53,22 +56,11 @@ jobs:
           devenv tasks --profile cloud run "aal:deploy-service-image" --input name="$service" --input profile="$SECRETSPEC_PROFILE"
           export TF_VAR_srv_digest=$(cat "result-${service}.digest")
           devenv tasks --profile cloud run "aal:tf" --input config="$service" --input apply=1
-          url=$(gcloud run services describe "$service" --project="$GCP_PROJECT" --region="$GCP_REGION" --format 'value(status.url)')
-          url="$url/openapi.json"
-          openapi="services/microservices/${service#srv-}/openapi.json"
 
-          echo "> Fetching OpenAPI Specs at $url"
-          curl --fail -sSL -H "Authorization: Bearer $(gcloud auth print-identity-token)" "$url" -o "$openapi"
-          oxfmt --write "$openapi"
-
-          if [[ -n "$(git status --porcelain -- "$openapi")" ]]; then
-            echo "> Updating gateway"
-            git add "$openapi"
-            version=$(jq -r '.info.version' "$openapi")
-            devenv tasks --secretspec-profile "$SECRETSPEC_PROFILE" --profile cloud run 'aal:tf' --input config="gateway" --input apply=1
-            git config user.name "$AUTHOR_NAME"
-            git config user.email "$AUTHOR_EMAIL"
-            git commit -m "build($service): v${version}"
-            git push --no-verify origin "HEAD:refs/heads/$GIT_BRANCH"
-            echo "::notice::| ${service}@${version} released. Please pull changes."
-          fi
+  deploy-srv-common:
+    needs: deploy-service
+    uses: ./.github/workflows/cd-srv-common.yml
+    with:
+      profile: ${{ inputs.profile }}
+    secrets:
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
