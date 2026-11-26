@@ -129,7 +129,7 @@
 
               echo "> Building package..."
               code=0
-              nix build --option substituters https://cache.nixos.org -L ".#$service" > "$output" 2>&1 || code="$?"
+              nix build -L ".#$service" > "$output" 2>&1 || code="$?"
 
               if [[ $code -eq 0 ]]; then
                 echo "| OK: Package built successfully - current hash is verified!"
