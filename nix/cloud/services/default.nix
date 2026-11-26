@@ -5,7 +5,6 @@ in
     lib'.mkTf {
       _module.args = {
         name = k;
-        tag = "latest";
       };
 
       terraform.backend.gcs = {

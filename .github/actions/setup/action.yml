@@ -32,7 +32,7 @@ runs:
       uses: actions/cache@v5
       with:
         path: /nix-cache
-        key: nix-cache-${{ runner.os }}-${{ hashFiles('flake.lock', 'devenv.lock') }}
+        key: nix-cache-${{ runner.os }}-${{ hashFiles('devenv.lock', 'flake.lock', 'pnpm-lock.yaml') }}
         restore-keys: |
           nix-cache-${{ runner.os }}-
 

@@ -83,18 +83,19 @@ in {
             '
           '';
 
-        "aal:deploy-service".exec =
+        "aal:deploy-service-image".exec =
           #bash
           ''
             set -euo pipefail
-            export name="$service"
-            export profile="$SECRETSPEC_PROFILE"
+            name=$(echo "$DEVENV_TASK_INPUT" | jq -r '.name // empty')
+            profile=$(echo "$DEVENV_TASK_INPUT" | jq -r '.profile // empty')
 
             if [[ -z "$name" || -z "$profile" ]]; then
               echo "SERVICE / SECRETSPEC_PROFILE env vars are required" >&2
               exit 1
             fi
 
+            export SECRETSPEC_PROFILE="$project"
             export out="result-$name"
             export target=".#images.${system}.$name"
             export version=$(nix eval --raw "$target.imageTag")
@@ -103,20 +104,13 @@ in {
             # shellcheck disable=SC2016
             secretspec run -- bash -c '
               skopeo copy \
+                --digestfile "$out.digest" \
                 --dest-creds "_json_key:$GCP_KEY"  \
                 "docker-archive:./$out" \
                 "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:$version"
 
-              skopeo copy \
-                --dest-creds "_json_key:''${GCP_KEY}"  \
-                "docker-archive:./$out" \
-                "docker://$TF_VAR_region-docker.pkg.dev/$TF_VAR_project_name/$TF_VAR_project_name/$name:latest"
-
-              # Update service
-              gcloud run services update \
-                --project "$TF_VAR_project_name" "$name" \
-                --region "$TF_VAR_region" \
-                --image "$TF_VAR_region-docker.pkg.dev/''${TF_VAR_project_name}/''${TF_VAR_project_name}/''${name}:latest"
+              digest=$(cat "$out.digest")
+              echo "{ \"digest\": \"$digest\" }" > "$DEVENV_TASK_OUTPUT_FILE"
             '
           '';
 
@@ -129,7 +123,7 @@ in {
               file="$dir/config.tf.json"
               rm -f "$file" >/dev/null 2>&1
 
-              config=$(echo "$DEVENV_TASK_INPUT" | jq -r '.config')
+              config=$(echo "$DEVENV_TASK_INPUT" | jq -r '.config // empty')
               apply=$(echo "$DEVENV_TASK_INPUT" | jq -r '.apply // empty')
               state=$(echo "$DEVENV_TASK_INPUT" | jq -r '.state // empty')
 

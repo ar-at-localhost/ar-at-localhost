@@ -1,7 +1,6 @@
 {
   ref,
   name,
-  tag,
   ...
 }: let
   project = ref.vars.project_id;
@@ -11,6 +10,13 @@ in {
     service-url.value = "\${google_cloud_run_v2_service.${name}.uri}";
   };
 
+  variable = {
+    srv_digest = {
+      type = "string";
+    };
+  };
+
+  /*
   import = [
     {
       to = "google_cloud_run_v2_service.${name}";
@@ -21,6 +27,7 @@ in {
       id = "projects/\${var.project_id}/locations/\${var.region}/services/${name} roles/run.invoker serviceAccount:\${data.google_service_account.services.email}";
     }
   ];
+  */
 
   resource = {
     google_cloud_run_v2_service.${name} = {
@@ -36,7 +43,7 @@ in {
         };
 
         containers = {
-          image = "\${var.region}-docker.pkg.dev/\${var.project_id}/\${var.project_id}/${name}:${tag}";
+          image = "\${var.region}-docker.pkg.dev/\${var.project_id}/\${var.project_id}/${name}@\${var.srv_digest}";
 
           env = [
             {
@@ -52,7 +59,7 @@ in {
               value_source = {
                 secret_key_ref = {
                   secret = "\${data.google_secret_manager_secret.sops_age_key.secret_id}";
-                  version = tag;
+                  version = "latest";
                 };
               };
             }

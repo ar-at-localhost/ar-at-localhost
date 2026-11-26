@@ -50,7 +50,8 @@ jobs:
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
           export service="${SERVICE%@*}"
-          devenv tasks --profile cloud run "aal:deploy-service"
+          devenv tasks --profile cloud run "aal:deploy-service-image" --input name="$service" --input profile="$SECRETSPEC_PROFILE"
+          export TF_VAR_srv_digest=$(cat "result-${service}.digest")
           devenv tasks --profile cloud run "aal:tf" --input config="$service" --input apply=1
           url=$(gcloud run services describe "$service" --project="$GCP_PROJECT" --region="$GCP_REGION" --format 'value(status.url)')
           url="$url/openapi.json"
