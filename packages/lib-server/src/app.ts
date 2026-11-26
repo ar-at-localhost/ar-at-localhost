@@ -172,7 +172,9 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
   await app.register(turnstilePlugin);
 
   app.get("/health", async (_, resp) => {
-    resp.status(200).send();
+    resp.status(200).send({
+      message: "OK",
+    });
   });
 
   return app;
