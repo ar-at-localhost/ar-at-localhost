@@ -133,7 +133,7 @@ const main = async () => {
           signals: rand([[{ type: "Hiring", summary: "Hiring a backend developer" }]]),
           status: rand(leadStatuses),
           url: randUrl(),
-          user_id: 11,
+          user_id: user.id,
         } satisfies typeof leadsTable.$inferInsert;
       }),
     );
