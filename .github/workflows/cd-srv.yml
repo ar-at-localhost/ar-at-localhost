@@ -53,11 +53,15 @@ jobs:
           devenv tasks --profile cloud run "aal:deploy-service"
           devenv tasks --profile cloud run "aal:tf" --input config="$service" --input apply=1
           url=$(gcloud run services describe srv-internal --project="$GCP_PROJECT" --region="$GCP_REGION" --format 'value(status.url)')
+          url="$url/openapi.json"
           openapi="services/microservices/${service#srv-}/openapi.json"
-          curl --fail -sSL -H "Authorization: Bearer $(gcloud auth print-identity-token)" "$url/openapi.json" -o "$openapi"
+
+          echo "> Fetching OpenAPI Specs at $url"
+          curl --fail -sSL -H "Authorization: Bearer $(gcloud auth print-identity-token)" "$url" -o "$openapi"
           oxfmt --write "$openapi"
 
           if [[ -n "$(git status --porcelain -- "$openapi")" ]]; then
+            echo "> Updating gateway"
             git add "$openapi"
             version=$(jq -r '.info.version' "$openapi")
             devenv tasks --secretspec-profile "$SECRETSPEC_PROFILE" --profile cloud run 'aal:tf' --input config="gateway" --input apply=1
