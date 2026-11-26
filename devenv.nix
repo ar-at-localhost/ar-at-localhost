@@ -95,7 +95,7 @@ in {
               exit 1
             fi
 
-            export SECRETSPEC_PROFILE="$project"
+            export SECRETSPEC_PROFILE="$profile"
             export out="result-$name"
             export target=".#images.${system}.$name"
             export version=$(nix eval --raw "$target.imageTag")
