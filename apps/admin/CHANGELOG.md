@@ -1,5 +1,14 @@
 # app-admin
 
+## 0.0.3
+
+### Patch Changes
+
+- Release
+- Updated dependencies []:
+  - lib@0.0.5
+  - ui@0.0.5
+
 ## 0.0.2
 
 ### Patch Changes

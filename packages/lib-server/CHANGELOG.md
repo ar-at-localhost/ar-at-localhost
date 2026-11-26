@@ -1,5 +1,13 @@
 # lib-server
 
+## 0.0.11
+
+### Patch Changes
+
+- Release
+- Updated dependencies []:
+  - lib@0.0.5
+
 ## 0.0.10
 
 ### Patch Changes

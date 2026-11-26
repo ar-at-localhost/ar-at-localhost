@@ -1,5 +1,14 @@
 # srv-contact
 
+## 0.0.5
+
+### Patch Changes
+
+- Release
+- Updated dependencies []:
+  - lib@0.0.5
+  - lib-server@0.0.11
+
 ## 0.0.4
 
 ### Patch Changes
