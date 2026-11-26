@@ -1,5 +1,13 @@
 # ui
 
+## 0.0.6
+
+### Patch Changes
+
+- Version: redeploy everything
+- Updated dependencies []:
+  - lib@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes

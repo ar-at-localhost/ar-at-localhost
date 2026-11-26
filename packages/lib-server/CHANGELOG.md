@@ -1,5 +1,13 @@
 # lib-server
 
+## 0.0.12
+
+### Patch Changes
+
+- Version: redeploy everything
+- Updated dependencies []:
+  - lib@0.0.6
+
 ## 0.0.11
 
 ### Patch Changes

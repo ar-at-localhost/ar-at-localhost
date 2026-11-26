@@ -1,5 +1,14 @@
 # srv-internal
 
+## 0.0.4
+
+### Patch Changes
+
+- Version: redeploy everything
+- Updated dependencies []:
+  - lib@0.0.6
+  - lib-server@0.0.12
+
 ## 0.0.3
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # site
 
+## 0.0.16
+
+### Patch Changes
+
+- Version: redeploy everything
+- Updated dependencies []:
+  - lib@0.0.6
+  - ui@0.0.6
+
 ## 0.0.15
 
 ### Patch Changes
