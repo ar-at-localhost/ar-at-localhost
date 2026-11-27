@@ -90,5 +90,5 @@ jobs:
             git config user.email "$AUTHOR_EMAIL"
             git commit -m "fix(nix-hash): update pnpm/nix hash"
             git push --no-verify origin "HEAD:refs/heads/$GIT_BRANCH"
-            echo "::notice::| Update hash(es) are committed. Please pull changes."
+            echo "::notice::| Updated hash(es) are committed. Please pull changes."
           fi

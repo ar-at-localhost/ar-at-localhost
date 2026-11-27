@@ -20,6 +20,8 @@ jobs:
   deploy-service:
     name: Deploy Service's Commons
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
         with:
@@ -30,9 +32,36 @@ jobs:
           age-key: ${{ secrets.SOPS_AGE_KEY }}
           profile: ${{ inputs.profile }}
 
-      - name: Deploy service
+      - name: Deploy service's commons
         env:
+          AUTHOR_NAME: ${{ github.actor }}
+          AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+          GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
           SECRETSPEC_PROFILE: ${{ inputs.profile }}
         shell: devenv shell --profile cloud -- bash -e {0}
         run: |
+          services=$(
+            pnpm turbo ls --output json |
+              jq -c '[.packages.items[].name | select(test("srv-"))]'
+          )
+
+          mapfile -t services < <(jq -r '.[]' <<< "$services")
+          for service in "${services[@]}"; do
+            sd="services/microservices/${service#srv-}"
+            mkdir -p "$sd"
+            url=$(gcloud run services describe "$service" --project="$GCP_PROJECT" --region="$GCP_REGION" --format 'value(status.url)')
+            url="$url/openapi.json"
+            curl --fail -sSl -H "Authorization: Bearer $(gcloud auth print-identity-token)" -o "$sd/openapi.json" "$url"
+          done
+
+          oxfmt services/**/openapi.json
           devenv tasks --secretspec-profile "$SECRETSPEC_PROFILE" --profile cloud run 'aal:tf' --input config="gateway" --input apply=1
+
+          if [[ -n "$(git status --porcelain -- services/**/openapi.json)" ]]; then
+            git add services/**/openapi.json
+            git config user.name "$AUTHOR_NAME"
+            git config user.email "$AUTHOR_EMAIL"
+            git commit -m 'feat(srv): update openapi.json'
+            git push --no-verify origin "HEAD:refs/heads/$GIT_BRANCH"
+            echo "::notice::| Updated OpenAPI spec(s) are committed. Please pull changes."
+          fi
