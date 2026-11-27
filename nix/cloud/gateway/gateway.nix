@@ -86,7 +86,7 @@ in {
   resource = {
     google_api_gateway_api.services = {
       inherit project provider;
-      api_id = "ar-at-localhost";
+      api_id = "\${var.project_id}";
       depends_on = ["google_project_service.apigateway"];
     };
 
