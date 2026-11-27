@@ -164,7 +164,7 @@ export const getBaseApp = async ({ swagger, name }: BaseAppOpts) => {
   });
 
   await app.register(fastifyRateLimit, {
-    max: 3 * safeRate,
+    max: 60 * safeRate,
     timeWindow: "1 minute",
     global: true,
   });
