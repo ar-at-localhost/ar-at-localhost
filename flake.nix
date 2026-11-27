@@ -50,6 +50,11 @@
           })
       );
   in {
+    formatter = forEachSupportedSystem (
+      {pkgs, ...}:
+        pkgs.alejandra
+    );
+
     images = forEachSupportedSystem (
       {
         pkgs,
