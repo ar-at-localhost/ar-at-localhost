@@ -45,7 +45,7 @@ jobs:
     uses: ./.github/workflows/cd-cloud.yml
     needs: checks
     if: >-
-      always() &&
+      !cancelled() &&
       needs.checks.result == 'success'
     with:
       profile: *secretspec_profile
@@ -56,7 +56,7 @@ jobs:
     name: Deploy services on cloud
     needs: [checks, sync-cloud]
     if: >-
-      always() &&
+      !cancelled() &&
       needs.checks.result == 'success' &&
       needs.checks.outputs.services != '[]'
     permissions:
@@ -77,6 +77,22 @@ jobs:
       service: ${{ matrix.service }}
       profile: *secretspec_profile
     secrets: inherit
+
+  deploy-services-commons:
+    name: Deploy service's commons on cloud
+    needs: [checks, deploy-services]
+    secrets: inherit
+    permissions:
+      contents: write
+
+    if: >-
+      !cancelled() &&
+      needs.checks.result == 'success' &&
+      (needs.deploy-services.result == 'success' || needs.deploy-services.result == 'skipped')
+
+    uses: ./.github/workflows/cd-srv-common.yml
+    with:
+      profile: *secretspec_profile
 
   deploy-apps:
     name: Deploy apps on cloud

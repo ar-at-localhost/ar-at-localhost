@@ -56,10 +56,3 @@ jobs:
           devenv tasks --profile cloud run "aal:deploy-service-image" --input name="$service" --input profile="$SECRETSPEC_PROFILE"
           export TF_VAR_srv_digest=$(cat "result-${service}.digest")
           devenv tasks --profile cloud run "aal:tf" --input config="$service" --input apply=1
-
-  deploy-srv-common:
-    needs: deploy-service
-    uses: ./.github/workflows/cd-srv-common.yml
-    with:
-      profile: ${{ inputs.profile }}
-    secrets: inherit

@@ -17,7 +17,7 @@ env:
 permissions: {}
 
 jobs:
-  deploy-service:
+  deploy-service-commons:
     name: Deploy Service's Commons
     runs-on: ubuntu-latest
     permissions:
