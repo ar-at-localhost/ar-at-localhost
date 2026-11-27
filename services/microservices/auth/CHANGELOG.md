@@ -1,5 +1,14 @@
 # srv-auth
 
+## 0.0.5
+
+### Patch Changes
+
+- Release
+- Updated dependencies []:
+  - lib@0.0.7
+  - lib-server@0.0.13
+
 ## 0.0.4
 
 ### Patch Changes
