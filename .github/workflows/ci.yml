@@ -44,6 +44,9 @@ jobs:
     name: Sync cloud resources
     uses: ./.github/workflows/cd-cloud.yml
     needs: checks
+    if: >-
+      always() &&
+      needs.checks.result == 'success'
     with:
       profile: *secretspec_profile
       templates: ${{ needs.checks.outputs.templates == '1' }}
@@ -52,7 +55,10 @@ jobs:
   deploy-services:
     name: Deploy services on cloud
     needs: [checks, sync-cloud]
-    if: needs.checks.outputs.services != '[]'
+    if: >-
+      always() &&
+      needs.checks.result == 'success' &&
+      needs.checks.outputs.services != '[]'
     permissions:
       contents: write
 
