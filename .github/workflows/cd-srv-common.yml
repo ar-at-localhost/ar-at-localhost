@@ -18,7 +18,7 @@ permissions: {}
 
 jobs:
   deploy-service:
-    name: Deploy service
+    name: Deploy Service's Commons
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
