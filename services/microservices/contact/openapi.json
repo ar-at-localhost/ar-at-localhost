@@ -1,12 +1,7 @@
 {
   "openapi": "3.0.3",
-  "info": {
-    "title": "srv-contact",
-    "version": "0.0.4"
-  },
-  "components": {
-    "schemas": {}
-  },
+  "info": { "title": "srv-contact", "version": "0.0.7" },
+  "components": { "schemas": {} },
   "paths": {
     "/health": {
       "get": {
@@ -17,11 +12,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -34,18 +25,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -59,18 +42,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -89,31 +64,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "first_name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 128
-                  },
-                  "last_name": {
-                    "type": "string",
-                    "maxLength": 128
-                  },
-                  "email": {
-                    "type": "string",
-                    "format": "email"
-                  },
-                  "message": {
-                    "type": "string",
-                    "minLength": 128,
-                    "maxLength": 10000
-                  },
-                  "markdown": {
-                    "type": "boolean"
-                  },
-                  "token": {
-                    "type": "string",
-                    "maxLength": 1024
-                  }
+                  "first_name": { "type": "string", "minLength": 1, "maxLength": 128 },
+                  "last_name": { "type": "string", "maxLength": 128 },
+                  "email": { "type": "string", "format": "email" },
+                  "message": { "type": "string", "minLength": 128, "maxLength": 10000 },
+                  "markdown": { "type": "boolean" },
+                  "token": { "type": "string", "maxLength": 1024 }
                 },
                 "required": ["first_name", "email", "message", "token"]
               }
@@ -127,11 +83,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -144,18 +96,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -169,18 +113,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -192,28 +128,19 @@
       "get": {
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "default": "1"
-            },
+            "schema": { "type": "string", "default": "1" },
             "in": "query",
             "name": "page",
             "required": false
           },
           {
-            "schema": {
-              "type": "string",
-              "default": "10"
-            },
+            "schema": { "type": "string", "default": "10" },
             "in": "query",
             "name": "limit",
             "required": false
           },
           {
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
+            "schema": { "type": "string", "nullable": true },
             "in": "query",
             "name": "search",
             "required": false
@@ -227,56 +154,23 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "offset": {
-                      "type": "number"
-                    },
-                    "total": {
-                      "type": "number"
-                    },
-                    "page": {
-                      "type": "number"
-                    },
-                    "limit": {
-                      "type": "number"
-                    },
+                    "offset": { "type": "number" },
+                    "total": { "type": "number" },
+                    "page": { "type": "number" },
+                    "limit": { "type": "number" },
                     "items": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "first_name": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 128
-                          },
-                          "last_name": {
-                            "type": "string",
-                            "maxLength": 128
-                          },
-                          "email": {
-                            "type": "string",
-                            "format": "email"
-                          },
-                          "message": {
-                            "type": "string",
-                            "minLength": 128,
-                            "maxLength": 10000
-                          },
-                          "markdown": {
-                            "type": "boolean"
-                          },
-                          "id": {
-                            "type": "integer"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time",
-                            "nullable": true
-                          },
+                          "first_name": { "type": "string", "minLength": 1, "maxLength": 128 },
+                          "last_name": { "type": "string", "maxLength": 128 },
+                          "email": { "type": "string", "format": "email" },
+                          "message": { "type": "string", "minLength": 128, "maxLength": 10000 },
+                          "markdown": { "type": "boolean" },
+                          "id": { "type": "integer" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
                           "deleted_at": {
                             "type": "string",
                             "format": "date-time",
@@ -289,8 +183,7 @@
                           "message",
                           "id",
                           "created_at",
-                          "updated_at",
-                          "deleted_at"
+                          "updated_at"
                         ]
                       }
                     }
@@ -307,18 +200,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -332,18 +217,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -362,24 +239,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "first_name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 64
-                  },
-                  "last_name_initial": {
-                    "type": "string",
-                    "maxLength": 1
-                  },
-                  "company": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 64
-                  },
-                  "email": {
-                    "type": "string",
-                    "format": "email"
-                  }
+                  "first_name": { "type": "string", "minLength": 1, "maxLength": 64 },
+                  "last_name_initial": { "type": "string", "maxLength": 1 },
+                  "company": { "type": "string", "minLength": 1, "maxLength": 64 },
+                  "email": { "type": "string", "format": "email" }
                 },
                 "required": ["first_name", "last_name_initial", "company", "email"]
               }
@@ -393,11 +256,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -410,16 +269,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "id": {
-                      "type": "integer"
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    }
+                    "message": { "type": "string" },
+                    "id": { "type": "integer" },
+                    "email": { "type": "string", "format": "email" }
                   },
                   "required": ["message", "id", "email"]
                 }
@@ -433,18 +285,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -458,18 +302,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -487,45 +323,15 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "first_name": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 64
-                    },
-                    "last_name_initial": {
-                      "type": "string",
-                      "maxLength": 1
-                    },
-                    "company": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 64
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "id": {
-                      "type": "integer"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "deleted_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "expiry": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
+                    "first_name": { "type": "string", "minLength": 1, "maxLength": 64 },
+                    "last_name_initial": { "type": "string", "maxLength": 1 },
+                    "company": { "type": "string", "minLength": 1, "maxLength": 64 },
+                    "email": { "type": "string", "format": "email" },
+                    "id": { "type": "integer" },
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "updated_at": { "type": "string", "format": "date-time" },
+                    "deleted_at": { "type": "string", "format": "date-time", "nullable": true },
+                    "expiry": { "type": "string", "format": "date-time" }
                   },
                   "required": [
                     "first_name",
@@ -535,7 +341,6 @@
                     "id",
                     "created_at",
                     "updated_at",
-                    "deleted_at",
                     "expiry"
                   ]
                 }
@@ -549,18 +354,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -574,18 +371,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [401]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Unauthenticated"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [401] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Unauthenticated"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -599,18 +388,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [404]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Not Found"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [404] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Not Found"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -624,18 +405,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -652,11 +425,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -669,18 +438,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -694,18 +455,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [401]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Unauthenticated"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [401] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Unauthenticated"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -719,18 +472,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [404]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Not Found"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [404] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Not Found"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -744,18 +489,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -774,14 +511,8 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "testimonial": {
-                    "type": "string",
-                    "minLength": 128,
-                    "maxLength": 10000
-                  },
-                  "rating": {
-                    "type": "string"
-                  }
+                  "testimonial": { "type": "string", "minLength": 128, "maxLength": 10000 },
+                  "rating": { "type": "string" }
                 },
                 "required": ["testimonial", "rating"]
               }
@@ -795,11 +526,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -811,11 +538,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -828,18 +551,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -853,18 +568,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [404]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Not Found"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [404] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Not Found"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -878,18 +585,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -903,31 +602,18 @@
       "get": {
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "default": "1"
-            },
+            "schema": { "type": "string", "default": "1" },
             "in": "query",
             "name": "page",
             "required": false
           },
           {
-            "schema": {
-              "type": "string",
-              "default": "10"
-            },
+            "schema": { "type": "string", "default": "10" },
             "in": "query",
             "name": "limit",
             "required": false
           },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "search",
-            "required": false
-          }
+          { "schema": { "type": "string" }, "in": "query", "name": "search", "required": false }
         ],
         "responses": {
           "200": {
@@ -937,62 +623,28 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "offset": {
-                      "type": "number"
-                    },
-                    "total": {
-                      "type": "number"
-                    },
-                    "page": {
-                      "type": "number"
-                    },
-                    "limit": {
-                      "type": "number"
-                    },
+                    "offset": { "type": "number" },
+                    "total": { "type": "number" },
+                    "page": { "type": "number" },
+                    "limit": { "type": "number" },
                     "items": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "first_name": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 64
-                          },
-                          "last_name_initial": {
-                            "type": "string",
-                            "maxLength": 1
-                          },
-                          "company": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 64
-                          },
-                          "email": {
-                            "type": "string",
-                            "format": "email"
-                          },
-                          "id": {
-                            "type": "integer"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time",
-                            "nullable": true
-                          },
+                          "first_name": { "type": "string", "minLength": 1, "maxLength": 64 },
+                          "last_name_initial": { "type": "string", "maxLength": 1 },
+                          "company": { "type": "string", "minLength": 1, "maxLength": 64 },
+                          "email": { "type": "string", "format": "email" },
+                          "id": { "type": "integer" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
                           "deleted_at": {
                             "type": "string",
                             "format": "date-time",
                             "nullable": true
                           },
-                          "expiry": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
+                          "expiry": { "type": "string", "format": "date-time" }
                         },
                         "required": [
                           "first_name",
@@ -1002,7 +654,6 @@
                           "id",
                           "created_at",
                           "updated_at",
-                          "deleted_at",
                           "expiry"
                         ]
                       }
@@ -1020,18 +671,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1045,18 +688,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1070,31 +705,18 @@
       "get": {
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "default": "1"
-            },
+            "schema": { "type": "string", "default": "1" },
             "in": "query",
             "name": "page",
             "required": false
           },
           {
-            "schema": {
-              "type": "string",
-              "default": "10"
-            },
+            "schema": { "type": "string", "default": "10" },
             "in": "query",
             "name": "limit",
             "required": false
           },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "search",
-            "required": false
-          }
+          { "schema": { "type": "string" }, "in": "query", "name": "search", "required": false }
         ],
         "responses": {
           "200": {
@@ -1104,61 +726,28 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "offset": {
-                      "type": "number"
-                    },
-                    "total": {
-                      "type": "number"
-                    },
-                    "page": {
-                      "type": "number"
-                    },
-                    "limit": {
-                      "type": "number"
-                    },
+                    "offset": { "type": "number" },
+                    "total": { "type": "number" },
+                    "page": { "type": "number" },
+                    "limit": { "type": "number" },
                     "items": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "first_name": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 64
-                          },
-                          "last_name_initial": {
-                            "type": "string",
-                            "maxLength": 1
-                          },
-                          "company": {
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 64
-                          },
-                          "id": {
-                            "type": "integer"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time",
-                            "nullable": true
-                          },
+                          "first_name": { "type": "string", "minLength": 1, "maxLength": 64 },
+                          "last_name_initial": { "type": "string", "maxLength": 1 },
+                          "company": { "type": "string", "minLength": 1, "maxLength": 64 },
+                          "id": { "type": "integer" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
                           "deleted_at": {
                             "type": "string",
                             "format": "date-time",
                             "nullable": true
                           },
-                          "testimonial": {
-                            "type": "string"
-                          },
-                          "rating": {
-                            "type": "string",
-                            "nullable": true
-                          }
+                          "testimonial": { "type": "string" },
+                          "rating": { "type": "string", "nullable": true }
                         },
                         "required": [
                           "first_name",
@@ -1167,7 +756,6 @@
                           "id",
                           "created_at",
                           "updated_at",
-                          "deleted_at",
                           "testimonial",
                           "rating"
                         ]
@@ -1186,18 +774,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1211,18 +791,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1241,11 +813,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -1258,18 +826,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1283,18 +843,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1313,11 +865,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -1330,18 +878,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1355,18 +895,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [429]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Too Many Requests"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [429] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Too Many Requests"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1380,18 +912,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1409,11 +933,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  "content": {
-                    "type": "string"
-                  }
-                },
+                "properties": { "content": { "type": "string" } },
                 "required": ["content"]
               }
             }
@@ -1427,23 +947,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "angle": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "company": {
-                      "type": "string"
-                    },
-                    "concerns": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "contact_role": {
-                      "type": "string",
-                      "nullable": true
-                    },
+                    "angle": { "type": "string", "minLength": 1 },
+                    "company": { "type": "string" },
+                    "concerns": { "type": "array", "items": { "type": "string" } },
+                    "contact_role": { "type": "string", "nullable": true },
                     "domain": {
                       "type": "string",
                       "pattern": "^(?=.{1,253}$)(?:(?![Xx][Nn]--)[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}$"
@@ -1453,70 +960,36 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "title": {
-                            "type": "string"
-                          },
-                          "url": {
-                            "type": "string",
-                            "format": "uri"
-                          }
+                          "title": { "type": "string" },
+                          "url": { "type": "string", "format": "uri" }
                         },
                         "required": ["url"]
                       }
                     },
                     "fit_score": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "number"
-                        }
-                      ],
+                      "anyOf": [{ "type": "string" }, { "type": "number" }],
                       "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
                       "type": "number",
                       "minimum": 1,
                       "maximum": 10
                     },
-                    "fit_reason": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "matched_repos": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "notes": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "reject_reason": {
-                      "type": "string",
-                      "nullable": true
-                    },
+                    "fit_reason": { "type": "string", "minLength": 1 },
+                    "matched_repos": { "type": "array", "items": { "type": "string" } },
+                    "notes": { "type": "string", "nullable": true },
+                    "reject_reason": { "type": "string", "nullable": true },
                     "signals": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "type": {
-                            "type": "string"
-                          },
-                          "summary": {
-                            "type": "string"
-                          }
+                          "type": { "type": "string" },
+                          "summary": { "type": "string" }
                         },
                         "required": ["type", "summary"]
                       },
                       "minItems": 1
                     },
-                    "snooze_until": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
+                    "snooze_until": { "type": "string", "format": "date-time", "nullable": true },
                     "status": {
                       "enum": [
                         "new",
@@ -1530,11 +1003,7 @@
                       ],
                       "type": "string"
                     },
-                    "url": {
-                      "type": "string",
-                      "format": "uri",
-                      "nullable": true
-                    }
+                    "url": { "type": "string", "format": "uri", "nullable": true }
                   },
                   "required": [
                     "angle",
@@ -1559,18 +1028,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1584,18 +1045,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [429]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Too Many Requests"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [429] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Too Many Requests"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1609,18 +1062,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1639,23 +1084,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "angle": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "company": {
-                    "type": "string"
-                  },
-                  "concerns": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "contact_role": {
-                    "type": "string",
-                    "nullable": true
-                  },
+                  "angle": { "type": "string", "minLength": 1 },
+                  "company": { "type": "string" },
+                  "concerns": { "type": "array", "items": { "type": "string" } },
+                  "contact_role": { "type": "string", "nullable": true },
                   "domain": {
                     "type": "string",
                     "pattern": "^(?=.{1,253}$)(?:(?![Xx][Nn]--)[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}$"
@@ -1665,70 +1097,36 @@
                     "items": {
                       "type": "object",
                       "properties": {
-                        "title": {
-                          "type": "string"
-                        },
-                        "url": {
-                          "type": "string",
-                          "format": "uri"
-                        }
+                        "title": { "type": "string" },
+                        "url": { "type": "string", "format": "uri" }
                       },
                       "required": ["url"]
                     }
                   },
                   "fit_score": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "number"
-                      }
-                    ],
+                    "anyOf": [{ "type": "string" }, { "type": "number" }],
                     "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
                     "type": "number",
                     "minimum": 1,
                     "maximum": 10
                   },
-                  "fit_reason": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "matched_repos": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "notes": {
-                    "type": "string",
-                    "nullable": true
-                  },
-                  "reject_reason": {
-                    "type": "string",
-                    "nullable": true
-                  },
+                  "fit_reason": { "type": "string", "minLength": 1 },
+                  "matched_repos": { "type": "array", "items": { "type": "string" } },
+                  "notes": { "type": "string", "nullable": true },
+                  "reject_reason": { "type": "string", "nullable": true },
                   "signals": {
                     "type": "array",
                     "items": {
                       "type": "object",
                       "properties": {
-                        "type": {
-                          "type": "string"
-                        },
-                        "summary": {
-                          "type": "string"
-                        }
+                        "type": { "type": "string" },
+                        "summary": { "type": "string" }
                       },
                       "required": ["type", "summary"]
                     },
                     "minItems": 1
                   },
-                  "snooze_until": {
-                    "type": "string",
-                    "format": "date-time",
-                    "nullable": true
-                  },
+                  "snooze_until": { "type": "string", "format": "date-time", "nullable": true },
                   "status": {
                     "enum": [
                       "new",
@@ -1742,11 +1140,7 @@
                     ],
                     "type": "string"
                   },
-                  "url": {
-                    "type": "string",
-                    "format": "uri",
-                    "nullable": true
-                  }
+                  "url": { "type": "string", "format": "uri", "nullable": true }
                 },
                 "required": [
                   "angle",
@@ -1772,40 +1166,14 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "deleted_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "angle": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "company": {
-                      "type": "string"
-                    },
-                    "concerns": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "contact_role": {
-                      "type": "string",
-                      "nullable": true
-                    },
+                    "id": { "type": "integer" },
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "updated_at": { "type": "string", "format": "date-time" },
+                    "deleted_at": { "type": "string", "format": "date-time", "nullable": true },
+                    "angle": { "type": "string", "minLength": 1 },
+                    "company": { "type": "string" },
+                    "concerns": { "type": "array", "items": { "type": "string" } },
+                    "contact_role": { "type": "string", "nullable": true },
                     "domain": {
                       "type": "string",
                       "pattern": "^(?=.{1,253}$)(?:(?![Xx][Nn]--)[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}$"
@@ -1815,70 +1183,36 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "title": {
-                            "type": "string"
-                          },
-                          "url": {
-                            "type": "string",
-                            "format": "uri"
-                          }
+                          "title": { "type": "string" },
+                          "url": { "type": "string", "format": "uri" }
                         },
                         "required": ["url"]
                       }
                     },
                     "fit_score": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "number"
-                        }
-                      ],
+                      "anyOf": [{ "type": "string" }, { "type": "number" }],
                       "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
                       "type": "number",
                       "minimum": 1,
                       "maximum": 10
                     },
-                    "fit_reason": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "matched_repos": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "notes": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "reject_reason": {
-                      "type": "string",
-                      "nullable": true
-                    },
+                    "fit_reason": { "type": "string", "minLength": 1 },
+                    "matched_repos": { "type": "array", "items": { "type": "string" } },
+                    "notes": { "type": "string", "nullable": true },
+                    "reject_reason": { "type": "string", "nullable": true },
                     "signals": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "type": {
-                            "type": "string"
-                          },
-                          "summary": {
-                            "type": "string"
-                          }
+                          "type": { "type": "string" },
+                          "summary": { "type": "string" }
                         },
                         "required": ["type", "summary"]
                       },
                       "minItems": 1
                     },
-                    "snooze_until": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
+                    "snooze_until": { "type": "string", "format": "date-time", "nullable": true },
                     "status": {
                       "enum": [
                         "new",
@@ -1892,20 +1226,13 @@
                       ],
                       "type": "string"
                     },
-                    "url": {
-                      "type": "string",
-                      "format": "uri",
-                      "nullable": true
-                    },
-                    "user_id": {
-                      "type": "integer"
-                    }
+                    "url": { "type": "string", "format": "uri", "nullable": true },
+                    "user_id": { "type": "integer" }
                   },
                   "required": [
                     "id",
                     "created_at",
                     "updated_at",
-                    "deleted_at",
                     "angle",
                     "company",
                     "concerns",
@@ -1929,18 +1256,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1954,18 +1273,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [429]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Too Many Requests"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [429] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Too Many Requests"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1979,18 +1290,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -2002,42 +1305,26 @@
       "get": {
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "default": "1"
-            },
+            "schema": { "type": "string", "default": "1" },
             "in": "query",
             "name": "page",
             "required": false
           },
           {
-            "schema": {
-              "type": "string",
-              "default": "10"
-            },
+            "schema": { "type": "string", "default": "10" },
             "in": "query",
             "name": "limit",
             "required": false
           },
           {
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
+            "schema": { "type": "string", "nullable": true },
             "in": "query",
             "name": "search",
             "required": false
           },
           {
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number"
-                }
-              ],
+              "anyOf": [{ "type": "string" }, { "type": "number" }],
               "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
               "type": "number",
               "minimum": 1,
@@ -2074,57 +1361,27 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "offset": {
-                      "type": "number"
-                    },
-                    "total": {
-                      "type": "number"
-                    },
-                    "page": {
-                      "type": "number"
-                    },
-                    "limit": {
-                      "type": "number"
-                    },
+                    "offset": { "type": "number" },
+                    "total": { "type": "number" },
+                    "page": { "type": "number" },
+                    "limit": { "type": "number" },
                     "items": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time",
-                            "nullable": true
-                          },
+                          "id": { "type": "integer" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
                           "deleted_at": {
                             "type": "string",
                             "format": "date-time",
                             "nullable": true
                           },
-                          "angle": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "company": {
-                            "type": "string"
-                          },
-                          "concerns": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          },
-                          "contact_role": {
-                            "type": "string",
-                            "nullable": true
-                          },
+                          "angle": { "type": "string", "minLength": 1 },
+                          "company": { "type": "string" },
+                          "concerns": { "type": "array", "items": { "type": "string" } },
+                          "contact_role": { "type": "string", "nullable": true },
                           "domain": {
                             "type": "string",
                             "pattern": "^(?=.{1,253}$)(?:(?![Xx][Nn]--)[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z]{2,63}$"
@@ -2134,60 +1391,30 @@
                             "items": {
                               "type": "object",
                               "properties": {
-                                "title": {
-                                  "type": "string"
-                                },
-                                "url": {
-                                  "type": "string",
-                                  "format": "uri"
-                                }
+                                "title": { "type": "string" },
+                                "url": { "type": "string", "format": "uri" }
                               },
                               "required": ["url"]
                             }
                           },
                           "fit_score": {
-                            "anyOf": [
-                              {
-                                "type": "string"
-                              },
-                              {
-                                "type": "number"
-                              }
-                            ],
+                            "anyOf": [{ "type": "string" }, { "type": "number" }],
                             "pattern": "^[+-]?(?:\\d*\\.)?\\d+$",
                             "type": "number",
                             "minimum": 1,
                             "maximum": 10
                           },
-                          "fit_reason": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "matched_repos": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          },
-                          "notes": {
-                            "type": "string",
-                            "nullable": true
-                          },
-                          "reject_reason": {
-                            "type": "string",
-                            "nullable": true
-                          },
+                          "fit_reason": { "type": "string", "minLength": 1 },
+                          "matched_repos": { "type": "array", "items": { "type": "string" } },
+                          "notes": { "type": "string", "nullable": true },
+                          "reject_reason": { "type": "string", "nullable": true },
                           "signals": {
                             "type": "array",
                             "items": {
                               "type": "object",
                               "properties": {
-                                "type": {
-                                  "type": "string"
-                                },
-                                "summary": {
-                                  "type": "string"
-                                }
+                                "type": { "type": "string" },
+                                "summary": { "type": "string" }
                               },
                               "required": ["type", "summary"]
                             },
@@ -2211,20 +1438,13 @@
                             ],
                             "type": "string"
                           },
-                          "url": {
-                            "type": "string",
-                            "format": "uri",
-                            "nullable": true
-                          },
-                          "user_id": {
-                            "type": "integer"
-                          }
+                          "url": { "type": "string", "format": "uri", "nullable": true },
+                          "user_id": { "type": "integer" }
                         },
                         "required": [
                           "id",
                           "created_at",
                           "updated_at",
-                          "deleted_at",
                           "angle",
                           "company",
                           "concerns",
@@ -2252,18 +1472,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -2277,18 +1489,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }

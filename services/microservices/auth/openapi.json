@@ -1,12 +1,7 @@
 {
   "openapi": "3.0.3",
-  "info": {
-    "title": "srv-auth",
-    "version": "0.0.2"
-  },
-  "components": {
-    "schemas": {}
-  },
+  "info": { "title": "srv-auth", "version": "0.0.5" },
+  "components": { "schemas": {} },
   "paths": {
     "/health": {
       "get": {
@@ -17,11 +12,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -34,18 +25,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -59,18 +42,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -89,15 +64,8 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "format": "email"
-                  },
-                  "password": {
-                    "type": "string",
-                    "minLength": 8,
-                    "maxLength": 32
-                  }
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "minLength": 8, "maxLength": 32 }
                 },
                 "required": ["email", "password"]
               }
@@ -112,12 +80,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string"
-                    },
-                    "refreshToken": {
-                      "type": "string"
-                    }
+                    "token": { "type": "string" },
+                    "refreshToken": { "type": "string" }
                   },
                   "required": ["token", "refreshToken"]
                 }
@@ -131,18 +95,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -156,18 +112,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [401]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Unauthenticated"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [401] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Unauthenticated"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -181,18 +129,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -212,12 +152,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string"
-                    },
-                    "refreshToken": {
-                      "type": "string"
-                    }
+                    "token": { "type": "string" },
+                    "refreshToken": { "type": "string" }
                   },
                   "required": ["token", "refreshToken"]
                 }
@@ -231,18 +167,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -256,18 +184,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [401]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Unauthenticated"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [401] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Unauthenticated"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -281,18 +201,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -312,40 +224,33 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "first_name": {
-                      "type": "string"
-                    },
-                    "last_name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
+                    "first_name": { "type": "string" },
+                    "last_name": { "type": "string" },
+                    "email": { "type": "string", "format": "email" },
                     "roles": {
                       "type": "array",
-                      "items": {
-                        "enum": ["admin", "system", "unknown"],
-                        "type": "string"
-                      }
+                      "items": { "enum": ["admin", "system", "unknown"], "type": "string" }
                     },
                     "keys": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "user_id": {
-                            "type": "integer"
-                          },
+                          "user_id": { "type": "integer" },
                           "type": {
                             "type": "string",
                             "enum": ["Anthropic", "Google AI", "GitHub", "OpenAI"]
                           },
-                          "key": {
-                            "type": "string"
+                          "key": { "type": "string" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
+                          "deleted_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
                           }
                         },
-                        "required": ["user_id", "type"]
+                        "required": ["user_id", "type", "created_at", "updated_at"]
                       }
                     },
                     "handles": {
@@ -353,37 +258,24 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "user_id": {
-                            "type": "integer"
-                          },
-                          "type": {
+                          "user_id": { "type": "integer" },
+                          "type": { "type": "string", "enum": ["GitHub"] },
+                          "handle": { "type": "string" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
+                          "deleted_at": {
                             "type": "string",
-                            "enum": ["GitHub"]
-                          },
-                          "handle": {
-                            "type": "string"
+                            "format": "date-time",
+                            "nullable": true
                           }
                         },
-                        "required": ["user_id", "type"]
+                        "required": ["user_id", "type", "created_at", "updated_at"]
                       }
                     },
-                    "id": {
-                      "type": "integer"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "deleted_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    }
+                    "id": { "type": "integer" },
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "updated_at": { "type": "string", "format": "date-time" },
+                    "deleted_at": { "type": "string", "format": "date-time", "nullable": true }
                   },
                   "required": [
                     "first_name",
@@ -394,8 +286,7 @@
                     "handles",
                     "id",
                     "created_at",
-                    "updated_at",
-                    "deleted_at"
+                    "updated_at"
                   ]
                 }
               }
@@ -408,18 +299,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -433,18 +316,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [401]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Unauthenticated"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [401] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Unauthenticated"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -458,18 +333,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -489,14 +356,8 @@
                   "personal_info": {
                     "type": "object",
                     "properties": {
-                      "first_name": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "last_name": {
-                        "type": "string",
-                        "minLength": 1
-                      }
+                      "first_name": { "type": "string", "minLength": 1 },
+                      "last_name": { "type": "string", "minLength": 1 }
                     }
                   },
                   "keys": {
@@ -508,11 +369,12 @@
                           "type": "string",
                           "enum": ["Anthropic", "Google AI", "GitHub", "OpenAI"]
                         },
-                        "key": {
-                          "type": "string"
-                        }
+                        "key": { "type": "string" },
+                        "created_at": { "type": "string", "format": "date-time" },
+                        "updated_at": { "type": "string", "format": "date-time" },
+                        "deleted_at": { "type": "string", "format": "date-time", "nullable": true }
                       },
-                      "required": ["type"]
+                      "required": ["type", "created_at", "updated_at"]
                     }
                   },
                   "handles": {
@@ -520,15 +382,13 @@
                     "items": {
                       "type": "object",
                       "properties": {
-                        "type": {
-                          "type": "string",
-                          "enum": ["GitHub"]
-                        },
-                        "handle": {
-                          "type": "string"
-                        }
+                        "type": { "type": "string", "enum": ["GitHub"] },
+                        "handle": { "type": "string" },
+                        "created_at": { "type": "string", "format": "date-time" },
+                        "updated_at": { "type": "string", "format": "date-time" },
+                        "deleted_at": { "type": "string", "format": "date-time", "nullable": true }
                       },
-                      "required": ["type"]
+                      "required": ["type", "created_at", "updated_at"]
                     }
                   }
                 }
@@ -544,40 +404,33 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "first_name": {
-                      "type": "string"
-                    },
-                    "last_name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
+                    "first_name": { "type": "string" },
+                    "last_name": { "type": "string" },
+                    "email": { "type": "string", "format": "email" },
                     "roles": {
                       "type": "array",
-                      "items": {
-                        "enum": ["admin", "system", "unknown"],
-                        "type": "string"
-                      }
+                      "items": { "enum": ["admin", "system", "unknown"], "type": "string" }
                     },
                     "keys": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "user_id": {
-                            "type": "integer"
-                          },
+                          "user_id": { "type": "integer" },
                           "type": {
                             "type": "string",
                             "enum": ["Anthropic", "Google AI", "GitHub", "OpenAI"]
                           },
-                          "key": {
-                            "type": "string"
+                          "key": { "type": "string" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
+                          "deleted_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true
                           }
                         },
-                        "required": ["user_id", "type"]
+                        "required": ["user_id", "type", "created_at", "updated_at"]
                       }
                     },
                     "handles": {
@@ -585,37 +438,24 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "user_id": {
-                            "type": "integer"
-                          },
-                          "type": {
+                          "user_id": { "type": "integer" },
+                          "type": { "type": "string", "enum": ["GitHub"] },
+                          "handle": { "type": "string" },
+                          "created_at": { "type": "string", "format": "date-time" },
+                          "updated_at": { "type": "string", "format": "date-time" },
+                          "deleted_at": {
                             "type": "string",
-                            "enum": ["GitHub"]
-                          },
-                          "handle": {
-                            "type": "string"
+                            "format": "date-time",
+                            "nullable": true
                           }
                         },
-                        "required": ["user_id", "type"]
+                        "required": ["user_id", "type", "created_at", "updated_at"]
                       }
                     },
-                    "id": {
-                      "type": "integer"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "deleted_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    }
+                    "id": { "type": "integer" },
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "updated_at": { "type": "string", "format": "date-time" },
+                    "deleted_at": { "type": "string", "format": "date-time", "nullable": true }
                   },
                   "required": [
                     "first_name",
@@ -626,8 +466,7 @@
                     "handles",
                     "id",
                     "created_at",
-                    "updated_at",
-                    "deleted_at"
+                    "updated_at"
                   ]
                 }
               }
@@ -640,18 +479,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -665,18 +496,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [401]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Unauthenticated"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [401] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Unauthenticated"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -690,18 +513,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -714,14 +529,7 @@
     "/file/": {
       "get": {
         "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "path",
-            "required": true
-          }
+          { "schema": { "type": "string" }, "in": "query", "name": "path", "required": true }
         ],
         "responses": {
           "200": {
@@ -730,11 +538,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -747,18 +551,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -772,18 +568,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [404]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Not Found"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [404] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Not Found"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -797,18 +585,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -824,14 +604,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  "path": {
-                    "type": "string"
-                  },
-                  "content": {
-                    "type": "string"
-                  }
-                },
+                "properties": { "path": { "type": "string" }, "content": { "type": "string" } },
                 "required": ["path", "content"]
               }
             }
@@ -844,11 +617,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
+                  "properties": { "message": { "type": "string" } },
                   "required": ["message"]
                 }
               }
@@ -861,18 +630,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -886,18 +647,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [404]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Not Found"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [404] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Not Found"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -911,18 +664,281 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
+                  },
+                  "required": ["statusCode", "error", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/llm/config/{label}": {
+      "get": {
+        "parameters": [
+          { "schema": { "type": "string" }, "in": "path", "name": "label", "required": true }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "label": { "type": "string" },
+                    "user_id": { "anyOf": [{ "type": "number" }, { "type": "string" }] },
+                    "max_input_tokens": {
+                      "anyOf": [{ "type": "number" }, { "type": "string" }],
+                      "nullable": true
                     },
-                    "code": {
-                      "type": "string"
+                    "max_output_tokens": {
+                      "anyOf": [{ "type": "number" }, { "type": "string" }],
+                      "nullable": true
                     },
-                    "error": {
-                      "enum": ["Internal Server Error"]
+                    "inputs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "enum": ["system_prompt", "prompt", "context"],
+                            "type": "string"
+                          },
+                          "kind": { "enum": ["file", "text"], "type": "string" },
+                          "key": { "type": "string", "nullable": true },
+                          "ref": { "type": "string", "nullable": true },
+                          "text": { "type": "string", "nullable": true }
+                        },
+                        "required": ["rel", "kind"]
+                      },
+                      "nullable": true,
+                      "default": []
                     },
-                    "message": {
-                      "type": "string"
-                    }
+                    "temperature": {
+                      "anyOf": [{ "type": "number" }, { "type": "string" }],
+                      "nullable": true
+                    },
+                    "llmProviders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "provider": { "type": "string" },
+                          "priority": { "type": "number" },
+                          "llms": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "provider": { "type": "string" },
+                                "model": { "type": "string" },
+                                "priority": { "type": "number" }
+                              },
+                              "required": ["provider", "model", "priority"]
+                            }
+                          }
+                        },
+                        "required": ["provider", "priority", "llms"]
+                      }
+                    },
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "updated_at": { "type": "string", "format": "date-time" },
+                    "deleted_at": { "type": "string", "format": "date-time", "nullable": true }
+                  },
+                  "required": ["label", "user_id", "llmProviders", "created_at", "updated_at"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
+                  },
+                  "required": ["statusCode", "error", "message"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
+                  },
+                  "required": ["statusCode", "error", "message"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": { "type": "string" },
+                  "user_id": { "anyOf": [{ "type": "number" }, { "type": "string" }] },
+                  "max_input_tokens": {
+                    "anyOf": [{ "type": "number" }, { "type": "string" }],
+                    "nullable": true
+                  },
+                  "max_output_tokens": {
+                    "anyOf": [{ "type": "number" }, { "type": "string" }],
+                    "nullable": true
+                  },
+                  "inputs": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "rel": { "enum": ["system_prompt", "prompt", "context"], "type": "string" },
+                        "kind": { "enum": ["file", "text"], "type": "string" },
+                        "key": { "type": "string", "nullable": true },
+                        "ref": { "type": "string", "nullable": true },
+                        "text": { "type": "string", "nullable": true }
+                      },
+                      "required": ["rel", "kind"]
+                    },
+                    "nullable": true,
+                    "default": []
+                  },
+                  "temperature": {
+                    "anyOf": [{ "type": "number" }, { "type": "string" }],
+                    "nullable": true
+                  }
+                },
+                "required": ["label", "user_id"]
+              }
+            }
+          }
+        },
+        "parameters": [
+          { "schema": { "type": "string" }, "in": "path", "name": "label", "required": true }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "label": { "type": "string" },
+                    "user_id": { "anyOf": [{ "type": "number" }, { "type": "string" }] },
+                    "max_input_tokens": {
+                      "anyOf": [{ "type": "number" }, { "type": "string" }],
+                      "nullable": true
+                    },
+                    "max_output_tokens": {
+                      "anyOf": [{ "type": "number" }, { "type": "string" }],
+                      "nullable": true
+                    },
+                    "inputs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "enum": ["system_prompt", "prompt", "context"],
+                            "type": "string"
+                          },
+                          "kind": { "enum": ["file", "text"], "type": "string" },
+                          "key": { "type": "string", "nullable": true },
+                          "ref": { "type": "string", "nullable": true },
+                          "text": { "type": "string", "nullable": true }
+                        },
+                        "required": ["rel", "kind"]
+                      },
+                      "nullable": true,
+                      "default": []
+                    },
+                    "temperature": {
+                      "anyOf": [{ "type": "number" }, { "type": "string" }],
+                      "nullable": true
+                    },
+                    "llmProviders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "provider": { "type": "string" },
+                          "priority": { "type": "number" },
+                          "llms": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "provider": { "type": "string" },
+                                "model": { "type": "string" },
+                                "priority": { "type": "number" }
+                              },
+                              "required": ["provider", "model", "priority"]
+                            }
+                          }
+                        },
+                        "required": ["provider", "priority", "llms"]
+                      }
+                    },
+                    "created_at": { "type": "string", "format": "date-time" },
+                    "updated_at": { "type": "string", "format": "date-time" },
+                    "deleted_at": { "type": "string", "format": "date-time", "nullable": true }
+                  },
+                  "required": ["label", "user_id", "llmProviders", "created_at", "updated_at"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
+                  },
+                  "required": ["statusCode", "error", "message"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -945,30 +961,18 @@
                     "connects": {
                       "type": "object",
                       "properties": {
-                        "inbound": {
-                          "type": "number"
-                        },
-                        "outbound": {
-                          "type": "number"
-                        },
-                        "total": {
-                          "type": "number"
-                        }
+                        "inbound": { "type": "number" },
+                        "outbound": { "type": "number" },
+                        "total": { "type": "number" }
                       },
                       "required": ["inbound", "outbound", "total"]
                     },
                     "testimonials": {
                       "type": "object",
                       "properties": {
-                        "received": {
-                          "type": "number"
-                        },
-                        "requested": {
-                          "type": "number"
-                        },
-                        "total": {
-                          "type": "number"
-                        }
+                        "received": { "type": "number" },
+                        "requested": { "type": "number" },
+                        "total": { "type": "number" }
                       },
                       "required": ["received", "requested", "total"]
                     }
@@ -985,18 +989,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [400]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Bad Request"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [400] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Bad Request"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
@@ -1010,18 +1006,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "statusCode": {
-                      "enum": [500]
-                    },
-                    "code": {
-                      "type": "string"
-                    },
-                    "error": {
-                      "enum": ["Internal Server Error"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
+                    "statusCode": { "enum": [500] },
+                    "code": { "type": "string" },
+                    "error": { "enum": ["Internal Server Error"] },
+                    "message": { "type": "string" }
                   },
                   "required": ["statusCode", "error", "message"]
                 }
