@@ -40,8 +40,8 @@ catalogs:
       specifier: ^1.53.1
       version: 1.53.1
     fastify:
-      specifier: 5.12.5
-      version: 5.12.5
+      specifier: 5.12.6
+      version: 5.12.6
     firebase-tools:
       specifier: ^15.34.0
       version: 15.34.0
@@ -458,7 +458,7 @@ importers:
         version: 1.0.0-rc.5-ab785fc(drizzle-orm@1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7))
       fastify:
         specifier: 'catalog:'
-        version: 5.12.5
+        version: 5.12.6
       neon:
         specifier: ^8.10.3
         version: 8.10.3(hono@4.13.13)(supports-color@7.2.0)
@@ -630,7 +630,7 @@ importers:
         version: 1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7)
       fastify:
         specifier: 'catalog:'
-        version: 5.12.5
+        version: 5.12.6
       lib:
         specifier: workspace:*
         version: link:../../../packages/lib
@@ -694,7 +694,7 @@ importers:
         version: 1.0.0-rc.5(@electric-sql/pglite@0.3.16)(@neondatabase/serverless@1.2.0)(@opentelemetry/api@1.9.1)(@types/pg@8.23.1)(pg@8.23.1)(valibot@1.5.0(typescript@6.0.3))(zod@4.6.7)
       fastify:
         specifier: 'catalog:'
-        version: 5.12.5
+        version: 5.12.6
       lib:
         specifier: workspace:*
         version: link:../../../packages/lib
@@ -773,7 +773,7 @@ importers:
         version: 1.53.1
       fastify:
         specifier: 'catalog:'
-        version: 5.12.5
+        version: 5.12.6
       lib:
         specifier: workspace:*
         version: link:../../../packages/lib
@@ -5232,8 +5232,8 @@ packages:
   fastify-plugin@6.0.1:
     resolution: {integrity: sha512-4wW4RxSmvPXLrh5mgQEiu43qU3bw44N2ss4FTkTkQIbprUhE+/s43QX0j/ttcztdWK7PEkHqVthdc5GdEGDvjA==}
 
-  fastify@5.12.5:
-    resolution: {integrity: sha512-OB2k1dlxs5/NAABqeKV2FUHkSD2BbENsCak8yULVcymn3fHIPDVa9TI3SDnJSWYSllZmSYuZXy2gTnsT+Sut1A==}
+  fastify@5.12.6:
+    resolution: {integrity: sha512-XeErl1DDsxdbhE9RPRJ05iNnfMhHRHHewVNNAJXaGTOaCY4wHb6rEizphhgzBq5YQe4JyqQWPpGd+hLh2PXXJA==}
 
   fastq@1.20.3:
     resolution: {integrity: sha512-XKv5nnLs6nLF71NgiKJLIZFLkPyIEuOselLG7ujZnGrRfQK8HpvY+WqKhAJUAdLomwVHErVS4LfxFlPq0/FTAw==}
@@ -13736,7 +13736,7 @@ snapshots:
 
   fastify-plugin@6.0.1: {}
 
-  fastify@5.12.5:
+  fastify@5.12.6:
     dependencies:
       '@fastify/ajv-compiler': 4.0.7
       '@fastify/error': 4.2.1
